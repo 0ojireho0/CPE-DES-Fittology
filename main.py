@@ -86,6 +86,11 @@ def index():
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/exercise_mode')
+def get_exercise_mode():
+    return jsonify({'exercise_mode': exercise_mode})
+
+
 # Function to detect bicep curls
 def detect_bicep_curls(img):
     global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left

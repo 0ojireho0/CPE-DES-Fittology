@@ -2,22 +2,50 @@
 <html>
 <head>
     <title>Live Streaming</title>
-
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="display: flex;">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
                 <h3 class="mt-5">Live Streaming</h3>
-                <img src="{{ url_for('video_feed') }}" width="50%">
+                <img src="{{ url_for('video_feed') }}" width="80%">
             </div>
         </div>
         <div>
-        
-
+            <!-- <p id="exercise-mode">Current Exercise: Loading...</p> -->
+            <div id="exercise-images">
+                <img id="bicep-curl-img" src="https://experiencelife.lifetime.life/wp-content/uploads/2021/08/f2-biceps-curl.jpg" style="display: none;"  alt="Bicep Curl">
+                <img id="push-up-img" src="https://www.fitnesseducation.edu.au/wp-content/uploads/2020/10/Pushups.jpg" style="display: none;"  alt="push up">
+            </div>
         </div>
     </div>
 
+    <script>
+        // Function to fetch exercise mode data and update text and images
+        function updateExerciseMode() {
+            fetch('/exercise_mode')
+            .then(response => response.json())
+            .then(data => {
+                //document.getElementById('exercise-mode').innerText = 'Current Exercise: ' + data.exercise_mode;
+                // Show/hide images based on exercise mode
+                if (data.exercise_mode === 'bicep_curl') {
+                    document.getElementById('bicep-curl-img').style.display = 'block';
+                    document.getElementById('push-up-img').style.display = 'none';
+                } else if (data.exercise_mode === 'push_up') {
+                    document.getElementById('bicep-curl-img').style.display = 'none';
+                    document.getElementById('push-up-img').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching exercise mode:', error);
+            });
+        }
 
+        // Update exercise mode initially
+        updateExerciseMode();
+
+        // Update exercise mode every second (or as frequently as needed)
+        setInterval(updateExerciseMode, 1000);
+    </script>
 </body>
 </html>
