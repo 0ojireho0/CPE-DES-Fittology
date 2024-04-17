@@ -11,6 +11,8 @@ app.config['MYSQL_DB'] = 'flask_users'
 
 mysql = MySQL(app)
 
+
+# ----------------------- THIS IS FOR LOGIN -------------------------------------
 @app.route('/')
 def home():
     if 'username' in session:
@@ -45,6 +47,7 @@ def register():
         pwd = request.form['password']
         injuries = request.form['injuries']
         injuries2 = request.form['injuries2']
+        exercise = request.form['exercise']
         
         # Check if either injuries or injuries2 is set to "yes"
         if injuries == "yes" or injuries2 == "yes":
@@ -53,7 +56,7 @@ def register():
         
         # If neither injuries nor injuries2 is set to "yes", proceed with registration
         cur = mysql.connection.cursor()
-        cur.execute(f"insert into tbl_users (username, password, fullname) values ('{username}', '{pwd}', '{fullname}')")
+        cur.execute(f"insert into tbl_users (username, password, fullname, exercise) values ('{username}', '{pwd}', '{fullname}', '{exercise}')")
         mysql.connection.commit()
         cur.close()
         
@@ -66,6 +69,8 @@ def register():
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
+
+# ------------------------------ END FOR LOGIN ------------------------------------ 
 
 
 
