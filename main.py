@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, Response, jsonify
 from flask_mysqldb import MySQL
+
+
+
 
 app = Flask('__name__')
 app.secret_key = 'your-secret-key'
@@ -27,16 +30,19 @@ def login():
         username = request.form['username']
         pwd = request.form['password']
         cur = mysql.connection.cursor()
-        cur.execute(f"SELECT username, fullname, password FROM tbl_users WHERE username = '{username}' ")
+        cur.execute(f"SELECT username, fullname, exercise, password FROM tbl_users WHERE username = '{username}' ")
         user = cur.fetchone()
         cur.close()
-        if user and pwd == user[2]:  # assuming password is the third column
+        if user and pwd == user[3]:  # assuming password is the fourth column
             session['username'] = user[0]
             session['fullname'] = user[1]  # storing full name in session
+            session['exercise'] = user[2]  # storing exercise in session
             return redirect(url_for('home'))
         else:
             return render_template('login.html', error='Invalid username or password')
     return render_template('login.html')
+
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
