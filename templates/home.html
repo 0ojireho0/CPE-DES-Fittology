@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Home Page</title>
 
-</head>
-<body>
-    <h1>Home Page</h1>
-    {% if username %}
-        <p>Hello, {{username}}!</p>
-        <a href="/logout">Logout</a>
-    {% else %}
-        <p>You are not logged in. <a href="/login">Login</a></p>
-        <p>Don't have an Account? <a href="/register">Register</a> here</p>
-    {% endif %}
+    <style>
+        .container{
+            text-align: center;
+        }
 
 
-</body>
+
+    </style>
+
+
+  </head>
+  <body>
+    <div class="container">
+      <h1>Fittology</h1>
+      {% if username %}
+      <p>Hello, {{ session['fullname'] }}!</p>
+      <a href="/logout">Logout</a>
+      {% else %}
+      <p>You are not logged in. <a href="/login">Login</a></p>
+      <p>Don't have an Account? <a href="/register">Register</a> here</p>
+      {% endif %}
+    </div>
+  </body>
 </html>

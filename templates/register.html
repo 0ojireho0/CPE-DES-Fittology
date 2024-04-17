@@ -4,17 +4,43 @@
 </head>
 <body>
     <h1>Register</h1>
-
     <form method="POST" action="/register">
+        {% if not_allowed %}
+            <p>{{not_allowed}}</p>
+        {% endif %}
+        <label for="fullname" >Fullname:</label>
+        <input type="text" id="fullname" name="fullname" required><br><br>
         <label for="username" >Username:</label>
         <input type="text" id="username" name="username" required><br><br>
-        <label for="email" >Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
         <label for="password" >Password:</label>
         <input type="password" id="password" name="password" required><br><br>
+
+        
+        <p>Do you have injuries? </p>
+        <input type="radio" id="yes" name="injuries" value="yes">
+        <label for="yes">yes</label>
+        <input type="radio" id="no" name="injuries" value="no">
+        <label for="no">no</label><br><br>
+
+        <p>Do you have injuries2? </p>
+        <input type="radio" id="yes" name="injuries2" value="yes">
+        <label for="yes">yes</label>
+        <input type="radio" id="no" name="injuries2" value="no">
+        <label for="no">no</label><br><br>
+
+        <p>What type of Exercise do you want? </p>
+        <input type="radio" id="muscle_gain" name="exercise" value="muscle_gain">
+        <label for="muscle_gain">Muscle Gain</label>
+        <input type="radio" id="loss_weight" name="exercise" value="loss_weight">
+        <label for="loss_weight">Loss Weight</label><br><br>
+
+
+
         <input type="submit" value="Register">
+
+
+
+
     </form>
-
-
 </body>
 </html>
