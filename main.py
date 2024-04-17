@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Response, jsonify
 from flask_mysqldb import MySQL
 
-
-
-
 app = Flask('__name__')
 app.secret_key = 'your-secret-key'
 
@@ -78,6 +75,12 @@ def logout():
 
 # ------------------------------ END FOR LOGIN ------------------------------------ 
 
+@app.route('/start_exercise')
+def start_exercise():
+    if session['exercise'] == "muscle_gain":
+        return redirect(url_for('login')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
+    elif session['exercise'] == "loss_weight":
+        return redirect(url_for('register')) #THIS URL IS SUPPOSED FOR LOSS WEIGHT
 
 
 
