@@ -9,6 +9,7 @@
             <div class="col-lg-8 offset-lg-2">
                 <h3 class="mt-5">Live Streaming</h3>
                 <img src="{{ url_for('video_feed') }}" width="100%">
+                <button id="startTimerBtn">Start Exercise</button>
             </div>
         </div>
         <div>
@@ -22,6 +23,29 @@
 
     <script>
         // Function to fetch exercise mode data and update text and images
+        document.getElementById('startTimerBtn').addEventListener('click', function() {
+            fetch('/start_timer', {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Timer started successfully');
+                    document.getElementById('startTimerBtn').style.display = 'none'; // Hide the button
+                    // Update the video source directly
+                    location.reload()
+                    document.getElementById('videoFeed').src = "{{ url_for('video_feed') }}";
+                    
+                } else {
+                    console.error('Failed to start timer');
+                }
+            })
+            .catch(error => {
+                console.error('Error starting timer:', error);
+            });
+        });
+        
+
+
         function updateExerciseMode() {
             fetch('/exercise_mode')
             .then(response => response.json())

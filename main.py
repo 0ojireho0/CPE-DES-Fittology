@@ -32,7 +32,7 @@ count_bicep_right = 0
 dir_bicep_left = 0
 dir_bicep_right = 0
 
-start_time = time.time() # starts time
+start_time = None # starts time
 repetition_time = 60 # duration time
 display_bicep = True
 
@@ -176,6 +176,14 @@ def video_feed():
 @app.route('/exercise_mode')
 def get_exercise_mode():
     return jsonify({'exercise_mode': exercise_mode})
+
+@app.route('/start_timer', methods=['POST'])
+def start_timer():
+    global start_time
+    start_time = time.time()  # Start the timer
+    return jsonify({'message': 'Timer started'}), 200
+    
+
 
 
 # Function to detect bicep curls
