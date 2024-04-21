@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Response, jsonify
 from flask_mysqldb import MySQL
+import os
+
 
 # -------------- FOR GAINING MUSCLE ---------------
 import cv2
@@ -70,6 +72,10 @@ rightangle_pushup = 0
 # Add this variable at the beginning of your code
 exercise_mode = "bicep_curl"
 
+picFolder = os.path.join('static', 'images')
+app.config['UPLOAD_FOLDER'] = picFolder
+
+
 # ----------------------- THIS IS FOR LOGIN -------------------------------------
 @app.route('/')
 def home():
@@ -81,6 +87,10 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    login_hagdanan = os.path.join(app.config['UPLOAD_FOLDER'], 'login_hagdanan.png')
+    logo = os.path.join(app.config['UPLOAD_FOLDER'], 'Logo.png')
+   
+    
     if request.method == 'POST':
         username = request.form['username']
         pwd = request.form['password']
@@ -94,8 +104,8 @@ def login():
             session['exercise'] = user[2]  # storing exercise in session
             return redirect(url_for('home'))
         else:
-            return render_template('login.html', error='Invalid username or password')
-    return render_template('login.html')
+            return render_template('login.html', error='Invalid username or password', login_hagdanan = login_hagdanan, logo = logo)
+    return render_template('login.html', login_hagdanan = login_hagdanan, logo = logo)
 
 
 
@@ -167,7 +177,11 @@ def gen_frames():
 
 @app.route('/gainMuscle')
 def muscleGain():
-    return render_template('gainingMuscle.html')
+    bicep_curl = os.path.join(app.config['UPLOAD_FOLDER'], 'bicep_curl.jpg')
+    push_up = os.path.join(app.config['UPLOAD_FOLDER'], 'Pushups.jpg')
+
+
+    return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up)
 
 @app.route('/video_feed')
 def video_feed():

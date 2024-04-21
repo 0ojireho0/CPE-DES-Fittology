@@ -1,21 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
 </head>
 <body>
-    <h1>Login</h1>
-    {% if error %}
-        <p>{{error}}</p>
-    {% endif %}
-    <form method="POST" action="/login">
-        <label for="username" >Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password" >Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" value="Login">
-    </form>
+    <div class="w-screen h-screen">
+        <div class="flex">
+            <div class="bg-white w-[65rem] h-[43rem]">
+                <div class='w-24 text-center ml-3 mt-2'>
+                    <img src="{{logo}}" alt="Logo" />
+                </div>
+                <div class='poppins text-4xl ml-44 mt-12'>
+                    <h3>Welcome<span class='text-[#F7813C] '>!</span></h3>
+                </div>
+                <div class='ml-44 mt-5 poppins_extralight'>
+                    <p>Don’t Have An Account? <a class='text-[#F7813C] cursor-pointer' href="/register">Sign up here</a></p>
+                </div>
+                {% if error %}
+                    <p class="text-red-500 ml-44 mt-3">{{error}}</p>
+                {% endif %}
+                <form method="POST" action="/login">
+                    <div class="ml-44 mt-3">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" class="bg-[#D9D9D9] w-96"  required><br><br>
+                    </div>
+                    <div class="ml-44 mt-3">
+                        <label for="password" >Password:</label>
+                        <input type="password" id="password" name="password" class="bg-[#D9D9D9] w-96" required><br><br>
+                    </div>
+                    <input type="submit" value="Login" class="ml-72 bg-[#94C9D8] text-white w-48 h-12 cursor-pointer">
+                    <!--<img src="{{ user_image}}" alt="login_hagdanan"> -->
+                </form>
+                
+                
+            </div>
+            
+            <div>
+                <img src="{{login_hagdanan}}" alt="LoginHagdanan" class="object-contain w-[30%] ml-10 absolute">
+                <p class="w-60 inter text-sm font-thin italic ml-52 mt-24 absolute">Unleash your potential with personalized routines designed to help you shed those extra pounds or pack on some muscle. It's like having a personal trainer in your pocket, but way more fun! 🔥</p>
+            </div>
+        </div>
+        
+
+
+
+    </div>
 
 
 </body>
