@@ -112,6 +112,7 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    logo = os.path.join(app.config['UPLOAD_FOLDER'], 'Logo.png')
     if request.method == "POST":
         username = request.form['username']
         fullname = request.form['fullname']
@@ -123,7 +124,7 @@ def register():
         # Check if either injuries or injuries2 is set to "yes"
         if injuries == "yes" or injuries2 == "yes":
             # If yes, return some message or redirect back to the registration page
-            return render_template('register.html', not_allowed="Sorry, registration not allowed for users with injuries")
+            return render_template('register.html', not_allowed="Sorry, registration not allowed for users with injuries", logo = logo)
         
         # If neither injuries nor injuries2 is set to "yes", proceed with registration
         cur = mysql.connection.cursor()
@@ -133,7 +134,7 @@ def register():
         
         return redirect(url_for('login'))
     
-    return render_template('register.html')
+    return render_template('register.html', logo = logo)
 
 
 @app.route('/logout')
