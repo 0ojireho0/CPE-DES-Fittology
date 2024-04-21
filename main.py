@@ -178,11 +178,12 @@ def gen_frames():
 
 @app.route('/gainMuscle')
 def muscleGain():
-    bicep_curl = os.path.join(app.config['UPLOAD_FOLDER'], 'bicep_curl.jpg')
-    push_up = os.path.join(app.config['UPLOAD_FOLDER'], 'Pushups.jpg')
-
-
-    return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up)
+    if 'username' in session:
+        bicep_curl = os.path.join(app.config['UPLOAD_FOLDER'], 'bicep_curl.jpg')
+        push_up = os.path.join(app.config['UPLOAD_FOLDER'], 'Pushups.jpg')
+        return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up)
+    else:
+        return redirect(url_for('home'))
 
 @app.route('/video_feed')
 def video_feed():
@@ -419,7 +420,10 @@ def detect_push_up(img):
 
 @app.route('/lossWeight')
 def lossWeight():
-    return render_template('lossWeight.html')
+    if 'username' in session:
+        return render_template('lossWeight.html')
+    else:
+        return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
