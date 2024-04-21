@@ -178,7 +178,7 @@ def gen_frames():
 
 @app.route('/gainMuscle')
 def muscleGain():
-    if 'username' in session:
+    if 'username' in session and session['exercise'] == "muscle_gain":
         bicep_curl = os.path.join(app.config['UPLOAD_FOLDER'], 'bicep_curl.jpg')
         push_up = os.path.join(app.config['UPLOAD_FOLDER'], 'Pushups.jpg')
         return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up)
@@ -420,7 +420,7 @@ def detect_push_up(img):
 
 @app.route('/lossWeight')
 def lossWeight():
-    if 'username' in session:
+    if 'username' in session and session['exercise'] == "loss_weight":
         return render_template('lossWeight.html')
     else:
         return redirect(url_for('home'))
