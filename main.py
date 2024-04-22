@@ -35,8 +35,10 @@ dir_bicep_left = 0
 dir_bicep_right = 0
 
 start_time = None # starts time
-repetition_time = 60 # duration time
-display_bicep = True
+countdown_before_exercise = None
+countdown_repetition_time = 10
+repetition_time = 70 # duration time
+display_bicep = False
 
 bar_left = 0
 bar_right = 0
@@ -195,22 +197,40 @@ def get_exercise_mode():
 
 @app.route('/start_timer', methods=['POST'])
 def start_timer():
-    global start_time
+    global start_time, countdown_before_exercise
+    countdown_before_exercise = time.time()
     start_time = time.time()  # Start the timer
     return jsonify({'message': 'Timer started'}), 200
-    
 
 
 
 # Function to detect bicep curls
 def detect_bicep_curls(img):
-    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left
+    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left, countdown_before_exercise, countdown_repetition_time
 
     img = cv2.resize(img, (1280, 720))
+
+
+    countdown_elapsed_time = time.time() - countdown_before_exercise
+    countdown_remaining_time = max(0, countdown_repetition_time - countdown_elapsed_time)
+    if countdown_remaining_time <= 0:
+        display_bicep = True
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time
     remaining_time = max(0, repetition_time - elapsed_time)
+
+
+
+    # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Starting: {int(countdown_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+ 
+    
 
     if exercise_mode == "bicep_curl":
         if display_bicep:  # Check if to display counter, bar, and percentage
@@ -272,11 +292,13 @@ def detect_bicep_curls(img):
             cvzone.putTextRect(img, 'Ai Bicep Curl Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
 
             # Draw rectangle behind the timer text
+            
             cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
             # Draw timer text above the rectangle
             timer_text = f"Time left: {int(remaining_time)}s"
             cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+            
 
             # bar
             cv2.putText(img, f"R {int(per_right)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
