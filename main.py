@@ -432,7 +432,7 @@ def detect_push_up(img):
 
     return img
 
-# --------------- FOR GAINING MUSCLE
+# --------------- FOR GAINING MUSCLE ----------------- 
 
 
 

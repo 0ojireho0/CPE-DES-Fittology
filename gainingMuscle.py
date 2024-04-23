@@ -27,6 +27,8 @@ countdown_repetition_time = 10
 repetition_time = 70 # duration time
 display_bicep = False
 
+rest_bicep_start_time = time.time()
+
 bar_left = 0
 bar_right = 0
 per_left = 0
@@ -76,6 +78,8 @@ def gen_frames():
 
             if exercise_mode == "bicep_curl":
                 img_with_faces = detect_bicep_curls(img)
+            if exercise_mode == "rest_bicep":
+                img_with_faces = rest_bicep(img)
             if exercise_mode == "push_up":
                 img_with_faces = detect_push_up(img)
 
@@ -109,7 +113,7 @@ def start_timer():
 
 # Function to detect bicep curls
 def detect_bicep_curls(img):
-    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left, countdown_before_exercise, countdown_repetition_time
+    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left, countdown_before_exercise, countdown_repetition_time, rest_bicep_start_time
 
     img = cv2.resize(img, (1280, 720))
 
@@ -228,20 +232,39 @@ def detect_bicep_curls(img):
         if remaining_time <= 0:
             cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
             display_bicep = False
-            exercise_mode = "push_up"
+            exercise_mode = "rest_bicep"
             # Reset variables for push-ups
-            count_pushup = 0
-            pushup_dir = 0
-            start_time_pushup = time.time()
+            rest_bicep_start_time = time.time()
 
         if count_bicep_right == 5 and count_bicep_left == 5:
             cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
             display_bicep = False
-            exercise_mode = "push_up"
+            exercise_mode = "rest_bicep"
             # Reset variables for push-ups
-            count_pushup = 0
-            pushup_dir = 0
-            start_time_pushup = time.time()
+            rest_bicep_start_time = time.time()
+
+    return img
+
+def rest_bicep(img):
+    global exercise_mode, rest_bicep_start_time, start_time_pushup
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_bicep_start_time
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "push_up"
+        start_time_pushup = time.time()
+
+
+
 
     return img
 
