@@ -40,6 +40,8 @@ countdown_repetition_time = 10
 repetition_time = 70 # duration time
 display_bicep = False
 
+rest_bicep_start_time = time.time()
+
 bar_left = 0
 bar_right = 0
 per_left = 0
@@ -87,27 +89,27 @@ def home():
         return render_template('home.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    login_hagdanan = os.path.join(app.config['UPLOAD_FOLDER'], 'login_hagdanan.png')
-    logo = os.path.join(app.config['UPLOAD_FOLDER'], 'Logo.png')
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     login_hagdanan = os.path.join(app.config['UPLOAD_FOLDER'], 'login_hagdanan.png')
+#     logo = os.path.join(app.config['UPLOAD_FOLDER'], 'Logo.png')
    
     
-    if request.method == 'POST':
-        username = request.form['username']
-        pwd = request.form['password']
-        cur = mysql.connection.cursor()
-        cur.execute(f"SELECT username, fullname, exercise, password FROM tbl_users WHERE username = '{username}' ")
-        user = cur.fetchone()
-        cur.close()
-        if user and pwd == user[3]:  # assuming password is the fourth column
-            session['username'] = user[0]
-            session['fullname'] = user[1]  # storing full name in session
-            session['exercise'] = user[2]  # storing exercise in session
-            return redirect(url_for('home'))
-        else:
-            return render_template('login.html', error='Invalid username or password', login_hagdanan = login_hagdanan, logo = logo)
-    return render_template('login.html', login_hagdanan = login_hagdanan, logo = logo)
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         pwd = request.form['password']
+#         cur = mysql.connection.cursor()
+#         cur.execute(f"SELECT username, fullname, exercise, password FROM tbl_users WHERE username = '{username}' ")
+#         user = cur.fetchone()
+#         cur.close()
+#         if user and pwd == user[3]:  # assuming password is the fourth column
+#             session['username'] = user[0]
+#             session['fullname'] = user[1]  # storing full name in session
+#             session['exercise'] = user[2]  # storing exercise in session
+#             return redirect(url_for('home'))
+#         else:
+#             return render_template('login.html', error='Invalid username or password', login_hagdanan = login_hagdanan, logo = logo)
+#     return render_template('login.html', login_hagdanan = login_hagdanan, logo = logo)
 
 
 
@@ -118,7 +120,7 @@ def register():
     if request.method == "POST":
         username = request.form['username']
         fullname = request.form['fullname']
-        pwd = request.form['password']
+        # pwd = request.form['password']
         injuries = request.form['injuries']
         injuries2 = request.form['injuries2']
         exercise = request.form['exercise']
@@ -129,12 +131,11 @@ def register():
             return render_template('register.html', not_allowed="Sorry, registration not allowed for users with injuries", logo = logo)
         
         # If neither injuries nor injuries2 is set to "yes", proceed with registration
-        cur = mysql.connection.cursor()
-        cur.execute(f"insert into tbl_users (username, password, fullname, exercise) values ('{username}', '{pwd}', '{fullname}', '{exercise}')")
-        mysql.connection.commit()
-        cur.close()
+        session['username'] = username
+        session['fullname'] = fullname
+        session['exercise'] = exercise
         
-        return redirect(url_for('login'))
+        return redirect(url_for('home'))
     
     return render_template('register.html', logo = logo)
 
@@ -168,6 +169,8 @@ def gen_frames():
 
             if exercise_mode == "bicep_curl":
                 img_with_faces = detect_bicep_curls(img)
+            if exercise_mode == "rest_bicep":
+                img_with_faces = rest_bicep(img)
             if exercise_mode == "push_up":
                 img_with_faces = detect_push_up(img)
 
@@ -206,7 +209,7 @@ def start_timer():
 
 # Function to detect bicep curls
 def detect_bicep_curls(img):
-    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left, countdown_before_exercise, countdown_repetition_time
+    global display_bicep, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, color_left, color_right, count_pushup, pushup_dir, start_time_pushup, exercise_mode, per_right, per_left, bar_right, angle_left, angle_right, bar_left, countdown_before_exercise, countdown_repetition_time, rest_bicep_start_time
 
     img = cv2.resize(img, (1280, 720))
 
@@ -325,20 +328,39 @@ def detect_bicep_curls(img):
         if remaining_time <= 0:
             cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
             display_bicep = False
-            exercise_mode = "push_up"
+            exercise_mode = "rest_bicep"
             # Reset variables for push-ups
-            count_pushup = 0
-            pushup_dir = 0
-            start_time_pushup = time.time()
+            rest_bicep_start_time = time.time()
 
         if count_bicep_right == 5 and count_bicep_left == 5:
             cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
             display_bicep = False
-            exercise_mode = "push_up"
+            exercise_mode = "rest_bicep"
             # Reset variables for push-ups
-            count_pushup = 0
-            pushup_dir = 0
-            start_time_pushup = time.time()
+            rest_bicep_start_time = time.time()
+
+    return img
+
+def rest_bicep(img):
+    global exercise_mode, rest_bicep_start_time, start_time_pushup
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_bicep_start_time
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "push_up"
+        start_time_pushup = time.time()
+
+
+
 
     return img
 
