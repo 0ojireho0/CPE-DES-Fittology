@@ -20,16 +20,16 @@ count_chestpress_right = 0
 dir_chestpress_left = 0
 dir_chestpress_right = 0
 
-start_time = time.time() # starts time
-repetition_time = 60 # duration time
-display_info = True # display features
+chest_press_start_time = time.time() # starts time
+chest_press_repetition_time = 60 # duration time
+chest_press_display_info = True # display features
 
-bar_left = 0
-bar_right = 0
-per_left = 0
-per_right = 0
-angle_left = 0
-angle_right = 0
+chest_press_bar_left = 0
+chest_press_bar_right = 0
+chest_press_per_left = 0
+chest_press_per_right = 0
+chest_press_angle_left = 0
+chest_press_angle_right = 0
 
 
 # main loop
@@ -40,47 +40,47 @@ while True:
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time
-    remaining_time = max(0, repetition_time - elapsed_time)
+    elapsed_time = time.time() - chest_press_start_time
+    remaining_time = max(0, chest_press_repetition_time - elapsed_time)
 
 
-    if display_info:  # Check if to display counter, bar, and percentage
+    if chest_press_display_info:  # Check if to display counter, bar, and percentage
         img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
         lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
 
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
-            angle_left = detector_chestpress.findAngle(img, 11, 13, 15)
-            angle_right = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
+            chest_press_angle_left = detector_chestpress.findAngle(img, 11, 13, 15)
+            chest_press_angle_right = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
             # (refer to mediapipe landmark mapping for number equivalent)
 
             # Interpolate angle to percentage and position on screen
-            per_left = np.interp(angle_left, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
-            bar_left = np.interp(angle_left, (50, 165), (400, 200)) # 
+            per_left = np.interp(chest_press_angle_left, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left = np.interp(chest_press_angle_left, (50, 165), (400, 200)) # 
 
-            per_right = np.interp(angle_right, (190, 300), (100, 0)) # 
-            bar_right = np.interp(angle_right, (190, 300), (200, 400)) # 
+            per_right = np.interp(chest_press_angle_right, (190, 300), (100, 0)) # 
+            bar_right = np.interp(chest_press_angle_right, (190, 300), (200, 400)) # 
 
             #Check for the left dumbbell curls
-            if angle_left >= 155:
+            if chest_press_angle_left >= 155:
                 if dir_chestpress_left == 0:
                     count_chestpress_left += 0.5
                     dir_chestpress_left = 1 
                     print("Count Left: ", count_chestpress_left)
-            elif angle_left <= 50:
+            elif chest_press_angle_left <= 50:
                 if dir_chestpress_left == 1:
                     count_chestpress_left += 0.5
                     dir_chestpress_left = 0  
                     print("Count Left: ", count_chestpress_left)
 
             #Check for the right dumbbell curls
-            if angle_right <= 190: 
+            if chest_press_angle_right <= 190: 
                 if dir_chestpress_right == 0:
                     count_chestpress_right += 0.5
                     dir_chestpress_right = 1 
                     print("Count Right: ", count_chestpress_right)
 
-            if angle_right >= 270:
+            if chest_press_angle_right >= 270:
                 if dir_chestpress_right == 1:
                     count_chestpress_right += 0.5
                     dir_chestpress_right = 0
@@ -105,10 +105,10 @@ while True:
         cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
         cv2.rectangle(img, (952, int(bar_left)), (995, 400), (0, 0, 255), -1)
         
-        if angle_left >= 155:
+        if chest_press_angle_left >= 155:
             cv2.rectangle(img, (952, int(bar_left)), (995, 400), (0, 255, 0), -1)
 
-        if angle_right <= 190:
+        if chest_press_angle_right <= 190:
             cv2.rectangle(img, (8, int(bar_right)), (50, 400), (0, 255, 0), -1)
 
     #count
