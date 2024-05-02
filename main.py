@@ -61,8 +61,6 @@ dir_bicep_left_set2 = 0
 dir_bicep_right_set2 = 0
 
 start_time_bicep_set2 = time.time() # starts time
-countdown_before_exercise_bicep_set2 = None
-countdown_repetition_time_bicep_set2 = 10
 repetition_time_bicep_set2 = 60 # duration time
 display_bicep_set2 = True
 
@@ -87,8 +85,6 @@ dir_bicep_left_set3 = 0
 dir_bicep_right_set3 = 0
 
 start_time_bicep_set3 = time.time() # starts time
-countdown_before_exercise_bicep_set3 = None
-countdown_repetition_time_bicep_set3 = 10
 repetition_time_bicep_set3 = 60 # duration time
 display_bicep_set3 = True
 
@@ -109,12 +105,13 @@ detector_pushup = pm_pushup.poseDetectorPushUp()
 # Initialize variables
 count_pushup = 0  # count_pushup of reps
 pushup_dir = 0  # pushup_direction
-pTime = 0  # Time
 start_time_pushup = time.time()  # Start time
 repetition_time_pushup = 60  # Repetition time
 
 # Display info
 display_pushup = True
+rest_pushup_start_time = time.time()
+
 
 per_right_pushup = 0
 per_left_pushup = 0
@@ -125,7 +122,55 @@ leftangle_pushup = 0
 rightangle_pushup = 0
 # ----------- END FOR PUSH UP --------------
 
-# Add this variable at the beginning of your code
+# ----------- FOR PUSH UP SET 2---------------
+# Import class
+detector_pushup = pm_pushup.poseDetectorPushUp()
+
+# Initialize variables
+count_pushup_set2 = 0  # count_pushup of reps
+pushup_dir_set2 = 0  # pushup_direction
+start_time_pushup_set2 = time.time()  # Start time
+repetition_time_pushup_set2 = 60  # Repetition time
+
+# Display info
+display_pushup_set2 = True
+rest_pushup_start_time_set2 = time.time()
+
+per_right_pushup_set2 = 0
+per_left_pushup_set2 = 0
+bar_left_pushup_set2 = 0
+bar_right_pushup_set2 = 0 
+
+leftangle_pushup_set2 = 0
+rightangle_pushup_set2 = 0
+# ----------- END FOR PUSH UP SET 2 --------------
+
+# ----------- FOR PUSH UP SET 3---------------
+# Import class
+detector_pushup = pm_pushup.poseDetectorPushUp()
+
+# Initialize variables
+count_pushup_set3 = 0  # count_pushup of reps
+pushup_dir_set3 = 0  # pushup_direction
+start_time_pushup_set3 = time.time()  # Start time
+repetition_time_pushup_set3 = 60  # Repetition time
+
+# Display info
+display_pushup_set3 = True
+rest_pushup_start_time_set3 = time.time()
+
+per_right_pushup_set3 = 0
+per_left_pushup_set3 = 0
+bar_left_pushup_set3 = 0
+bar_right_pushup_set3 = 0 
+
+leftangle_pushup_set3 = 0
+rightangle_pushup_set3 = 0
+# ----------- END FOR PUSH UP SET 3 --------------
+
+
+
+
 
 
 picFolder = os.path.join('static', 'images')
@@ -236,6 +281,16 @@ def gen_frames():
                 img_with_faces = rest_bicep_set3(img)
             if exercise_mode == "push_up":
                 img_with_faces = detect_push_up(img)
+            if exercise_mode == "rest_pushup":
+                img_with_faces = rest_pushup(img)
+            if exercise_mode == "push_up_set2":
+                img_with_faces = detect_push_up_set2(img)
+            if exercise_mode == "rest_pushup_set2":
+                img_with_faces = rest_pushup_set2(img)
+            if exercise_mode == "push_up_set3":
+                img_with_faces = detect_push_up_set3(img)
+            if exercise_mode == "rest_pushup_set3":
+                img_with_faces = rest_pushup_set3(img)
 
 
             ret, buffer = cv2.imencode('.jpg', img_with_faces)
@@ -259,6 +314,7 @@ def video_feed():
 
 @app.route('/exercise_mode')
 def get_exercise_mode():
+    global exercise_mode
     return jsonify({'exercise_mode': exercise_mode})
 
 @app.route('/start_timer', methods=['POST'])
@@ -411,7 +467,7 @@ def rest_bicep(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -547,7 +603,7 @@ def rest_bicep_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time_set2
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -683,7 +739,7 @@ def rest_bicep_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time_set3
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -701,7 +757,7 @@ def rest_bicep_set3(img):
 
 # Function to detect push-ups
 def detect_push_up(img):
-    global exercise_mode, per_left_pushup, per_right_pushup, count_pushup, display_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time, pushup_dir
+    global exercise_mode, per_left_pushup, per_right_pushup, count_pushup, display_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, pushup_dir, rest_pushup_start_time
 
     img = cv2.resize(img, (1280, 720))
 
@@ -732,12 +788,11 @@ def detect_push_up(img):
                         if pushup_dir == 1:
                             count_pushup += 0.5
                             pushup_dir = 0
-                            print(count_pushup)
                     if leftangle_pushup <= 190 and rightangle_pushup <= 190:
                         if pushup_dir == 0:
                             count_pushup += 0.5
                             pushup_dir = 1
-                            print(count_pushup)
+                      
 
             cvzone.putTextRect(img, 'Push-Up Counter', [345, 30], thickness=2, border=2, scale=2.5)
 
@@ -769,19 +824,237 @@ def detect_push_up(img):
         if remaining_time <= 0:
             cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
             display_pushup = False
+            exercise_mode = "rest_pushup"
+            rest_pushup_start_time = time.time()
 
         if int(count_pushup) >= 5:
             cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
             display_pushup = False
-            # exercise_mode = "bicep_curl"
-            # # Reset variables for bicep curls
-            # count_bicep_left = 0
-            # count_bicep_right = 0
-            # dir_bicep_left = 0
-            # dir_bicep_right = 0
-            # start_time = time.time()
+            exercise_mode = "rest_pushup"
+            rest_pushup_start_time = time.time()
 
     return img
+
+def rest_pushup(img):
+    global exercise_mode, rest_pushup_start_time, start_time_pushup_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_pushup_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "push_up_set2"
+        start_time_pushup_set2 = time.time()
+    return img
+
+
+def detect_push_up_set2(img):
+    global exercise_mode, per_left_pushup_set2, per_right_pushup_set2, count_pushup_set2, display_pushup_set2, bar_left_pushup_set2, bar_right_pushup_set2, leftangle_pushup_set2, rightangle_pushup_set2, pushup_dir_set2, rest_pushup_start_time_set2
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_pushup_set2
+    remaining_time = max(0, repetition_time_pushup_set2 - elapsed_time)
+    if exercise_mode == "push_up_set2":
+        if display_pushup_set2:  # Check if to display count_pushup, bar, and percentage
+
+            img = detector_pushup.findPose(img, False)
+            lmList = detector_pushup.findPosition(img, False)
+
+            # Define hand angles outside the if statement
+            if len(lmList) != 0:
+                leftangle_pushup_set2, rightangle_pushup_set2 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)
+
+                # Interpolate angles to percentage and position on screen
+                per_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (100, 0))
+                bar_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (200, 400))
+
+                per_right_pushup_set2 = np.interp(rightangle_pushup_set2, (30, 170), (0, 100))
+                bar_right_pushup_set2 = np.interp(rightangle_pushup_set2, (30, 170), (400, 200))
+
+                
+                
+                #Check if the person is in a proper push-up posture
+                if detector_pushup.isPushUpPosture(lmList):
+                    if leftangle_pushup_set2 >= 260 and rightangle_pushup_set2 >= 45:
+                        if pushup_dir_set2 == 1:
+                            count_pushup_set2 += 0.5
+                            pushup_dir_set2 = 0
+                    if leftangle_pushup_set2 <= 190 and rightangle_pushup_set2 <= 190:
+                        if pushup_dir_set2 == 0:
+                            count_pushup_set2 += 0.5
+                            pushup_dir_set2 = 1
+                            
+
+            cvzone.putTextRect(img, 'Push-Up Counter SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+
+            # Draw rectangle behind the timer text
+            cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+            # Draw timer text above the rectangle
+            timer_text = f"Time left: {int(remaining_time)}s"
+            cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+            # Draw bars for left and right angles
+            cv2.putText(img, f"R {int(per_right_pushup_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+            cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
+            cv2.rectangle(img, (8, int(bar_right_pushup_set2)), (50, 400), (0, 0, 255), -1)
+
+            cv2.putText(img, f"L {int(per_left_pushup_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+            cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
+            cv2.rectangle(img, (952, int(bar_left_pushup_set2)), (995, 400), (0, 0, 255), -1)
+
+            if leftangle_pushup_set2 <= 190:
+                cv2.rectangle(img, (952, int(bar_left_pushup_set2)), (995, 400), (0, 255, 0), -1)
+
+            if rightangle_pushup_set2 >= 170:
+                cv2.rectangle(img, (8, int(bar_right_pushup_set2)), (50, 400), (0, 255, 0), -1)
+
+        cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+        cv2.putText(img, f"{int(count_pushup_set2)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+        if remaining_time <= 0:
+            cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+            display_pushup_set2 = False
+            exercise_mode = "rest_pushup_set2"
+            rest_pushup_start_time_set2 = time.time()
+
+        if int(count_pushup_set2) >= 5:
+            cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
+            display_pushup_set2 = False
+            exercise_mode = "rest_pushup_set2"
+            rest_pushup_start_time_set2 = time.time()
+
+    return img
+
+def rest_pushup_set2(img):
+    global exercise_mode, rest_pushup_start_time_set2, start_time_pushup_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_pushup_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "push_up_set3"
+        start_time_pushup_set3 = time.time()
+
+    return img
+
+def detect_push_up_set3(img):
+    global exercise_mode, per_left_pushup_set3, per_right_pushup_set3, count_pushup_set3, display_pushup_set3, bar_left_pushup_set3, bar_right_pushup_set3, leftangle_pushup_set3, rightangle_pushup_set3, pushup_dir_set3, rest_pushup_start_time_set3
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_pushup_set3
+    remaining_time = max(0, repetition_time_pushup_set3 - elapsed_time)
+    if exercise_mode == "push_up_set3":
+        if display_pushup_set3:  # Check if to display count_pushup, bar, and percentage
+
+            img = detector_pushup.findPose(img, False)
+            lmList = detector_pushup.findPosition(img, False)
+
+            # Define hand angles outside the if statement
+            if len(lmList) != 0:
+                leftangle_pushup_set3, rightangle_pushup_set3 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)
+
+                # Interpolate angles to percentage and position on screen
+                per_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (100, 0))
+                bar_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (200, 400))
+
+                per_right_pushup_set3 = np.interp(rightangle_pushup_set3, (30, 170), (0, 100))
+                bar_right_pushup_set3 = np.interp(rightangle_pushup_set3, (30, 170), (400, 200))
+
+                
+                
+                #Check if the person is in a proper push-up posture
+                if detector_pushup.isPushUpPosture(lmList):
+                    if leftangle_pushup_set3 >= 260 and rightangle_pushup_set3 >= 45:
+                        if pushup_dir_set3 == 1:
+                            count_pushup_set3 += 0.5
+                            pushup_dir_set3 = 0
+                    if leftangle_pushup_set3 <= 190 and rightangle_pushup_set3 <= 190:
+                        if pushup_dir_set3 == 0:
+                            count_pushup_set3 += 0.5
+                            pushup_dir_set3 = 1
+                            
+
+            cvzone.putTextRect(img, 'Push-Up Counter SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+
+            # Draw rectangle behind the timer text
+            cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+            # Draw timer text above the rectangle
+            timer_text = f"Time left: {int(remaining_time)}s"
+            cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+            # Draw bars for left and right angles
+            cv2.putText(img, f"R {int(per_right_pushup_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+            cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
+            cv2.rectangle(img, (8, int(bar_right_pushup_set3)), (50, 400), (0, 0, 255), -1)
+
+            cv2.putText(img, f"L {int(per_left_pushup_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+            cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
+            cv2.rectangle(img, (952, int(bar_left_pushup_set3)), (995, 400), (0, 0, 255), -1)
+
+            if leftangle_pushup_set3 <= 190:
+                cv2.rectangle(img, (952, int(bar_left_pushup_set3)), (995, 400), (0, 255, 0), -1)
+
+            if rightangle_pushup_set3 >= 170:
+                cv2.rectangle(img, (8, int(bar_right_pushup_set3)), (50, 400), (0, 255, 0), -1)
+
+        cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+        cv2.putText(img, f"{int(count_pushup_set3)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+        if remaining_time <= 0:
+            cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+            display_pushup_set3 = False
+            exercise_mode = "rest_pushup_set3"
+            rest_pushup_start_time_set3 = time.time()
+
+        if int(count_pushup_set3) >= 5:
+            cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
+            display_pushup_set3 = False
+            exercise_mode = "rest_pushup_set3"
+            rest_pushup_start_time_set3 = time.time()
+    return img
+
+def rest_pushup_set3(img):
+    global exercise_mode, rest_pushup_start_time_set3, start_time_pushup_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_pushup_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "next_exercise"
+        print(exercise_mode)
+        #start_time_pushup_set3 = time.time()
+
+
+
+    return img
+
 
 # --------------- FOR GAINING MUSCLE ----------------- 
 
