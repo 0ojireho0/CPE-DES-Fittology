@@ -55,10 +55,15 @@ class poseDetectorPushUp():
 
             lefthandangle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
                                          math.atan2(y1 - y2, x1 - x2))
-
+            
+            if lefthandangle < 0:
+                lefthandangle += 360
 
             righthandangle = math.degrees(math.atan2(y6 - y5, x6 - x5) -
                                           math.atan2(y4 - y5, x4 - x5))
+            
+            if righthandangle < 0:
+                righthandangle += 360
 
             if drawpoints == True:
                 cv2.circle(img,(x1,y1),10,(255,0,255),5)
@@ -74,19 +79,19 @@ class poseDetectorPushUp():
                 cv2.circle(img, (x6, y6), 10, (255, 0, 255), 5)
                 cv2.circle(img, (x6, y6), 15, (0, 255, 0), 5)
 
-                cv2.line(img, (x1,y1), (x2,y2), (0,0,255),6)
-                cv2.line(img, (x2,y2), (x3, y3), (0, 0, 255), 6)
+                cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
+                cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
                 cv2.line(img, (x4, y4), (x5, y5), (0, 0, 255), 6)
                 cv2.line(img, (x5, y5), (x6, y6), (0, 0, 255), 6)
-                cv2.line(img, (x1, y1), (x4, y4), (0, 0, 255), 6)
 
                 cv2.putText(img, str(int(lefthandangle)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
                 cv2.putText(img, str(int(righthandangle)), (x5 - 50, y5 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
 
-                return lefthandangle, righthandangle
+                return int(lefthandangle), int(righthandangle)
             else:
                 return None, None
             
+
     def isPushUpPosture(self, lmList):
         # Check if keypoints are available
         if len(lmList) < 5:
@@ -107,11 +112,10 @@ class poseDetectorPushUp():
 
         # Check if the person is in a push-up posture based on the approximate shape of the body
         # and the angle of the torso
-        if torso_height > 1.2 * avg_arm_length and torso_angle < np.pi / 4:  # Adjust the threshold as needed
+        if torso_height > 0.2 * avg_arm_length and torso_angle < np.pi / 5:  # Adjust the thresholds as needed
             return True
         else:
             return False
-
 
 def main():
     cap = cv2.VideoCapture(1)

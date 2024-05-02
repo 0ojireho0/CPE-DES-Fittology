@@ -49,7 +49,7 @@ while True:
 
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
-            angle_left = detector_bicep.findAngle(img, 11, 13, 15) # defines left arm landmark keypoints 
+            angle_left = detector_bicep.findAngle(img, 11, 13, 15)
             angle_right = detector_bicep.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
             # (refer to mediapipe landmark mapping for number equivalent)
     
@@ -88,7 +88,7 @@ while True:
                     dir_bicep_right = 0  
 
         # label
-        cvzone.putTextRect(img, 'Ai Bicep Curl Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Bicep Curl Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -114,11 +114,11 @@ while True:
             cv2.rectangle(img, (8, int(bar_right)), (50, 400), (0, 255, 0), -1)
 
     #count
-    cv2.rectangle(img, (20, 20), (140, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_bicep_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (0, 0, 255), 7)
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_bicep_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_bicep_left)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (0, 0, 255), 7)
+    cv2.putText(img, f"{int(count_bicep_left)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     if remaining_time <= 0:
         cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
