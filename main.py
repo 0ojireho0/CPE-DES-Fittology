@@ -10,6 +10,7 @@ import time
 import BicepCurl_PoseModule as pm_bicep
 import PushUp_PoseModule as pm_pushup
 import shouldertap_PoseModule as pm_shouldertap
+import chestpress_PoseModule as pm_chestpress
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -244,8 +245,86 @@ rest_shouldertap_start_time_set3 = time.time()
 
 # ----------- END FOR SHOULDER TAP SET 3---------------
 
+# ----------- FOR CHEST PRESS---------------
 
+#import class
+detector_chestpress = pm_chestpress.poseDetector()
 
+#Initialize Variables
+count_chestpress_left = 0
+count_chestpress_right = 0
+
+dir_chestpress_left = 0
+dir_chestpress_right = 0
+
+start_time_chestpress = time.time() # starts time
+repetition_time_chestpress = 60 # duration time
+display_info_chestpress = True # display features
+
+bar_left_chestpress = 0
+bar_right_chestpress = 0
+per_left_chestpress = 0
+per_right_chestpress = 0
+angle_left_chestpress = 0
+angle_right_chestpress = 0
+
+rest_chestpress_start_time = time.time()
+
+# ----------- END FOR CHEST PRESS---------------
+
+# ----------- FOR CHEST PRESS SET 2---------------
+
+#import class
+detector_chestpress = pm_chestpress.poseDetector()
+
+#Initialize Variables
+count_chestpress_left_set2 = 0
+count_chestpress_right_set2 = 0
+
+dir_chestpress_left_set2 = 0
+dir_chestpress_right_set2 = 0
+
+start_time_chestpress_set2 = time.time() # starts time
+repetition_time_chestpress_set2 = 60 # duration time
+display_info_chestpress_set2 = True # display features
+
+bar_left_chestpress_set2 = 0
+bar_right_chestpress_set2 = 0
+per_left_chestpress_set2 = 0
+per_right_chestpress_set2 = 0
+angle_left_chestpress_set2 = 0
+angle_right_chestpress_set2 = 0
+
+rest_chestpress_start_time_set2 = time.time()
+
+# ----------- END FOR CHEST PRESS SET 2---------------
+
+# ----------- FOR CHEST PRESS SET 3---------------
+
+#import class
+detector_chestpress = pm_chestpress.poseDetector()
+
+#Initialize Variables
+count_chestpress_left_set3 = 0
+count_chestpress_right_set3 = 0
+
+dir_chestpress_left_set3 = 0
+dir_chestpress_right_set3 = 0
+
+start_time_chestpress_set3 = time.time() # starts time
+repetition_time_chestpress_set3 = 60 # duration time
+display_info_chestpress_set3 = True # display features
+
+bar_left_chestpress_set3 = 0
+bar_right_chestpress_set3 = 0
+per_left_chestpress_set3 = 0
+per_right_chestpress_set3 = 0
+angle_left_chestpress_set3 = 0
+angle_right_chestpress_set3 = 0
+
+rest_chestpress_start_time_set3 = time.time()
+
+# ----------- END FOR CHEST PRESS SET 3---------------
 
 picFolder = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = picFolder
@@ -377,6 +456,18 @@ def gen_frames():
                 img_with_faces = detect_shouldertap_set3(img)
             if exercise_mode == "rest_shouldertap_rest3":
                 img_with_faces = rest_shouldertap_set3(img)
+            if exercise_mode == "chest_press":
+                img_with_faces = detect_chestpress(img)
+            if exercise_mode == "rest_chestpress":
+                img_with_faces = rest_chestpress(img)
+            if exercise_mode == "chest_press_set2":
+                img_with_faces = detect_chestpress_set2(img)
+            if exercise_mode == "rest_chestpress_set2":
+                img_with_faces = rest_chestpress_set2(img)
+            if exercise_mode == "chest_press_set3":
+                img_with_faces = detect_chestpress_set3(img)
+            if exercise_mode == "rest_chestpress_set3":
+                img_with_faces = rest_chestpress_set3(img)
 
 
             ret, buffer = cv2.imencode('.jpg', img_with_faces)
@@ -1487,7 +1578,7 @@ def detect_shouldertap_set3(img):
     return img
 
 def rest_shouldertap_set3(img):
-    global exercise_mode, rest_shouldertap_start_time_set3, start_time_shouldertap_set3
+    global exercise_mode, rest_shouldertap_start_time_set3, start_time_chestpress
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time_set3
@@ -1501,14 +1592,384 @@ def rest_shouldertap_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
+        exercise_mode = "chest_press"
+        start_time_chestpress = time.time()
+    return img
+
+
+def detect_chestpress(img):
+    global count_chestpress_left, count_chestpress_right, dir_chestpress_right, dir_chestpress_left, start_time_chestpress, repetition_time_chestpress, display_info_chestpress, bar_left_chestpress, bar_right_chestpress, per_left_chestpress, per_right_chestpress, angle_left_chestpress, angle_right_chestpress, exercise_mode, rest_chestpress_start_time
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_chestpress
+    remaining_time = max(0, repetition_time_chestpress - elapsed_time)
+
+
+    if display_info_chestpress:  # Check if to display counter, bar, and percentage
+        img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
+        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList_bicep) != 0:
+            angle_left_chestpress = detector_chestpress.findAngle(img, 11, 13, 15)
+            angle_right_chestpress = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
+            # (refer to mediapipe landmark mapping for number equivalent)
+
+            # Interpolate angle to percentage and position on screen
+            per_left_chestpress = np.interp(angle_left_chestpress, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress = np.interp(angle_left_chestpress, (50, 165), (400, 200)) # 
+
+            per_right_chestpress = np.interp(angle_right_chestpress, (190, 300), (100, 0)) # 
+            bar_right_chestpress = np.interp(angle_right_chestpress, (190, 300), (200, 400)) # 
+
+            if angle_left_chestpress >= 155:
+                if dir_chestpress_left == 0 and count_chestpress_left < 5:
+                    count_chestpress_left += 0.5
+                    if count_chestpress_left == 5:
+                        dir_chestpress_left = -1
+                    else:
+                        dir_chestpress_left = 1 
+            elif angle_left_chestpress <= 50:
+                if dir_chestpress_left == 1 and count_chestpress_left < 5:
+                    count_chestpress_left += 0.5
+                    if count_chestpress_left == 5:
+                        dir_chestpress_left = -1
+                    else:
+                        dir_chestpress_left = 0  
+
+            if angle_right_chestpress <= 190: 
+                if dir_chestpress_right == 0 and count_chestpress_right < 5:
+                    count_chestpress_right += 0.5
+                    if count_chestpress_right == 5:
+                        dir_chestpress_right = -1
+                    else:
+                        dir_chestpress_right = 1 
+
+            if angle_right_chestpress >= 270:
+                if dir_chestpress_right == 1 and count_chestpress_right < 5:
+                    count_chestpress_right += 0.5
+                    if count_chestpress_right == 5:
+                        dir_chestpress_right = -1
+                    else:
+                        dir_chestpress_right = 0
+
+        # label
+        cvzone.putTextRect(img, 'Chest Press Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_chestpress)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_chestpress)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_chestpress)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_chestpress)), (995, 400), (0, 0, 255), -1)
+        
+        if angle_left_chestpress >= 155:
+            cv2.rectangle(img, (952, int(bar_left_chestpress)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_chestpress <= 190:
+            cv2.rectangle(img, (8, int(bar_right_chestpress)), (50, 400), (0, 255, 0), -1)
+
+    #count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_chestpress_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_chestpress_right)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress = False
+        exercise_mode = "rest_chestpress"
+        rest_chestpress_start_time = time.time()
+
+    if count_chestpress_right == 5 and count_chestpress_left == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress = False
+        exercise_mode = "rest_chestpress"
+        rest_chestpress_start_time = time.time()
+    return img
+
+def rest_chestpress(img):
+    global exercise_mode, rest_chestpress_start_time, start_time_chestpress_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_chestpress_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "chest_press_set2"
+        start_time_chestpress_set2 = time.time()
+    return img
+
+def detect_chestpress_set2(img):
+    global count_chestpress_left_set2, count_chestpress_right_set2, dir_chestpress_right_set2, dir_chestpress_left_set2, start_time_chestpress_set2, repetition_time_chestpress_set2, display_info_chestpress_set2, bar_left_chestpress_set2, bar_right_chestpress_set2, per_left_chestpress_set2, per_right_chestpress_set2, angle_left_chestpress_set2, angle_right_chestpress_set2, exercise_mode, rest_chestpress_start_time_set2
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_chestpress_set2
+    remaining_time = max(0, repetition_time_chestpress_set2 - elapsed_time)
+
+
+    if display_info_chestpress_set2:  # Check if to display counter, bar, and percentage
+        img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
+        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList_bicep) != 0:
+            angle_left_chestpress_set2 = detector_chestpress.findAngle(img, 11, 13, 15)
+            angle_right_chestpress_set2 = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
+            # (refer to mediapipe landmark mapping for number equivalent)
+
+            # Interpolate angle to percentage and position on screen
+            per_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (50, 165), (400, 200)) # 
+
+            per_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (190, 300), (100, 0)) # 
+            bar_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (190, 300), (200, 400)) # 
+
+            if angle_left_chestpress_set2 >= 155:
+                if dir_chestpress_left_set2 == 0 and count_chestpress_left_set2 < 5:
+                    count_chestpress_left_set2 += 0.5
+                    if count_chestpress_left_set2 == 5:
+                        dir_chestpress_left_set2 = -1
+                    else:
+                        dir_chestpress_left_set2 = 1 
+            elif angle_left_chestpress_set2 <= 50:
+                if dir_chestpress_left_set2 == 1 and count_chestpress_left_set2 < 5:
+                    count_chestpress_left_set2 += 0.5
+                    if count_chestpress_left_set2 == 5:
+                        dir_chestpress_left_set2 = -1
+                    else:
+                        dir_chestpress_left_set2 = 0  
+
+            if angle_right_chestpress_set2 <= 190: 
+                if dir_chestpress_right_set2 == 0 and count_chestpress_right_set2 < 5:
+                    count_chestpress_right_set2 += 0.5
+                    if count_chestpress_right_set2 == 5:
+                        dir_chestpress_right_set2 = -1
+                    else:
+                        dir_chestpress_right_set2 = 1 
+
+            if angle_right_chestpress_set2 >= 270:
+                if dir_chestpress_right_set2 == 1 and count_chestpress_right_set2 < 5:
+                    count_chestpress_right_set2 += 0.5
+                    if count_chestpress_right_set2 == 5:
+                        dir_chestpress_right_set2 = -1
+                    else:
+                        dir_chestpress_right_set2 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Chest Press Tracker SET 2', [345, 30], thickness=2, border=2, scale=2.5) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_chestpress_set2)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_chestpress_set2)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_chestpress_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_chestpress_set2)), (995, 400), (0, 0, 255), -1)
+        
+        if angle_left_chestpress_set2 >= 155:
+            cv2.rectangle(img, (952, int(bar_left_chestpress_set2)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_chestpress_set2 <= 190:
+            cv2.rectangle(img, (8, int(bar_right_chestpress_set2)), (50, 400), (0, 255, 0), -1)
+
+    #count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_chestpress_right_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_chestpress_right_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress_set2 = False
+        exercise_mode = "rest_chestpress_set2"
+        rest_chestpress_start_time_set2 = time.time()
+
+    if count_chestpress_right_set2 == 5 and count_chestpress_left_set2 == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress_set2 = False
+        exercise_mode = "rest_chestpress_set2"
+        rest_chestpress_start_time_set2 = time.time()
+
+    return img
+
+def rest_chestpress_set2(img):
+    global exercise_mode, rest_chestpress_start_time_set2, start_time_chestpress_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_chestpress_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "chest_press_set3"
+        start_time_chestpress_set3 = time.time()
+
+    return img
+
+def detect_chestpress_set3(img):
+    global count_chestpress_left_set3, count_chestpress_right_set3, dir_chestpress_right_set3, dir_chestpress_left_set3, start_time_chestpress_set3, repetition_time_chestpress_set3, display_info_chestpress_set3, bar_left_chestpress_set3, bar_right_chestpress_set3, per_left_chestpress_set3, per_right_chestpress_set3, angle_left_chestpress_set3, angle_right_chestpress_set3, exercise_mode, rest_chestpress_start_time_set3
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_chestpress_set3
+    remaining_time = max(0, repetition_time_chestpress_set3 - elapsed_time)
+
+
+    if display_info_chestpress_set3:  # Check if to display counter, bar, and percentage
+        img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
+        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList_bicep) != 0:
+            angle_left_chestpress_set3 = detector_chestpress.findAngle(img, 11, 13, 15)
+            angle_right_chestpress_set3 = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
+            # (refer to mediapipe landmark mapping for number equivalent)
+
+            # Interpolate angle to percentage and position on screen
+            per_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (50, 165), (400, 200)) # 
+
+            per_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (190, 300), (100, 0)) # 
+            bar_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (190, 300), (200, 400)) # 
+
+            if angle_left_chestpress_set3 >= 155:
+                if dir_chestpress_left_set3 == 0 and count_chestpress_left_set3 < 5:
+                    count_chestpress_left_set3 += 0.5
+                    if count_chestpress_left_set3 == 5:
+                        dir_chestpress_left_set3 = -1
+                    else:
+                        dir_chestpress_left_set3 = 1 
+            elif angle_left_chestpress_set3 <= 50:
+                if dir_chestpress_left_set3 == 1 and count_chestpress_left_set3 < 5:
+                    count_chestpress_left_set3 += 0.5
+                    if count_chestpress_left_set3 == 5:
+                        dir_chestpress_left_set3 = -1
+                    else:
+                        dir_chestpress_left_set3 = 0  
+
+            if angle_right_chestpress_set3 <= 190: 
+                if dir_chestpress_right_set3 == 0 and count_chestpress_right_set3 < 5:
+                    count_chestpress_right_set3 += 0.5
+                    if count_chestpress_right_set3 == 5:
+                        dir_chestpress_right_set3 = -1
+                    else:
+                        dir_chestpress_right_set3 = 1 
+
+            if angle_right_chestpress_set3 >= 270:
+                if dir_chestpress_right_set3 == 1 and count_chestpress_right_set3 < 5:
+                    count_chestpress_right_set3 += 0.5
+                    if count_chestpress_right_set3 == 5:
+                        dir_chestpress_right_set3 = -1
+                    else:
+                        dir_chestpress_right_set3 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Chest Press Tracker SET 3', [345, 30], thickness=2, border=2, scale=2.5) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_chestpress_set3)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_chestpress_set3)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_chestpress_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_chestpress_set3)), (995, 400), (0, 0, 255), -1)
+        
+        if angle_left_chestpress_set3 >= 155:
+            cv2.rectangle(img, (952, int(bar_left_chestpress_set3)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_chestpress_set3 <= 190:
+            cv2.rectangle(img, (8, int(bar_right_chestpress_set3)), (50, 400), (0, 255, 0), -1)
+
+    #count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_chestpress_right_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_chestpress_right_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress_set3 = False
+        exercise_mode = "rest_chestpress_set3"
+        rest_chestpress_start_time_set3 = time.time()
+
+    if count_chestpress_right_set3 == 5 and count_chestpress_left_set3 == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_chestpress_set3 = False
+        exercise_mode = "rest_chestpress_set3"
+        rest_chestpress_start_time_set3 = time.time()
+    return img
+
+def rest_chestpress_set3(img):
+    global exercise_mode, rest_chestpress_start_time_set3, start_time_chestpress_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_chestpress_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
         exercise_mode = "next_exercise"
         print(exercise_mode)
-        #start_time_shouldertap_set3 = time.time()
-
+        #start_time_chestpress_set3 = time.time()
 
 
 
     return img
+
+
 # --------------- FOR GAINING MUSCLE ----------------- 
 
 
