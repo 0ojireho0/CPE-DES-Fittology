@@ -11,6 +11,7 @@ import BicepCurl_PoseModule as pm_bicep
 import PushUp_PoseModule as pm_pushup
 import shouldertap_PoseModule as pm_shouldertap
 import chestpress_PoseModule as pm_chestpress
+import dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -326,6 +327,78 @@ rest_chestpress_start_time_set3 = time.time()
 
 # ----------- END FOR CHEST PRESS SET 3---------------
 
+# ----------- FOR DUMBBELL FRONT RAISE ---------------
+detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
+
+# Initialize Variables
+count_left_dumbbellfrontraise = 0
+count_right_dumbbellfrontraise = 0
+
+dir_left_dumbbellfrontraise = 0
+dir_right_dumbbellfrontraise = 0
+
+start_time_dumbbellfrontraise = time.time()  # starts time
+repetition_time_dumbbellfrontraise = 60  # duration time
+display_info_dumbbellfrontraise = True  # display features
+
+bar_left_dumbbellfrontraise = 0
+bar_right_dumbbellfrontraise = 0
+per_left_dumbbellfrontraise = 0
+per_right_dumbbellfrontraise = 0
+angle_left_dumbbellfrontraise = 0
+angle_right_dumbbellfrontraise = 0
+
+rest_dumbbellfrontraise_start_time = time.time()
+# ----------- END FOR DUMBBELL FRONT RAISE ---------------
+
+# ----------- FOR DUMBBELL FRONT RAISE SET 2 ---------------
+detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
+
+# Initialize Variables
+count_left_dumbbellfrontraise_set2 = 0
+count_right_dumbbellfrontraise_set2 = 0
+
+dir_left_dumbbellfrontraise_set2 = 0
+dir_right_dumbbellfrontraise_set2 = 0
+
+start_time_dumbbellfrontraise_set2 = time.time()  # starts time
+repetition_time_dumbbellfrontraise_set2 = 60  # duration time
+display_info_dumbbellfrontraise_set2 = True  # display features
+
+bar_left_dumbbellfrontraise_set2 = 0
+bar_right_dumbbellfrontraise_set2 = 0
+per_left_dumbbellfrontraise_set2 = 0
+per_right_dumbbellfrontraise_set2 = 0
+angle_left_dumbbellfrontraise_set2 = 0
+angle_right_dumbbellfrontraise_set2 = 0
+
+rest_dumbbellfrontraise_start_time_set2 = time.time()
+# ----------- END FOR DUMBBELL FRONT RAISE SET 2---------------
+
+# ----------- FOR DUMBBELL FRONT RAISE SET 3 ---------------
+detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
+
+# Initialize Variables
+count_left_dumbbellfrontraise_set3 = 0
+count_right_dumbbellfrontraise_set3 = 0
+
+dir_left_dumbbellfrontraise_set3 = 0
+dir_right_dumbbellfrontraise_set3 = 0
+
+start_time_dumbbellfrontraise_set3 = time.time()  # starts time
+repetition_time_dumbbellfrontraise_set3 = 60  # duration time
+display_info_dumbbellfrontraise_set3 = True  # display features
+
+bar_left_dumbbellfrontraise_set3 = 0
+bar_right_dumbbellfrontraise_set3 = 0
+per_left_dumbbellfrontraise_set3 = 0
+per_right_dumbbellfrontraise_set3 = 0
+angle_left_dumbbellfrontraise_set3 = 0
+angle_right_dumbbellfrontraise_set3 = 0
+
+rest_dumbbellfrontraise_start_time_set3 = time.time()
+# ----------- END FOR DUMBBELL FRONT RAISE SET 3---------------
+
 picFolder = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = picFolder
 
@@ -468,6 +541,19 @@ def gen_frames():
                 img_with_faces = detect_chestpress_set3(img)
             if exercise_mode == "rest_chestpress_set3":
                 img_with_faces = rest_chestpress_set3(img)
+            if exercise_mode == "dumbbell_frontraise":
+                img_with_faces = detect_dumbbellfrontraise(img)
+            if exercise_mode == "rest_dumbbellfrontraise":
+                img_with_faces = rest_dumbbellfrontraise(img)
+            if exercise_mode == "dumbbell_frontraise_set2":
+                img_with_faces = detect_dumbbellfrontraise_set2(img)
+            if exercise_mode == "rest_dumbbellfrontraise_set2":
+                img_with_faces = rest_dumbbellfrontraise_set2(img)
+            if exercise_mode == "dumbbell_frontraise_set3":
+                img_with_faces = detect_dumbbellfrontraise_set3(img)
+            if exercise_mode == "rest_dumbbellfrontraise_set3":
+                img_with_faces = rest_dumbbellfrontraise_set3(img)
+
 
 
             ret, buffer = cv2.imencode('.jpg', img_with_faces)
@@ -481,7 +567,10 @@ def muscleGain():
     if 'username' in session and session['exercise'] == "muscle_gain":
         bicep_curl = os.path.join(app.config['UPLOAD_FOLDER'], 'bicep_curl.jpg')
         push_up = os.path.join(app.config['UPLOAD_FOLDER'], 'Pushups.jpg')
-        return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up)
+        shoulder_tap = os.path.join(app.config['UPLOAD_FOLDER'], 'shoulder_tap.jpg')
+        dumbbell_frontraise = os.path.join(app.config['UPLOAD_FOLDER'], 'dumbbell_frontraise.jpg')
+        chest_press = os.path.join(app.config['UPLOAD_FOLDER'], 'chest_press.jpg')
+        return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up, shoulder_tap = shoulder_tap, dumbbell_frontraise = dumbbell_frontraise, chest_press = chest_press)
     else:
         return redirect(url_for('home'))
 
@@ -517,7 +606,7 @@ def detect_bicep_curls(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time
-    remaining_time = max(0, repetition_time - elapsed_time)
+    remaining_time = max(0, repetition_time - elapsed_time) #repetition_time
 
 
 
@@ -1947,7 +2036,7 @@ def detect_chestpress_set3(img):
     return img
 
 def rest_chestpress_set3(img):
-    global exercise_mode, rest_chestpress_start_time_set3, start_time_chestpress_set3
+    global exercise_mode, rest_chestpress_start_time_set3, start_time_dumbbellfrontraise
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time_set3
@@ -1961,14 +2050,381 @@ def rest_chestpress_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
-        exercise_mode = "next_exercise"
-        print(exercise_mode)
-        #start_time_chestpress_set3 = time.time()
+        exercise_mode = "dumbbell_frontraise"
+        start_time_dumbbellfrontraise = time.time()
+    return img
+
+def detect_dumbbellfrontraise(img):
+    global count_left_dumbbellfrontraise, count_right_dumbbellfrontraise, dir_left_dumbbellfrontraise, dir_right_dumbbellfrontraise, start_time_dumbbellfrontraise, repetition_time_dumbbellfrontraise, display_info_dumbbellfrontraise, bar_left_dumbbellfrontraise, bar_right_dumbbellfrontraise, per_left_dumbbellfrontraise, per_right_dumbbellfrontraise, angle_left_dumbbellfrontraise, angle_right_dumbbellfrontraise, rest_dumbbellfrontraise_start_time, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_dumbbellfrontraise
+    remaining_time = max(0, repetition_time_dumbbellfrontraise - elapsed_time)
+
+    if display_info_dumbbellfrontraise:  # Check if to display counter, bar, and percentage
+        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
+        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+
+            angle_left_dumbbellfrontraise = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
 
 
+            # # Interpolate angle to percentage and position on screen
+            per_left_dumbbellfrontraise = np.interp(angle_left_dumbbellfrontraise, (20, 150), (0, 100))
+            bar_left_dumbbellfrontraise = np.interp(angle_left_dumbbellfrontraise, (20, 160), (400, 200))
+
+            per_right_dumbbellfrontraise = np.interp(angle_right_dumbbellfrontraise, (20, 150), (0, 100))
+            bar_right_dumbbellfrontraise = np.interp(angle_right_dumbbellfrontraise, (20, 160), (400, 200))
+
+            #Check for the left dumbbell front raises
+            if angle_left_dumbbellfrontraise >= 150:
+                if dir_left_dumbbellfrontraise == 0 and count_left_dumbbellfrontraise < 5:
+                    count_left_dumbbellfrontraise += 0.5
+                    if count_left_dumbbellfrontraise == 5:
+                        dir_left_dumbbellfrontraise = -1
+                    else:
+                        dir_left_dumbbellfrontraise = 1
+            elif angle_left_dumbbellfrontraise <= 20:
+                if dir_left_dumbbellfrontraise == 1 and count_left_dumbbellfrontraise < 5:
+                    count_left_dumbbellfrontraise += 0.5
+                    if count_left_dumbbellfrontraise == 5:
+                        dir_left_dumbbellfrontraise = -1
+                    else:
+                        dir_left_dumbbellfrontraise = 0
+
+            # Check for the right dumbbell front raises
+            if angle_right_dumbbellfrontraise >= 150:
+                if dir_right_dumbbellfrontraise == 0 and count_right_dumbbellfrontraise < 5:
+                    count_right_dumbbellfrontraise += 0.5
+                    if count_right_dumbbellfrontraise == 5:
+                        dir_right_dumbbellfrontraise = -1
+                    else:
+                        dir_right_dumbbellfrontraise = 1
+            if angle_right_dumbbellfrontraise <= 20:
+                if dir_right_dumbbellfrontraise == 1 and count_right_dumbbellfrontraise < 5:
+                    count_right_dumbbellfrontraise += 0.5
+                    if count_right_dumbbellfrontraise == 5:
+                        dir_right_dumbbellfrontraise = -1
+                    else:
+                        dir_right_dumbbellfrontraise = 0
+
+        # label
+        cvzone.putTextRect(img, 'Dumbbell Raise Tracker', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_dumbbellfrontraise)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_dumbbellfrontraise)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise)), (995, 400), (0, 0, 255), -1)
+
+        if angle_left_dumbbellfrontraise >= 150:
+            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_dumbbellfrontraise >= 150:
+            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise)), (50, 400), (0, 255, 0), -1)
+
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_right_dumbbellfrontraise)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_left_dumbbellfrontraise)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise = False
+        exercise_mode = "rest_dumbbellfrontraise"
+        rest_dumbbellfrontraise_start_time = time.time()
+
+    if count_right_dumbbellfrontraise == 5 and count_left_dumbbellfrontraise == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise = False
+        exercise_mode = "rest_dumbbellfrontraise"
+        rest_dumbbellfrontraise_start_time = time.time()
+    return img
+
+def rest_dumbbellfrontraise(img):
+    global exercise_mode, rest_dumbbellfrontraise_start_time, start_time_dumbbellfrontraise_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "dumbbell_frontraise_set2"
+        start_time_dumbbellfrontraise_set2 = time.time()
 
     return img
 
+def detect_dumbbellfrontraise_set2(img):
+    global count_left_dumbbellfrontraise_set2, count_right_dumbbellfrontraise_set2, dir_left_dumbbellfrontraise_set2, dir_right_dumbbellfrontraise_set2, start_time_dumbbellfrontraise_set2, repetition_time_dumbbellfrontraise_set2, display_info_dumbbellfrontraise_set2, bar_left_dumbbellfrontraise_set2, bar_right_dumbbellfrontraise_set2, per_left_dumbbellfrontraise_set2, per_right_dumbbellfrontraise_set2, angle_left_dumbbellfrontraise_set2, angle_right_dumbbellfrontraise_set2, rest_dumbbellfrontraise_start_time_set2, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_dumbbellfrontraise_set2
+    remaining_time = max(0, repetition_time_dumbbellfrontraise_set2 - elapsed_time)
+
+    if display_info_dumbbellfrontraise_set2:  # Check if to display counter, bar, and percentage
+        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
+        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+
+            angle_left_dumbbellfrontraise_set2 = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise_set2 = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
+
+
+            # # Interpolate angle to percentage and position on screen
+            per_left_dumbbellfrontraise_set2 = np.interp(angle_left_dumbbellfrontraise_set2, (20, 150), (0, 100))
+            bar_left_dumbbellfrontraise_set2 = np.interp(angle_left_dumbbellfrontraise_set2, (20, 160), (400, 200))
+
+            per_right_dumbbellfrontraise_set2 = np.interp(angle_right_dumbbellfrontraise_set2, (20, 150), (0, 100))
+            bar_right_dumbbellfrontraise_set2 = np.interp(angle_right_dumbbellfrontraise_set2, (20, 160), (400, 200))
+
+            #Check for the left dumbbell front raises
+            if angle_left_dumbbellfrontraise_set2 >= 150:
+                if dir_left_dumbbellfrontraise_set2 == 0 and count_left_dumbbellfrontraise_set2 < 5:
+                    count_left_dumbbellfrontraise_set2 += 0.5
+                    if count_left_dumbbellfrontraise_set2 == 5:
+                        dir_left_dumbbellfrontraise_set2 = -1
+                    else:
+                        dir_left_dumbbellfrontraise_set2 = 1
+            elif angle_left_dumbbellfrontraise_set2 <= 20:
+                if dir_left_dumbbellfrontraise_set2 == 1 and count_left_dumbbellfrontraise_set2 < 5:
+                    count_left_dumbbellfrontraise_set2 += 0.5
+                    if count_left_dumbbellfrontraise_set2 == 5:
+                        dir_left_dumbbellfrontraise_set2 = -1
+                    else:
+                        dir_left_dumbbellfrontraise_set2 = 0
+
+            # Check for the right dumbbell front raises
+            if angle_right_dumbbellfrontraise_set2 >= 150:
+                if dir_right_dumbbellfrontraise_set2 == 0 and count_right_dumbbellfrontraise_set2 < 5:
+                    count_right_dumbbellfrontraise_set2 += 0.5
+                    if count_right_dumbbellfrontraise_set2 == 5:
+                        dir_right_dumbbellfrontraise_set2 = -1
+                    else:
+                        dir_right_dumbbellfrontraise_set2 = 1
+            if angle_right_dumbbellfrontraise_set2 <= 20:
+                if dir_right_dumbbellfrontraise_set2 == 1 and count_right_dumbbellfrontraise_set2 < 5:
+                    count_right_dumbbellfrontraise_set2 += 0.5
+                    if count_right_dumbbellfrontraise_set2 == 5:
+                        dir_right_dumbbellfrontraise_set2 = -1
+                    else:
+                        dir_right_dumbbellfrontraise_set2 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Dumbbell Raise SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_dumbbellfrontraise_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set2)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_dumbbellfrontraise_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set2)), (995, 400), (0, 0, 255), -1)
+
+        if angle_left_dumbbellfrontraise_set2 >= 150:
+            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set2)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_dumbbellfrontraise_set2 >= 150:
+            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set2)), (50, 400), (0, 255, 0), -1)
+
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_right_dumbbellfrontraise_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_left_dumbbellfrontraise_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise_set2 = False
+        exercise_mode = "rest_dumbbellfrontraise_set2"
+        rest_dumbbellfrontraise_start_time_set2 = time.time()
+
+    if count_right_dumbbellfrontraise == 5 and count_left_dumbbellfrontraise == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise_set2 = False
+        exercise_mode = "rest_dumbbellfrontraise_set2"
+        rest_dumbbellfrontraise_start_time_set2 = time.time()
+    return img
+
+def rest_dumbbellfrontraise_set2(img):
+    global exercise_mode, rest_dumbbellfrontraise_start_time_set2, start_time_dumbbellfrontraise_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "dumbbell_frontraise_set3"
+        start_time_dumbbellfrontraise_set3 = time.time()
+    return img
+
+def detect_dumbbellfrontraise_set3(img):
+    global count_left_dumbbellfrontraise_set3, count_right_dumbbellfrontraise_set3, dir_left_dumbbellfrontraise_set3, dir_right_dumbbellfrontraise_set3, start_time_dumbbellfrontraise_set3, repetition_time_dumbbellfrontraise_set3, display_info_dumbbellfrontraise_set3, bar_left_dumbbellfrontraise_set3, bar_right_dumbbellfrontraise_set3, per_left_dumbbellfrontraise_set3, per_right_dumbbellfrontraise_set3, angle_left_dumbbellfrontraise_set3, angle_right_dumbbellfrontraise_set3, rest_dumbbellfrontraise_start_time_set3, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    # Timer - starts timer based on set duration
+    elapsed_time = time.time() - start_time_dumbbellfrontraise_set3
+    remaining_time = max(0, repetition_time_dumbbellfrontraise_set3 - elapsed_time)
+
+    if display_info_dumbbellfrontraise_set3:  # Check if to display counter, bar, and percentage
+        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
+        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+
+            angle_left_dumbbellfrontraise_set3 = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise_set3 = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
+
+
+            # # Interpolate angle to percentage and position on screen
+            per_left_dumbbellfrontraise_set3 = np.interp(angle_left_dumbbellfrontraise_set3, (20, 150), (0, 100))
+            bar_left_dumbbellfrontraise_set3 = np.interp(angle_left_dumbbellfrontraise_set3, (20, 160), (400, 200))
+
+            per_right_dumbbellfrontraise_set3 = np.interp(angle_right_dumbbellfrontraise_set3, (20, 150), (0, 100))
+            bar_right_dumbbellfrontraise_set3 = np.interp(angle_right_dumbbellfrontraise_set3, (20, 160), (400, 200))
+
+            #Check for the left dumbbell front raises
+            if angle_left_dumbbellfrontraise_set3 >= 150:
+                if dir_left_dumbbellfrontraise_set3 == 0 and count_left_dumbbellfrontraise_set3 < 5:
+                    count_left_dumbbellfrontraise_set3 += 0.5
+                    if count_left_dumbbellfrontraise_set3 == 5:
+                        dir_left_dumbbellfrontraise_set3 = -1
+                    else:
+                        dir_left_dumbbellfrontraise_set3 = 1
+            elif angle_left_dumbbellfrontraise_set3 <= 20:
+                if dir_left_dumbbellfrontraise_set3 == 1 and count_left_dumbbellfrontraise_set3 < 5:
+                    count_left_dumbbellfrontraise += 0.5
+                    if count_left_dumbbellfrontraise_set3 == 5:
+                        dir_left_dumbbellfrontraise_set3 = -1
+                    else:
+                        dir_left_dumbbellfrontraise_set3 = 0
+
+            # Check for the right dumbbell front raises
+            if angle_right_dumbbellfrontraise_set3 >= 150:
+                if dir_right_dumbbellfrontraise_set3 == 0 and count_right_dumbbellfrontraise_set3 < 5:
+                    count_right_dumbbellfrontraise_set3 += 0.5
+                    if count_right_dumbbellfrontraise_set3 == 5:
+                        dir_right_dumbbellfrontraise_set3 = -1
+                    else:
+                        dir_right_dumbbellfrontraise_set3 = 1
+            if angle_right_dumbbellfrontraise_set3 <= 20:
+                if dir_right_dumbbellfrontraise_set3 == 1 and count_right_dumbbellfrontraise_set3 < 5:
+                    count_right_dumbbellfrontraise_set3 += 0.5
+                    if count_right_dumbbellfrontraise_set3 == 5:
+                        dir_right_dumbbellfrontraise_set3 = -1
+                    else:
+                        dir_right_dumbbellfrontraise_set3 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Dumbbell Raise SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # bar
+        cv2.putText(img, f"R {int(per_right_dumbbellfrontraise_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set3)), (50, 400), (0, 0, 255), -1)
+
+        cv2.putText(img, f"L {int(per_left_dumbbellfrontraise_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set3)), (995, 400), (0, 0, 255), -1)
+
+        if angle_left_dumbbellfrontraise_set3 >= 150:
+            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set3)), (995, 400), (0, 255, 0), -1)
+
+        if angle_right_dumbbellfrontraise_set3 >= 150:
+            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set3)), (50, 400), (0, 255, 0), -1)
+
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_right_dumbbellfrontraise_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_left_dumbbellfrontraise_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise_set3 = False
+        exercise_mode = "rest_dumbbellfrontraise_set3"
+        rest_dumbbellfrontraise_start_time_set3 = time.time()
+
+    if count_right_dumbbellfrontraise == 5 and count_left_dumbbellfrontraise == 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_dumbbellfrontraise_set3 = False
+        exercise_mode = "rest_dumbbellfrontraise_set3"
+        rest_dumbbellfrontraise_start_time_set3 = time.time()
+
+    return img
+
+def rest_dumbbellfrontraise_set3(img):
+    global exercise_mode, rest_dumbbellfrontraise_start_time_set3, start_time_dumbbellfrontraise_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "next_exercise"
+        print(exercise_mode)
+        #start_time_dumbbellfrontraise_set3 = time.time()
+    return img
 
 # --------------- FOR GAINING MUSCLE ----------------- 
 

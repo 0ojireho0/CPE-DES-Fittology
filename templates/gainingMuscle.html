@@ -17,6 +17,9 @@
             <div id="exercise-images">
                 <img id="bicep-curl-img" src="{{bicep_curl}}" style="display: none;" width="100%"  alt="Bicep Curl">
                 <img id="push-up-img" src="{{push_up}}" style="display: none;" width="100%"  alt="push up">
+                <img id="shoulder-tap-img" src="{{shoulder_tap}}" style="display: none;" width="100%"  alt="shoulder tap">
+                <img id="dumbbell-frontraise-img" src="{{dumbbell_frontraise}}" style="display: none;" width="100%"  alt="dumbbell frontraise">
+                <img id="chest-press-img" src="{{chest_press}}" style="display: none;" width="100%"  alt="chest press">
             </div>
         </div>
     </div>
@@ -57,6 +60,15 @@
                 } else if (data.exercise_mode === 'push_up') {
                     document.getElementById('bicep-curl-img').style.display = 'none';
                     document.getElementById('push-up-img').style.display = 'block';
+                } else if (data.exercise_mode === 'shoulder_tap'){
+                    document.getElementById('push-up-img').style.display = 'none';
+                    document.getElementById('shoulder-tap-img').style.display = 'block';
+                } else if (data.exercise_mode === 'chest_press'){
+                    document.getElementById('shoulder-tap-img').style.display = 'none';
+                    document.getElementById('chest-press-img').style.display = 'block';
+                } else if (data.exercise_mode === 'dumbbell_frontraise'){
+                    document.getElementById('chest-press-img').style.display = 'none';
+                    document.getElementById('dumbbell-frontraise-img').style.display = 'block';
                 }
             })
             .catch(error => {
