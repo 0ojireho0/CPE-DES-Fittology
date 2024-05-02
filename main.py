@@ -9,6 +9,7 @@ import numpy as np
 import time
 import BicepCurl_PoseModule as pm_bicep
 import PushUp_PoseModule as pm_pushup
+import shouldertap_PoseModule as pm_shouldertap
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -168,7 +169,80 @@ leftangle_pushup_set3 = 0
 rightangle_pushup_set3 = 0
 # ----------- END FOR PUSH UP SET 3 --------------
 
+# ----------- FOR SHOULDER TAP ---------------
+detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
 
+count_shoulder_tap_right = 0
+count_shoulder_tap_left = 0
+dir_shoulder_tap_right = 0
+dir_shoulder_tap_left = 0
+
+start_time_shouldertap = time.time()
+repetition_time_shouldertap = 60
+display_info_shouldertap = True
+
+per_left_arm_shouldertap = 0
+bar_left_arm_shouldertap = 0
+
+per_right_arm_shouldertap = 0
+bar_right_arm_shouldertap = 0
+
+color_left_arm_shouldertap = 0
+color_right_arm_shouldertap = 0
+
+rest_shouldertap_start_time = time.time()
+
+# ----------- END FOR SHOULDER TAP ---------------
+
+# ----------- FOR SHOULDER TAP SET 2---------------
+detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
+
+count_shoulder_tap_right_set2 = 0
+count_shoulder_tap_left_set2 = 0
+dir_shoulder_tap_right_set2 = 0
+dir_shoulder_tap_left_set2 = 0
+
+start_time_shouldertap_set2 = time.time()
+repetition_time_shouldertap_set2 = 60
+display_info_shouldertap_set2 = True
+
+per_left_arm_shouldertap_set2 = 0
+bar_left_arm_shouldertap_set2 = 0
+
+per_right_arm_shouldertap_set2 = 0
+bar_right_arm_shouldertap_set2 = 0
+
+color_left_arm_shouldertap_set2 = 0
+color_right_arm_shouldertap_set2 = 0
+
+rest_shouldertap_start_time_set2 = time.time()
+
+# ----------- END FOR SHOULDER TAP SET 2---------------
+
+# ----------- FOR SHOULDER TAP SET 3---------------
+detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
+
+count_shoulder_tap_right_set3 = 0
+count_shoulder_tap_left_set3 = 0
+dir_shoulder_tap_right_set3 = 0
+dir_shoulder_tap_left_set3 = 0
+
+start_time_shouldertap_set3 = time.time()
+repetition_time_shouldertap_set3 = 60
+display_info_shouldertap_set3 = True
+
+per_left_arm_shouldertap_set3 = 0
+bar_left_arm_shouldertap_set3 = 0
+
+per_right_arm_shouldertap_set3 = 0
+bar_right_arm_shouldertap_set3 = 0
+
+color_left_arm_shouldertap_set3 = 0
+color_right_arm_shouldertap_set3 = 0
+
+rest_shouldertap_start_time_set3 = time.time()
+
+# ----------- END FOR SHOULDER TAP SET 3---------------
 
 
 
@@ -291,6 +365,18 @@ def gen_frames():
                 img_with_faces = detect_push_up_set3(img)
             if exercise_mode == "rest_pushup_set3":
                 img_with_faces = rest_pushup_set3(img)
+            if exercise_mode == "shoulder_tap":
+                img_with_faces = detect_shouldertap(img)
+            if exercise_mode == "rest_shouldertap":
+                img_with_faces = rest_shouldertap(img)
+            if exercise_mode == "shoulder_tap_set2":
+                img_with_faces = detect_shouldertap_set2(img)
+            if exercise_mode == "rest_shouldertap_rest2":
+                img_with_faces = rest_shouldertap_set2(img)
+            if exercise_mode == "shoulder_tap_set3":
+                img_with_faces = detect_shouldertap_set3(img)
+            if exercise_mode == "rest_shouldertap_rest3":
+                img_with_faces = rest_shouldertap_set3(img)
 
 
             ret, buffer = cv2.imencode('.jpg', img_with_faces)
@@ -1033,7 +1119,7 @@ def detect_push_up_set3(img):
     return img
 
 def rest_pushup_set3(img):
-    global exercise_mode, rest_pushup_start_time_set3, start_time_pushup_set3
+    global exercise_mode, rest_pushup_start_time_set3, start_time_shouldertap
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set3
@@ -1047,15 +1133,382 @@ def rest_pushup_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
+        exercise_mode = "shoulder_tap"
+        start_time_shouldertap = time.time()
+
+    return img
+
+def detect_shouldertap(img):
+    global count_shoulder_tap_left, count_shoulder_tap_right, dir_shoulder_tap_left, dir_shoulder_tap_right, start_time_shouldertap, display_info_shouldertap, per_left_arm_shouldertap, per_right_arm_shouldertap, bar_left_arm_shouldertap, bar_right_arm_shouldertap, color_left_arm_shouldertap, color_right_arm_shouldertap, exercise_mode, rest_shouldertap_start_time
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_shouldertap
+    remaining_time = max(0, repetition_time_shouldertap - elapsed_time) #repetition_time_shouldertap
+
+    if display_info_shouldertap:  # Check if to display counter, bar, and percentage
+        img = detector_ShoulderTap.findPose(img, False)
+        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+
+            #Interpolate angle to percentage and position on screen
+            per_right_arm_shouldertap = np.interp(distance1, (180, 350), (100, 0))
+            bar_right_arm_shouldertap = np.interp(distance1, (180, 350), (200, 400))
+
+            per_left_arm_shouldertap = np.interp(distance2, (180, 350), (100, 0))
+            bar_left_arm_shouldertap = np.interp(distance2, (180, 350), (200, 400))
+
+
+            if int(per_left_arm_shouldertap) == 100 :
+                color_left_arm_shouldertap = (0, 255, 0) 
+            elif int(per_right_arm_shouldertap) == 100:
+                color_right_arm_shouldertap = (0, 255, 0)
+            else:
+                color_left_arm_shouldertap = (0, 0, 255)  
+                color_right_arm_shouldertap = (0, 0, 255)
+
+            if distance1 <= 180:
+                if dir_shoulder_tap_right == 0 and count_shoulder_tap_right < 5:
+                    count_shoulder_tap_right += 0.5
+                    if count_shoulder_tap_right == 5:
+                        dir_shoulder_tap_right = -1
+                    else:
+                        dir_shoulder_tap_right = 1
+            elif distance1 >= 350:
+                if dir_shoulder_tap_right == 1 and count_shoulder_tap_right < 5:
+                    count_shoulder_tap_right += 0.5
+                    if count_shoulder_tap_right == 5:
+                        dir_shoulder_tap_right = -1
+                    else:
+                        dir_shoulder_tap_right = 0
+
+            if distance2 <= 180:
+                if dir_shoulder_tap_left == 0 and count_shoulder_tap_left < 5:
+                    count_shoulder_tap_left += 0.5
+                    if count_shoulder_tap_left == 5:
+                        dir_shoulder_tap_left = -1
+                    else:
+                        dir_shoulder_tap_left = 1
+            elif distance2 >= 350:
+                if dir_shoulder_tap_left == 1 and count_shoulder_tap_left < 5:
+                    count_shoulder_tap_left += 0.5
+                    if count_shoulder_tap_left == 5:
+                        dir_shoulder_tap_left = -1
+                    else:
+                        dir_shoulder_tap_left = 0
+
+        cvzone.putTextRect(img, 'Shoulder Tap Tracker', [370, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_shouldertap)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap)), (50, 400), color_right_arm_shouldertap, -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_shouldertap)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap)), (995, 400), color_left_arm_shouldertap, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_left)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap = False
+        exercise_mode = "rest_shouldertap"
+        rest_shouldertap_start_time = time.time()
+
+    if count_shoulder_tap_right >= 5 and count_shoulder_tap_left >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap = False
+        exercise_mode = "rest_shouldertap"
+        rest_shouldertap_start_time = time.time()
+
+    return img
+
+def rest_shouldertap(img):
+    global exercise_mode, rest_shouldertap_start_time, start_time_shouldertap_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_shouldertap_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "shoulder_tap_set2"
+        start_time_shouldertap_set2 = time.time()
+    return img
+
+def detect_shouldertap_set2(img):
+    global count_shoulder_tap_left_set2, count_shoulder_tap_right_set2, dir_shoulder_tap_left_set2, dir_shoulder_tap_right_set2, start_time_shouldertap_set2, display_info_shouldertap_set2, per_left_arm_shouldertap_set2, per_right_arm_shouldertap_set2, bar_left_arm_shouldertap_set2, bar_right_arm_shouldertap_set2, color_left_arm_shouldertap_set2, color_right_arm_shouldertap_set2, exercise_mode, rest_shouldertap_start_time_set2
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_shouldertap_set2
+    remaining_time = max(0, repetition_time_shouldertap_set2 - elapsed_time) #repetition_time_shouldertap
+
+    if display_info_shouldertap_set2:  # Check if to display counter, bar, and percentage
+        img = detector_ShoulderTap.findPose(img, False)
+        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+
+            #Interpolate angle to percentage and position on screen
+            per_right_arm_shouldertap_set2 = np.interp(distance1, (180, 350), (100, 0))
+            bar_right_arm_shouldertap_set2 = np.interp(distance1, (180, 350), (200, 400))
+
+            per_left_arm_shouldertap_set2 = np.interp(distance2, (180, 350), (100, 0))
+            bar_left_arm_shouldertap_set2 = np.interp(distance2, (180, 350), (200, 400))
+
+
+            if int(per_left_arm_shouldertap_set2) == 100 :
+                color_left_arm_shouldertap_set2 = (0, 255, 0) 
+            elif int(per_right_arm_shouldertap_set2) == 100:
+                color_right_arm_shouldertap_set2 = (0, 255, 0)
+            else:
+                color_left_arm_shouldertap_set2 = (0, 0, 255)  
+                color_right_arm_shouldertap_set2 = (0, 0, 255)
+
+            if distance1 <= 180:
+                if dir_shoulder_tap_right_set2 == 0 and count_shoulder_tap_right_set2 < 5:
+                    count_shoulder_tap_right_set2 += 0.5
+                    if count_shoulder_tap_right_set2 == 5:
+                        dir_shoulder_tap_right_set2 = -1
+                    else:
+                        dir_shoulder_tap_right_set2 = 1
+            elif distance1 >= 350:
+                if dir_shoulder_tap_right_set2 == 1 and count_shoulder_tap_right_set2 < 5:
+                    count_shoulder_tap_right_set2 += 0.5
+                    if count_shoulder_tap_right_set2 == 5:
+                        dir_shoulder_tap_right_set2 = -1
+                    else:
+                        dir_shoulder_tap_right_set2 = 0
+
+            if distance2 <= 180:
+                if dir_shoulder_tap_left_set2 == 0 and count_shoulder_tap_left_set2 < 5:
+                    count_shoulder_tap_left_set2 += 0.5
+                    if count_shoulder_tap_left_set2 == 5:
+                        dir_shoulder_tap_left_set2 = -1
+                    else:
+                        dir_shoulder_tap_left_set2 = 1
+            elif distance2 >= 350:
+                if dir_shoulder_tap_left_set2 == 1 and count_shoulder_tap_left_set2 < 5:
+                    count_shoulder_tap_left_set2 += 0.5
+                    if count_shoulder_tap_left_set2 == 5:
+                        dir_shoulder_tap_left_set2 = -1
+                    else:
+                        dir_shoulder_tap_left_set2 = 0
+
+        cvzone.putTextRect(img, 'Shoulder Tap Tracker SET 2', [370, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_shouldertap_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap_set2)), (50, 400), color_right_arm_shouldertap_set2, -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_shouldertap_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap_set2)), (995, 400), color_left_arm_shouldertap_set2, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_right_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_left_set2)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap_set2 = False
+        exercise_mode = "rest_shouldertap_rest2"
+        rest_shouldertap_start_time_set2 = time.time()
+
+    if count_shoulder_tap_right_set2 >= 5 and count_shoulder_tap_left_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap_set2 = False
+        exercise_mode = "rest_shouldertap_rest2"
+        rest_shouldertap_start_time_set2 = time.time()
+    return img
+
+def rest_shouldertap_set2(img):
+    global exercise_mode, rest_shouldertap_start_time_set2, start_time_shouldertap_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_shouldertap_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "shoulder_tap_set3"
+        start_time_shouldertap_set3 = time.time()
+    return img
+
+def detect_shouldertap_set3(img):
+    global count_shoulder_tap_left_set3, count_shoulder_tap_right_set3, dir_shoulder_tap_left_set3, dir_shoulder_tap_right_set3, start_time_shouldertap_set3, display_info_shouldertap_set3, per_left_arm_shouldertap_set3, per_right_arm_shouldertap_set3, bar_left_arm_shouldertap_set3, bar_right_arm_shouldertap_set3, color_left_arm_shouldertap_set3, color_right_arm_shouldertap_set3, exercise_mode, rest_shouldertap_start_time_set3
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_shouldertap_set3
+    remaining_time = max(0, repetition_time_shouldertap_set3 - elapsed_time) #repetition_time_shouldertap
+
+    if display_info_shouldertap_set3:  # Check if to display counter, bar, and percentage
+        img = detector_ShoulderTap.findPose(img, False)
+        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+
+            #Interpolate angle to percentage and position on screen
+            per_right_arm_shouldertap_set3 = np.interp(distance1, (180, 350), (100, 0))
+            bar_right_arm_shouldertap_set3 = np.interp(distance1, (180, 350), (200, 400))
+
+            per_left_arm_shouldertap_set3 = np.interp(distance2, (180, 350), (100, 0))
+            bar_left_arm_shouldertap_set3 = np.interp(distance2, (180, 350), (200, 400))
+
+
+            if int(per_left_arm_shouldertap_set3) == 100 :
+                color_left_arm_shouldertap_set3 = (0, 255, 0) 
+            elif int(per_right_arm_shouldertap_set3) == 100:
+                color_right_arm_shouldertap_set3 = (0, 255, 0)
+            else:
+                color_left_arm_shouldertap_set3 = (0, 0, 255)  
+                color_right_arm_shouldertap_set3 = (0, 0, 255)
+
+            if distance1 <= 180:
+                if dir_shoulder_tap_right_set3 == 0 and count_shoulder_tap_right_set3 < 5:
+                    count_shoulder_tap_right_set3 += 0.5
+                    if count_shoulder_tap_right_set3 == 5:
+                        dir_shoulder_tap_right_set3 = -1
+                    else:
+                        dir_shoulder_tap_right_set3 = 1
+            elif distance1 >= 350:
+                if dir_shoulder_tap_right_set3 == 1 and count_shoulder_tap_right_set3 < 5:
+                    count_shoulder_tap_right_set3 += 0.5
+                    if count_shoulder_tap_right_set3 == 5:
+                        dir_shoulder_tap_right_set3 = -1
+                    else:
+                        dir_shoulder_tap_right_set3 = 0
+
+            if distance2 <= 180:
+                if dir_shoulder_tap_left_set3 == 0 and count_shoulder_tap_left_set3 < 5:
+                    count_shoulder_tap_left_set3 += 0.5
+                    if count_shoulder_tap_left_set3 == 5:
+                        dir_shoulder_tap_left_set3 = -1
+                    else:
+                        dir_shoulder_tap_left_set3 = 1
+            elif distance2 >= 350:
+                if dir_shoulder_tap_left_set3 == 1 and count_shoulder_tap_left_set3 < 5:
+                    count_shoulder_tap_left_set3 += 0.5
+                    if count_shoulder_tap_left_set3 == 5:
+                        dir_shoulder_tap_left_set3 = -1
+                    else:
+                        dir_shoulder_tap_left_set3 = 0
+
+        cvzone.putTextRect(img, 'Shoulder Tap Tracker SET 3', [370, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_shouldertap_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap_set3)), (50, 400), color_right_arm_shouldertap_set3, -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_shouldertap_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap_set3)), (995, 400), color_left_arm_shouldertap_set3, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_right_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_shoulder_tap_left_set3)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap_set3 = False
+        exercise_mode = "rest_shouldertap_rest3"
+        rest_shouldertap_start_time_set3 = time.time()
+
+    if count_shoulder_tap_right_set3 >= 5 and count_shoulder_tap_left_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_shouldertap_set3 = False
+        exercise_mode = "rest_shouldertap_rest3"
+        rest_shouldertap_start_time_set3 = time.time()
+    return img
+
+def rest_shouldertap_set3(img):
+    global exercise_mode, rest_shouldertap_start_time_set3, start_time_shouldertap_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_shouldertap_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
         exercise_mode = "next_exercise"
         print(exercise_mode)
-        #start_time_pushup_set3 = time.time()
+        #start_time_shouldertap_set3 = time.time()
+
 
 
 
     return img
-
-
 # --------------- FOR GAINING MUSCLE ----------------- 
 
 
