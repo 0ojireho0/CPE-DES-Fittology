@@ -12,6 +12,7 @@ import PushUp_PoseModule as pm_pushup
 import shouldertap_PoseModule as pm_shouldertap
 import chestpress_PoseModule as pm_chestpress
 import dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
+import alternatinglunge_PoseModule as pm_alternatinglunge
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -399,6 +400,100 @@ angle_right_dumbbellfrontraise_set3 = 0
 rest_dumbbellfrontraise_start_time_set3 = time.time()
 # ----------- END FOR DUMBBELL FRONT RAISE SET 3---------------
 
+# ----------- FOR ALTERNATING LUNGE ---------------
+detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
+count_alternating_right_lunge = 0
+count_alternating_left_lunge = 0
+
+dir_alternating_left_lunge = 0
+dir_alternating_right_lunge = 0
+
+
+start_time_alternatinglunge = time.time()
+repetition_time_alternatinglunge = 60
+display_info_alternatinglunge = True
+
+per_left_leg_alternatinglunge = 0
+bar_left_leg_alternatinglunge = 0
+
+per_right_leg_alternatinglunge = 0
+bar_right_leg_alternatinglunge = 0
+
+leftleg_alternatinglunge  = 0
+rightleg_alternatinglunge = 0
+
+
+cooldown_duration_alternatinglunge = 5
+cooldown_timer_alternatinglunge = 0
+
+color_right_leg_alternatinglunge = (0, 0, 255)
+color_left_leg_alternatinglunge = (0, 0, 255)
+rest_alternatinglunge_start_time = time.time()
+# ----------- END FOR ALTERNATING LUNGE ---------------
+
+# ----------- FOR ALTERNATING LUNGE SET 2 ---------------
+detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
+count_alternating_right_lunge_set2 = 0
+count_alternating_left_lunge_set2 = 0
+
+dir_alternating_left_lunge_set2 = 0
+dir_alternating_right_lunge_set2 = 0
+
+
+start_time_alternatinglunge_set2 = time.time()
+repetition_time_alternatinglunge_set2 = 60
+display_info_alternatinglunge_set2 = True
+
+per_left_leg_alternatinglunge_set2 = 0
+bar_left_leg_alternatinglunge_set2 = 0
+
+per_right_leg_alternatinglunge_set2 = 0
+bar_right_leg_alternatinglunge_set2 = 0
+
+leftleg_alternatinglunge_set2 = 0
+rightleg_alternatinglunge_set2 = 0
+
+
+cooldown_duration_alternatinglunge_set2 = 5
+cooldown_timer_alternatinglunge_set2 = 0
+
+color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+color_left_leg_alternatinglunge_set2 = (0, 0, 255)
+rest_alternatinglunge_start_time_set2 = time.time()
+# ----------- END FOR ALTERNATING LUNGE SET 2 ---------------
+
+# ----------- FOR ALTERNATING LUNGE SET 3 ---------------
+detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
+count_alternating_right_lunge_set3 = 0
+count_alternating_left_lunge_set3 = 0
+
+dir_alternating_left_lunge_set3 = 0
+dir_alternating_right_lunge_set3 = 0
+
+
+start_time_alternatinglunge_set3 = time.time()
+repetition_time_alternatinglunge_set3 = 60
+display_info_alternatinglunge_set3 = True
+
+per_left_leg_alternatinglunge_set3 = 0
+bar_left_leg_alternatinglunge_set3 = 0
+
+per_right_leg_alternatinglunge_set3 = 0
+bar_right_leg_alternatinglunge_set3 = 0
+
+leftleg_alternatinglunge_set3  = 0
+rightleg_alternatinglunge_set3 = 0
+
+
+cooldown_duration_alternatinglunge_set3 = 5
+cooldown_timer_alternatinglunge_set3 = 0
+
+color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+color_left_leg_alternatinglunge_set3 = (0, 0, 255)
+rest_alternatinglunge_start_time_set3 = time.time()
+# ----------- END FOR ALTERNATING LUNGE SET 3 ---------------
+
+
 picFolder = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = picFolder
 
@@ -474,7 +569,7 @@ def logout():
 def start_exercise():
     global exercise_mode
     if session['exercise'] == "muscle_gain":
-        exercise_mode = "bicep_curl"
+        exercise_mode = "alternating_lunge"
         return redirect(url_for('muscleGain')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
     elif session['exercise'] == "loss_weight":
         #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
@@ -553,6 +648,18 @@ def gen_frames():
                 img_with_faces = detect_dumbbellfrontraise_set3(img)
             if exercise_mode == "rest_dumbbellfrontraise_set3":
                 img_with_faces = rest_dumbbellfrontraise_set3(img)
+            if exercise_mode == "alternating_lunge":
+                img_with_faces = detect_alternatinglunge(img)
+            if exercise_mode == "rest_alternatinglunge":
+                img_with_faces = rest_alternatinglunge(img)
+            if exercise_mode == "alternating_lunge_set2":
+                img_with_faces = detect_alternatinglunge_set2(img)
+            if exercise_mode == "rest_alternatinglunge_set2":
+                img_with_faces = rest_alternatinglunge_set2(img)
+            if exercise_mode == "alternating_lunge_set3":
+                img_with_faces = detect_alternatinglunge_set3(img)
+            if exercise_mode == "rest_alternatinglunge_set3":
+                img_with_faces = rest_alternatinglunge_set3(img)
 
 
 
@@ -2407,7 +2514,7 @@ def detect_dumbbellfrontraise_set3(img):
     return img
 
 def rest_dumbbellfrontraise_set3(img):
-    global exercise_mode, rest_dumbbellfrontraise_start_time_set3, start_time_dumbbellfrontraise_set3
+    global exercise_mode, rest_dumbbellfrontraise_start_time_set3, start_time_alternatinglunge
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set3
@@ -2421,9 +2528,594 @@ def rest_dumbbellfrontraise_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
+        exercise_mode = "alternating_lunge"
+        start_time_alternatinglunge = time.time()
+    return img
+
+def detect_alternatinglunge(img):
+    global count_alternating_left_lunge, count_alternating_right_lunge, dir_alternating_left_lunge, dir_alternating_right_lunge, start_time_alternatinglunge, repetition_time_alternatinglunge, per_left_leg_alternatinglunge, per_right_leg_alternatinglunge, display_info_alternatinglunge, bar_left_leg_alternatinglunge, bar_right_leg_alternatinglunge, leftleg_alternatinglunge, rightleg_alternatinglunge, cooldown_duration_alternatinglunge, cooldown_timer_alternatinglunge, color_right_leg_alternatinglunge, color_left_leg_alternatinglunge, exercise_mode, rest_alternatinglunge_start_time
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_alternatinglunge
+    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge
+
+    if display_info_alternatinglunge:  # Check if to display counter, bar, and percentage
+        img = detector_alternatingleftlunge.findPose(img, False)
+        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            rightleg_alternatinglunge, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_alternatinglunge, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+
+            if cooldown_timer_alternatinglunge > 0:
+                cooldown_timer_alternatinglunge -= 1
+
+            #print(orientation, orientation2)
+            if orientation == 'right' and orientation2 == 'right':
+                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (90, 170), (100, 0))
+                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (90, 170), (480, 680))
+                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (90, 170), (100, 0))
+                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (90, 170), (480, 680))
+
+                    if int(per_left_leg_alternatinglunge) == 100:
+                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge) == 100:
+                        color_right_leg_alternatinglunge = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge = (0, 0, 255)
+
+                    if rightleg_alternatinglunge <= 80:
+                        if dir_alternating_right_lunge == 0:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    elif rightleg_alternatinglunge >= 150:
+                        if dir_alternating_right_lunge == 1:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    
+                    if leftleg_alternatinglunge <= 80:
+                        if dir_alternating_left_lunge == 0:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    elif leftleg_alternatinglunge >= 150:
+                        if dir_alternating_left_lunge == 1:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+
+            elif orientation =='left' and orientation2 == 'left':
+                if leftleg_alternatinglunge is not None and rightleg_alternatinglunge is not None:
+                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (190, 280), (0, 100))
+                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (190, 280), (680, 480))
+                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (190, 280), (0, 100))
+                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (190, 280), (680, 480))
+
+                    if int(per_left_leg_alternatinglunge) == 100:
+                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge) == 100:
+                        color_right_leg_alternatinglunge = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge = (0, 0, 255)
+
+                    if rightleg_alternatinglunge > 280:
+                        if dir_alternating_right_lunge == 0:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    elif rightleg_alternatinglunge < 179:
+                        if dir_alternating_right_lunge == 1:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    if leftleg_alternatinglunge > 280:
+                        if dir_alternating_left_lunge == 0:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    elif leftleg_alternatinglunge < 179:
+                        if dir_alternating_left_lunge == 1:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (100, 200), (100, 0))
+                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (100, 200), (480, 680))
+                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (100, 200), (100, 0))
+                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (100, 200), (480, 680))
+
+
+                    if int(per_left_leg_alternatinglunge) == 100:
+                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge) == 100:
+                        color_right_leg_alternatinglunge = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge = (0, 0, 255)
+
+                    if rightleg_alternatinglunge <= 150 and leftleg_alternatinglunge <= 100:
+                        if dir_alternating_right_lunge == 0:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    else: 
+                        if dir_alternating_right_lunge == 1:
+                            count_alternating_right_lunge += 0.5
+                            dir_alternating_right_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+
+                    if rightleg_alternatinglunge <= 100 and leftleg_alternatinglunge <= 150:
+                        if dir_alternating_left_lunge == 0:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 1
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+                    else:
+                        if dir_alternating_left_lunge == 1:
+                            count_alternating_left_lunge += 0.5
+                            dir_alternating_left_lunge = 0
+                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+
+  
+        cvzone.putTextRect(img, 'Leg Lunge (alternate)', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge)), (50, 680), color_right_leg_alternatinglunge, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge)), (995, 680), color_left_leg_alternatinglunge, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_alternating_right_lunge)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_alternating_left_lunge)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge = False
+        exercise_mode = "rest_alternatinglunge"
+        rest_alternatinglunge_start_time = time.time()
+
+    # Repetition
+    if count_alternating_left_lunge >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge = False
+        exercise_mode = "rest_alternatinglunge"
+        rest_alternatinglunge_start_time = time.time()
+
+    return img
+
+def rest_alternatinglunge(img):
+    global exercise_mode, rest_alternatinglunge_start_time, start_time_alternatinglunge_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_alternatinglunge_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "alternating_lunge_set2"
+        start_time_alternatinglunge_set2 = time.time()
+
+    return img
+
+def detect_alternatinglunge_set2(img):
+    global count_alternating_left_lunge_set2, count_alternating_right_lunge_set2, dir_alternating_left_lunge_set2, dir_alternating_right_lunge_set2, start_time_alternatinglunge_set2, repetition_time_alternatinglunge_set2, per_left_leg_alternatinglunge_set2, per_right_leg_alternatinglunge_set2, display_info_alternatinglunge_set2, bar_left_leg_alternatinglunge_set2, bar_right_leg_alternatinglunge_set2, leftleg_alternatinglunge_set2, rightleg_alternatinglunge_set2, cooldown_duration_alternatinglunge_set2, cooldown_timer_alternatinglunge_set2, color_right_leg_alternatinglunge_set2, color_left_leg_alternatinglunge_set2, exercise_mode, rest_alternatinglunge_start_time_set2
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_alternatinglunge_set2
+    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge_set2
+
+    if display_info_alternatinglunge_set2:  # Check if to display counter, bar, and percentage
+        img = detector_alternatingleftlunge.findPose(img, False)
+        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            rightleg_alternatinglunge_set2, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_alternatinglunge_set2, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+
+            if cooldown_timer_alternatinglunge_set2 > 0:
+                cooldown_timer_alternatinglunge_set2 -= 1
+
+            #print(orientation, orientation2)
+            if orientation == 'right' and orientation2 == 'right':
+                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (90, 170), (100, 0))
+                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (90, 170), (480, 680))
+                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (90, 170), (100, 0))
+                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (90, 170), (480, 680))
+
+                    if int(per_left_leg_alternatinglunge_set2) == 100:
+                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set2) == 100:
+                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set2 <= 80:
+                        if dir_alternating_right_lunge_set2 == 0:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    elif rightleg_alternatinglunge_set2 >= 150:
+                        if dir_alternating_right_lunge_set2 == 1:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    
+                    if leftleg_alternatinglunge_set2 <= 80:
+                        if dir_alternating_left_lunge_set2 == 0:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    elif leftleg_alternatinglunge_set2 >= 150:
+                        if dir_alternating_left_lunge_set2 == 1:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+
+            elif orientation =='left' and orientation2 == 'left':
+                if leftleg_alternatinglunge_set2 is not None and rightleg_alternatinglunge_set2 is not None:
+                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (190, 280), (0, 100))
+                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (190, 280), (680, 480))
+                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (190, 280), (0, 100))
+                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (190, 280), (680, 480))
+
+                    if int(per_left_leg_alternatinglunge_set2) == 100:
+                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set2) == 100:
+                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set2 > 280:
+                        if dir_alternating_right_lunge_set2 == 0:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    elif rightleg_alternatinglunge_set2 < 179:
+                        if dir_alternating_right_lunge_set2 == 1:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    if leftleg_alternatinglunge_set2 > 280:
+                        if dir_alternating_left_lunge_set2 == 0:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    elif leftleg_alternatinglunge_set2 < 179:
+                        if dir_alternating_left_lunge_set2 == 1:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (100, 200), (100, 0))
+                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (100, 200), (480, 680))
+                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (100, 200), (100, 0))
+                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (100, 200), (480, 680))
+
+
+                    if int(per_left_leg_alternatinglunge_set2) == 100:
+                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set2) == 100:
+                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set2 <= 150 and leftleg_alternatinglunge_set2 <= 100:
+                        if dir_alternating_right_lunge_set2 == 0:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    else: 
+                        if dir_alternating_right_lunge_set2 == 1:
+                            count_alternating_right_lunge_set2 += 0.5
+                            dir_alternating_right_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+
+                    if rightleg_alternatinglunge_set2 <= 100 and leftleg_alternatinglunge_set2 <= 150:
+                        if dir_alternating_left_lunge_set2 == 0:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 1
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+                    else:
+                        if dir_alternating_left_lunge_set2 == 1:
+                            count_alternating_left_lunge_set2 += 0.5
+                            dir_alternating_left_lunge_set2 = 0
+                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+
+  
+        cvzone.putTextRect(img, 'Leg Lunge (alternate) SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge_set2)), (50, 680), color_right_leg_alternatinglunge_set2, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge_set2)), (995, 680), color_left_leg_alternatinglunge_set2, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_alternating_right_lunge_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_alternating_left_lunge_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge_set2 = False
+        exercise_mode = "rest_alternatinglunge_set2"
+        rest_alternatinglunge_start_time_set2 = time.time()
+
+    # Repetition
+    if count_alternating_left_lunge_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge_set2 = False
+        exercise_mode = "rest_alternatinglunge_set2"
+        rest_alternatinglunge_start_time_set2 = time.time()
+    return img
+
+def rest_alternatinglunge_set2(img):
+    global exercise_mode, rest_alternatinglunge_start_time_set2, start_time_alternatinglunge_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "alternating_lunge_set3"
+        start_time_alternatinglunge_set3 = time.time()
+    return img
+
+def detect_alternatinglunge_set3(img):
+    global count_alternating_left_lunge_set3, count_alternating_right_lunge_set3, dir_alternating_left_lunge_set3, dir_alternating_right_lunge_set3, start_time_alternatinglunge_set3, repetition_time_alternatinglunge_set3, per_left_leg_alternatinglunge_set3, per_right_leg_alternatinglunge_set3, display_info_alternatinglunge_set3, bar_left_leg_alternatinglunge_set3, bar_right_leg_alternatinglunge_set3, leftleg_alternatinglunge_set3, rightleg_alternatinglunge_set3, cooldown_duration_alternatinglunge_set3, cooldown_timer_alternatinglunge_set3, color_right_leg_alternatinglunge_set3, color_left_leg_alternatinglunge_set3, exercise_mode, rest_alternatinglunge_start_time_set3
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_alternatinglunge_set3
+    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge_set3
+
+    if display_info_alternatinglunge_set3:  # Check if to display counter, bar, and percentage
+        img = detector_alternatingleftlunge.findPose(img, False)
+        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            rightleg_alternatinglunge_set3, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_alternatinglunge_set3, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+
+            if cooldown_timer_alternatinglunge_set3 > 0:
+                cooldown_timer_alternatinglunge_set3 -= 1
+
+            #print(orientation, orientation2)
+            if orientation == 'right' and orientation2 == 'right':
+                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (90, 170), (100, 0))
+                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (90, 170), (480, 680))
+                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (90, 170), (100, 0))
+                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (90, 170), (480, 680))
+
+                    if int(per_left_leg_alternatinglunge_set3) == 100:
+                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set3) == 100:
+                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set3 <= 80:
+                        if dir_alternating_right_lunge_set3 == 0:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    elif rightleg_alternatinglunge_set3 >= 150:
+                        if dir_alternating_right_lunge_set3 == 1:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    
+                    if leftleg_alternatinglunge_set3 <= 80:
+                        if dir_alternating_left_lunge_set3 == 0:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    elif leftleg_alternatinglunge_set3 >= 150:
+                        if dir_alternating_left_lunge_set3 == 1:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+
+            elif orientation =='left' and orientation2 == 'left':
+                if leftleg_alternatinglunge_set3 is not None and rightleg_alternatinglunge_set3 is not None:
+                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (190, 280), (0, 100))
+                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (190, 280), (680, 480))
+                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (190, 280), (0, 100))
+                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (190, 280), (680, 480))
+
+                    if int(per_left_leg_alternatinglunge_set3) == 100:
+                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set3) == 100:
+                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set3 > 280:
+                        if dir_alternating_right_lunge_set3 == 0:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    elif rightleg_alternatinglunge_set3 < 179:
+                        if dir_alternating_right_lunge_set3 == 1:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    if leftleg_alternatinglunge_set3 > 280:
+                        if dir_alternating_left_lunge_set3 == 0:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    elif leftleg_alternatinglunge_set3 < 179:
+                        if dir_alternating_left_lunge_set3 == 1:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (100, 200), (100, 0))
+                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (100, 200), (480, 680))
+                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (100, 200), (100, 0))
+                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (100, 200), (480, 680))
+
+
+                    if int(per_left_leg_alternatinglunge_set3) == 100:
+                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
+                    elif int(per_right_leg_alternatinglunge_set3) == 100:
+                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
+                    else:
+                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
+                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+
+                    if rightleg_alternatinglunge_set3 <= 150 and leftleg_alternatinglunge_set3 <= 100:
+                        if dir_alternating_right_lunge_set3 == 0:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    else: 
+                        if dir_alternating_right_lunge_set3 == 1:
+                            count_alternating_right_lunge_set3 += 0.5
+                            dir_alternating_right_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+
+                    if rightleg_alternatinglunge_set3 <= 100 and leftleg_alternatinglunge_set3 <= 150:
+                        if dir_alternating_left_lunge_set3 == 0:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 1
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+                    else:
+                        if dir_alternating_left_lunge_set3 == 1:
+                            count_alternating_left_lunge_set3 += 0.5
+                            dir_alternating_left_lunge_set3 = 0
+                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+
+  
+        cvzone.putTextRect(img, 'Leg Lunge (alternate) SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge_set3)), (50, 680), color_right_leg_alternatinglunge_set3, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge_set3)), (995, 680), color_left_leg_alternatinglunge_set3, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_alternating_right_lunge_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_alternating_left_lunge_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge_set3 = False
+        exercise_mode = "rest_alternatinglunge_set3"
+        rest_alternatinglunge_start_time_set3 = time.time()
+
+    # Repetition
+    if count_alternating_left_lunge_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_alternatinglunge_set3 = False
+        exercise_mode = "rest_alternatinglunge_set3"
+        rest_alternatinglunge_start_time_set3 = time.time()
+    return img
+
+def rest_alternatinglunge_set3(img):
+    global exercise_mode, rest_alternatinglunge_start_time_set3, start_time_alternatinglunge_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
         exercise_mode = "next_exercise"
         print(exercise_mode)
-        #start_time_dumbbellfrontraise_set3 = time.time()
+        #start_time_alternatinglunge_set3 = time.time()
+
     return img
 
 # --------------- FOR GAINING MUSCLE ----------------- 
