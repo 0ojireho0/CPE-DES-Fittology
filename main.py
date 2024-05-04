@@ -430,6 +430,9 @@ cooldown_timer_alternatinglunge = 0
 color_right_leg_alternatinglunge = (0, 0, 255)
 color_left_leg_alternatinglunge = (0, 0, 255)
 rest_alternatinglunge_start_time = time.time()
+
+orientation = ''
+orientation2 = ''
 # ----------- END FOR ALTERNATING LUNGE ---------------
 
 # ----------- FOR ALTERNATING LUNGE SET 2 ---------------
@@ -651,7 +654,7 @@ def logout():
 def start_exercise():
     global exercise_mode
     if session['exercise'] == "muscle_gain":
-        exercise_mode = "bicep_curl"
+        exercise_mode = "alternating_lunge"
         return redirect(url_for('muscleGain')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
     elif session['exercise'] == "loss_weight":
         #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
@@ -2627,12 +2630,12 @@ def rest_dumbbellfrontraise_set3(img):
     return img
 
 def detect_alternatinglunge(img):
-    global count_alternating_left_lunge, count_alternating_right_lunge, dir_alternating_left_lunge, dir_alternating_right_lunge, start_time_alternatinglunge, repetition_time_alternatinglunge, per_left_leg_alternatinglunge, per_right_leg_alternatinglunge, display_info_alternatinglunge, bar_left_leg_alternatinglunge, bar_right_leg_alternatinglunge, leftleg_alternatinglunge, rightleg_alternatinglunge, cooldown_duration_alternatinglunge, cooldown_timer_alternatinglunge, color_right_leg_alternatinglunge, color_left_leg_alternatinglunge, exercise_mode, rest_alternatinglunge_start_time
+    global count_alternating_left_lunge, count_alternating_right_lunge, dir_alternating_left_lunge, dir_alternating_right_lunge, start_time_alternatinglunge, repetition_time_alternatinglunge, per_left_leg_alternatinglunge, per_right_leg_alternatinglunge, display_info_alternatinglunge, bar_left_leg_alternatinglunge, bar_right_leg_alternatinglunge, leftleg_alternatinglunge, rightleg_alternatinglunge, cooldown_duration_alternatinglunge, cooldown_timer_alternatinglunge, color_right_leg_alternatinglunge, color_left_leg_alternatinglunge, exercise_mode, rest_alternatinglunge_start_time, orientation, orientation2
 
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_alternatinglunge
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge
+    remaining_time = max(0, repetition_time_alternatinglunge - elapsed_time)
 
     if display_info_alternatinglunge:  # Check if to display counter, bar, and percentage
         img = detector_alternatingleftlunge.findPose(img, False)
@@ -2769,6 +2772,10 @@ def detect_alternatinglunge(img):
         timer_text = f"Time left: {int(remaining_time)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
+        # Orientation
+        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
+        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
+
         # RIGHT LEG
         cv2.putText(img, f"R {int(per_right_leg_alternatinglunge)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
@@ -2823,12 +2830,12 @@ def rest_alternatinglunge(img):
     return img
 
 def detect_alternatinglunge_set2(img):
-    global count_alternating_left_lunge_set2, count_alternating_right_lunge_set2, dir_alternating_left_lunge_set2, dir_alternating_right_lunge_set2, start_time_alternatinglunge_set2, repetition_time_alternatinglunge_set2, per_left_leg_alternatinglunge_set2, per_right_leg_alternatinglunge_set2, display_info_alternatinglunge_set2, bar_left_leg_alternatinglunge_set2, bar_right_leg_alternatinglunge_set2, leftleg_alternatinglunge_set2, rightleg_alternatinglunge_set2, cooldown_duration_alternatinglunge_set2, cooldown_timer_alternatinglunge_set2, color_right_leg_alternatinglunge_set2, color_left_leg_alternatinglunge_set2, exercise_mode, rest_alternatinglunge_start_time_set2
+    global count_alternating_left_lunge_set2, count_alternating_right_lunge_set2, dir_alternating_left_lunge_set2, dir_alternating_right_lunge_set2, start_time_alternatinglunge_set2, repetition_time_alternatinglunge_set2, per_left_leg_alternatinglunge_set2, per_right_leg_alternatinglunge_set2, display_info_alternatinglunge_set2, bar_left_leg_alternatinglunge_set2, bar_right_leg_alternatinglunge_set2, leftleg_alternatinglunge_set2, rightleg_alternatinglunge_set2, cooldown_duration_alternatinglunge_set2, cooldown_timer_alternatinglunge_set2, color_right_leg_alternatinglunge_set2, color_left_leg_alternatinglunge_set2, exercise_mode, rest_alternatinglunge_start_time_set2, orientation, orientation2
 
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_alternatinglunge_set2
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge_set2
+    remaining_time = max(0, repetition_time_alternatinglunge_set2 - elapsed_time) #repetition_time_alternatinglunge_set2
 
     if display_info_alternatinglunge_set2:  # Check if to display counter, bar, and percentage
         img = detector_alternatingleftlunge.findPose(img, False)
@@ -2965,6 +2972,10 @@ def detect_alternatinglunge_set2(img):
         timer_text = f"Time left: {int(remaining_time)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
+        # Orientation
+        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
+        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
+
         # RIGHT LEG
         cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
@@ -3017,7 +3028,7 @@ def rest_alternatinglunge_set2(img):
     return img
 
 def detect_alternatinglunge_set3(img):
-    global count_alternating_left_lunge_set3, count_alternating_right_lunge_set3, dir_alternating_left_lunge_set3, dir_alternating_right_lunge_set3, start_time_alternatinglunge_set3, repetition_time_alternatinglunge_set3, per_left_leg_alternatinglunge_set3, per_right_leg_alternatinglunge_set3, display_info_alternatinglunge_set3, bar_left_leg_alternatinglunge_set3, bar_right_leg_alternatinglunge_set3, leftleg_alternatinglunge_set3, rightleg_alternatinglunge_set3, cooldown_duration_alternatinglunge_set3, cooldown_timer_alternatinglunge_set3, color_right_leg_alternatinglunge_set3, color_left_leg_alternatinglunge_set3, exercise_mode, rest_alternatinglunge_start_time_set3
+    global count_alternating_left_lunge_set3, count_alternating_right_lunge_set3, dir_alternating_left_lunge_set3, dir_alternating_right_lunge_set3, start_time_alternatinglunge_set3, repetition_time_alternatinglunge_set3, per_left_leg_alternatinglunge_set3, per_right_leg_alternatinglunge_set3, display_info_alternatinglunge_set3, bar_left_leg_alternatinglunge_set3, bar_right_leg_alternatinglunge_set3, leftleg_alternatinglunge_set3, rightleg_alternatinglunge_set3, cooldown_duration_alternatinglunge_set3, cooldown_timer_alternatinglunge_set3, color_right_leg_alternatinglunge_set3, color_left_leg_alternatinglunge_set3, exercise_mode, rest_alternatinglunge_start_time_set3, orientation, orientation2
 
     img = cv2.resize(img, (1280, 720))
 
@@ -3158,6 +3169,10 @@ def detect_alternatinglunge_set3(img):
         # Draw timer text above the rectangle
         timer_text = f"Time left: {int(remaining_time)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # Orientation
+        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
+        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         # RIGHT LEG
         cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)

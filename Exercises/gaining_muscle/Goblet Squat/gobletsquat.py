@@ -5,7 +5,7 @@ import time
 import gobletsquat_PoseModule as pm
 import cvzone
 
-cap = cv2.VideoCapture(r'C:\Users\RID\Desktop\pose_estimation\aipose2\Exercise\gainingmuscle\gobletsquat2.mp4')
+cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\Goblet Squat\gobletsquat2.mp4')
 detector_gobletsquat = pm.poseDetectorGobletSquat()
 
 count_goblet_squat = 0
@@ -132,11 +132,6 @@ while True:
                             dir_goblet_squat = 0
                             cooldown_timer = cooldown_duration
 
-        #Delay Timer for Pose Estimation
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        if cooldown_timer > 0:
-            cooldown_timer -= 1 / fps
-
         cvzone.putTextRect(img, 'Goblet Squat Tracker', [450, 30], thickness=2, border=2, scale=2)
 
         # Draw rectangle behind the timer text
@@ -145,10 +140,6 @@ while True:
         # Draw timer text above the rectangle
         timer_text = f"Time left: {int(remaining_time)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         # RIGHT LEG
         cv2.putText(img, f"R {int(per_right_leg)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
