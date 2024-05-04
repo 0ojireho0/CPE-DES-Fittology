@@ -13,6 +13,7 @@ import shouldertap_PoseModule as pm_shouldertap
 import chestpress_PoseModule as pm_chestpress
 import dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
 import alternatinglunge_PoseModule as pm_alternatinglunge
+import bodyweightsquat_PoseModule as pm_bws
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -493,6 +494,87 @@ color_left_leg_alternatinglunge_set3 = (0, 0, 255)
 rest_alternatinglunge_start_time_set3 = time.time()
 # ----------- END FOR ALTERNATING LUNGE SET 3 ---------------
 
+# ----------- FOR BODY WEIGHT SQUAT ---------------
+detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
+
+count_body_weight_squat = 0
+dir_body_weight_squat = 0
+
+
+start_time_bws = time.time()
+repetition_time_bws = 60
+display_info_bws = True
+
+leftbody_bws = 0
+rightbody_bws = 0
+
+per_left_body_bws = 0
+bar_left_body_bws = 0
+
+per_right_body_bws = 0
+bar_right_body_bws = 0
+
+color_right_body_bws = 0
+color_left_body_bws = 0
+
+rest_bws_start_time = time.time()
+
+# ----------- END FOR BODY WEIGHT SQUAT ---------------
+
+# ----------- FOR BODY WEIGHT SQUAT SET 2 ---------------
+detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
+
+count_body_weight_squat_set2 = 0
+dir_body_weight_squat_set2 = 0
+
+
+start_time_bws_set2 = time.time()
+repetition_time_bws_set2 = 60
+display_info_bws_set2 = True
+
+leftbody_bws_set2 = 0
+rightbody_bws_set2 = 0
+
+per_left_body_bws_set2 = 0
+bar_left_body_bws_set2 = 0
+
+per_right_body_bws_set2 = 0
+bar_right_body_bws_set2 = 0
+
+color_right_body_bws_set2 = 0
+color_left_body_bws_set2 = 0
+
+rest_bws_start_time_set2 = time.time()
+
+# ----------- END FOR BODY WEIGHT SQUAT SET 2 ---------------
+
+# ----------- FOR BODY WEIGHT SQUAT SET 3 ---------------
+detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
+
+count_body_weight_squat_set3 = 0
+dir_body_weight_squat_set3 = 0
+
+
+start_time_bws_set3 = time.time()
+repetition_time_bws_set3 = 60
+display_info_bws_set3 = True
+
+leftbody_bws_set3 = 0
+rightbody_bws_set3 = 0
+
+per_left_body_bws_set3 = 0
+bar_left_body_bws_set3 = 0
+
+per_right_body_bws_set3 = 0
+bar_right_body_bws_set3 = 0
+
+color_right_body_bws_set3 = 0
+color_left_body_bws_set3 = 0
+
+rest_bws_start_time_set3 = time.time()
+
+# ----------- END FOR BODY WEIGHT SQUAT SET 3 ---------------
+
 
 picFolder = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = picFolder
@@ -569,7 +651,7 @@ def logout():
 def start_exercise():
     global exercise_mode
     if session['exercise'] == "muscle_gain":
-        exercise_mode = "alternating_lunge"
+        exercise_mode = "bicep_curl"
         return redirect(url_for('muscleGain')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
     elif session['exercise'] == "loss_weight":
         #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
@@ -660,6 +742,18 @@ def gen_frames():
                 img_with_faces = detect_alternatinglunge_set3(img)
             if exercise_mode == "rest_alternatinglunge_set3":
                 img_with_faces = rest_alternatinglunge_set3(img)
+            if exercise_mode == "bws":
+                img_with_faces = detect_bws(img)
+            if exercise_mode == "rest_bws":
+                img_with_faces = rest_bws(img)
+            if exercise_mode == "bws_set2":
+                img_with_faces = detect_bws_set2(img)
+            if exercise_mode == "rest_bws_set2":
+                img_with_faces = rest_bws_set2(img)
+            if exercise_mode == "bws_set3":
+                img_with_faces = detect_bws_set3(img)
+            if exercise_mode == "rest_bws_set3":
+                img_with_faces = rest_bws_set3(img)
 
 
 
@@ -3098,7 +3192,7 @@ def detect_alternatinglunge_set3(img):
     return img
 
 def rest_alternatinglunge_set3(img):
-    global exercise_mode, rest_alternatinglunge_start_time_set3, start_time_alternatinglunge_set3
+    global exercise_mode, rest_alternatinglunge_start_time_set3, start_time_bws
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set3
@@ -3112,12 +3206,446 @@ def rest_alternatinglunge_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
-        exercise_mode = "next_exercise"
-        print(exercise_mode)
-        #start_time_alternatinglunge_set3 = time.time()
+        exercise_mode = "bws"
+        start_time_bws = time.time()
 
     return img
 
+def detect_bws(img):
+    global count_body_weight_squat, dir_body_weight_squat, start_time_bws, repetition_time_bws, display_info_bws, leftbody_bws, rightbody_bws, per_left_body_bws, bar_left_body_bws, per_right_body_bws, bar_right_body_bws, color_right_body_bws, color_left_body_bws, rest_bws_start_time, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_bws
+    remaining_time = max(0, repetition_time_bws - elapsed_time) #repetition_time_bws
+
+    if display_info_bws:  # Check if to display counter, bar, and percentage
+        img = detector_BodyWeightSquat.findPose(img, False)
+        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+            
+            leftbody_bws, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bws, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
+            
+            if orientation == 'right' and orientation2 == 'right':
+                per_right_body_bws = np.interp(rightbody_bws, (180, 280), (0, 100))
+                bar_right_body_bws = np.interp(rightbody_bws, (180, 280), (400, 200))
+
+                per_left_body_bws = np.interp(leftbody_bws, (180, 280), (0, 100))
+                bar_left_body_bws = np.interp(leftbody_bws, (180, 280), (400, 200))
+
+                if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
+                    color_left_body_bws = (0, 255, 0)
+                    color_right_body_bws = (0, 255, 0)  
+                else:
+                    color_left_body_bws = (0, 0, 255)  
+                    color_right_body_bws = (0, 0, 255)  
+            
+                if leftbody_bws >= 280 and rightbody_bws >= 280:
+                    if dir_body_weight_squat == 0:
+                        count_body_weight_squat += 0.5
+                        dir_body_weight_squat = 1
+                elif leftbody_bws <= 180 and rightbody_bws <= 180:
+                    if dir_body_weight_squat == 1:
+                        count_body_weight_squat +=0.5
+                        dir_body_weight_squat = 0
+                    
+            elif orientation =='left' and orientation2 == 'left':
+                if leftbody_bws is not None and rightbody_bws is not None:
+
+                    per_right_body_bws = np.interp(rightbody_bws, (90, 170), (100, 0))
+                    bar_right_body_bws = np.interp(rightbody_bws, (90, 170), (200, 400))
+
+                    per_left_body_bws = np.interp(leftbody_bws, (90, 170), (100, 0))
+                    bar_left_body_bws = np.interp(leftbody_bws, (90, 170), (200, 400))
+
+                    if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
+                        color_left_body_bws = (0, 255, 0)
+                        color_right_body_bws = (0, 255, 0)  
+                    else:
+                        color_left_body_bws = (0, 0, 255)  
+                        color_right_body_bws = (0, 0, 255)  
+ 
+                    if leftbody_bws <= 90 and rightbody_bws <= 90:
+                        if dir_body_weight_squat == 0:
+                            count_body_weight_squat += 0.5
+                            dir_body_weight_squat = 1
+                    elif leftbody_bws >= 170 and rightbody_bws >= 170:
+                        if dir_body_weight_squat == 1:
+                            count_body_weight_squat +=0.5
+                            dir_body_weight_squat = 0
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_body_bws = np.interp(rightbody_bws, (180, 270), (100, 0))
+                    bar_right_body_bws = np.interp(rightbody_bws, (180, 270), (200, 400))
+
+                    per_left_body_bws = np.interp(leftbody_bws, (180, 270), (100, 0))
+                    bar_left_body_bws = np.interp(leftbody_bws, (180, 270), (200, 400))
+
+                    if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
+                        color_left_body_bws = (0, 255, 0)
+                        color_right_body_bws = (0, 255, 0)  
+                    else:
+                        color_left_body_bws = (0, 0, 255)  
+                        color_right_body_bws = (0, 0, 255)  
+
+                    if rightbody_bws <= 180 and leftbody_bws <= 180: 
+                        if dir_body_weight_squat == 0:
+                            count_body_weight_squat += 0.5
+                            dir_body_weight_squat =1
+                    elif rightbody_bws >= 270 and leftbody_bws >= 270:
+                        if dir_body_weight_squat == 1:
+                            count_body_weight_squat += 0.5
+                            dir_body_weight_squat = 0
+                    
+
+        cvzone.putTextRect(img, 'Body Weight Squat Tracker', [220, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_body_bws)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_body_bws)), (50, 400), color_right_body_bws, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_body_bws)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_body_bws)), (995, 400), color_left_body_bws, -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_body_weight_squat)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws"
+        rest_bws_start_time = time.time()
+
+    if count_body_weight_squat >= 6:  
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws"
+        rest_bws_start_time = time.time()
+    return img
+
+def rest_bws(img):
+    global exercise_mode, rest_bws_start_time, start_time_bws_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_bws_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "bws_set2"
+        start_time_bws_set2 = time.time()
+    return img
+
+def detect_bws_set2(img):
+    global count_body_weight_squat_set2, dir_body_weight_squat_set2, start_time_bws_set2, repetition_time_bws_set2, display_info_bws_set2, leftbody_bws_set2, rightbody_bws_set2, per_left_body_bws_set2, bar_left_body_bws_set2, per_right_body_bws_set2, bar_right_body_bws_set2, color_right_body_bws_set2, color_left_body_bws_set2, rest_bws_start_time_set2, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_bws_set2
+    remaining_time = max(0, repetition_time_bws_set2 - elapsed_time) #repetition_time_bws_set2
+
+    if display_info_bws_set2:  # Check if to display counter, bar, and percentage
+        img = detector_BodyWeightSquat.findPose(img, False)
+        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+            
+            leftbody_bws_set2, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bws_set2, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
+            
+            if orientation == 'right' and orientation2 == 'right':
+                per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 280), (0, 100))
+                bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 280), (400, 200))
+
+                per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 280), (0, 100))
+                bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 280), (400, 200))
+
+                if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
+                    color_left_body_bws_set2 = (0, 255, 0)
+                    color_right_body_bws_set2 = (0, 255, 0)  
+                else:
+                    color_left_body_bws_set2 = (0, 0, 255)  
+                    color_right_body_bws_set2 = (0, 0, 255)  
+            
+                if leftbody_bws_set2 >= 280 and rightbody_bws_set2 >= 280:
+                    if dir_body_weight_squat_set2 == 0:
+                        count_body_weight_squat_set2 += 0.5
+                        dir_body_weight_squat_set2 = 1
+                elif leftbody_bws_set2 <= 180 and rightbody_bws_set2 <= 180:
+                    if dir_body_weight_squat_set2 == 1:
+                        count_body_weight_squat_set2 +=0.5
+                        dir_body_weight_squat_set2 = 0
+                    
+            elif orientation =='left' and orientation2 == 'left':
+                if leftbody_bws_set2 is not None and rightbody_bws_set2 is not None:
+
+                    per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (90, 170), (100, 0))
+                    bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (90, 170), (200, 400))
+
+                    per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (90, 170), (100, 0))
+                    bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (90, 170), (200, 400))
+
+                    if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
+                        color_left_body_bws_set2 = (0, 255, 0)
+                        color_right_body_bws_set2 = (0, 255, 0)  
+                    else:
+                        color_left_body_bws_set2 = (0, 0, 255)  
+                        color_right_body_bws_set2 = (0, 0, 255)  
+ 
+                    if leftbody_bws_set2 <= 90 and rightbody_bws_set2 <= 90:
+                        if dir_body_weight_squat_set2 == 0:
+                            count_body_weight_squat_set2 += 0.5
+                            dir_body_weight_squat_set2 = 1
+                    elif leftbody_bws_set2 >= 170 and rightbody_bws_set2 >= 170:
+                        if dir_body_weight_squat_set2 == 1:
+                            count_body_weight_squat_set2 +=0.5
+                            dir_body_weight_squat_set2 = 0
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 270), (100, 0))
+                    bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 270), (200, 400))
+
+                    per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 270), (100, 0))
+                    bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 270), (200, 400))
+
+                    if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
+                        color_left_body_bws_set2 = (0, 255, 0)
+                        color_right_body_bws_set2 = (0, 255, 0)  
+                    else:
+                        color_left_body_bws_set2 = (0, 0, 255)  
+                        color_right_body_bws_set2 = (0, 0, 255)  
+
+                    if rightbody_bws_set2 <= 180 and leftbody_bws_set2 <= 180: 
+                        if dir_body_weight_squat_set2 == 0:
+                            count_body_weight_squat_set2 += 0.5
+                            dir_body_weight_squat_set2 =1
+                    elif rightbody_bws_set2 >= 270 and leftbody_bws_set2 >= 270:
+                        if dir_body_weight_squat_set2 == 1:
+                            count_body_weight_squat_set2 += 0.5
+                            dir_body_weight_squat_set2 = 0
+                    
+
+        cvzone.putTextRect(img, 'Body Weight Squat Tracker SET 2', [220, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_body_bws_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_body_bws_set2)), (50, 400), color_right_body_bws_set2, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_body_bws_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_body_bws_set2)), (995, 400), color_left_body_bws_set2, -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_body_weight_squat_set2)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws_set2"
+        rest_bws_start_time_set2 = time.time()
+
+    if count_body_weight_squat_set2 >= 6:  
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws_set2"
+        rest_bws_start_time_set2 = time.time()
+    return img
+
+def rest_bws_set2(img):
+    global exercise_mode, rest_bws_start_time_set2, start_time_bws_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_bws_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "bws_set3"
+        start_time_bws_set3 = time.time()
+    return img
+
+def detect_bws_set3(img):
+    global count_body_weight_squat_set3, dir_body_weight_squat_set3, start_time_bws_set3, repetition_time_bws_set3, display_info_bws_set3, leftbody_bws_set3, rightbody_bws_set3, per_left_body_bws_set3, bar_left_body_bws_set3, per_right_body_bws_set3, bar_right_body_bws_set3, color_right_body_bws_set3, color_left_body_bws_set3, rest_bws_start_time_set3, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_bws_set3
+    remaining_time = max(0, repetition_time_bws_set3 - elapsed_time) #repetition_time_bws_set3
+
+    if display_info_bws_set3:  # Check if to display counter, bar, and percentage
+        img = detector_BodyWeightSquat.findPose(img, False)
+        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+            
+            leftbody_bws_set3, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bws_set3, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
+            
+            if orientation == 'right' and orientation2 == 'right':
+                per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 280), (0, 100))
+                bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 280), (400, 200))
+
+                per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 280), (0, 100))
+                bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 280), (400, 200))
+
+                if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
+                    color_left_body_bws_set3 = (0, 255, 0)
+                    color_right_body_bws_set3 = (0, 255, 0)  
+                else:
+                    color_left_body_bws_set3 = (0, 0, 255)  
+                    color_right_body_bws_set3 = (0, 0, 255)  
+            
+                if leftbody_bws_set3 >= 280 and rightbody_bws_set3 >= 280:
+                    if dir_body_weight_squat_set3 == 0:
+                        count_body_weight_squat_set3 += 0.5
+                        dir_body_weight_squat_set3 = 1
+                elif leftbody_bws_set3 <= 180 and rightbody_bws_set3 <= 180:
+                    if dir_body_weight_squat_set3 == 1:
+                        count_body_weight_squat_set3 +=0.5
+                        dir_body_weight_squat_set3 = 0
+                    
+            elif orientation =='left' and orientation2 == 'left':
+                if leftbody_bws_set3 is not None and rightbody_bws_set3 is not None:
+
+                    per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (90, 170), (100, 0))
+                    bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (90, 170), (200, 400))
+
+                    per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (90, 170), (100, 0))
+                    bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (90, 170), (200, 400))
+
+                    if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
+                        color_left_body_bws_set3 = (0, 255, 0)
+                        color_right_body_bws_set3 = (0, 255, 0)  
+                    else:
+                        color_left_body_bws_set3 = (0, 0, 255)  
+                        color_right_body_bws_set3 = (0, 0, 255)  
+ 
+                    if leftbody_bws_set3 <= 90 and rightbody_bws_set3 <= 90:
+                        if dir_body_weight_squat_set3 == 0:
+                            count_body_weight_squat_set3 += 0.5
+                            dir_body_weight_squat_set3 = 1
+                    elif leftbody_bws_set3 >= 170 and rightbody_bws_set3 >= 170:
+                        if dir_body_weight_squat_set3 == 1:
+                            count_body_weight_squat_set3 +=0.5
+                            dir_body_weight_squat_set3 = 0
+
+            elif orientation == 'front' and orientation2 == 'front':
+                    
+                    per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 270), (100, 0))
+                    bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 270), (200, 400))
+
+                    per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 270), (100, 0))
+                    bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 270), (200, 400))
+
+                    if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
+                        color_left_body_bws_set3 = (0, 255, 0)
+                        color_right_body_bws_set3 = (0, 255, 0)  
+                    else:
+                        color_left_body_bws_set3 = (0, 0, 255)  
+                        color_right_body_bws_set3 = (0, 0, 255)  
+
+                    if rightbody_bws_set3 <= 180 and leftbody_bws_set3 <= 180: 
+                        if dir_body_weight_squat_set3 == 0:
+                            count_body_weight_squat_set3 += 0.5
+                            dir_body_weight_squat_set3 =1
+                    elif rightbody_bws_set3 >= 270 and leftbody_bws_set3 >= 270:
+                        if dir_body_weight_squat_set3 == 1:
+                            count_body_weight_squat_set3 += 0.5
+                            dir_body_weight_squat_set3 = 0
+                    
+
+        cvzone.putTextRect(img, 'Body Weight Squat Tracker SET 3', [220, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_body_bws_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_body_bws_set3)), (50, 400), color_right_body_bws_set3, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_body_bws_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_body_bws_set3)), (995, 400), color_left_body_bws_set3, -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_body_weight_squat_set3)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws_set3"
+        rest_bws_start_time_set3 = time.time()
+
+    if count_body_weight_squat_set2 >= 6:  
+        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_bws = False
+        exercise_mode = "rest_bws_set3"
+        rest_bws_start_time_set3 = time.time()
+    return img
+
+def rest_bws_set3(img):
+    global exercise_mode, rest_bws_start_time_set3, start_time_bws_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_bws_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "next_exercise"
+        print(exercise_mode)
+        #start_time_bws_set3 = time.time()
+    return img
 # --------------- FOR GAINING MUSCLE ----------------- 
 
 
