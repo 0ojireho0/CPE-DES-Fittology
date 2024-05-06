@@ -1048,7 +1048,12 @@ def muscleGain():
         shoulder_tap = os.path.join(app.config['UPLOAD_FOLDER'], 'shoulder_tap.jpg')
         dumbbell_frontraise = os.path.join(app.config['UPLOAD_FOLDER'], 'dumbbell_frontraise.jpg')
         chest_press = os.path.join(app.config['UPLOAD_FOLDER'], 'chest_press.jpg')
-        return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up, shoulder_tap = shoulder_tap, dumbbell_frontraise = dumbbell_frontraise, chest_press = chest_press)
+        alternatingleglunges = os.path.join(app.config['UPLOAD_FOLDER'], 'alternatingleglunges.jpg')
+        bodyweightsquat = os.path.join(app.config['UPLOAD_FOLDER'], 'bodyweightsquat.jpg')
+        dumbbellhiphinge = os.path.join(app.config['UPLOAD_FOLDER'], 'dumbbellhiphinge.jpg')
+        gobletsquat = os.path.join(app.config['UPLOAD_FOLDER'], 'gobletsquat.jpg')
+        highkneetap = os.path.join(app.config['UPLOAD_FOLDER'], 'highkneetap.jpg')
+        return render_template('gainingMuscle.html', bicep_curl = bicep_curl, push_up = push_up, shoulder_tap = shoulder_tap, dumbbell_frontraise = dumbbell_frontraise, chest_press = chest_press, alternatingleglunges = alternatingleglunges, bodyweightsquat = bodyweightsquat, dumbbellhiphinge = dumbbellhiphinge, gobletsquat = gobletsquat, highkneetap = highkneetap)
     else:
         return redirect(url_for('home'))
 
@@ -1084,7 +1089,7 @@ def detect_bicep_curls(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time
-    remaining_time = max(0, repetition_time - elapsed_time) #repetition_time
+    remaining_time = max(0, 70 - elapsed_time) #repetition_time
 
 
 
@@ -1211,7 +1216,7 @@ def rest_bicep(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1232,7 +1237,7 @@ def detect_bicep_curls_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bicep_set2
-    remaining_time = max(0, repetition_time_bicep_set2 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bicep_set2
 
     if exercise_mode == "bicep_curl_set2":
         if display_bicep_set2:  # Check if to display counter, bar, and percentage
@@ -1347,7 +1352,7 @@ def rest_bicep_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1368,7 +1373,7 @@ def detect_bicep_curls_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bicep_set3
-    remaining_time = max(0, repetition_time_bicep_set3 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bicep_set3
 
     if exercise_mode == "bicep_curl_set3":
         if display_bicep_set3:  # Check if to display counter, bar, and percentage
@@ -1483,7 +1488,7 @@ def rest_bicep_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1506,7 +1511,7 @@ def detect_push_up(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_pushup
-    remaining_time = max(0, repetition_time_pushup - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup
     if exercise_mode == "push_up":
         if display_pushup:  # Check if to display count_pushup, bar, and percentage
 
@@ -1584,7 +1589,7 @@ def rest_pushup(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1605,7 +1610,7 @@ def detect_push_up_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_pushup_set2
-    remaining_time = max(0, repetition_time_pushup_set2 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup_set2
     if exercise_mode == "push_up_set2":
         if display_pushup_set2:  # Check if to display count_pushup, bar, and percentage
 
@@ -1683,7 +1688,7 @@ def rest_pushup_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1704,7 +1709,7 @@ def detect_push_up_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_pushup_set3
-    remaining_time = max(0, repetition_time_pushup_set3 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup_set3
     if exercise_mode == "push_up_set3":
         if display_pushup_set3:  # Check if to display count_pushup, bar, and percentage
 
@@ -1781,7 +1786,7 @@ def rest_pushup_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1802,7 +1807,7 @@ def detect_shouldertap(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_shouldertap
-    remaining_time = max(0, repetition_time_shouldertap - elapsed_time) #repetition_time_shouldertap
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap
 
     if display_info_shouldertap:  # Check if to display counter, bar, and percentage
         img = detector_ShoulderTap.findPose(img, False)
@@ -1905,7 +1910,7 @@ def rest_shouldertap(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1925,7 +1930,7 @@ def detect_shouldertap_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_shouldertap_set2
-    remaining_time = max(0, repetition_time_shouldertap_set2 - elapsed_time) #repetition_time_shouldertap
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap_set2
 
     if display_info_shouldertap_set2:  # Check if to display counter, bar, and percentage
         img = detector_ShoulderTap.findPose(img, False)
@@ -2027,7 +2032,7 @@ def rest_shouldertap_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2047,7 +2052,7 @@ def detect_shouldertap_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_shouldertap_set3
-    remaining_time = max(0, repetition_time_shouldertap_set3 - elapsed_time) #repetition_time_shouldertap
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap_set3
 
     if display_info_shouldertap_set3:  # Check if to display counter, bar, and percentage
         img = detector_ShoulderTap.findPose(img, False)
@@ -2149,7 +2154,7 @@ def rest_shouldertap_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2171,7 +2176,7 @@ def detect_chestpress(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_chestpress
-    remaining_time = max(0, repetition_time_chestpress - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress
 
 
     if display_info_chestpress:  # Check if to display counter, bar, and percentage
@@ -2272,7 +2277,7 @@ def rest_chestpress(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2293,7 +2298,7 @@ def detect_chestpress_set2(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_chestpress_set2
-    remaining_time = max(0, repetition_time_chestpress_set2 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress_set2
 
 
     if display_info_chestpress_set2:  # Check if to display counter, bar, and percentage
@@ -2395,7 +2400,7 @@ def rest_chestpress_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2417,7 +2422,7 @@ def detect_chestpress_set3(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_chestpress_set3
-    remaining_time = max(0, repetition_time_chestpress_set3 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress_set3
 
 
     if display_info_chestpress_set3:  # Check if to display counter, bar, and percentage
@@ -2518,7 +2523,7 @@ def rest_chestpress_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2539,7 +2544,7 @@ def detect_dumbbellfrontraise(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_dumbbellfrontraise
-    remaining_time = max(0, repetition_time_dumbbellfrontraise - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise
 
     if display_info_dumbbellfrontraise:  # Check if to display counter, bar, and percentage
         img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
@@ -2641,7 +2646,7 @@ def rest_dumbbellfrontraise(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2663,7 +2668,7 @@ def detect_dumbbellfrontraise_set2(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_dumbbellfrontraise_set2
-    remaining_time = max(0, repetition_time_dumbbellfrontraise_set2 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise_set2
 
     if display_info_dumbbellfrontraise_set2:  # Check if to display counter, bar, and percentage
         img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
@@ -2765,7 +2770,7 @@ def rest_dumbbellfrontraise_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2786,7 +2791,7 @@ def detect_dumbbellfrontraise_set3(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_dumbbellfrontraise_set3
-    remaining_time = max(0, repetition_time_dumbbellfrontraise_set3 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise_set3
 
     if display_info_dumbbellfrontraise_set3:  # Check if to display counter, bar, and percentage
         img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
@@ -2816,7 +2821,7 @@ def detect_dumbbellfrontraise_set3(img):
                         dir_left_dumbbellfrontraise_set3 = 1
             elif angle_left_dumbbellfrontraise_set3 <= 20:
                 if dir_left_dumbbellfrontraise_set3 == 1 and count_left_dumbbellfrontraise_set3 < 5:
-                    count_left_dumbbellfrontraise += 0.5
+                    count_left_dumbbellfrontraise_set3 += 0.5
                     if count_left_dumbbellfrontraise_set3 == 5:
                         dir_left_dumbbellfrontraise_set3 = -1
                     else:
@@ -2876,7 +2881,7 @@ def detect_dumbbellfrontraise_set3(img):
         exercise_mode = "rest_dumbbellfrontraise_set3"
         rest_dumbbellfrontraise_start_time_set3 = time.time()
 
-    if count_right_dumbbellfrontraise == 5 and count_left_dumbbellfrontraise == 5:
+    if count_right_dumbbellfrontraise_set3 == 5 and count_left_dumbbellfrontraise_set3 == 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set3 = False
         exercise_mode = "rest_dumbbellfrontraise_set3"
@@ -2889,7 +2894,7 @@ def rest_dumbbellfrontraise_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2909,7 +2914,7 @@ def detect_alternatinglunge(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_alternatinglunge
-    remaining_time = max(0, repetition_time_alternatinglunge - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge
 
     if display_info_alternatinglunge:  # Check if to display counter, bar, and percentage
         img = detector_alternatingleftlunge.findPose(img, False)
@@ -3088,7 +3093,7 @@ def rest_alternatinglunge(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3109,7 +3114,7 @@ def detect_alternatinglunge_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_alternatinglunge_set2
-    remaining_time = max(0, repetition_time_alternatinglunge_set2 - elapsed_time) #repetition_time_alternatinglunge_set2
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge_set2
 
     if display_info_alternatinglunge_set2:  # Check if to display counter, bar, and percentage
         img = detector_alternatingleftlunge.findPose(img, False)
@@ -3287,7 +3292,7 @@ def rest_alternatinglunge_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3307,7 +3312,7 @@ def detect_alternatinglunge_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_alternatinglunge_set3
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_alternatinglunge_set3
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge_set3
 
     if display_info_alternatinglunge_set3:  # Check if to display counter, bar, and percentage
         img = detector_alternatingleftlunge.findPose(img, False)
@@ -3485,7 +3490,7 @@ def rest_alternatinglunge_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3506,7 +3511,7 @@ def detect_bws(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bws
-    remaining_time = max(0, repetition_time_bws - elapsed_time) #repetition_time_bws
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws
 
     if display_info_bws:  # Check if to display counter, bar, and percentage
         img = detector_BodyWeightSquat.findPose(img, False)
@@ -3631,7 +3636,7 @@ def rest_bws(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bws_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3651,7 +3656,7 @@ def detect_bws_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bws_set2
-    remaining_time = max(0, repetition_time_bws_set2 - elapsed_time) #repetition_time_bws_set2
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws_set2
 
     if display_info_bws_set2:  # Check if to display counter, bar, and percentage
         img = detector_BodyWeightSquat.findPose(img, False)
@@ -3776,7 +3781,7 @@ def rest_bws_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bws_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3796,7 +3801,7 @@ def detect_bws_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bws_set3
-    remaining_time = max(0, repetition_time_bws_set3 - elapsed_time) #repetition_time_bws_set3
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws_set3
 
     if display_info_bws_set3:  # Check if to display counter, bar, and percentage
         img = detector_BodyWeightSquat.findPose(img, False)
@@ -3921,7 +3926,7 @@ def rest_bws_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bws_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3941,7 +3946,7 @@ def detect_gs(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_goblet_squat
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_goblet_squat
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat
 
     if display_info_goblet_squat:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
@@ -4089,7 +4094,7 @@ def rest_gs(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4109,7 +4114,7 @@ def detect_gs_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_goblet_squat_set2
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_goblet_squat_set2
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat_set2
 
     if display_info_goblet_squat_set2:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
@@ -4257,7 +4262,7 @@ def rest_gs_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4277,7 +4282,7 @@ def detect_gs_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_goblet_squat_set3
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_goblet_squat_set3
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat_set3
 
     if display_info_goblet_squat_set3:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
@@ -4424,7 +4429,7 @@ def rest_gs_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4444,7 +4449,7 @@ def detect_hkt(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_hkt
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hkt
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt
 
     if display_info_hkt:  # Check if to display counter, bar, and percentage
         img = detector_HighKneeTap.findPose(img, False)
@@ -4612,7 +4617,7 @@ def rest_hkt(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_hkt_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4632,7 +4637,7 @@ def detect_hkt_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_hkt_set2
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hkt_set2
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt_set2
 
     if display_info_hkt_set2:  # Check if to display counter, bar, and percentage
         img = detector_HighKneeTap.findPose(img, False)
@@ -4801,7 +4806,7 @@ def rest_hkt_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_hkt_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4822,7 +4827,7 @@ def detect_hkt_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_hkt_set3
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hkt_set3
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt_set3
 
     if display_info_hkt_set3:  # Check if to display counter, bar, and percentage
         img = detector_HighKneeTap.findPose(img, False)
@@ -4990,7 +4995,7 @@ def rest_hkt_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_hkt_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5012,7 +5017,7 @@ def detect_dhh(img):
 
 
     elapsed_time = time.time() - start_time_hpp
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hpp
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp
 
     if display_info_hpp:
         img = detector_HipHinge.findPose(img, False)
@@ -5139,7 +5144,7 @@ def rest_dhh(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5161,7 +5166,7 @@ def detect_dhh_set2(img):
 
 
     elapsed_time = time.time() - start_time_hpp_set2
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hpp_set2
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp_set2
 
     if display_info_hpp_set2:
         img = detector_HipHinge.findPose(img, False)
@@ -5288,7 +5293,7 @@ def rest_dhh_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5310,7 +5315,7 @@ def detect_dhh_set3(img):
 
 
     elapsed_time = time.time() - start_time_hpp_set3
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_hpp_set3
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp_set3
 
     if display_info_hpp_set3:
         img = detector_HipHinge.findPose(img, False)
@@ -5436,7 +5441,7 @@ def rest_dhh_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color

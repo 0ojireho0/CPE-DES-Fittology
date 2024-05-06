@@ -20,6 +20,11 @@
                 <img id="shoulder-tap-img" src="{{shoulder_tap}}" style="display: none;" width="100%"  alt="shoulder tap">
                 <img id="dumbbell-frontraise-img" src="{{dumbbell_frontraise}}" style="display: none;" width="100%"  alt="dumbbell frontraise">
                 <img id="chest-press-img" src="{{chest_press}}" style="display: none;" width="100%"  alt="chest press">
+                <img id="alternatingleglunges-img" src="{{alternatingleglunges}}" style="display: none;" width="100%"  alt="alternatingleglunges">
+                <img id="bodyweightsquat-img" src="{{bodyweightsquat}}" style="display: none;" width="100%"  alt="bodyweightsquat">
+                <img id="dumbbellhiphinge-img" src="{{dumbbellhiphinge}}" style="display: none;" width="100%"  alt="dumbbellhiphinge">
+                <img id="gobletsquat-img" src="{{gobletsquat}}" style="display: none;" width="100%"  alt="gobletsquat">
+                <img id="highkneetap-img" src="{{highkneetap}}" style="display: none;" width="100%"  alt="highkneetap">
             </div>
         </div>
     </div>
@@ -69,7 +74,22 @@
                 } else if (data.exercise_mode === 'dumbbell_frontraise'){
                     document.getElementById('chest-press-img').style.display = 'none';
                     document.getElementById('dumbbell-frontraise-img').style.display = 'block';
-                }
+                } else if (data.exercise_mode === 'alternating_lunge'){
+                    document.getElementById('dumbbell-frontraise-img').style.display = 'none';
+                    document.getElementById('alternatingleglunges-img').style.display = 'block';
+                } else if (data.exercise_mode === 'bws'){
+                    document.getElementById('alternatingleglunges-img').style.display = 'none';
+                    document.getElementById('bodyweightsquat-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'goblet_squat'){
+                    document.getElementById('bodyweightsquat-img').style.display = 'none';
+                    document.getElementById('gobletsquat-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'highkneetap'){
+                    document.getElementById('gobletsquat-img').style.display = 'none';
+                    document.getElementById('highkneetap-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'dhh'){
+                    document.getElementById('highkneetap-img').style.display = 'none';
+                    document.getElementById('dumbbellhiphinge-img').style.display = 'block';
+                }     
             })
             .catch(error => {
                 console.error('Error fetching exercise mode:', error);
