@@ -8,17 +8,17 @@ import cvzone
 
 
 # Camera
-cap = cv2.VideoCapture(r'C:\Users\RID\Desktop\pose_estimation\aipose2\Exercise\weightloss\squatjack.mp4')
+cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\loss_weight\Squat Jacks\squatjack.mp4')
 
 # Import class
 detector_squatjack = pm.poseDetectorSquatJack()
 
 # Initialize Variables
 count_squatjack = 0
-dir = 0
-start_time = time.time()  # starts time
-repetition_time = 60  # duration time
-display_info = True  # display features
+dir_squatjack = 0
+start_time_squatjack = time.time()  # starts time
+repetition_time_squatjack = 60  # duration time
+display_info_squatjack = True  # display features
 
 # Main loop
 while True:
@@ -28,10 +28,10 @@ while True:
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time
-    remaining_time = max(0, repetition_time - elapsed_time)
+    elapsed_time = time.time() - start_time_squatjack
+    remaining_time = max(0, repetition_time_squatjack - elapsed_time)
 
-    if display_info:  # Check if to display counter, bar, and percentage
+    if display_info_squatjack:  # Check if to display counter, bar, and percentage
         img = detector_squatjack.findPose(img, False)  # initializes img as variable for findpose function
         lmList_squatjack = detector_squatjack.findPosition(img, False)  # initializes lmList_squatjack as variable for findPosition function
 
@@ -46,13 +46,13 @@ while True:
 
 
             if distance >= 240:
-                if dir == 0:
+                if dir_squatjack == 0:
                     count_squatjack += 0.5
-                    dir = 1
+                    dir_squatjack = 1
             elif distance <= 60:
-                if dir == 1:
+                if dir_squatjack == 1:
                     count_squatjack +=0.5
-                    dir = 0
+                    dir_squatjack = 0
 
 
         # Label
@@ -83,11 +83,11 @@ while True:
 
     if remaining_time <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info = False
+        display_info_squatjack = False
 
     if count_squatjack == 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info = False
+        display_info_squatjack = False
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
