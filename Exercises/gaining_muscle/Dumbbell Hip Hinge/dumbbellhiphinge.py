@@ -7,7 +7,7 @@ import cvzone
 
 # Load video
 # r'C:\Users\RID\Desktop\pose_estimation\aipose2\Exercise\gainingmuscle\hiphinge.mp4'
-cap = cv2.VideoCapture(r'C:\Users\RID\Desktop\pose_estimation\aipose2\Exercise\gainingmuscle\hiphingecomplete.mp4')
+cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\Dumbbell Hip Hinge\How to Perform a Dumbbell Hip Hinge.mp4')
 
 # Initialize pose detector
 detector_HipHinge = pm.poseDetectorBodyHipHinge()
@@ -15,10 +15,10 @@ detector_HipHinge = pm.poseDetectorBodyHipHinge()
 # Initialize variables
 count_hip_hinge = 0
 dir_hip_hinge = 0
-pTime = 0
-start_time = time.time()
-repetition_time = 60
-display_info = True
+
+start_time_hpp = time.time()
+repetition_time_hpp = 60
+display_info_hpp = True
 
 per_left_hip_angle = 0
 bar_left_hip_angle = 0
@@ -26,13 +26,12 @@ bar_left_hip_angle = 0
 per_right_hip_angle = 0
 bar_right_hip_angle = 0
 
-leftbody = 0
-rightbody = 0
+leftbody_hpp = 0
+rightbody_hpp = 0
 
 color_hip = (0, 0, 255)
 
-interpolation = True
-interpolation2 = True
+
 
 while True:
     success, img = cap.read()
@@ -41,47 +40,47 @@ while True:
     img = cv2.resize(img, (1280, 720))
     #img = cv2.cvtColor(cv2.flip(img, 1), cv2.COLOR_BGR2RGB)
 
-    elapsed_time = time.time() - start_time
-    remaining_time = max(0, repetition_time - elapsed_time)
+    elapsed_time = time.time() - start_time_hpp
+    remaining_time = max(0, repetition_time_hpp - elapsed_time)
 
-    if display_info:
+    if display_info_hpp:
         img = detector_HipHinge.findPose(img, False)
         lmList_hip_hinge = detector_HipHinge.findPosition(img, False)
 
         if len(lmList_hip_hinge) != 0:
-            leftbody, orientation = detector_HipHinge.HipHinge(img, 11, 23, 25, True)
-            rightbody, orientation2 = detector_HipHinge.HipHinge(img, 12, 24, 26, True)
+            leftbody_hpp, orientation = detector_HipHinge.HipHinge(img, 11, 23, 25, True)
+            rightbody_hpp, orientation2 = detector_HipHinge.HipHinge(img, 12, 24, 26, True)
 
             if orientation == 'right' and orientation2 == 'right':
-                if leftbody is not None and rightbody is not None:
+                if leftbody_hpp is not None and rightbody_hpp is not None:
 
-                    per_left_hip_angle = np.interp(int(leftbody), (230, 280), (0, 100))
-                    bar_left_hip_angle = np.interp(int(leftbody), (230, 280), (400, 200))
+                    per_left_hip_angle = np.interp(int(leftbody_hpp), (230, 280), (0, 100))
+                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (230, 280), (400, 200))
 
-                    per_right_hip_angle = np.interp(int(rightbody), (230, 280), (0, 100))
-                    bar_right_hip_angle = np.interp(int(rightbody), (230, 280), (400, 200))
+                    per_right_hip_angle = np.interp(int(rightbody_hpp), (230, 280), (0, 100))
+                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (230, 280), (400, 200))
 
                     if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
                         color_hip = (0, 255, 0)
                     else: 
                         color_hip = (0, 0, 255)
                     
-                    if leftbody >= 270 and rightbody >= 270:
+                    if leftbody_hpp >= 270 and rightbody_hpp >= 270:
                         if dir_hip_hinge == 0:
                             count_hip_hinge += 0.5
                             dir_hip_hinge = 1
-                    elif leftbody <= 230 and rightbody <= 230:
+                    elif leftbody_hpp <= 230 and rightbody_hpp <= 230:
                         if dir_hip_hinge == 1:
                             dir_hip_hinge = 0
                             count_hip_hinge += 0.5
 
             elif orientation =='left' and orientation2 == 'left':
-                if leftbody is not None and rightbody is not None:
-                    per_left_hip_angle = np.interp(int(leftbody), (70, 150), (100, 0))
-                    bar_left_hip_angle = np.interp(int(leftbody), (70, 140), (200, 400))
+                if leftbody_hpp is not None and rightbody_hpp is not None:
+                    per_left_hip_angle = np.interp(int(leftbody_hpp), (70, 150), (100, 0))
+                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (70, 140), (200, 400))
 
-                    per_right_hip_angle = np.interp(int(rightbody), (70, 150), (100, 0))
-                    bar_right_hip_angle = np.interp(int(rightbody), (70, 140), (200, 400))
+                    per_right_hip_angle = np.interp(int(rightbody_hpp), (70, 150), (100, 0))
+                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (70, 140), (200, 400))
 
                     
                     if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
@@ -89,22 +88,22 @@ while True:
                     else: 
                         color_hip = (0, 0, 255)
                     
-                    if leftbody <= 70 and rightbody <= 70:
+                    if leftbody_hpp <= 70 and rightbody_hpp <= 70:
                         if dir_hip_hinge == 0:
                             count_hip_hinge += 0.5
                             dir_hip_hinge = 1
-                    elif leftbody >= 150 and rightbody >= 150:
+                    elif leftbody_hpp >= 150 and rightbody_hpp >= 150:
                         if dir_hip_hinge == 1:
                             count_hip_hinge += 0.5
                             dir_hip_hinge = 0
 
             elif orientation == 'front' and orientation2 == 'front':
-                if leftbody is not None and rightbody is not None:
-                    per_left_hip_angle = np.interp(int(leftbody), (90, 240), (100, 0))
-                    bar_left_hip_angle = np.interp(int(leftbody), (80, 240), (200, 400))
+                if leftbody_hpp is not None and rightbody_hpp is not None:
+                    per_left_hip_angle = np.interp(int(leftbody_hpp), (90, 240), (100, 0))
+                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (80, 240), (200, 400))
 
-                    per_right_hip_angle = np.interp(int(rightbody), (90, 240), (100, 0))
-                    bar_right_hip_angle = np.interp(int(rightbody), (80, 240), (200, 400))
+                    per_right_hip_angle = np.interp(int(rightbody_hpp), (90, 240), (100, 0))
+                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (80, 240), (200, 400))
 
                     
                     if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
@@ -113,11 +112,11 @@ while True:
                         color_hip = (0, 0, 255)
                     
 
-                    if leftbody <= 90 and rightbody <= 90:
+                    if leftbody_hpp <= 90 and rightbody_hpp <= 90:
                         if dir_hip_hinge == 0:
                             count_hip_hinge += 0.5
                             dir_hip_hinge = 1
-                    elif leftbody >= 240 and rightbody >= 240:
+                    elif leftbody_hpp >= 240 and rightbody_hpp >= 240:
                         if dir_hip_hinge == 1:
                             count_hip_hinge += 0.5
                             dir_hip_hinge = 0
@@ -151,12 +150,12 @@ while True:
     # Check if time's up
     if remaining_time <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info = False
+        display_info_hpp = False
 
     # Check if exercise is complete
     if count_hip_hinge >= 5:  
         cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info = False
+        display_info_hpp = False
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1)
