@@ -1,14 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-   
-
+    <title>Live Streaming</title>
 </head>
 <body>
-    <div>
-        <h1>Loss Weight</h1>
+    <div class="container" style="display: flex;">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h3 class="mt-5">Loss Weight</h3>
+                <img src="{{ url_for('video_feed') }}" width="100%">
+                <button id="startTimerBtn">Start Exercise</button>
+            </div>
+        </div>
+        <div>
+            <!-- <p id="exercise-mode">Current Exercise: Loading...</p> -->
+            <!-- 
+            <div id="exercise-images">
+                <img id="bicep-curl-img" src="{{bicep_curl}}" style="display: none;" width="100%"  alt="Bicep Curl">
+                <img id="push-up-img" src="{{push_up}}" style="display: none;" width="100%"  alt="push up">
+                <img id="shoulder-tap-img" src="{{shoulder_tap}}" style="display: none;" width="100%"  alt="shoulder tap">
+                <img id="dumbbell-frontraise-img" src="{{dumbbell_frontraise}}" style="display: none;" width="100%"  alt="dumbbell frontraise">
+                <img id="chest-press-img" src="{{chest_press}}" style="display: none;" width="100%"  alt="chest press">
+                <img id="alternatingleglunges-img" src="{{alternatingleglunges}}" style="display: none;" width="100%"  alt="alternatingleglunges">
+                <img id="bodyweightsquat-img" src="{{bodyweightsquat}}" style="display: none;" width="100%"  alt="bodyweightsquat">
+                <img id="dumbbellhiphinge-img" src="{{dumbbellhiphinge}}" style="display: none;" width="100%"  alt="dumbbellhiphinge">
+                <img id="gobletsquat-img" src="{{gobletsquat}}" style="display: none;" width="100%"  alt="gobletsquat">
+                <img id="highkneetap-img" src="{{highkneetap}}" style="display: none;" width="100%"  alt="highkneetap">
+            </div>
+            -->
+        </div>
     </div>
 
+    <script>
+        document.getElementById('startTimerBtn').addEventListener('click', function() {
+            fetch('/start_timer_lossWeight', {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Timer started successfully');
+                    // Update the video source directly
+                    location.reload()
+                    document.getElementById('videoFeed').src = "{{ url_for('video_feed') }}";
+                    
+                } else {
+                    console.error('Failed to start timer');
+                }
+            })
+            .catch(error => {
+                console.error('Error starting timer:', error);
+            });
+        });
+    </script>
 
+    <!--<script>
+        // Function to fetch exercise mode data and update text and images
+        document.getElementById('startTimerBtn').addEventListener('click', function() {
+            fetch('/start_timer_lossWeight', {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Timer started successfully');
+                    // Update the video source directly
+                    location.reload()
+                    document.getElementById('videoFeed').src = "{{ url_for('video_feed') }}";
+                    
+                } else {
+                    console.error('Failed to start timer');
+                }
+            })
+            .catch(error => {
+                console.error('Error starting timer:', error);
+            });
+        });
+        
+
+
+        function updateExerciseMode() {
+            fetch('/exercise_mode')
+            .then(response => response.json())
+            .then(data => {
+                //document.getElementById('exercise-mode').innerText = 'Current Exercise: ' + data.exercise_mode;
+                // Show/hide images based on exercise mode
+                if (data.exercise_mode === 'bicep_curl') {
+                    document.getElementById('bicep-curl-img').style.display = 'block';
+                    document.getElementById('push-up-img').style.display = 'none';
+                } else if (data.exercise_mode === 'push_up') {
+                    document.getElementById('bicep-curl-img').style.display = 'none';
+                    document.getElementById('push-up-img').style.display = 'block';
+                } else if (data.exercise_mode === 'shoulder_tap'){
+                    document.getElementById('push-up-img').style.display = 'none';
+                    document.getElementById('shoulder-tap-img').style.display = 'block';
+                } else if (data.exercise_mode === 'chest_press'){
+                    document.getElementById('shoulder-tap-img').style.display = 'none';
+                    document.getElementById('chest-press-img').style.display = 'block';
+                } else if (data.exercise_mode === 'dumbbell_frontraise'){
+                    document.getElementById('chest-press-img').style.display = 'none';
+                    document.getElementById('dumbbell-frontraise-img').style.display = 'block';
+                } else if (data.exercise_mode === 'alternating_lunge'){
+                    document.getElementById('dumbbell-frontraise-img').style.display = 'none';
+                    document.getElementById('alternatingleglunges-img').style.display = 'block';
+                } else if (data.exercise_mode === 'bws'){
+                    document.getElementById('alternatingleglunges-img').style.display = 'none';
+                    document.getElementById('bodyweightsquat-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'goblet_squat'){
+                    document.getElementById('bodyweightsquat-img').style.display = 'none';
+                    document.getElementById('gobletsquat-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'highkneetap'){
+                    document.getElementById('gobletsquat-img').style.display = 'none';
+                    document.getElementById('highkneetap-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'dhh'){
+                    document.getElementById('highkneetap-img').style.display = 'none';
+                    document.getElementById('dumbbellhiphinge-img').style.display = 'block';
+                }     
+            })
+            .catch(error => {
+                console.error('Error fetching exercise mode:', error);
+            });
+        }
+
+        // Update exercise mode initially
+        updateExerciseMode();
+
+        // Update exercise mode every second (or as frequently as needed)
+        setInterval(updateExerciseMode, 1000);
+    </script> -->
 </body>
 </html>

@@ -17,6 +17,8 @@ import bodyweightsquat_PoseModule as pm_bws
 import gobletsquat_PoseModule as pm_gs
 import highkneetap_PoseModule as pm_hkt
 import dumbbellhiphinge_PoseModule as pm_dhh
+import jogginginplace_PoseModule as pm_jip
+import JumpingJack_PoseModule as pm_jumpingjacks
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -894,7 +896,7 @@ def start_exercise():
         exercise_mode = "bicep_curl"
         return redirect(url_for('muscleGain')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
     elif session['exercise'] == "loss_weight":
-        #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
+        exercise_mode = "joginplace" #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
         return redirect(url_for('lossWeight')) #THIS URL IS SUPPOSED FOR LOSS WEIGHT
 
 
@@ -1032,6 +1034,33 @@ def gen_frames():
                 img_with_faces = rest_dhh_set3(img)
             # ---------- END FOR GAINING MUSCLES ------------
 
+            # ---------- FOR LOSS WEIGHT ------------------
+            if exercise_mode == "joginplace":
+                img_with_faces = detect_jip(img)
+            if exercise_mode == "rest_jip":
+                img_with_faces = rest_jip(img)
+            if exercise_mode == "joginplace_set2":
+                img_with_faces = detect_jip_set2(img)
+            if exercise_mode == "rest_jip_set2":
+                img_with_faces = rest_jip_set2(img)
+            if exercise_mode == "joginplace_set3":
+                img_with_faces = detect_jip_set3(img)
+            if exercise_mode == "rest_jip_set3":
+                img_with_faces = rest_jip_set3(img)
+            if exercise_mode == "jumpingjacks":
+                img_with_faces = detect_jumpingjacks(img)
+            if exercise_mode == "rest_jumpingjacks":
+                img_with_faces = rest_jumpingjacks(img)
+            if exercise_mode == "jumpingjacks_set2":
+                img_with_faces = detect_jumpingjacks_set2(img)
+            if exercise_mode == "rest_jumpingjacks_set2":
+                img_with_faces = rest_jumpingjacks_set2(img)
+            if exercise_mode == "jumpingjacks_set3":
+                img_with_faces = detect_jumpingjacks_set3(img)
+            if exercise_mode == "rest_jumpingjacks_set3":
+                img_with_faces = rest_jumpingjacks_set3(img)
+            # ---------- END FOR LOSS WEIGHT -------------
+
 
 
             ret, buffer = cv2.imencode('.jpg', img_with_faces)
@@ -1071,6 +1100,13 @@ def start_timer():
     global start_time, countdown_before_exercise
     countdown_before_exercise = time.time()
     start_time = time.time()  # Start the timer
+    return jsonify({'message': 'Timer started'}), 200
+
+@app.route('/start_timer_lossWeight', methods=['POST'])
+def start_timer_lossWeight():
+    global start_time_jip, countdown_before_jip
+    countdown_before_jip = time.time()
+    start_time_jip = time.time()  # Start the timer
     return jsonify({'message': 'Timer started'}), 200
 
 
@@ -2167,7 +2203,6 @@ def rest_shouldertap_set3(img):
         exercise_mode = "chest_press"
         start_time_chestpress = time.time()
     return img
-
 
 def detect_chestpress(img):
     global count_chestpress_left, count_chestpress_right, dir_chestpress_right, dir_chestpress_left, start_time_chestpress, repetition_time_chestpress, display_info_chestpress, bar_left_chestpress, bar_right_chestpress, per_left_chestpress, per_right_chestpress, angle_left_chestpress, angle_right_chestpress, exercise_mode, rest_chestpress_start_time
@@ -5462,13 +5497,899 @@ def rest_dhh_set3(img):
 
 
 
+# ------------- FOR LOSS WEIGHT -----------------------
+
+# --------------- FOR JOG IN PLACE -------------------
+detector_jip = pm_jip.PoseDetector()
+
+left_foot_lift_off_count_jip = 0
+right_foot_lift_off_count_jip = 0
+counter_left_jip = 0
+counter_right_jip = 0
+
+per_down_right_jip = 0
+bar_down_right_jip = 0
+
+per_down_left_jip = 0
+bar_down_left_jip = 0
+countdown_before_jip = None
+
+
+dir_left_jip = 0
+dir_right_jip = 0
+
+start_time_jip = time.time()
+repetition_time_jip = 70
+display_info_jip = False
+
+color_leg_jip = (0, 0, 255)
+rest_jip_start_time = time.time()
+drawings = None
+drawings2 = None
+# --------------- END FOR JOG IN PLACE --------------
+
+# --------------- FOR JOG IN PLACE SET 2 -------------------
+detector_jip = pm_jip.PoseDetector()
+
+left_foot_lift_off_count_jip_set2 = 0
+right_foot_lift_off_count_jip_set2 = 0
+counter_left_jip_set2 = 0
+counter_right_jip_set2 = 0
+
+per_down_right_jip_set2 = 0
+bar_down_right_jip_set2 = 0
+
+per_down_left_jip_set2 = 0
+bar_down_left_jip_set2 = 0
+
+
+dir_left_jip_set2 = 0
+dir_right_jip_set2 = 0
+
+start_time_jip_set2 = time.time()
+repetition_time_jip_set2 = 60
+display_info_jip_set2 = True
+
+color_leg_jip_set2 = (0, 0, 255)
+rest_jip_start_time_set2 = time.time()
+# --------------- END FOR JOG IN PLACE SET 2 --------------
+
+
+# --------------- FOR JOG IN PLACE SET 3 -------------------
+detector_jip = pm_jip.PoseDetector()
+
+left_foot_lift_off_count_jip_set3 = 0
+right_foot_lift_off_count_jip_set3 = 0
+counter_left_jip_set3 = 0
+counter_right_jip_set3 = 0
+
+per_down_right_jip_set3 = 0
+bar_down_right_jip_set3 = 0
+
+per_down_left_jip_set3 = 0
+bar_down_left_jip_set3 = 0
+
+
+dir_left_jip_set3 = 0
+dir_right_jip_set3 = 0
+
+start_time_jip_set3 = time.time()
+repetition_time_jip_set3 = 70
+display_info_jip_set3 = True
+
+color_leg_jip_set3 = (0, 0, 255)
+rest_jip_start_time_set3 = time.time()
+# --------------- END FOR JOG IN PLACE SET 3 --------------
+
+# --------------- FOR JUMPING JACK ------------------
+detector_JumpingJack = pm_jumpingjacks.poseDetectorJumpingJack()
+
+count_jumping_jacks = 0
+dir_jumping_jacks = 0
+
+start_time_jumpingjacks = time.time()
+repetition_time_jumpingjacks = 60
+display_info_jumpingjacks = True
+
+per_left_arm_jumpingjacks = 0
+bar_left_arm_jumpingjacks = 0
+
+per_right_arm_jumpingjacks = 0
+bar_right_arm_jumpingjacks = 0
+
+per_down_left_jumpingjacks = 0
+per_down_right_jumpingjacks = 0
+
+bar_down_left_jumpingjacks = 0
+bar_down_right_jumpingjacks = 0
+
+leftwholearm_jumpingjacks = 0
+rightwholearm_jumpingjacks = 0
+distance_jumpingjacks = 0
+rest_jumpingjack_start_time = time.time()
+# --------------- END FOR JUMPING JACK -------------
+
+# --------------- FOR JUMPING JACK SET 2 ------------------
+detector_JumpingJack = pm_jumpingjacks.poseDetectorJumpingJack()
+
+count_jumping_jacks_set2 = 0
+dir_jumping_jacks_set2 = 0
+
+start_time_jumpingjacks_set2 = time.time()
+repetition_time_jumpingjacks_set2 = 60
+display_info_jumpingjacks_set2 = True
+
+per_left_arm_jumpingjacks_set2 = 0
+bar_left_arm_jumpingjacks_set2 = 0
+
+per_right_arm_jumpingjacks_set2 = 0
+bar_right_arm_jumpingjacks_set2 = 0
+
+per_down_left_jumpingjacks_set2 = 0
+per_down_right_jumpingjacks_set2 = 0
+
+bar_down_left_jumpingjacks_set2 = 0
+bar_down_right_jumpingjacks_set2 = 0
+
+leftwholearm_jumpingjacks_set2 = 0
+rightwholearm_jumpingjacks_set2 = 0
+distance_jumpingjacks_set2 = 0
+rest_jumpingjack_start_time_set2 = time.time()
+# --------------- END FOR JUMPING JACK SET 2 -------------
+
+# --------------- FOR JUMPING JACK SET SET 3 ------------------
+detector_JumpingJack = pm_jumpingjacks.poseDetectorJumpingJack()
+
+count_jumping_jacks_set3 = 0
+dir_jumping_jacks_set3 = 0
+
+start_time_jumpingjacks_set3 = time.time()
+repetition_time_jumpingjacks_set3 = 60
+display_info_jumpingjacks_set3 = True
+
+per_left_arm_jumpingjacks_set3 = 0
+bar_left_arm_jumpingjacks_set3 = 0
+
+per_right_arm_jumpingjacks_set3 = 0
+bar_right_arm_jumpingjacks_set3 = 0
+
+per_down_left_jumpingjacks_set3 = 0
+per_down_right_jumpingjacks_set3 = 0
+
+bar_down_left_jumpingjacks_set3 = 0
+bar_down_right_jumpingjacks_set3 = 0
+
+leftwholearm_jumpingjacks_set3 = 0
+rightwholearm_jumpingjacks_set3 = 0
+distance_jumpingjacks_set3 = 0
+rest_jumpingjack_start_time_set3 = time.time()
+# --------------- END FOR JUMPING JACK SET 3 -------------
+
+
+
+
+
+
+def detect_jip(img):
+    global left_foot_lift_off_count_jip, right_foot_lift_off_count_jip, counter_left_jip, counter_right_jip, per_down_right_jip, bar_down_right_jip, per_down_left_jip, bar_down_left_jip, dir_left_jip, dir_right_jip, start_time_jip, repetition_time_jip, display_info_jip, color_leg_jip, rest_jip_start_time, countdown_before_jip, drawings, drawings2, exercise_mode
+    
+    img = cv2.resize(img, (1280, 720))
+
+    countdown_elapsed_time = time.time() - countdown_before_jip
+    countdown_remaining_time = max(0, 10 - countdown_elapsed_time)
+
+    if countdown_remaining_time <= 0:
+        display_info_jip = True
+
+    elapsed_time = time.time() - start_time_jip
+    remaining_time = max(0, 20 - elapsed_time) #repetition_time_jip
+
+    # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Starting: {int(countdown_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+    if display_info_jip:
+        img = detector_jip.find_Pose(img, False)
+        pose_landmarks = detector_jip.get_pose_landmarks()
+        drawings = detector_jip.pose_landmarks_drawings(img, pose_landmarks,  32, 28, 30, 26, 24, True)
+        drawings2 = detector_jip.pose_landmarks_drawings(img, pose_landmarks, 31, 27, 29, 25, 23, True)
+
+        if pose_landmarks:
+            left_foot_lift_off_count_jip, right_foot_lift_off_count_jip = detector_jip.detect_feet_lift_off(pose_landmarks, threshold=0.80)
+
+            per_down_left_jip = np.interp(left_foot_lift_off_count_jip, (0, 1), (100, 0))
+            bar_down_left_jip = np.interp(left_foot_lift_off_count_jip, (0, 1), (480, 680))
+
+            per_down_right_jip= np.interp(right_foot_lift_off_count_jip, (0, 1), (100, 0))
+            bar_down_right_jip= np.interp(right_foot_lift_off_count_jip, (0, 1), (480, 680))
+
+
+            if per_down_left_jip == 100 or per_down_right_jip == 100:
+                color_leg_jip = (0, 255, 0)
+     
+            if left_foot_lift_off_count_jip == 1:
+                if dir_left_jip == 0 and counter_left_jip <= 60:
+                    counter_left_jip += 1
+                    if counter_left_jip == 5:
+                        dir_left_jip = 0
+                    else:
+                        dir_left_jip = 1
+            else: 
+                if dir_left_jip == 1:
+                    dir_left_jip = 0
+
+            if right_foot_lift_off_count_jip == 1:
+                if dir_right_jip == 0 and counter_right_jip <= 60:
+                    counter_right_jip += 1
+                    if counter_right_jip == 5:
+                        dir_right_jip = 0
+                    else:
+                        dir_right_jip = 1
+            else: 
+                if dir_right_jip == 1:
+                    dir_right_jip = 0
+
+        # label
+        cvzone.putTextRect(img, 'Jogging in Place', [450, 30], thickness=2, border=2, scale=2) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jip)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jip)), (50, 680), color_leg_jip, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jip)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jip)), (995, 680), color_leg_jip, -1)
+
+    # Counter for the right foot
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)  # Adjusted rectangle shape
+    cv2.putText(img, f"{int(counter_right_jip)}/60", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Counter for the left foot
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)  # Adjusted rectangle shape and coordinates
+    cv2.putText(img, f"{int(counter_left_jip)}/60", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip = False
+        exercise_mode = "rest_jip"
+        rest_jip_start_time = time.time()
+        
+
+    if counter_right_jip == 60 and counter_left_jip == 60:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip = False
+        exercise_mode = "rest_jip"
+        rest_jip_start_time = time.time()
+    return img
+
+def rest_jip(img):
+    global exercise_mode, rest_jip_start_time, start_time_jip_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jip_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "joginplace_set2"
+        start_time_jip_set2 = time.time()
+    return img
+
+def detect_jip_set2(img):
+    global left_foot_lift_off_count_jip_set2, right_foot_lift_off_count_jip_set2, counter_left_jip_set2, counter_right_jip_set2, per_down_right_jip_set2, bar_down_right_jip_set2, per_down_left_jip_set2, bar_down_left_jip_set2, dir_left_jip_set2, dir_right_jip_set2, start_time_jip_set2, repetition_time_jip_set2, display_info_jip_set2, color_leg_jip_set2, rest_jip_start_time_set2, drawings, drawings2, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+    elapsed_time = time.time() - start_time_jip_set2
+    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jip
+
+    if display_info_jip_set2:
+        img = detector_jip.find_Pose(img, False)
+        pose_landmarks = detector_jip.get_pose_landmarks()
+        drawings = detector_jip.pose_landmarks_drawings(img, pose_landmarks,  32, 28, 30, 26, 24, True)
+        drawings2 = detector_jip.pose_landmarks_drawings(img, pose_landmarks, 31, 27, 29, 25, 23, True)
+
+        if pose_landmarks:
+            left_foot_lift_off_count_jip_set2, right_foot_lift_off_count_jip_set2 = detector_jip.detect_feet_lift_off(pose_landmarks, threshold=0.80)
+
+            per_down_left_jip_set2 = np.interp(left_foot_lift_off_count_jip_set2, (0, 1), (100, 0))
+            bar_down_left_jip_set2 = np.interp(left_foot_lift_off_count_jip_set2, (0, 1), (480, 680))
+
+            per_down_right_jip_set2= np.interp(right_foot_lift_off_count_jip_set2, (0, 1), (100, 0))
+            bar_down_right_jip_set2= np.interp(right_foot_lift_off_count_jip_set2, (0, 1), (480, 680))
+
+
+            if per_down_left_jip_set2 == 100 or per_down_right_jip_set2 == 100:
+                color_leg_jip_set2 = (0, 255, 0)
+     
+            if left_foot_lift_off_count_jip_set2 == 1:
+                if dir_left_jip_set2 == 0 and counter_left_jip_set2 <= 60:
+                    counter_left_jip_set2 += 1
+                    if counter_left_jip_set2 == 5:
+                        dir_left_jip_set2 = 0
+                    else:
+                        dir_left_jip_set2 = 1
+            else: 
+                if dir_left_jip_set2 == 1:
+                    dir_left_jip_set2 = 0
+
+            if right_foot_lift_off_count_jip_set2 == 1:
+                if dir_right_jip_set2 == 0 and counter_right_jip_set2 <= 60:
+                    counter_right_jip_set2 += 1
+                    if counter_right_jip_set2 == 5:
+                        dir_right_jip_set2 = 0
+                    else:
+                        dir_right_jip_set2 = 1
+            else: 
+                if dir_right_jip_set2 == 1:
+                    dir_right_jip_set2 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Jogging in Place SET 2', [450, 30], thickness=2, border=2, scale=2) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jip_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jip_set2)), (50, 680), color_leg_jip_set2, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jip_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jip_set2)), (995, 680), color_leg_jip_set2, -1)
+
+    # Counter for the right foot
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)  # Adjusted rectangle shape
+    cv2.putText(img, f"{int(counter_right_jip_set2)}/60", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Counter for the left foot
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)  # Adjusted rectangle shape and coordinates
+    cv2.putText(img, f"{int(counter_left_jip_set2)}/60", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip_set2 = False
+        exercise_mode = "rest_jip_set2"
+        rest_jip_start_time_set2 = time.time()
+
+    if counter_right_jip_set2 == 60 and counter_left_jip_set2 == 60:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip_set2 = False
+        exercise_mode = "rest_jip_set2"
+        rest_jip_start_time_set2 = time.time()
+    return img
+
+def rest_jip_set2(img):
+    global exercise_mode, rest_jip_start_time_set2, start_time_jip_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jip_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "joginplace_set3"
+        start_time_jip_set3 = time.time()
+    return img 
+
+def detect_jip_set3(img):
+    global left_foot_lift_off_count_jip_set3, right_foot_lift_off_count_jip_set3, counter_left_jip_set3, counter_right_jip_set3, per_down_right_jip_set3, bar_down_right_jip_set3, per_down_left_jip_set3, bar_down_left_jip_set3, dir_left_jip_set3, dir_right_jip_set3, start_time_jip_set3, repetition_time_jip_set3, display_info_jip_set3, color_leg_jip_set3, rest_jip_start_time_set3, drawings, drawings2, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+    elapsed_time = time.time() - start_time_jip_set3
+    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jip
+
+    if display_info_jip_set3:
+        img = detector_jip.find_Pose(img, False)
+        pose_landmarks = detector_jip.get_pose_landmarks()
+        drawings = detector_jip.pose_landmarks_drawings(img, pose_landmarks,  32, 28, 30, 26, 24, True)
+        drawings2 = detector_jip.pose_landmarks_drawings(img, pose_landmarks, 31, 27, 29, 25, 23, True)
+
+        if pose_landmarks:
+            left_foot_lift_off_count_jip_set3, right_foot_lift_off_count_jip_set3 = detector_jip.detect_feet_lift_off(pose_landmarks, threshold=0.80)
+
+            per_down_left_jip_set3 = np.interp(left_foot_lift_off_count_jip_set3, (0, 1), (100, 0))
+            bar_down_left_jip_set3 = np.interp(left_foot_lift_off_count_jip_set3, (0, 1), (480, 680))
+
+            per_down_right_jip_set3= np.interp(right_foot_lift_off_count_jip_set3, (0, 1), (100, 0))
+            bar_down_right_jip_set3= np.interp(right_foot_lift_off_count_jip_set3, (0, 1), (480, 680))
+
+
+            if per_down_left_jip_set3 == 100 or per_down_right_jip_set3 == 100:
+                color_leg_jip_set3 = (0, 255, 0)
+     
+            if left_foot_lift_off_count_jip_set3 == 1:
+                if dir_left_jip_set3 == 0 and counter_left_jip_set3 <= 60:
+                    counter_left_jip_set3 += 1
+                    if counter_left_jip_set3 == 5:
+                        dir_left_jip_set3 = 0
+                    else:
+                        dir_left_jip_set3 = 1
+            else: 
+                if dir_left_jip_set3 == 1:
+                    dir_left_jip_set3 = 0
+
+            if right_foot_lift_off_count_jip_set3 == 1:
+                if dir_right_jip_set3 == 0 and counter_right_jip_set3 <= 60:
+                    counter_right_jip_set3 += 1
+                    if counter_right_jip_set3 == 5:
+                        dir_right_jip_set3 = 0
+                    else:
+                        dir_right_jip_set3 = 1
+            else: 
+                if dir_right_jip_set3 == 1:
+                    dir_right_jip_set3 = 0
+
+        # label
+        cvzone.putTextRect(img, 'Jogging in Place SET 3', [450, 30], thickness=2, border=2, scale=2) 
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jip_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jip_set3)), (50, 680), color_leg_jip_set3, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jip_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jip_set3)), (995, 680), color_leg_jip_set3, -1)
+
+    # Counter for the right foot
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)  # Adjusted rectangle shape
+    cv2.putText(img, f"{int(counter_right_jip_set3)}/60", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Counter for the left foot
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)  # Adjusted rectangle shape and coordinates
+    cv2.putText(img, f"{int(counter_left_jip_set3)}/60", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip_set3 = False
+        exercise_mode = "rest_jip_set3"
+        rest_jip_start_time_set3 = time.time()
+
+    if counter_right_jip_set3 == 60 and counter_left_jip_set3 == 60:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_jip_set3 = False
+        exercise_mode = "rest_jip_set3"
+        rest_jip_start_time_set3 = time.time()
+    return img 
+
+def rest_jip_set3(img):
+    global exercise_mode, rest_jip_start_time_set3, start_time_jumpingjacks
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jip_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "jumpingjacks"
+        start_time_jumpingjacks = time.time()
+    return img
+
+def detect_jumpingjacks(img):
+    global count_jumping_jacks, dir_jumping_jacks, start_time_jumpingjacks, repetition_time_jumpingjacks, display_info_jumpingjacks, per_left_arm_jumpingjacks, bar_left_arm_jumpingjacks, per_right_arm_jumpingjacks, bar_right_arm_jumpingjacks, per_down_left_jumpingjacks, per_down_right_jumpingjacks, bar_down_left_jumpingjacks, bar_down_right_jumpingjacks, leftwholearm_jumpingjacks, rightwholearm_jumpingjacks, distance_jumpingjacks, rest_jumpingjack_start_time, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_jumpingjacks
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_jumpingjacks:  # Check if to display counter, bar, and percentage
+        img = detector_JumpingJack.findPose(img, False)
+        lmList_jumping_jacks = detector_JumpingJack.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            leftwholearm_jumpingjacks, rightwholearm_jumpingjacks, = detector_JumpingJack.UpperBodySwing(
+                img, 23, 11, 13, 14, 12, 24, 15, 16, drawpoints= True)
+            distance_jumpingjacks = detector_JumpingJack.findJumpingJack(img, 24, 26, 28, 23, 25, 27, drawpoints=True)  # Define landmark keypoints
+
+            #Interpolate angle to percentage and position on screen
+            per_left_arm_jumpingjacks = np.interp(leftwholearm_jumpingjacks, (200, 270), (100, 0))
+            bar_left_arm_jumpingjacks = np.interp(leftwholearm_jumpingjacks, (210, 280), (200, 400))
+
+            per_right_arm_jumpingjacks = np.interp(rightwholearm_jumpingjacks, (200, 270), (100, 0))
+            bar_right_arm_jumpingjacks = np.interp(rightwholearm_jumpingjacks, (210, 280), (200, 400))
+
+
+            per_down_left_jumpingjacks = np.interp(distance_jumpingjacks, (35, 180), (0, 100))
+            bar_down_left_jumpingjacks = np.interp(distance_jumpingjacks, (35, 190), (680, 480))
+
+            per_down_right_jumpingjacks= np.interp(distance_jumpingjacks, (35, 180), (0, 100))
+            bar_down_right_jumpingjacks= np.interp(distance_jumpingjacks, (35, 190), (680, 480))
+
+
+            if leftwholearm_jumpingjacks <= 220 and rightwholearm_jumpingjacks  <= 220 and distance_jumpingjacks >= 180:
+                if dir_jumping_jacks == 0:
+                    count_jumping_jacks += 0.5
+                    dir_jumping_jacks = 1 
+                    
+            elif leftwholearm_jumpingjacks >= 270 and rightwholearm_jumpingjacks >= 270 and distance_jumpingjacks <= 35:
+                if dir_jumping_jacks == 1:
+                    count_jumping_jacks += 0.5
+                    dir_jumping_jacks = 0  
+
+
+
+        cvzone.putTextRect(img, 'Ai Jumping Jack', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_jumpingjacks)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks)), (50, 400), (0, 0, 255), -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_jumpingjacks)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks)), (995, 400), (0, 0, 255), -1)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jumpingjacks)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks)), (50, 680), (0, 0, 255), -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jumpingjacks)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks)), (995, 680), (0, 0, 255), -1)
+
+        if leftwholearm_jumpingjacks <= 210:
+            cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks)), (995, 400), (0, 255, 0), -1)
+
+        if rightwholearm_jumpingjacks <= 210:
+            cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks)), (50, 400), (0, 255, 0), -1)
+
+        if distance_jumpingjacks >= 180:
+            cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks)), (995, 680), (0, 255, 0), -1)
+        
+        if distance_jumpingjacks >= 180:
+            cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks)), (50, 680), (0, 255, 0), -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_jumping_jacks)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks = False
+        exercise_mode = "rest_jumpingjacks"
+        rest_jumpingjack_start_time = time.time()
+
+    if count_jumping_jacks >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks = False
+        exercise_mode = "rest_jumpingjacks"
+        rest_jumpingjack_start_time = time.time()
+    return img
+
+def rest_jumpingjacks(img):
+    global exercise_mode, rest_jumpingjack_start_time, start_time_jumpingjacks_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jumpingjack_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "jumpingjacks_set2"
+        start_time_jumpingjacks_set2 = time.time()
+    return img 
+
+def detect_jumpingjacks_set2(img):
+    global count_jumping_jacks_set2, dir_jumping_jacks_set2, start_time_jumpingjacks_set2, repetition_time_jumpingjacks_set2, display_info_jumpingjacks_set2, per_left_arm_jumpingjacks_set2, bar_left_arm_jumpingjacks_set2, per_right_arm_jumpingjacks_set2, bar_right_arm_jumpingjacks_set2, per_down_left_jumpingjacks_set2, per_down_right_jumpingjacks_set2, bar_down_left_jumpingjacks_set2, bar_down_right_jumpingjacks_set2, leftwholearm_jumpingjacks_set2, rightwholearm_jumpingjacks_set2, distance_jumpingjacks_set2, rest_jumpingjack_start_time_set2, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_jumpingjacks_set2
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_jumpingjacks_set2:  # Check if to display counter, bar, and percentage
+        img = detector_JumpingJack.findPose(img, False)
+        lmList_jumping_jacks = detector_JumpingJack.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            leftwholearm_jumpingjacks_set2, rightwholearm_jumpingjacks_set2, = detector_JumpingJack.UpperBodySwing(
+                img, 23, 11, 13, 14, 12, 24, 15, 16, drawpoints= True)
+            distance_jumpingjacks_set2 = detector_JumpingJack.findJumpingJack(img, 24, 26, 28, 23, 25, 27, drawpoints=True)  # Define landmark keypoints
+
+            #Interpolate angle to percentage and position on screen
+            per_left_arm_jumpingjacks_set2 = np.interp(leftwholearm_jumpingjacks_set2, (200, 270), (100, 0))
+            bar_left_arm_jumpingjacks_set2 = np.interp(leftwholearm_jumpingjacks_set2, (210, 280), (200, 400))
+
+            per_right_arm_jumpingjacks_set2 = np.interp(rightwholearm_jumpingjacks_set2, (200, 270), (100, 0))
+            bar_right_arm_jumpingjacks_set2 = np.interp(rightwholearm_jumpingjacks_set2, (210, 280), (200, 400))
+
+
+            per_down_left_jumpingjacks_set2 = np.interp(distance_jumpingjacks_set2, (35, 180), (0, 100))
+            bar_down_left_jumpingjacks_set2 = np.interp(distance_jumpingjacks_set2, (35, 190), (680, 480))
+
+            per_down_right_jumpingjacks_set2= np.interp(distance_jumpingjacks_set2, (35, 180), (0, 100))
+            bar_down_right_jumpingjacks_set2= np.interp(distance_jumpingjacks_set2, (35, 190), (680, 480))
+
+
+            if leftwholearm_jumpingjacks_set2 <= 220 and rightwholearm_jumpingjacks_set2  <= 220 and distance_jumpingjacks_set2 >= 180:
+                if dir_jumping_jacks_set2 == 0:
+                    count_jumping_jacks_set2 += 0.5
+                    dir_jumping_jacks_set2 = 1 
+                    
+            elif leftwholearm_jumpingjacks_set2 >= 270 and rightwholearm_jumpingjacks_set2 >= 270 and distance_jumpingjacks_set2 <= 35:
+                if dir_jumping_jacks_set2 == 1:
+                    count_jumping_jacks_set2 += 0.5
+                    dir_jumping_jacks_set2 = 0  
+
+
+
+        cvzone.putTextRect(img, 'Ai Jumping Jack SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_jumpingjacks_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks_set2)), (50, 400), (0, 0, 255), -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_jumpingjacks_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks_set2)), (995, 400), (0, 0, 255), -1)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jumpingjacks_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks_set2)), (50, 680), (0, 0, 255), -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jumpingjacks_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks_set2)), (995, 680), (0, 0, 255), -1)
+
+        if leftwholearm_jumpingjacks_set2 <= 210:
+            cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks_set2)), (995, 400), (0, 255, 0), -1)
+
+        if rightwholearm_jumpingjacks_set2 <= 210:
+            cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks_set2)), (50, 400), (0, 255, 0), -1)
+
+        if distance_jumpingjacks_set2 >= 180:
+            cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks_set2)), (995, 680), (0, 255, 0), -1)
+        
+        if distance_jumpingjacks_set2 >= 180:
+            cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks_set2)), (50, 680), (0, 255, 0), -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_jumping_jacks_set2)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks_set2 = False
+        exercise_mode = "rest_jumpingjacks_set2"
+        rest_jumpingjack_start_time_set2 = time.time()
+
+    if count_jumping_jacks_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks_set2 = False
+        exercise_mode = "rest_jumpingjacks_set2"
+        rest_jumpingjack_start_time_set2 = time.time()
+    return img
+
+def rest_jumpingjacks_set2(img):
+    global exercise_mode, rest_jumpingjack_start_time_set2, start_time_jumpingjacks_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jumpingjack_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "jumpingjacks_set3"
+        start_time_jumpingjacks_set3 = time.time()
+    return img
+
+def detect_jumpingjacks_set3(img):
+    global count_jumping_jacks_set3, dir_jumping_jacks_set3, start_time_jumpingjacks_set3, repetition_time_jumpingjacks_set3, display_info_jumpingjacks_set3, per_left_arm_jumpingjacks_set3, bar_left_arm_jumpingjacks_set3, per_right_arm_jumpingjacks_set3, bar_right_arm_jumpingjacks_set3, per_down_left_jumpingjacks_set3, per_down_right_jumpingjacks_set3, bar_down_left_jumpingjacks_set3, bar_down_right_jumpingjacks_set3, leftwholearm_jumpingjacks_set3, rightwholearm_jumpingjacks_set3, distance_jumpingjacks_set3, rest_jumpingjack_start_time_set3, exercise_mode
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_jumpingjacks_set3
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_jumpingjacks_set3:  # Check if to display counter, bar, and percentage
+        img = detector_JumpingJack.findPose(img, False)
+        lmList_jumping_jacks = detector_JumpingJack.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            leftwholearm_jumpingjacks_set3, rightwholearm_jumpingjacks_set3, = detector_JumpingJack.UpperBodySwing(
+                img, 23, 11, 13, 14, 12, 24, 15, 16, drawpoints= True)
+            distance_jumpingjacks_set3 = detector_JumpingJack.findJumpingJack(img, 24, 26, 28, 23, 25, 27, drawpoints=True)  # Define landmark keypoints
+
+            #Interpolate angle to percentage and position on screen
+            per_left_arm_jumpingjacks_set3 = np.interp(leftwholearm_jumpingjacks_set3, (200, 270), (100, 0))
+            bar_left_arm_jumpingjacks_set3 = np.interp(leftwholearm_jumpingjacks_set3, (210, 280), (200, 400))
+
+            per_right_arm_jumpingjacks_set3 = np.interp(rightwholearm_jumpingjacks_set3, (200, 270), (100, 0))
+            bar_right_arm_jumpingjacks_set3 = np.interp(rightwholearm_jumpingjacks_set3, (210, 280), (200, 400))
+
+
+            per_down_left_jumpingjacks_set3 = np.interp(distance_jumpingjacks_set3, (35, 180), (0, 100))
+            bar_down_left_jumpingjacks_set3 = np.interp(distance_jumpingjacks_set3, (35, 190), (680, 480))
+
+            per_down_right_jumpingjacks_set3= np.interp(distance_jumpingjacks_set3, (35, 180), (0, 100))
+            bar_down_right_jumpingjacks_set3= np.interp(distance_jumpingjacks_set3, (35, 190), (680, 480))
+
+
+            if leftwholearm_jumpingjacks_set3 <= 220 and rightwholearm_jumpingjacks_set3  <= 220 and distance_jumpingjacks_set3 >= 180:
+                if dir_jumping_jacks_set3 == 0:
+                    count_jumping_jacks_set3 += 0.5
+                    dir_jumping_jacks_set3 = 1 
+                    
+            elif leftwholearm_jumpingjacks_set3 >= 270 and rightwholearm_jumpingjacks_set3 >= 270 and distance_jumpingjacks_set3 <= 35:
+                if dir_jumping_jacks_set3 == 1:
+                    count_jumping_jacks_set3 += 0.5
+                    dir_jumping_jacks_set3 = 0  
+
+
+
+        cvzone.putTextRect(img, 'Ai Jumping Jack SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+
+        #Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # ARM RIGHT
+        cv2.putText(img, f"R {int(per_right_arm_jumpingjacks_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks_set3)), (50, 400), (0, 0, 255), -1)
+
+        # ARM LEFT
+        cv2.putText(img, f"L {int(per_left_arm_jumpingjacks_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks_set3)), (995, 400), (0, 0, 255), -1)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_down_right_jumpingjacks_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks_set3)), (50, 680), (0, 0, 255), -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_down_left_jumpingjacks_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks_set3)), (995, 680), (0, 0, 255), -1)
+
+        if leftwholearm_jumpingjacks_set3 <= 210:
+            cv2.rectangle(img, (952, int(bar_left_arm_jumpingjacks_set3)), (995, 400), (0, 255, 0), -1)
+
+        if rightwholearm_jumpingjacks_set3 <= 210:
+            cv2.rectangle(img, (8, int(bar_right_arm_jumpingjacks_set3)), (50, 400), (0, 255, 0), -1)
+
+        if distance_jumpingjacks_set3 >= 180:
+            cv2.rectangle(img, (952, int(bar_down_left_jumpingjacks_set3)), (995, 680), (0, 255, 0), -1)
+        
+        if distance_jumpingjacks_set3 >= 180:
+            cv2.rectangle(img, (8, int(bar_down_right_jumpingjacks_set3)), (50, 680), (0, 255, 0), -1)
+
+    cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_jumping_jacks_set3)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks_set3 = False
+        exercise_mode = "rest_jumpingjacks_set3"
+        rest_jumpingjack_start_time_set3 = time.time()
+
+    if count_jumping_jacks_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
+        display_info_jumpingjacks_set3 = False
+        exercise_mode = "rest_jumpingjacks_set3"
+        rest_jumpingjack_start_time_set3 = time.time()
+    return img
+
+def rest_jumpingjacks_set3(img):
+    global exercise_mode, rest_jumpingjack_start_time_set3, start_time_jumpingjacks_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_jumpingjack_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "next exercise"
+        print(exercise_mode)
+        #start_time_jumpingjacks_set3 = time.time()
+    return img
+
+
 
 @app.route('/lossWeight')
 def lossWeight():
+
     if 'username' in session and session['exercise'] == "loss_weight":
         return render_template('lossWeight.html')
     else:
         return redirect(url_for('home'))
+    
+
+# ------------- END FOR LOSS WEIGHT -------------------------------
 
 if __name__ == '__main__':
     app.run(debug=True)
