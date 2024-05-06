@@ -26,6 +26,7 @@ import squatjump_PoseModule as pm_squatjump
 import squatsidekick_PoseModule as pm_squatsidekick
 import jumpinglunge_PoseModule as pm_jumpinglunge
 import plankjacks_PoseModule as pm_plankjacks
+import PlankToeTaps_PoseModule as pm_ptt
 import cvzone
 import math
 # ----------------- FOR GAINING MUSCLE -------------
@@ -903,7 +904,7 @@ def start_exercise():
         exercise_mode = "bicep_curl"
         return redirect(url_for('muscleGain')) #THIS URL IS SUPPOSED FOR GAINING MUSCLES
     elif session['exercise'] == "loss_weight":
-        exercise_mode = "plankjacks" #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
+        exercise_mode = "joginplace" #LALAGYAN KO NG FIRST EXERCISE FOR LOSS WEIGHT
         return redirect(url_for('lossWeight')) #THIS URL IS SUPPOSED FOR LOSS WEIGHT
 
 
@@ -1150,6 +1151,18 @@ def gen_frames():
                 img_with_faces = detect_plankjacks_set3(img)
             if exercise_mode == "rest_plankjacks_set3":
                 img_with_faces = rest_plankjacks_set3(img)
+            if exercise_mode == "ptt":
+                img_with_faces = detect_ptt(img)
+            if exercise_mode == "rest_ptt":
+                img_with_faces = rest_ptt(img)
+            if exercise_mode == "ptt_set2":
+                img_with_faces = detect_ptt_set2(img)
+            if exercise_mode == "rest_ptt_set2":
+                img_with_faces = rest_ptt_set2(img)
+            if exercise_mode == "ptt_set3":
+                img_with_faces = detect_ptt_set3(img)
+            if exercise_mode == "rest_ptt_set3":
+                img_with_faces = rest_ptt_set3(img)
             # ---------- END FOR LOSS WEIGHT -------------
 
 
@@ -6377,6 +6390,97 @@ color_right_leg_plankjacks_set3 = (0, 0, 255)
 rest_plankjacks_start_time_set3 = time.time()
 # ---------------- FOR PLANK JACKS SET 3 -----------------------
 
+# ---------------- FOR PLANK TOE TAPS -------------------------
+detector_PlankToeTaps = pm_ptt.poseDetectorPlankToeTaps()
+
+count_plank_toe_taps_right = 0
+count_plank_toe_taps_left = 0
+
+
+dir_plank_toe_taps_right = 0
+dir_plank_toe_taps_left = 0
+
+
+start_time_ptt = time.time()
+repetition_time_ptt = 60
+display_info_ptt = True
+
+per_left_leg_ptt = 0
+bar_left_leg_ptt = 0
+
+per_right_leg_ptt = 0
+bar_right_leg_ptt = 0
+
+cooldown_duration_ptt = 5
+cooldown_timer_ptt = 0
+
+color_left_leg_ptt = (0, 0, 255)
+color_right_leg_ptt = (0, 0, 255)
+
+rest_ptt_start_time = time.time()
+# ---------------- END FOR PLANK TOE TAPS ---------------------
+
+# ---------------- FOR PLANK TOE TAPS SET 2 -------------------------
+detector_PlankToeTaps = pm_ptt.poseDetectorPlankToeTaps()
+
+count_plank_toe_taps_right_set2 = 0
+count_plank_toe_taps_left_set2 = 0
+
+
+dir_plank_toe_taps_right_set2 = 0
+dir_plank_toe_taps_left_set2 = 0
+
+
+start_time_ptt_set2 = time.time()
+repetition_time_ptt_set2 = 60
+display_info_ptt_set2 = True
+
+per_left_leg_ptt_set2 = 0
+bar_left_leg_ptt_set2 = 0
+
+per_right_leg_ptt_set2 = 0
+bar_right_leg_ptt_set2 = 0
+
+cooldown_duration_ptt_set2 = 5
+cooldown_timer_ptt_set2 = 0
+
+color_left_leg_ptt_set2 = (0, 0, 255)
+color_right_leg_ptt_set2 = (0, 0, 255)
+
+rest_ptt_start_time_set2 = time.time()
+# ---------------- END FOR PLANK TOE TAPS SET 2 ---------------------
+
+# ---------------- FOR PLANK TOE TAPS SET 3 -------------------------
+detector_PlankToeTaps = pm_ptt.poseDetectorPlankToeTaps()
+
+count_plank_toe_taps_right_set3 = 0
+count_plank_toe_taps_left_set3 = 0
+
+
+dir_plank_toe_taps_right_set3 = 0
+dir_plank_toe_taps_left_set3 = 0
+
+
+start_time_ptt_set3 = time.time()
+repetition_time_ptt_set3 = 60
+display_info_ptt_set3 = True
+
+per_left_leg_ptt_set3 = 0
+bar_left_leg_ptt_set3 = 0
+
+per_right_leg_ptt_set3 = 0
+bar_right_leg_ptt_set3 = 0
+
+cooldown_duration_ptt_set3 = 5
+cooldown_timer_ptt_set3 = 0
+
+color_left_leg_ptt_set3 = (0, 0, 255)
+color_right_leg_ptt_set3 = (0, 0, 255)
+
+rest_ptt_start_time_set3 = time.time()
+# ---------------- END FOR PLANK TOE TAPS SET 3 ---------------------
+
+
 
 def detect_jip(img):
     global left_foot_lift_off_count_jip, right_foot_lift_off_count_jip, counter_left_jip, counter_right_jip, per_down_right_jip, bar_down_right_jip, per_down_left_jip, bar_down_left_jip, dir_left_jip, dir_right_jip, start_time_jip, repetition_time_jip, display_info_jip, color_leg_jip, rest_jip_start_time, countdown_before_jip, drawings, drawings2, exercise_mode
@@ -10524,7 +10628,7 @@ def detect_plankjacks_set3(img):
     return img
 
 def rest_plankjacks_set3(img):
-    global exercise_mode, rest_plankjacks_start_time_set3, start_time_plankjacks_set3
+    global exercise_mode, rest_plankjacks_start_time_set3, start_time_ptt
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_plankjacks_start_time_set3
@@ -10538,9 +10642,398 @@ def rest_plankjacks_set3(img):
     cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
     if rest_remaining_time <= 0:
-        exercise_mode = "next"
+        exercise_mode = "ptt"
+        start_time_ptt = time.time()
+    return img
+
+def detect_ptt(img):
+    global count_plank_toe_taps_right, count_plank_toe_taps_left, dir_plank_toe_taps_right, dir_plank_toe_taps_left, start_time_ptt, repetition_time_ptt, display_info_ptt, per_left_leg_ptt, bar_left_leg_ptt, per_right_leg_ptt, bar_right_leg_ptt, cooldown_duration_ptt, cooldown_timer_ptt, color_left_leg_ptt, color_right_leg_ptt, orientation, orientation2, exercise_mode, rest_ptt_start_time
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_ptt
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_ptt:  # Check if to display counter, bar, and percentage
+        img = detector_PlankToeTaps.findPose(img, False)
+        lmList_jumping_jacks = detector_PlankToeTaps.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            distance1, distance2 = detector_PlankToeTaps.PlankToeTaps(img, 16, 14, 12, 24, 26, 28, 32, 15, 13, 11, 23, 25, 27, 31, True)
+           
+            #print("right: ", distance1, "left: ", distance2)
+
+            if cooldown_timer_ptt > 0:
+                cooldown_timer_ptt -= 1
+
+            per_right_leg_ptt = np.interp(distance1, (40, 350), (100, 0))
+            bar_right_leg_ptt = np.interp(distance1, (40, 350), (480, 680))
+            per_left_leg_ptt = np.interp(distance2, (40, 350), (100, 0))
+            bar_left_leg_ptt = np.interp(distance2, (40, 350), (480, 680))
+
+            if int(per_left_leg_ptt) == 100:
+                color_left_leg_ptt = (0, 255, 0)  # Change color of left leg bar to green
+            elif int(per_right_leg_ptt) == 100:
+                color_right_leg_ptt = (0, 255, 0)
+            else:
+                color_left_leg_ptt = (0, 0, 255)  # Keep color of left leg bar as red
+                color_right_leg_ptt = (0, 0, 255)
+
+            if distance1 <= 40:
+                if dir_plank_toe_taps_right == 0 and count_plank_toe_taps_right <= 6:
+                    count_plank_toe_taps_right += 0.5
+                    if count_plank_toe_taps_right == 6:
+                        dir_plank_toe_taps_right = 0
+                    else:
+                        dir_plank_toe_taps_right = 1
+                        #print("right up: ",count_plank_toe_taps_right)
+            elif distance1 >= 300:
+                if dir_plank_toe_taps_right == 1 and count_plank_toe_taps_right <= 6:
+                    count_plank_toe_taps_right += 0.5
+                    if count_plank_toe_taps_right == 6:
+                        dir_plank_toe_taps_right = 1
+                    else:
+                        dir_plank_toe_taps_right = 0
+                        #print("right down: ",count_plank_toe_taps_right)
+            
+            if distance2 <= 40:
+                if dir_plank_toe_taps_left == 0 and count_plank_toe_taps_left <= 6:
+                    count_plank_toe_taps_left += 0.5
+                    if count_plank_toe_taps_left == 6:
+                        dir_plank_toe_taps_left = 0
+                    else:
+                        dir_plank_toe_taps_left = 1
+                        #print("left up: ",count_plank_toe_taps_left)
+            elif distance2 >= 300:
+                if dir_plank_toe_taps_left == 1 and count_plank_toe_taps_left <= 6:
+                    count_plank_toe_taps_left += 0.5
+                    if count_plank_toe_taps_left == 6:
+                        dir_plank_toe_taps_left = 1
+                    else:
+                        dir_plank_toe_taps_left = 0
+                        #print("left down: ",count_plank_toe_taps_left)
+
+        cvzone.putTextRect(img, 'Plank Toe Taps', [390, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_ptt)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_ptt)), (50, 680), color_right_leg_ptt, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_ptt)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_ptt)), (995, 680), color_left_leg_ptt, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_right)}/6", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_left)}/6", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt = False
+        exercise_mode = "rest_ptt"
+        rest_ptt_start_time = time.time()
+
+    # Repetition
+    if count_plank_toe_taps_right == 5 and count_plank_toe_taps_left == 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt = False
+        exercise_mode = "rest_ptt"
+        rest_ptt_start_time = time.time()
+    return img
+
+def rest_ptt(img):
+    global exercise_mode, rest_ptt_start_time, start_time_ptt_set2
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_ptt_start_time
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "ptt_set2"
+        start_time_ptt_set2 = time.time()
+    return img
+
+def detect_ptt_set2(img):
+    global count_plank_toe_taps_right_set2, count_plank_toe_taps_left_set2, dir_plank_toe_taps_right_set2, dir_plank_toe_taps_left_set2, start_time_ptt_set2, repetition_time_ptt_set2, display_info_ptt_set2, per_left_leg_ptt_set2, bar_left_leg_ptt_set2, per_right_leg_ptt_set2, bar_right_leg_ptt_set2, cooldown_duration_ptt_set2, cooldown_timer_ptt_set2, color_left_leg_ptt_set2, color_right_leg_ptt_set2, orientation, orientation2, exercise_mode, rest_ptt_start_time_set2
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_ptt_set2
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_ptt_set2:  # Check if to display counter, bar, and percentage
+        img = detector_PlankToeTaps.findPose(img, False)
+        lmList_jumping_jacks = detector_PlankToeTaps.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            distance1, distance2 = detector_PlankToeTaps.PlankToeTaps(img, 16, 14, 12, 24, 26, 28, 32, 15, 13, 11, 23, 25, 27, 31, True)
+           
+            #print("right: ", distance1, "left: ", distance2)
+
+            if cooldown_timer_ptt_set2 > 0:
+                cooldown_timer_ptt_set2 -= 1
+
+            per_right_leg_ptt_set2 = np.interp(distance1, (40, 350), (100, 0))
+            bar_right_leg_ptt_set2 = np.interp(distance1, (40, 350), (480, 680))
+            per_left_leg_ptt_set2 = np.interp(distance2, (40, 350), (100, 0))
+            bar_left_leg_ptt_set2 = np.interp(distance2, (40, 350), (480, 680))
+
+            if int(per_left_leg_ptt_set2) == 100:
+                color_left_leg_ptt_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            elif int(per_right_leg_ptt_set2) == 100:
+                color_right_leg_ptt_set2 = (0, 255, 0)
+            else:
+                color_left_leg_ptt_set2 = (0, 0, 255)  # Keep color of left leg bar as red
+                color_right_leg_ptt_set2 = (0, 0, 255)
+
+            if distance1 <= 40:
+                if dir_plank_toe_taps_right_set2 == 0 and count_plank_toe_taps_right_set2 <= 6:
+                    count_plank_toe_taps_right_set2 += 0.5
+                    if count_plank_toe_taps_right_set2 == 6:
+                        dir_plank_toe_taps_right_set2 = 0
+                    else:
+                        dir_plank_toe_taps_right_set2 = 1
+                        #print("right up: ",count_plank_toe_taps_right)
+            elif distance1 >= 300:
+                if dir_plank_toe_taps_right_set2 == 1 and count_plank_toe_taps_right_set2 <= 6:
+                    count_plank_toe_taps_right_set2 += 0.5
+                    if count_plank_toe_taps_right_set2 == 6:
+                        dir_plank_toe_taps_right_set2 = 1
+                    else:
+                        dir_plank_toe_taps_right_set2 = 0
+                        #print("right down: ",count_plank_toe_taps_right)
+            
+            if distance2 <= 40:
+                if dir_plank_toe_taps_left_set2 == 0 and count_plank_toe_taps_left_set2 <= 6:
+                    count_plank_toe_taps_left_set2 += 0.5
+                    if count_plank_toe_taps_left_set2 == 6:
+                        dir_plank_toe_taps_left_set2 = 0
+                    else:
+                        dir_plank_toe_taps_left_set2 = 1
+                        #print("left up: ",count_plank_toe_taps_left)
+            elif distance2 >= 300:
+                if dir_plank_toe_taps_left_set2 == 1 and count_plank_toe_taps_left_set2 <= 6:
+                    count_plank_toe_taps_left_set2 += 0.5
+                    if count_plank_toe_taps_left_set2 == 6:
+                        dir_plank_toe_taps_left_set2 = 1
+                    else:
+                        dir_plank_toe_taps_left_set2 = 0
+                        #print("left down: ",count_plank_toe_taps_left)
+
+        cvzone.putTextRect(img, 'Plank Toe Taps SET 2', [390, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_ptt_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_ptt_set2)), (50, 680), color_right_leg_ptt_set2, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_ptt_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_ptt_set2)), (995, 680), color_left_leg_ptt_set2, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_right_set2)}/6", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_left_set2)}/6", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt_set2 = False
+        exercise_mode = "rest_ptt_set2"
+        rest_ptt_start_time_set2 = time.time()
+
+    # Repetition
+    if count_plank_toe_taps_right_set2 == 5 and count_plank_toe_taps_left_set2 == 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt_set2 = False
+        exercise_mode = "rest_ptt_set2"
+        rest_ptt_start_time_set2 = time.time()
+    return img
+
+def rest_ptt_set2(img):
+    global exercise_mode, rest_ptt_start_time_set2, start_time_ptt_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_ptt_start_time_set2
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "ptt_set3"
+        start_time_ptt_set3 = time.time()
+    return img
+
+def detect_ptt_set3(img):
+    global count_plank_toe_taps_right_set3, count_plank_toe_taps_left_set3, dir_plank_toe_taps_right_set3, dir_plank_toe_taps_left_set3, start_time_ptt_set3, repetition_time_ptt_set3, display_info_ptt_set3, per_left_leg_ptt_set3, bar_left_leg_ptt_set3, per_right_leg_ptt_set3, bar_right_leg_ptt_set3, cooldown_duration_ptt_set3, cooldown_timer_ptt_set3, color_left_leg_ptt_set3, color_right_leg_ptt_set3, orientation, orientation2, exercise_mode, rest_ptt_start_time_set3
+
+    img = cv2.resize(img, (1280, 720))
+
+    elapsed_time = time.time() - start_time_ptt_set3
+    remaining_time = max(0, 10 - elapsed_time)
+
+    if display_info_ptt_set3:  # Check if to display counter, bar, and percentage
+        img = detector_PlankToeTaps.findPose(img, False)
+        lmList_jumping_jacks = detector_PlankToeTaps.findPosition(img, False)
+
+        # Define angles for jumping jacks outside the if statement
+        if len(lmList_jumping_jacks) != 0:
+
+            # Right and Left keypoints
+            distance1, distance2 = detector_PlankToeTaps.PlankToeTaps(img, 16, 14, 12, 24, 26, 28, 32, 15, 13, 11, 23, 25, 27, 31, True)
+           
+            #print("right: ", distance1, "left: ", distance2)
+
+            if cooldown_timer_ptt_set3 > 0:
+                cooldown_timer_ptt_set3 -= 1
+
+            per_right_leg_ptt_set3 = np.interp(distance1, (40, 350), (100, 0))
+            bar_right_leg_ptt_set3 = np.interp(distance1, (40, 350), (480, 680))
+            per_left_leg_ptt_set3 = np.interp(distance2, (40, 350), (100, 0))
+            bar_left_leg_ptt_set3 = np.interp(distance2, (40, 350), (480, 680))
+
+            if int(per_left_leg_ptt_set3) == 100:
+                color_left_leg_ptt_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            elif int(per_right_leg_ptt_set3) == 100:
+                color_right_leg_ptt_set3 = (0, 255, 0)
+            else:
+                color_left_leg_ptt_set3 = (0, 0, 255)  # Keep color of left leg bar as red
+                color_right_leg_ptt_set3 = (0, 0, 255)
+
+            if distance1 <= 40:
+                if dir_plank_toe_taps_right_set3 == 0 and count_plank_toe_taps_right_set3 <= 6:
+                    count_plank_toe_taps_right_set3 += 0.5
+                    if count_plank_toe_taps_right_set3 == 6:
+                        dir_plank_toe_taps_right_set3 = 0
+                    else:
+                        dir_plank_toe_taps_right_set3 = 1
+                        #print("right up: ",count_plank_toe_taps_right)
+            elif distance1 >= 300:
+                if dir_plank_toe_taps_right_set3 == 1 and count_plank_toe_taps_right_set3 <= 6:
+                    count_plank_toe_taps_right_set3 += 0.5
+                    if count_plank_toe_taps_right_set3 == 6:
+                        dir_plank_toe_taps_right_set3 = 1
+                    else:
+                        dir_plank_toe_taps_right_set3 = 0
+                        #print("right down: ",count_plank_toe_taps_right)
+            
+            if distance2 <= 40:
+                if dir_plank_toe_taps_left_set3 == 0 and count_plank_toe_taps_left_set3 <= 6:
+                    count_plank_toe_taps_left_set3 += 0.5
+                    if count_plank_toe_taps_left_set3 == 6:
+                        dir_plank_toe_taps_left_set3 = 0
+                    else:
+                        dir_plank_toe_taps_left_set3 = 1
+                        #print("left up: ",count_plank_toe_taps_left)
+            elif distance2 >= 300:
+                if dir_plank_toe_taps_left_set3 == 1 and count_plank_toe_taps_left_set3 <= 6:
+                    count_plank_toe_taps_left_set3 += 0.5
+                    if count_plank_toe_taps_left_set3 == 6:
+                        dir_plank_toe_taps_left_set3 = 1
+                    else:
+                        dir_plank_toe_taps_left_set3 = 0
+                        #print("left down: ",count_plank_toe_taps_left)
+
+        cvzone.putTextRect(img, 'Plank Toe Taps SET 3', [390, 30], thickness=2, border=2, scale=2.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # RIGHT LEG
+        cv2.putText(img, f"R {int(per_right_leg_ptt_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_leg_ptt_set3)), (50, 680), color_right_leg_ptt_set3, -1)
+
+        # LEFT LEG
+        cv2.putText(img, f"L {int(per_left_leg_ptt_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_leg_ptt_set3)), (995, 680), color_left_leg_ptt_set3, -1)
+
+    # Counter 
+    cv2.rectangle(img, (20, 20), (140, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_right_set3)}/6", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(count_plank_toe_taps_left_set3)}/6", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    # Timer
+    if remaining_time <= 0:
+        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt_set3 = False
+        exercise_mode = "rest_ptt_set3"
+        rest_ptt_start_time_set3 = time.time()
+
+    # Repetition
+    if count_plank_toe_taps_right_set3 == 5 and count_plank_toe_taps_left_set3 == 5:  # Assuming 10 jumping jacks for demonstration
+        cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
+        display_info_ptt_set3 = False
+        exercise_mode = "rest_ptt_set3"
+        rest_ptt_start_time_set3 = time.time()
+    return img 
+
+def rest_ptt_set3(img):
+    global exercise_mode, rest_ptt_start_time_set3
+    img = cv2.resize(img, (1280, 720))
+
+    rest_elapsed_time = time.time() - rest_ptt_start_time_set3
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+
+        # Draw rectangle behind the timer text
+    cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+    # Draw timer text above the rectangle
+    timer_text = f"Rest: {int(rest_remaining_time)}s"
+    cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+    if rest_remaining_time <= 0:
+        exercise_mode = "done_lossWeight"
         print(exercise_mode)
-        #start_time_plankjacks_set3 = time.time()
     return img
 
 @app.route('/lossWeight')
