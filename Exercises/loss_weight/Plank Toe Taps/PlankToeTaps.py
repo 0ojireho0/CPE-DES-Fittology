@@ -5,20 +5,17 @@ import time
 import PlankToeTaps_PoseModule as pm
 import cvzone
 
-cap = cv2.VideoCapture(r'C:\Users\RID\Desktop\pose_estimation\aipose2\Exercise\weightloss\ptt3.mp4')
+cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\loss_weight\Plank Toe Taps\PlankToeTaps.mp4')
 detector_PlankToeTaps = pm.poseDetectorPlankToeTaps()
 
-count_arc = 0
-count_plank_toe_taps = 0
 count_plank_toe_taps_right = 0
 count_plank_toe_taps_left = 0
 
-dir_arc = 0
-dir_plank_toe_taps = 0
+
 dir_plank_toe_taps_right = 0
 dir_plank_toe_taps_left = 0
 
-pTime = 0
+
 start_time = time.time()
 repetition_time = 60
 display_info = True
@@ -28,16 +25,6 @@ bar_left_leg = 0
 
 per_right_leg = 0
 bar_right_leg = 0
-
-leftleg= 0
-rightleg = 0
-
-right = 0
-left = 0
-
-done = 0
-
-perform_interpolation = True
 
 cooldown_duration = 5
 cooldown_timer = 0
@@ -105,11 +92,6 @@ while True:
                     count_plank_toe_taps_left += 0.5
                     dir_plank_toe_taps_left = 0
                     print("left down: ",count_plank_toe_taps_left)
-
-        #Delay Timer for Pose Estimation
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        if cooldown_timer > 0:
-            cooldown_timer -= 1 / fps
 
         cvzone.putTextRect(img, 'Plank Toe Taps Counter', [390, 30], thickness=2, border=2, scale=2.5)
 
