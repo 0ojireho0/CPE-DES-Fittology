@@ -68,6 +68,19 @@ def start_exercise():
     session['highkneetap'] = os.path.join(app.config['UPLOAD_FOLDER'], 'highkneetap.jpg')
     # -------------------------- END FOR GAINING MUSCLE -------------------------
 
+    # -------------------------- FOR LOSS WEIGHT -------------------------------
+    session['buttkicks'] = os.path.join(app.config['UPLOAD_FOLDER'], 'buttkicks.jpg')
+    session['joginplace'] = os.path.join(app.config['UPLOAD_FOLDER'], 'joginplace.jpg')
+    session['jumpingjacks'] = os.path.join(app.config['UPLOAD_FOLDER'], 'jumpingjack.jpg')
+    session['jumpinglunges'] = os.path.join(app.config['UPLOAD_FOLDER'], 'jumpinglunges.jpg')
+    session['plankjacks'] = os.path.join(app.config['UPLOAD_FOLDER'], 'plankjacks.jpg')
+    session['planktoetaps'] = os.path.join(app.config['UPLOAD_FOLDER'], 'planktoetaps.jpg')
+    session['sidelegraise'] = os.path.join(app.config['UPLOAD_FOLDER'], 'sidelegraise.jpg')
+    session['squatjacks'] = os.path.join(app.config['UPLOAD_FOLDER'], 'squatjacks.jpg')
+    session['squatjump'] = os.path.join(app.config['UPLOAD_FOLDER'], 'squatjump.jpg')
+    session['squatsidekick'] = os.path.join(app.config['UPLOAD_FOLDER'], 'squatsidekick.jpg')
+    # -------------------------- END FOR LOSS WEIGHT ---------------------------
+
     if session['exercise'] == "muscle_gain":
         return redirect("/muscleGain")
     else:

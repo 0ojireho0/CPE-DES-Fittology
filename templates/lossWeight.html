@@ -13,6 +13,18 @@
             </div>
         </div>
         <div>
+            <div id="exercise-images">
+                <img id="buttkicks-img" src="{{buttkicks}}" style="display: none;" width="100%"  alt="buttkicksl">
+                <img id="joginplace-img" src="{{joginplace}}" style="display: none;" width="100%"  alt="joginplace">
+                <img id="jumpingjacks-img" src="{{jumpingjacks}}" style="display: none;" width="100%"  alt="jumpingjacks">
+                <img id="jumpinglunge-img" src="{{jumpinglunges}}" style="display: none;" width="100%"  alt="jumpinglunges">
+                <img id="plankjacks-img" src="{{plankjacks}}" style="display: none;" width="100%"  alt="plankjacks">
+                <img id="planktoetaps-img" src="{{planktoetaps}}" style="display: none;" width="100%"  alt="planktoetaps">
+                <img id="sidelegraise-img" src="{{sidelegraise}}" style="display: none;" width="100%"  alt="sidelegraise">
+                <img id="squatjacks-img" src="{{squatjacks}}" style="display: none;" width="100%"  alt="squatjacks">
+                <img id="squatjump-img" src="{{squatjump}}" style="display: none;" width="100%"  alt="squatjump">
+                <img id="squatsidekick-img" src="{{squatsidekick}}" style="display: none;" width="100%"  alt="squatsidekick">
+            </div>
         </div>
     </div>
 
@@ -36,6 +48,54 @@
                 console.error('Error starting timer:', error);
             });
         });
+
+        function updateExerciseMode() {
+            fetch("{{url_for('lossWeight.get_exercise_mode')}}")
+            .then(response => response.json())
+            .then(data => {
+                //document.getElementById('exercise-mode').innerText = 'Current Exercise: ' + data.exercise_mode;
+                // Show/hide images based on exercise mode
+                if (data.exercise_mode === 'joginplace') {
+                    document.getElementById('joginplace-img').style.display = 'block';
+                } else if (data.exercise_mode === 'jumpingjacks') {
+                    document.getElementById('joginplace-img').style.display = 'none';
+                    document.getElementById('jumpingjacks-img').style.display = 'block';
+                } else if (data.exercise_mode === 'buttkick'){
+                    document.getElementById('jumpingjacks-img').style.display = 'none';
+                    document.getElementById('buttkicks-img').style.display = 'block';
+                } else if (data.exercise_mode === 'slr'){
+                    document.getElementById('buttkicks-img').style.display = 'none';
+                    document.getElementById('sidelegraise-img').style.display = 'block';
+                } else if (data.exercise_mode === 'squatjacks'){
+                    document.getElementById('sidelegraise-img').style.display = 'none';
+                    document.getElementById('squatjacks-img').style.display = 'block';
+                } else if (data.exercise_mode === 'squatjump'){
+                    document.getElementById('squatjacks-img').style.display = 'none';
+                    document.getElementById('squatjump-img').style.display = 'block';
+                } else if (data.exercise_mode === 'squatsidekick'){
+                    document.getElementById('squatjump-img').style.display = 'none';
+                    document.getElementById('squatsidekick-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'jumpinglunge'){
+                    document.getElementById('squatsidekick-img').style.display = 'none';
+                    document.getElementById('jumpinglunge-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'plankjacks'){
+                    document.getElementById('jumpinglunge-img').style.display = 'none';
+                    document.getElementById('plankjacks-img').style.display = 'block';
+                }  else if (data.exercise_mode === 'ptt'){
+                    document.getElementById('plankjacks-img').style.display = 'none';
+                    document.getElementById('planktoetaps-img').style.display = 'block';
+                }     
+            })
+            .catch(error => {
+                console.error('Error fetching exercise mode:', error);
+            });
+        }
+
+        // Update exercise mode initially
+        updateExerciseMode();
+
+        // Update exercise mode every second (or as frequently as needed)
+        setInterval(updateExerciseMode, 1000);
     </script>
 </body>
 </html>

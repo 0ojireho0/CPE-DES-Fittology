@@ -184,7 +184,7 @@ rest_jumpingjack_start_time_set3 = time.time()
 # --------------- END FOR JUMPING JACK SET 3 -------------
 
 # ---------------- FOR BUTTKICK -----------------------
-detector_alternatingleftlunge = pm_buttkick.poseDetectorButtKick()
+detector_buttkick = pm_buttkick.poseDetectorButtKick()
 
 count_alternating_right_lunge_buttkick = 0
 count_alternating_left_lunge_buttkick = 0
@@ -219,7 +219,7 @@ rest_buttkick_start_time = time.time()
 # ---------------- END FOR BUTTKICK ------------------
 
 # ---------------- FOR BUTTKICK SET 2 -----------------------
-detector_alternatingleftlunge = pm_buttkick.poseDetectorButtKick()
+detector_buttkick = pm_buttkick.poseDetectorButtKick()
 
 count_alternating_right_lunge_buttkick_set2 = 0
 count_alternating_left_lunge_buttkick_set2 = 0
@@ -254,7 +254,7 @@ rest_buttkick_start_time_set2 = time.time()
 # ---------------- END FOR BUTTKICK SET 2 ------------------
 
 # ---------------- FOR BUTTKICK -----------------------
-detector_alternatingleftlunge = pm_buttkick.poseDetectorButtKick()
+detector_buttkick = pm_buttkick.poseDetectorButtKick()
 
 count_alternating_right_lunge_buttkick_set3 = 0
 count_alternating_left_lunge_buttkick_set3 = 0
@@ -646,7 +646,7 @@ rest_squatsidekick_start_time_set3 = time.time()
 # --------------- END FOR SQUAT SIDE KICK SET 3 ------------
 
 # ---------------- FOR JUMPING LUNGE -------------------
-detector_alternatingleftlunge = pm_jumpinglunge.poseDetectorJumpingLunge()
+detector_jumpinglunge = pm_jumpinglunge.poseDetectorJumpingLunge()
 
 count_alternating_right_lunge_jumpinglunge = 0
 count_alternating_left_lunge_jumpinglunge = 0
@@ -675,7 +675,7 @@ rest_jumpinglunge_start_time = time.time()
 # ---------------- END FOR JUMPING LUNGE ---------------
 
 # ---------------- FOR JUMPING LUNGE SET 2 -------------------
-detector_alternatingleftlunge = pm_jumpinglunge.poseDetectorJumpingLunge()
+detector_jumpinglunge = pm_jumpinglunge.poseDetectorJumpingLunge()
 
 count_alternating_right_lunge_jumpinglunge_set2 = 0
 count_alternating_left_lunge_jumpinglunge_set2 = 0
@@ -704,7 +704,7 @@ rest_jumpinglunge_start_time_set2 = time.time()
 # ---------------- END FOR JUMPING LUNGE SET 2 ---------------
 
 # ---------------- FOR JUMPING LUNGE SET 3 -------------------
-detector_alternatingleftlunge = pm_jumpinglunge.poseDetectorJumpingLunge()
+detector_jumpinglunge = pm_jumpinglunge.poseDetectorJumpingLunge()
 
 count_alternating_right_lunge_jumpinglunge_set3 = 0
 count_alternating_left_lunge_jumpinglunge_set3 = 0
@@ -892,6 +892,9 @@ color_left_leg_ptt_set3 = (0, 0, 255)
 color_right_leg_ptt_set3 = (0, 0, 255)
 
 rest_ptt_start_time_set3 = time.time()
+
+orientation = ''
+orientation2 = ''
 # ---------------- END FOR PLANK TOE TAPS SET 3 ---------------------
 
 
@@ -901,7 +904,17 @@ rest_ptt_start_time_set3 = time.time()
 def home():
     #username = session.get('username')
     if 'username' in session and session['exercise'] == "loss_weight":
-        return render_template('lossWeight.html')
+        buttkicks = session.get('buttkicks')
+        joginplace = session.get('joginplace')
+        jumpingjacks = session.get('jumpingjacks')
+        jumpinglunges = session.get('jumpinglunges')
+        plankjacks = session.get('plankjacks')
+        planktoetaps = session.get('planktoetaps')
+        sidelegraise = session.get('sidelegraise')
+        squatjacks = session.get('squatjacks')
+        squatjump = session.get('squatjump')
+        squatsidekick = session.get('squatsidekick')
+        return render_template('lossWeight.html', buttkicks = buttkicks, joginplace = joginplace, jumpingjacks = jumpingjacks, jumpinglunges = jumpinglunges, plankjacks = plankjacks, planktoetaps = planktoetaps, sidelegraise = sidelegraise, squatjacks = squatjacks, squatjump = squatjump, squatsidekick = squatsidekick  )
     else:
         return render_template('home.html')
 
@@ -1052,6 +1065,11 @@ def start_timer_lossWeight():
     start_time_jip = time.time()  # Start the timer
     return jsonify({'message': 'Timer started'}), 200
 
+@lossWeight.route('/exercise_mode')
+def get_exercise_mode():
+    global exercise_mode
+    return jsonify({'exercise_mode': exercise_mode})
+
 def detect_jip(img):
     global left_foot_lift_off_count_jip, right_foot_lift_off_count_jip, counter_left_jip, counter_right_jip, per_down_right_jip, bar_down_right_jip, per_down_left_jip, bar_down_left_jip, dir_left_jip, dir_right_jip, start_time_jip, repetition_time_jip, display_info_jip, color_leg_jip, rest_jip_start_time, countdown_before_jip, drawings, drawings2, exercise_mode
     
@@ -1064,7 +1082,7 @@ def detect_jip(img):
         display_info_jip = True
 
     elapsed_time = time.time() - start_time_jip
-    remaining_time = max(0, 20 - elapsed_time) #repetition_time_jip
+    remaining_time = max(0, 70 - elapsed_time) #repetition_time_jip
 
     # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1161,7 +1179,7 @@ def rest_jip(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jip_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1180,7 +1198,7 @@ def detect_jip_set2(img):
 
     img = cv2.resize(img, (1280, 720))
     elapsed_time = time.time() - start_time_jip_set2
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jip
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_jip
 
     if display_info_jip_set2:
         img = detector_jip.find_Pose(img, False)
@@ -1269,7 +1287,7 @@ def rest_jip_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jip_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1288,7 +1306,7 @@ def detect_jip_set3(img):
 
     img = cv2.resize(img, (1280, 720))
     elapsed_time = time.time() - start_time_jip_set3
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jip
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_jip
 
     if display_info_jip_set3:
         img = detector_jip.find_Pose(img, False)
@@ -1377,7 +1395,7 @@ def rest_jip_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jip_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1397,7 +1415,7 @@ def detect_jumpingjacks(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpingjacks
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_jumpingjacks:  # Check if to display counter, bar, and percentage
         img = detector_JumpingJack.findPose(img, False)
@@ -1500,7 +1518,7 @@ def rest_jumpingjacks(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpingjack_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1520,7 +1538,7 @@ def detect_jumpingjacks_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpingjacks_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_jumpingjacks_set2:  # Check if to display counter, bar, and percentage
         img = detector_JumpingJack.findPose(img, False)
@@ -1623,7 +1641,7 @@ def rest_jumpingjacks_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpingjack_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1643,7 +1661,7 @@ def detect_jumpingjacks_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpingjacks_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_jumpingjacks_set3:  # Check if to display counter, bar, and percentage
         img = detector_JumpingJack.findPose(img, False)
@@ -1746,7 +1764,7 @@ def rest_jumpingjacks_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpingjack_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1766,18 +1784,18 @@ def detect_buttkick(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_buttkick
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_buttkick:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_buttkick.findPose(img, False)
+        lmList_jumping_jacks = detector_buttkick.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_buttkick, orientation = detector_alternatingleftlunge.ButtKick(img, 24, 26, 28, True)
-            leftleg_buttkick, orientation2 = detector_alternatingleftlunge.ButtKick(img, 23, 25, 27, True)
+            rightleg_buttkick, orientation = detector_buttkick.ButtKick(img, 24, 26, 28, True)
+            leftleg_buttkick, orientation2 = detector_buttkick.ButtKick(img, 23, 25, 27, True)
 
             if cooldown_timer_buttkick > 0:
                 cooldown_timer_buttkick -= 1
@@ -1986,7 +2004,7 @@ def rest_buttkick(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_buttkick_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2006,18 +2024,18 @@ def detect_buttkick_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_buttkick_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_buttkick_set2:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_buttkick.findPose(img, False)
+        lmList_jumping_jacks = detector_buttkick.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_buttkick_set2, orientation = detector_alternatingleftlunge.ButtKick(img, 24, 26, 28, True)
-            leftleg_buttkick_set2, orientation2 = detector_alternatingleftlunge.ButtKick(img, 23, 25, 27, True)
+            rightleg_buttkick_set2, orientation = detector_buttkick.ButtKick(img, 24, 26, 28, True)
+            leftleg_buttkick_set2, orientation2 = detector_buttkick.ButtKick(img, 23, 25, 27, True)
 
             if cooldown_timer_buttkick_set2 > 0:
                 cooldown_timer_buttkick_set2 -= 1
@@ -2226,7 +2244,7 @@ def rest_buttkick_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_buttkick_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2246,18 +2264,18 @@ def detect_buttkick_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_buttkick_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_buttkick_set3:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_buttkick.findPose(img, False)
+        lmList_jumping_jacks = detector_buttkick.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_buttkick_set3, orientation = detector_alternatingleftlunge.ButtKick(img, 24, 26, 28, True)
-            leftleg_buttkick_set3, orientation2 = detector_alternatingleftlunge.ButtKick(img, 23, 25, 27, True)
+            rightleg_buttkick_set3, orientation = detector_buttkick.ButtKick(img, 24, 26, 28, True)
+            leftleg_buttkick_set3, orientation2 = detector_buttkick.ButtKick(img, 23, 25, 27, True)
 
             if cooldown_timer_buttkick_set3 > 0:
                 cooldown_timer_buttkick_set3 -= 1
@@ -2466,7 +2484,7 @@ def rest_buttkick_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_buttkick_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2486,7 +2504,7 @@ def detect_slr(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_slr
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
 
     if display_info_slr:  # Check if to display counter, bar, and percentage
@@ -2587,7 +2605,7 @@ def rest_slr(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_slr_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2608,7 +2626,7 @@ def detect_slr_set2(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_slr_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
 
     if display_info_slr_set2:  # Check if to display counter, bar, and percentage
@@ -2709,7 +2727,7 @@ def rest_slr_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_slr_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2730,7 +2748,7 @@ def detect_slr_set3(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_slr_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
 
     if display_info_slr_set3:  # Check if to display counter, bar, and percentage
@@ -2834,7 +2852,7 @@ def rest_slr_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_slr_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2849,13 +2867,13 @@ def rest_slr_set3(img):
     return img
 
 def detect_squatjacks(img):
-    global  count_squatjack, dir_squatjack ,start_time_squatjack, start_time_squatjack ,repetition_time_squatjack, display_info_squatjack, per_down_squatjacks, distance_squatjacks, bar_down_squatjacks, exercise_mode, rest_squatjacks_start_time
+    global  count_squatjack, dir_squatjack , start_time_squatjacks ,repetition_time_squatjack, display_info_squatjack, per_down_squatjacks, distance_squatjacks, bar_down_squatjacks, exercise_mode, rest_squatjacks_start_time
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_squatjack
-    remaining_time = max(0, 10 - elapsed_time)
+    elapsed_time = time.time() - start_time_squatjacks
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjack:  # Check if to display counter, bar, and percentage
         img = detector_squatjack.findPose(img, False)  # initializes img as variable for findpose function
@@ -2925,7 +2943,7 @@ def rest_squatjacks(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjacks_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -2946,7 +2964,7 @@ def detect_squatjacks_set2(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_squatjacks_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjack_set2:  # Check if to display counter, bar, and percentage
         img = detector_squatjack.findPose(img, False)  # initializes img as variable for findpose function
@@ -3016,7 +3034,7 @@ def rest_squatjacks_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjacks_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3037,7 +3055,7 @@ def detect_squatjacks_set3(img):
 
     # Timer - starts timer based on set duration
     elapsed_time = time.time() - start_time_squatjacks_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjack_set3:  # Check if to display counter, bar, and percentage
         img = detector_squatjack.findPose(img, False)  # initializes img as variable for findpose function
@@ -3107,7 +3125,7 @@ def rest_squatjacks_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjacks_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3127,7 +3145,7 @@ def detect_squatjump(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatjump
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjump:  # Check if to display counter, bar, and percentage
         img = detector_squatjump.findPose(img, False)
@@ -3298,7 +3316,7 @@ def rest_squatjump(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjump_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3318,7 +3336,7 @@ def detect_squatjump_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatjump_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjump_set2:  # Check if to display counter, bar, and percentage
         img = detector_squatjump.findPose(img, False)
@@ -3489,7 +3507,7 @@ def rest_squatjump_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjump_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3510,7 +3528,7 @@ def detect_squatjump_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatjump_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_squatjump_set3:  # Check if to display counter, bar, and percentage
         img = detector_squatjump.findPose(img, False)
@@ -3681,7 +3699,7 @@ def rest_squatjump_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatjump_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3701,7 +3719,7 @@ def detect_squatsidekick(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatsidekick
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_squatsidekick
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_squatsidekick
 
     if display_info_squatsidekick:  # Check if to display counter, bar, and percentage
         img = detector_SquatSideKick.findPose(img, False)
@@ -3852,7 +3870,7 @@ def rest_squatsidekick(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatsidekick_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3872,7 +3890,7 @@ def detect_squatsidekick_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatsidekick_set2
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_squatsidekick
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_squatsidekick
 
     if display_info_squatsidekick_set2:  # Check if to display counter, bar, and percentage
         img = detector_SquatSideKick.findPose(img, False)
@@ -4023,7 +4041,7 @@ def rest_squatsidekick_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatsidekick_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4043,7 +4061,7 @@ def detect_squatsidekick_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_squatsidekick_set3
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_squatsidekick
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_squatsidekick
 
     if display_info_squatsidekick_set3:  # Check if to display counter, bar, and percentage
         img = detector_SquatSideKick.findPose(img, False)
@@ -4193,7 +4211,7 @@ def rest_squatsidekick_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_squatsidekick_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4213,18 +4231,18 @@ def detect_jumpinglunge(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpinglunge
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jumpinglunge
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_jumpinglunge
 
     if display_info_jumpinglunge:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_jumpinglunge.findPose(img, False)
+        lmList_jumping_jacks = detector_jumpinglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_jumpinglunge, orientation = detector_alternatingleftlunge.JumpingLunge(img, 24, 26, 28, True)
-            leftleg_jumpinglunge, orientation2 = detector_alternatingleftlunge.JumpingLunge(img, 23, 25, 27, True)
+            rightleg_jumpinglunge, orientation = detector_jumpinglunge.JumpingLunge(img, 24, 26, 28, True)
+            leftleg_jumpinglunge, orientation2 = detector_jumpinglunge.JumpingLunge(img, 23, 25, 27, True)
 
             if cooldown_timer_jumpinglunge > 0:
                 cooldown_timer_jumpinglunge -= 1
@@ -4428,7 +4446,7 @@ def rest_jumpinglunge(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpinglunge_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4448,18 +4466,18 @@ def detect_jumpinglunge_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpinglunge_set2
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jumpinglunge
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_jumpinglunge
 
     if display_info_jumpinglunge_set2:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_jumpinglunge.findPose(img, False)
+        lmList_jumping_jacks = detector_jumpinglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_jumpinglunge_set2, orientation = detector_alternatingleftlunge.JumpingLunge(img, 24, 26, 28, True)
-            leftleg_jumpinglunge_set2, orientation2 = detector_alternatingleftlunge.JumpingLunge(img, 23, 25, 27, True)
+            rightleg_jumpinglunge_set2, orientation = detector_jumpinglunge.JumpingLunge(img, 24, 26, 28, True)
+            leftleg_jumpinglunge_set2, orientation2 = detector_jumpinglunge.JumpingLunge(img, 23, 25, 27, True)
 
             if cooldown_timer_jumpinglunge_set2 > 0:
                 cooldown_timer_jumpinglunge_set2 -= 1
@@ -4663,7 +4681,7 @@ def rest_jumpinglunge_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpinglunge_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4683,18 +4701,18 @@ def detect_jumpinglunge_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_jumpinglunge_set3
-    remaining_time = max(0, 10 - elapsed_time) #repetition_time_jumpinglunge
+    remaining_time = max(0, 60 - elapsed_time) #repetition_time_jumpinglunge
 
     if display_info_jumpinglunge_set3:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+        img = detector_jumpinglunge.findPose(img, False)
+        lmList_jumping_jacks = detector_jumpinglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
         if len(lmList_jumping_jacks) != 0:
 
             # Right and Left keypoints
-            rightleg_jumpinglunge_set3, orientation = detector_alternatingleftlunge.JumpingLunge(img, 24, 26, 28, True)
-            leftleg_jumpinglunge_set3, orientation2 = detector_alternatingleftlunge.JumpingLunge(img, 23, 25, 27, True)
+            rightleg_jumpinglunge_set3, orientation = detector_jumpinglunge.JumpingLunge(img, 24, 26, 28, True)
+            leftleg_jumpinglunge_set3, orientation2 = detector_jumpinglunge.JumpingLunge(img, 23, 25, 27, True)
 
             if cooldown_timer_jumpinglunge_set3 > 0:
                 cooldown_timer_jumpinglunge_set3 -= 1
@@ -4898,7 +4916,7 @@ def rest_jumpinglunge_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_jumpinglunge_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -4918,7 +4936,7 @@ def detect_plankjacks(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_plankjacks
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_plankjacks:  # Check if to display counter, bar, and percentage
         img = detector_PlankJacks.findPose(img, False)
@@ -5000,7 +5018,7 @@ def rest_plankjacks(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_plankjacks_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5020,7 +5038,7 @@ def detect_plankjacks_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_plankjacks_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_plankjacks_set2:  # Check if to display counter, bar, and percentage
         img = detector_PlankJacks.findPose(img, False)
@@ -5101,7 +5119,7 @@ def rest_plankjacks_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_plankjacks_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5122,7 +5140,7 @@ def detect_plankjacks_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_plankjacks_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_plankjacks_set3:  # Check if to display counter, bar, and percentage
         img = detector_PlankJacks.findPose(img, False)
@@ -5203,7 +5221,7 @@ def rest_plankjacks_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_plankjacks_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5223,7 +5241,7 @@ def detect_ptt(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_ptt
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_ptt:  # Check if to display counter, bar, and percentage
         img = detector_PlankToeTaps.findPose(img, False)
@@ -5333,7 +5351,7 @@ def rest_ptt(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_ptt_start_time
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5353,7 +5371,7 @@ def detect_ptt_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_ptt_set2
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_ptt_set2:  # Check if to display counter, bar, and percentage
         img = detector_PlankToeTaps.findPose(img, False)
@@ -5463,7 +5481,7 @@ def rest_ptt_set2(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_ptt_start_time_set2
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -5483,7 +5501,7 @@ def detect_ptt_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_ptt_set3
-    remaining_time = max(0, 10 - elapsed_time)
+    remaining_time = max(0, 60 - elapsed_time)
 
     if display_info_ptt_set3:  # Check if to display counter, bar, and percentage
         img = detector_PlankToeTaps.findPose(img, False)
@@ -5593,7 +5611,7 @@ def rest_ptt_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_ptt_start_time_set3
-    rest_remaining_time = max(0, 10 - rest_elapsed_time)
+    rest_remaining_time = max(0, 60 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
