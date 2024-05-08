@@ -4,16 +4,16 @@ import cvzone
 import time
 import os
 import numpy as np
-import BicepCurl_PoseModule as pm_bicep
-import PushUp_PoseModule as pm_pushup
-import shouldertap_PoseModule as pm_shouldertap
-import chestpress_PoseModule as pm_chestpress
-import dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
-import alternatinglunge_PoseModule as pm_alternatinglunge
-import bodyweightsquat_PoseModule as pm_bws
-import gobletsquat_PoseModule as pm_gs
-import highkneetap_PoseModule as pm_hkt
-import dumbbellhiphinge_PoseModule as pm_dhh
+import poseModules.BicepCurl_PoseModule as pm_bicep
+import poseModules.PushUp_PoseModule as pm_pushup
+import poseModules.shouldertap_PoseModule as pm_shouldertap
+import poseModules.chestpress_PoseModule as pm_chestpress
+import poseModules.dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
+import poseModules.alternatinglunge_PoseModule as pm_alternatinglunge
+import poseModules.bodyweightsquat_PoseModule as pm_bws
+import poseModules.gobletsquat_PoseModule as pm_gs
+import poseModules.highkneetap_PoseModule as pm_hkt
+import poseModules.dumbbellhiphinge_PoseModule as pm_dhh
 
 muscleGain = Blueprint("muscleGain", __name__,static_folder="static", template_folder="templates")
 

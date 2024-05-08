@@ -4,16 +4,16 @@ import time
 import cvzone
 import numpy as np
 
-import jogginginplace_PoseModule as pm_jip
-import JumpingJack_PoseModule as pm_jumpingjacks
-import buttkick_PoseModule as pm_buttkick
-import SideLegRaises_PoseModule as pm_slr
-import SquatJack_PoseModule as pm_squatjacks
-import squatjump_PoseModule as pm_squatjump
-import squatsidekick_PoseModule as pm_squatsidekick
-import jumpinglunge_PoseModule as pm_jumpinglunge
-import plankjacks_PoseModule as pm_plankjacks
-import PlankToeTaps_PoseModule as pm_ptt
+import poseModules.jogginginplace_PoseModule as pm_jip
+import poseModules.JumpingJack_PoseModule as pm_jumpingjacks
+import poseModules.buttkick_PoseModule as pm_buttkick
+import poseModules.SideLegRaises_PoseModule as pm_slr
+import poseModules.SquatJack_PoseModule as pm_squatjacks
+import poseModules.squatjump_PoseModule as pm_squatjump
+import poseModules.squatsidekick_PoseModule as pm_squatsidekick
+import poseModules.jumpinglunge_PoseModule as pm_jumpinglunge
+import poseModules.plankjacks_PoseModule as pm_plankjacks
+import poseModules.PlankToeTaps_PoseModule as pm_ptt
 
 lossWeight = Blueprint("lossWeight", __name__,static_folder="static", template_folder="templates")
 
