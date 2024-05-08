@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
                 <h3 class="mt-5">Live Streaming</h3>
-                <img src="{{ url_for('video_feed') }}" width="100%">
+                <img src="{{ url_for('muscleGain.video_feed') }}" width="100%">
                 <button id="startTimerBtn">Start Exercise</button>
             </div>
         </div>
@@ -28,11 +28,11 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         // Function to fetch exercise mode data and update text and images
         document.getElementById('startTimerBtn').addEventListener('click', function() {
-            fetch('/start_timer', {
+            fetch("{{url_for('muscleGain.start_timer')}}", {
                 method: 'POST',
             })
             .then(response => {
@@ -40,7 +40,7 @@
                     console.log('Timer started successfully');
                     // Update the video source directly
                     location.reload()
-                    document.getElementById('videoFeed').src = "{{ url_for('video_feed') }}";
+                    document.getElementById('videoFeed').src = "{{ url_for('muscleGain.video_feed') }}";
                     
                 } else {
                     console.error('Failed to start timer');
@@ -52,9 +52,9 @@
         });
         
 
-
+        
         function updateExerciseMode() {
-            fetch('/exercise_mode')
+            fetch("{{url_for('muscleGain.get_exercise_mode')}}")
             .then(response => response.json())
             .then(data => {
                 //document.getElementById('exercise-mode').innerText = 'Current Exercise: ' + data.exercise_mode;
@@ -101,6 +101,7 @@
 
         // Update exercise mode every second (or as frequently as needed)
         setInterval(updateExerciseMode, 1000);
+        
     </script>
 </body>
 </html>
