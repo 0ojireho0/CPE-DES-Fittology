@@ -40,98 +40,115 @@ class poseDetector():
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lmList
 
-    # Function to calculate angle between three points for the right arm
-    def findAngle(self, img, p1, p2, p3, draw=True):
-        if len(self.lmList) != 0:
-            # Get the landmarks for the right arm
-            x1, y1 = self.lmList[p1][1:]
-            x2, y2 = self.lmList[p2][1:]
-            x3, y3 = self.lmList[p3][1:]
-
-            # Calculate the angle for the right arm
-            angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-            if angle < 0:
-                angle += 360
-
-            # Draw the angle if required
-            if draw:
-                cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
-                cv2.line(img, (x3, y3), (x2, y2), (0, 0, 255), 6)
-                cv2.circle(img, (x1, y1), 10, (0, 0, 255), 5)
-                cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
-                cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
-                cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
-                cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
-                cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
-
-                cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-
-            return angle
-        else:
-            return None
-
-    # Function to calculate angle between three points for the left arm
-    def findAngle2(self, img, p1, p2, p3, draw=True):
-        if len(self.lmList) != 0:
-            # Get the landmarks for the left arm
-            x1, y1 = self.lmList[p1][1:]
-            x2, y2 = self.lmList[p2][1:]
-            x3, y3 = self.lmList[p3][1:]
-
-            # Calculate the angle for the left arm
-            angle2 = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-            if angle2 < 0:
-                angle2 += 360
-
-            # Draw the angle if required
-            if draw:
-                cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
-                cv2.line(img, (x3, y3), (x2, y2), (0, 0, 255), 6)
-                cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
-                cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
-                cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
-                cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
-                cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
-                cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
-                cv2.putText(img, str(int(angle2)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-
-            return angle2
-        else:
-            return None
-
-# Function to capture video feed and perform pose detection
-def main():
-    cap = cv2.VideoCapture(1)
-    pTime = 0
-    detector = poseDetector()
-    while True:
-        # Capture frame from camera
-        success, img = cap.read()
-
-        # Find and draw pose on the frame
-        img = detector.findPose(img)
-
-        # Find landmark position for specific points (e.g, shoulder)
-        lmList = detector.findPosition(img, draw=False)
+    def get_pose_orientation(self, landmarks):
+        # Define the indices of the landmarks for shoulders and hips
+        shoulder_indices = [11, 12]  # Left and right shoulders
+        hip_indices = [23, 24]  # Left and right hips
         
-        # Calculate and display angles
-        if len(lmList) != 0:
-            angle_right = detector.findAngle(img, 12, 14, 16)
-            angle_left = detector.findAngle2(img, 11, 13, 15)
-            print("Right arm angle:", angle_right)
-            print("Left arm angle:", angle_left)
+        # Extract coordinates for shoulders and hips
+        shoulders = [landmarks.landmark[index] for index in shoulder_indices]
+        hips = [landmarks.landmark[index] for index in hip_indices]
+        
+        # Extract x-coordinates of shoulders and hips
+        shoulder_x = [shoulder.z for shoulder in shoulders]
+        hip_x = [hip.z for hip in hips]
+        if shoulder_x[0] <= -0.20 and shoulder_x[1] >= 0.03 and hip_x[0] <= -0.05 and hip_x[1] >= 0.05:
+            return 'right'
+        elif shoulder_x[0] >= 0.03 and shoulder_x[1] <= -0.20 and hip_x[0] >= 0.05 and hip_x[1] <= -0.05:
+            return 'left'
+        elif shoulder_x[0] <= -0.01 and shoulder_x[1] <= -0.01 and -0.05 <= hip_x[0] <= 0.05 and -0.05 <= hip_x[1] <= 0.05 :
+            return 'front'
+        else:
+            return 'none'
 
-        # Calculate and display FPS
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
+    def BicepCurl(self, img, p1, p2, p3, drawpoints):
+        if len(self.lmList) != 0:
 
-        cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+            x1, y1 = self.lmList[p1][1], self.lmList[p1][2]
+            x2, y2 = self.lmList[p2][1], self.lmList[p2][2]
+            x3, y3 = self.lmList[p3][1], self.lmList[p3][2]
 
-        # Display the annotated image
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
+            orientation = self.get_pose_orientation(self.results.pose_landmarks)
 
-# Run the main function if this script is executed
-if __name__ == "__main__":
-    main()
+            # Calculate the angle only if the leg is stepping forward
+            if orientation == 'right':
+                measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
+                if measure < 0:
+                    measure += 360
+                    
+                if drawpoints:
+                    cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
+
+                    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
+                    cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
+
+                    cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
+                    return int(measure), 'right'
+            
+            elif orientation == 'left':
+                measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
+                if measure < 0:
+                    measure += 360
+                    
+                if drawpoints:
+                    cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
+
+                    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
+                    cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
+
+                    cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
+                    return int(measure), 'left'
+            
+            elif orientation == 'front':
+                measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
+                if measure < 0:
+                    measure += 360
+                    
+                if drawpoints:
+                    cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
+                    cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
+                    cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
+
+                    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
+                    cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
+
+                    cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
+                    return int(measure), 'front'
+
+                # measure = math.sqrt((x3 - x1) ** 2 + (y3 - y1) ** 2)
+                # midpoint_x = int((x1 + x3) / 2)
+                # midpoint_y = int((y1 + y3) / 2)
+
+                # if drawpoints:
+                    
+                #     cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
+                #     cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
+                #     cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
+                #     cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
+                #     cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
+                #     cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
+
+                #     cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
+                #     cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
+
+                #     cv2.putText(img, f"{int(measure)}", (midpoint_x, midpoint_y), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
+                #     return int(measure), 'front' 
+        return None, 'None'
+
+
+
+
+

@@ -8,7 +8,7 @@ import cvzone
 
 
 #Camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\bicep curl\bicepcurl.mp4')
 
 #import class
 detector_bicep = pm.poseDetector()
@@ -30,6 +30,12 @@ per_right = 0
 angle_left = 0
 angle_right = 0
 
+color_right_bicepcurl = (0, 0, 255)
+color_left_bicepcurl = (0, 0, 255)
+
+orientation = ''
+orientation2 = ''
+
 
 # main loop
 while True:
@@ -49,43 +55,114 @@ while True:
 
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
-            angle_left = detector_bicep.findAngle(img, 11, 13, 15)
-            angle_right = detector_bicep.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
-            # (refer to mediapipe landmark mapping for number equivalent)
-    
-            # Interpolate angle to percentage and position on screen
-            per_left = np.interp(angle_left, (30, 130), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
-            bar_left = np.interp(angle_left, (30, 140), (200, 400)) # *
 
-            per_right = np.interp(angle_right, (200, 340), (0, 100)) # *
-            bar_right = np.interp(angle_right, (200, 350), (400, 200)) # *
+            angle_left, orientation = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
+            angle_right, orientation2 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
 
-            # Check for the left dumbbell curls
-            color_left = (255, 0, 255)
-            if per_left == 100: 
-                color_left = (0, 255, 0)
-                if dir_bicep_left == 0:
-                    count_bicep_left += 0.5
-                    dir_bicep_left = 1 
+            if orientation == 'right' and orientation2 == "right":
+                per_left = np.interp(angle_left, (180, 300), (0, 100))
+                bar_left = np.interp(angle_left, (180, 300), (400, 200))
 
-            if per_left == 0:
-                color_left = (0, 255, 0) 
-                if dir_bicep_left == 1:
-                    count_bicep_left += 0.5
-                    dir_bicep_left = 0  
+                per_right = np.interp(angle_right, (180, 300), (0, 100)) 
+                bar_right = np.interp(angle_right, (180, 300), (400, 200)) 
 
-            # Check for the right dumbbell curls
-            color_right = (255, 0, 255)
-            if per_right == 100: 
-                color_right = (0, 255, 0)
-                if dir_bicep_right == 0:
-                    count_bicep_right += 0.5
-                    dir_bicep_right = 1 
-            if per_right == 0:
-                color_right = (0, 255, 0) 
-                if dir_bicep_right == 1:
-                    count_bicep_right += 0.5
-                    dir_bicep_right = 0  
+                if int(per_left) == 100:
+                    color_left_bicepcurl = (0, 255, 0)  # Change color of left leg bar to green
+                elif int(per_right) == 100:
+                    color_right_bicepcurl = (0, 255, 0)
+                else:
+                    color_left_bicepcurl = (0, 0, 255)  # Keep color of left leg bar as red
+                    color_right_bicepcurl = (0, 0, 255)
+
+                if angle_right >= 300:
+                    if dir_bicep_right == 0:
+                        count_bicep_right += 0.5
+                        dir_bicep_right = 1
+                elif angle_right <= 190:
+                    if dir_bicep_right == 1:
+                        count_bicep_left += 0.5
+                        dir_bicep_right = 0
+
+                if angle_left >= 300:
+                    if dir_bicep_left == 0:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 1
+
+                elif angle_left <= 190:
+                    if dir_bicep_left == 1:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 0
+
+            elif orientation == 'left' and orientation2 == 'left' :
+                per_left = np.interp(angle_left, (40, 180), (100, 0))
+                bar_left = np.interp(angle_left, (40, 180), (200, 400))
+
+                per_right = np.interp(angle_right, (40, 180), (100, 0)) 
+                bar_right = np.interp(angle_right, (40, 180), (200, 400)) 
+
+                if int(per_left) == 100:
+                    color_left_bicepcurl = (0, 255, 0)  # Change color of left leg bar to green
+                elif int(per_right) == 100:
+                    color_right_bicepcurl = (0, 255, 0)
+                else:
+                    color_left_bicepcurl = (0, 0, 255)  # Keep color of left leg bar as red
+                    color_right_bicepcurl = (0, 0, 255)
+
+                if angle_right <= 40:
+                    if dir_bicep_right == 0:
+                        count_bicep_right += 0.5
+                        dir_bicep_right = 1
+
+                elif angle_right >= 180:
+                    if dir_bicep_right == 1:
+                        count_bicep_right += 0.5
+                        dir_bicep_right = 0
+                
+                if angle_left <= 40:
+                    if dir_bicep_left == 0:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 1
+
+                elif angle_left >= 180:
+                    if dir_bicep_left == 1:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 0
+
+            elif orientation == 'front' and orientation2 == 'front':
+                per_left = np.interp(angle_left, (30, 130), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+                bar_left = np.interp(angle_left, (30, 140), (200, 400)) # *
+
+                per_right = np.interp(angle_right, (200, 340), (0, 100)) # *
+                bar_right = np.interp(angle_right, (200, 350), (400, 200)) # *
+
+                if int(per_left) == 100:
+                    color_left_bicepcurl = (0, 255, 0)  # Change color of left leg bar to green
+                elif int(per_right) == 100:
+                    color_right = (0, 255, 0)
+                else:
+                    color_left_bicepcurl = (0, 0, 255)  # Keep color of left leg bar as red
+                    color_right_bicepcurl = (0, 0, 255)
+
+                # Check for the left dumbbell curls
+                if per_left == 100: 
+                    if dir_bicep_left == 0:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 1 
+
+                if per_left == 0:
+                    if dir_bicep_left == 1:
+                        count_bicep_left += 0.5
+                        dir_bicep_left = 0  
+
+                # Check for the right dumbbell curls
+                if per_right == 100: 
+                    if dir_bicep_right == 0:
+                        count_bicep_right += 0.5
+                        dir_bicep_right = 1 
+                if per_right == 0:
+                    if dir_bicep_right == 1:
+                        count_bicep_right += 0.5
+                        dir_bicep_right = 0  
 
         # label
         cvzone.putTextRect(img, 'Bicep Curl Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
@@ -97,21 +174,18 @@ while True:
         timer_text = f"Time left: {int(remaining_time)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
+        # Orientation
+        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
+        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
+
         # bar
         cv2.putText(img, f"R {int(per_right)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
-        cv2.rectangle(img, (8, int(bar_right)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right)), (50, 400), color_right_bicepcurl, -1)
 
         cv2.putText(img, f"L {int(per_left)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
-        cv2.rectangle(img, (952, int(bar_left)), (995, 400), (0, 0, 255), -1)
-        
-        
-        if angle_left < 40:
-            cv2.rectangle(img, (952, int(bar_left)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right > 280:
-            cv2.rectangle(img, (8, int(bar_right)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left)), (995, 400), color_left_bicepcurl, -1)
 
     #count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
@@ -124,7 +198,7 @@ while True:
         cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
         display_info = False
 
-    if count_bicep_right == 5 and count_bicep_left == 5:
+    if count_bicep_right >= 5 and count_bicep_left >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info = False
 
