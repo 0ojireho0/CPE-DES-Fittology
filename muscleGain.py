@@ -1860,7 +1860,7 @@ def rest_pushup_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set3
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color

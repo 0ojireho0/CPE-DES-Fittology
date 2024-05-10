@@ -6,9 +6,10 @@ import time
 import BicepCurl_PoseModule as pm
 import cvzone
 
+import pyttsx3
 
 #Camera
-cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\bicep curl\bicepcurl.mp4')
+cap = cv2.VideoCapture(0)
 
 #import class
 detector_bicep = pm.poseDetector()
@@ -36,6 +37,7 @@ color_left_bicepcurl = (0, 0, 255)
 orientation = ''
 orientation2 = ''
 
+text_count_left = pyttsx3.init()
 
 # main loop
 while True:
@@ -193,6 +195,8 @@ while True:
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
     cv2.putText(img, f"{int(count_bicep_left)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    text_count_left.say(int(count_bicep_left))
+    text_count_left.runAndWait()
 
     if remaining_time <= 0:
         cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)

@@ -918,7 +918,7 @@ def home():
     else:
         return render_template('home.html')
 
-exercise_mode = "joginplace"
+exercise_mode = "slr"
     
 def gen_frames():
     cap = cv2.VideoCapture(0)
@@ -1166,7 +1166,7 @@ def detect_jip(img):
         rest_jip_start_time = time.time()
         
 
-    if counter_right_jip == 60 and counter_left_jip == 60:
+    if counter_right_jip >= 60 and counter_left_jip >= 60:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_jip = False
         exercise_mode = "rest_jip"
@@ -1275,7 +1275,7 @@ def detect_jip_set2(img):
         exercise_mode = "rest_jip_set2"
         rest_jip_start_time_set2 = time.time()
 
-    if counter_right_jip_set2 == 60 and counter_left_jip_set2 == 60:
+    if counter_right_jip_set2 >= 60 and counter_left_jip_set2 >= 60:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_jip_set2 = False
         exercise_mode = "rest_jip_set2"
@@ -1383,7 +1383,7 @@ def detect_jip_set3(img):
         exercise_mode = "rest_jip_set3"
         rest_jip_start_time_set3 = time.time()
 
-    if counter_right_jip_set3 == 60 and counter_left_jip_set3 == 60:
+    if counter_right_jip_set3 >= 60 and counter_left_jip_set3 >= 60:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_jip_set3 = False
         exercise_mode = "rest_jip_set3"
@@ -2593,7 +2593,7 @@ def detect_slr(img):
         exercise_mode = "rest_slr"
         rest_slr_start_time = time.time()
 
-    if count_sidelegraise_right == 5 and count_sidelegraise_left == 5:
+    if count_sidelegraise_right >= 5 and count_sidelegraise_left >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_slr = False
         exercise_mode = "rest_slr"
@@ -2715,7 +2715,7 @@ def detect_slr_set2(img):
         exercise_mode = "rest_slr_set2"
         rest_slr_start_time_set2 = time.time()
 
-    if count_sidelegraise_right_set2 == 5 and count_sidelegraise_left_set2 == 5:
+    if count_sidelegraise_right_set2 >= 5 and count_sidelegraise_left_set2 >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_slr_set2 = False
         exercise_mode = "rest_slr_set2"
@@ -2837,7 +2837,7 @@ def detect_slr_set3(img):
         exercise_mode = "rest_slr_set3"
         rest_slr_start_time_set3 = time.time()
 
-    if count_sidelegraise_right_set3 == 5 and count_sidelegraise_left_set3 == 5:
+    if count_sidelegraise_right_set3 >= 5 and count_sidelegraise_left_set3 >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_slr_set3 = False
         exercise_mode = "rest_slr_set3"
@@ -2931,7 +2931,7 @@ def detect_squatjacks(img):
         exercise_mode = "rest_squatjacks"
         rest_squatjacks_start_time = time.time()
 
-    if count_squatjack == 5:
+    if count_squatjack >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjack = False
         exercise_mode = "rest_squatjacks"
@@ -3022,7 +3022,7 @@ def detect_squatjacks_set2(img):
         exercise_mode = "rest_squatjacks_set2"
         rest_squatjacks_start_time_set2 = time.time()
 
-    if count_squatjack_set2 == 5:
+    if count_squatjack_set2 >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjack_set2 = False
         exercise_mode = "rest_squatjacks_set2"
@@ -3113,7 +3113,7 @@ def detect_squatjacks_set3(img):
         exercise_mode = "rest_squatjacks_set3"
         rest_squatjacks_start_time_set3 = time.time()
 
-    if count_squatjack == 5:
+    if count_squatjack >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjack_set3 = False
         exercise_mode = "rest_squatjacks_set3"
@@ -3304,7 +3304,7 @@ def detect_squatjump(img):
         rest_squatjump_start_time = time.time()
 
     # Repetition
-    if count_squat_jump == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squat_jump >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjump = False
         exercise_mode = "rest_squatjump"
@@ -3495,7 +3495,7 @@ def detect_squatjump_set2(img):
         rest_squatjump_start_time_set2 = time.time()
 
     # Repetition
-    if count_squat_jump_set2 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squat_jump_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjump_set2 = False
         exercise_mode = "rest_squatjump_set2"
@@ -3687,7 +3687,7 @@ def detect_squatjump_set3(img):
         rest_squatjump_start_time_set3 = time.time()
 
     # Repetition
-    if count_squat_jump_set3 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squat_jump_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
         display_info_squatjump_set3 = False
         exercise_mode = "rest_squatjump_set3"
@@ -3857,7 +3857,7 @@ def detect_squatsidekick(img):
         rest_squatsidekick_start_time = time.time()
 
     # Repetition
-    if count_squatsidekick == 10 and count_right_kick_squatsidekick == 5 and count_left_kick_squatsidekick == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squatsidekick >= 10 and count_right_kick_squatsidekick >= 5 and count_left_kick_squatsidekick >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_squatsidekick = False
         exercise_mode = "rest_squatsidekick"
@@ -4028,7 +4028,7 @@ def detect_squatsidekick_set2(img):
         rest_squatsidekick_start_time_set2 = time.time()
 
     # Repetition
-    if count_squatsidekick_set2 == 10 and count_right_kick_squatsidekick_set2 == 5 and count_left_kick_squatsidekick_set2 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squatsidekick_set2 >= 10 and count_right_kick_squatsidekick_set2 >= 5 and count_left_kick_squatsidekick_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_squatsidekick_set2 = False
         exercise_mode = "rest_squatsidekick_set2"
@@ -4199,7 +4199,7 @@ def detect_squatsidekick_set3(img):
         rest_squatsidekick_start_time_set3 = time.time()
 
     # Repetition
-    if count_squatsidekick_set3 == 10 and count_right_kick_squatsidekick_set3 == 5 and count_left_kick_squatsidekick_set3 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_squatsidekick_set3 >= 10 and count_right_kick_squatsidekick_set3 >= 5 and count_left_kick_squatsidekick_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_squatsidekick_set3 = False
         exercise_mode = "rest_squatsidekick_set3"
@@ -5339,7 +5339,7 @@ def detect_ptt(img):
         rest_ptt_start_time = time.time()
 
     # Repetition
-    if count_plank_toe_taps_right == 5 and count_plank_toe_taps_left == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_plank_toe_taps_right >= 5 and count_plank_toe_taps_left >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_ptt = False
         exercise_mode = "rest_ptt"
@@ -5469,7 +5469,7 @@ def detect_ptt_set2(img):
         rest_ptt_start_time_set2 = time.time()
 
     # Repetition
-    if count_plank_toe_taps_right_set2 == 5 and count_plank_toe_taps_left_set2 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_plank_toe_taps_right_set2 >= 5 and count_plank_toe_taps_left_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_ptt_set2 = False
         exercise_mode = "rest_ptt_set2"
@@ -5599,7 +5599,7 @@ def detect_ptt_set3(img):
         rest_ptt_start_time_set3 = time.time()
 
     # Repetition
-    if count_plank_toe_taps_right_set3 == 5 and count_plank_toe_taps_left_set3 == 5:  # Assuming 10 jumping jacks for demonstration
+    if count_plank_toe_taps_right_set3 >= 5 and count_plank_toe_taps_left_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
         cvzone.putTextRect(img, 'Exercise Complete', [345, 30], thickness=2, border=2, scale=2.5)
         display_info_ptt_set3 = False
         exercise_mode = "rest_ptt_set3"
