@@ -4,9 +4,9 @@ import cvzone
 import time
 import os
 import numpy as np
-import poseModules.bicepcurl_PoseModule as pm_bicep
-import poseModules.PushUp_PoseModule as pm_pushup
-import poseModules.shouldertap_PoseModule as pm_shouldertap
+import poseModules.bicepcurl_front_PoseModule as pm_bicep
+import poseModules.pushup_front_PoseModule as pm_pushup
+import poseModules.shouldertaps_front_PoseModule as pm_shouldertap
 import poseModules.chestpress_PoseModule as pm_chestpress
 import poseModules.dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
 import poseModules.alternatinglunge_PoseModule as pm_alternatinglunge
@@ -22,7 +22,7 @@ muscleGain = Blueprint("muscleGain", __name__,static_folder="static", template_f
 # Initialize posemodule as detector
 detector_bicep = pm_bicep.poseDetector()
 
-# Initialize variables for counting curls
+#Initialize Variables
 count_bicep_left = 0
 count_bicep_right = 0
 dir_bicep_left = 0
@@ -74,6 +74,7 @@ total_reps_count_right_bicep = 0
 #timer
 start_time1_bicep = time.time()
 start_time2_bicep = time.time()
+start_time3_bicep = time.time()
 time_threshold_bicep = 1  
 within_range_time1_bicep = 0
 within_range_time2_bicep = 0
@@ -134,13 +135,13 @@ dir_bicep_left_unsuccessful_bicep_set2 = 0
 dir_bicep_right_unsuccessful_bicep_set2 = 0
 
 total_reps_count_bicep_set2 = 0
-
 total_reps_count_left_bicep_set2 = 0
 total_reps_count_right_bicep_set2 = 0
 
 #timer
 start_time1_bicep_set2 = time.time()
 start_time2_bicep_set2 = time.time()
+start_time3_bicep_set2 = time.time()
 time_threshold_bicep_set2 = 1  
 within_range_time1_bicep_set2 = 0
 within_range_time2_bicep_set2 = 0
@@ -209,6 +210,7 @@ total_reps_count_right_bicep_set3 = 0
 #timer
 start_time1_bicep_set3 = time.time()
 start_time2_bicep_set3 = time.time()
+start_time3_bicep_set3 = time.time()
 time_threshold_bicep_set3 = 1  
 within_range_time1_bicep_set3 = 0
 within_range_time2_bicep_set3 = 0
@@ -226,17 +228,12 @@ dir_gen_feedback_unsuccessful_bicep_set3 = 0
 # Import class
 detector_pushup = pm_pushup.poseDetectorPushUp()
 
-# Initialize variables
-count_pushup = 0  # count_pushup of reps
-pushup_dir = 0  # pushup_direction
-start_time_pushup = time.time()  # Start time
-repetition_time_pushup = 60  # Repetition time
 
 # Display info
-display_pushup = True
-rest_pushup_start_time = time.time()
+display_info_pushup = True
+dir_left_pushup = 0
 
-
+dir_right_pushup = 0
 per_right_pushup = 0
 per_left_pushup = 0
 bar_left_pushup = 0
@@ -244,22 +241,58 @@ bar_right_pushup = 0
 
 leftangle_pushup = 0
 rightangle_pushup = 0
+
+color_right_pushup = (0, 0, 255)
+color_left_pushup = (0, 0, 255)
+
+feedback_left_pushup = ""
+feedback_right_pushup = ""
+
+success_threshold_pushup = 100
+
+peak_value_pushup = 0
+atrest_value_pushup = 0
+
+unsuccessful_reps_count_left_pushup = 0
+successful_reps_count_left_pushup = 0
+
+unsuccessful_reps_count_right_pushup = 0
+successful_reps_count_right_pushup = 0
+
+dir_left_unsuccessful_pushup = 0
+dir_right_unsuccessful_pushup = 0
+
+total_reps_count_pushup = 0
+
+total_reps_count_left_pushup = 0
+total_reps_count_right_pushup = 0
+start_time1_pushup = time.time()
+start_time2_pushup = time.time()
+start_time3_pushup = time.time()
+time_threshold_pushup = 3 
+within_range_time1_pushup = 0
+within_range_time2_pushup = 0
+
+# gen feedback success
+general_feedback_left_pushup = ""
+general_feedback_right_pushup = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_pushup = 0
+dir_gen_feedback_unsuccessful_pushup = 0
+
+rest_pushup_start_time = time.time()
 # ----------- END FOR PUSH UP --------------
 
 # ----------- FOR PUSH UP SET 2---------------
 # Import class
 detector_pushup = pm_pushup.poseDetectorPushUp()
 
-# Initialize variables
-count_pushup_set2 = 0  # count_pushup of reps
-pushup_dir_set2 = 0  # pushup_direction
-start_time_pushup_set2 = time.time()  # Start time
-repetition_time_pushup_set2 = 60  # Repetition time
-
 # Display info
-display_pushup_set2 = True
-rest_pushup_start_time_set2 = time.time()
+display_info_pushup_set2 = True
+dir_left_pushup_set2 = 0
 
+dir_right_pushup_set2 = 0
 per_right_pushup_set2 = 0
 per_left_pushup_set2 = 0
 bar_left_pushup_set2 = 0
@@ -267,22 +300,58 @@ bar_right_pushup_set2 = 0
 
 leftangle_pushup_set2 = 0
 rightangle_pushup_set2 = 0
+
+color_right_pushup_set2 = (0, 0, 255)
+color_left_pushup_set2 = (0, 0, 255)
+
+feedback_left_pushup_set2 = ""
+feedback_right_pushup_set2 = ""
+
+success_threshold_pushup_set2 = 100
+
+peak_value_pushup_set2 = 0
+atrest_value_pushup_set2 = 0
+
+unsuccessful_reps_count_left_pushup_set2 = 0
+successful_reps_count_left_pushup_set2 = 0
+
+unsuccessful_reps_count_right_pushup_set2 = 0
+successful_reps_count_right_pushup_set2 = 0
+
+dir_left_unsuccessful_pushup_set2 = 0
+dir_right_unsuccessful_pushup_set2 = 0
+
+total_reps_count_pushup_set2 = 0
+
+total_reps_count_left_pushup_set2 = 0
+total_reps_count_right_pushup_set2 = 0
+start_time1_pushup_set2 = time.time()
+start_time2_pushup_set2 = time.time()
+start_time3_pushup_set2 = time.time()
+time_threshold_pushup_set2 = 3 
+within_range_time1_pushup_set2 = 0
+within_range_time2_pushup_set2 = 0
+
+# gen feedback success
+general_feedback_left_pushup_set2 = ""
+general_feedback_right_pushup_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_pushup_set2 = 0
+dir_gen_feedback_unsuccessful_pushup_set2 = 0
+
+rest_pushup_start_time_set2 = time.time()
 # ----------- END FOR PUSH UP SET 2 --------------
 
 # ----------- FOR PUSH UP SET 3---------------
 # Import class
 detector_pushup = pm_pushup.poseDetectorPushUp()
 
-# Initialize variables
-count_pushup_set3 = 0  # count_pushup of reps
-pushup_dir_set3 = 0  # pushup_direction
-start_time_pushup_set3 = time.time()  # Start time
-repetition_time_pushup_set3 = 60  # Repetition time
-
 # Display info
-display_pushup_set3 = True
-rest_pushup_start_time_set3 = time.time()
+display_info_pushup_set3 = True
+dir_left_pushup_set3 = 0
 
+dir_right_pushup_set3 = 0
 per_right_pushup_set3 = 0
 per_left_pushup_set3 = 0
 bar_left_pushup_set3 = 0
@@ -290,78 +359,243 @@ bar_right_pushup_set3 = 0
 
 leftangle_pushup_set3 = 0
 rightangle_pushup_set3 = 0
+
+color_right_pushup_set3 = (0, 0, 255)
+color_left_pushup_set3 = (0, 0, 255)
+
+feedback_left_pushup_set3 = ""
+feedback_right_pushup_set3 = ""
+
+success_threshold_pushup_set3 = 100
+
+peak_value_pushup_set3 = 0
+atrest_value_pushup_set3 = 0
+
+unsuccessful_reps_count_left_pushup_set3 = 0
+successful_reps_count_left_pushup_set3 = 0
+
+unsuccessful_reps_count_right_pushup_set3 = 0
+successful_reps_count_right_pushup_set3 = 0
+
+dir_left_unsuccessful_pushup_set3 = 0
+dir_right_unsuccessful_pushup_set3 = 0
+
+total_reps_count_pushup_set3 = 0
+
+total_reps_count_left_pushup_set3 = 0
+total_reps_count_right_pushup_set3 = 0
+start_time1_pushup_set3 = time.time()
+start_time2_pushup_set3 = time.time()
+start_time3_pushup_set3 = time.time()
+time_threshold_pushup_set3 = 3 
+within_range_time1_pushup_set3 = 0
+within_range_time2_pushup_set3 = 0
+
+# gen feedback success
+general_feedback_left_pushup_set3 = ""
+general_feedback_right_pushup_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_pushup_set3 = 0
+dir_gen_feedback_unsuccessful_pushup_set3 = 0
+
+rest_pushup_start_time_set3 = time.time()
 # ----------- END FOR PUSH UP SET 3 --------------
 
 # ----------- FOR SHOULDER TAP ---------------
-detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
+detector_shouldertaps = pm_shouldertap.poseDetectorShoulderTap()
 
-count_shoulder_tap_right = 0
-count_shoulder_tap_left = 0
-dir_shoulder_tap_right = 0
-dir_shoulder_tap_left = 0
 
-start_time_shouldertap = time.time()
-repetition_time_shouldertap = 60
-display_info_shouldertap = True
+dir_left_shouldertaps = 0
+dir_right_shouldertaps = 0
 
-per_left_arm_shouldertap = 0
-bar_left_arm_shouldertap = 0
+repetition_time_shouldertaps = 60  # Repetition time
 
-per_right_arm_shouldertap = 0
-bar_right_arm_shouldertap = 0
+# Display info
+display_info_shouldertaps = True
 
-color_left_arm_shouldertap = 0
-color_right_arm_shouldertap = 0
+orientation_shouldertaps = ""
+orientation2_shouldertaps = ""
+
+per_right_shouldertaps = 0
+per_left_shouldertaps = 0
+bar_left_shouldertaps = 0
+bar_right_shouldertaps = 0 
+
+
+color_right_shouldertaps = (0, 0, 255)
+color_left_shouldertaps = (0, 0, 255)
+
+feedback_left_shouldertaps = ""
+feedback_right_shouldertaps = ""
+
+success_threshold_shouldertaps = 100
+
+atrest_value_shouldertaps = 0
+
+unsuccessful_reps_count_left_shouldertaps = 0
+successful_reps_count_left_shouldertaps = 0
+
+unsuccessful_reps_count_right_shouldertaps = 0
+successful_reps_count_right_shouldertaps = 0
+
+dir_left_unsuccessful_shouldertaps = 0
+dir_right_unsuccessful_shouldertaps = 0
+
+total_reps_count_shouldertaps = 0
+
+total_reps_count_left_shouldertaps = 0
+total_reps_count_right_shouldertaps = 0
+
+start_time1_shouldertaps = time.time()
+start_time2_shouldertaps = time.time()
+start_time3_shouldertaps = time.time()
+time_threshold_shouldertaps = 1 
+within_range_time1_shouldertaps = 0
+within_range_time2_shouldertaps = 0
+
+# gen feedback success
+general_feedback_left_shouldertaps = ""
+general_feedback_right_shouldertaps = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_shouldertaps = 0
+dir_gen_feedback_unsuccessful_shouldertaps = 0
+
+cooldown_timer_shouldertaps = 0
+cooldown_duration_shouldertaps = 5
 
 rest_shouldertap_start_time = time.time()
 
 # ----------- END FOR SHOULDER TAP ---------------
 
 # ----------- FOR SHOULDER TAP SET 2---------------
-detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
 
-count_shoulder_tap_right_set2 = 0
-count_shoulder_tap_left_set2 = 0
-dir_shoulder_tap_right_set2 = 0
-dir_shoulder_tap_left_set2 = 0
 
-start_time_shouldertap_set2 = time.time()
-repetition_time_shouldertap_set2 = 60
-display_info_shouldertap_set2 = True
+dir_left_shouldertaps_set2 = 0
+dir_right_shouldertaps_set2 = 0
 
-per_left_arm_shouldertap_set2 = 0
-bar_left_arm_shouldertap_set2 = 0
+repetition_time_shouldertaps_set2 = 60  # Repetition time
 
-per_right_arm_shouldertap_set2 = 0
-bar_right_arm_shouldertap_set2 = 0
+# Display info
+display_info_shouldertaps_set2 = True
 
-color_left_arm_shouldertap_set2 = 0
-color_right_arm_shouldertap_set2 = 0
+orientation_shouldertaps_set2 = ""
+orientation2_shouldertaps_set2 = ""
+
+per_right_shouldertaps_set2 = 0
+per_left_shouldertaps_set2 = 0
+bar_left_shouldertaps_set2 = 0
+bar_right_shouldertaps_set2 = 0 
+
+
+color_right_shouldertaps_set2 = (0, 0, 255)
+color_left_shouldertaps_set2 = (0, 0, 255)
+
+feedback_left_shouldertaps_set2 = ""
+feedback_right_shouldertaps_set2 = ""
+
+success_threshold_shouldertaps_set2 = 100
+
+atrest_value_shouldertaps_set2 = 0
+
+unsuccessful_reps_count_left_shouldertaps_set2 = 0
+successful_reps_count_left_shouldertaps_set2 = 0
+
+unsuccessful_reps_count_right_shouldertaps_set2 = 0
+successful_reps_count_right_shouldertaps_set2 = 0
+
+dir_left_unsuccessful_shouldertaps_set2 = 0
+dir_right_unsuccessful_shouldertaps_set2 = 0
+
+total_reps_count_shouldertaps_set2 = 0
+
+total_reps_count_left_shouldertaps_set2 = 0
+total_reps_count_right_shouldertaps_set2 = 0
+
+start_time1_shouldertaps_set2 = time.time()
+start_time2_shouldertaps_set2 = time.time()
+start_time3_shouldertaps_set2 = time.time()
+time_threshold_shouldertaps_set2 = 1 
+within_range_time1_shouldertaps_set2 = 0
+within_range_time2_shouldertaps_set2 = 0
+
+# gen feedback success
+general_feedback_left_shouldertaps_set2 = ""
+general_feedback_right_shouldertaps_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_shouldertaps_set2 = 0
+dir_gen_feedback_unsuccessful_shouldertaps_set2 = 0
+
+cooldown_timer_shouldertaps_set2 = 0
+cooldown_duration_shouldertaps_set2 = 5
 
 rest_shouldertap_start_time_set2 = time.time()
 
 # ----------- END FOR SHOULDER TAP SET 2---------------
 
 # ----------- FOR SHOULDER TAP SET 3---------------
-detector_ShoulderTap = pm_shouldertap.poseDetectorShoulderTap()
 
-count_shoulder_tap_right_set3 = 0
-count_shoulder_tap_left_set3 = 0
-dir_shoulder_tap_right_set3 = 0
-dir_shoulder_tap_left_set3 = 0
 
-start_time_shouldertap_set3 = time.time()
-repetition_time_shouldertap_set3 = 60
-display_info_shouldertap_set3 = True
+dir_left_shouldertaps_set3 = 0
+dir_right_shouldertaps_set3 = 0
 
-per_left_arm_shouldertap_set3 = 0
-bar_left_arm_shouldertap_set3 = 0
+#repetition_time_shouldertaps_set3 = 60  # Repetition time
 
-per_right_arm_shouldertap_set3 = 0
-bar_right_arm_shouldertap_set3 = 0
+# Display info
+display_info_shouldertaps_set3 = True
 
-color_left_arm_shouldertap_set3 = 0
-color_right_arm_shouldertap_set3 = 0
+orientation_shouldertaps_set3 = ""
+orientation2_shouldertaps_set3 = ""
+
+per_right_shouldertaps_set3 = 0
+per_left_shouldertaps_set3 = 0
+bar_left_shouldertaps_set3 = 0
+bar_right_shouldertaps_set3 = 0 
+
+
+color_right_shouldertaps_set3 = (0, 0, 255)
+color_left_shouldertaps_set3 = (0, 0, 255)
+
+feedback_left_shouldertaps_set3 = ""
+feedback_right_shouldertaps_set3 = ""
+
+success_threshold_shouldertaps_set3 = 100
+
+atrest_value_shouldertaps_set3 = 0
+
+unsuccessful_reps_count_left_shouldertaps_set3 = 0
+successful_reps_count_left_shouldertaps_set3 = 0
+
+unsuccessful_reps_count_right_shouldertaps_set3 = 0
+successful_reps_count_right_shouldertaps_set3 = 0
+
+dir_left_unsuccessful_shouldertaps_set3 = 0
+dir_right_unsuccessful_shouldertaps_set3 = 0
+
+total_reps_count_shouldertaps_set3 = 0
+
+total_reps_count_left_shouldertaps_set3 = 0
+total_reps_count_right_shouldertaps_set3 = 0
+
+start_time1_shouldertaps_set3 = time.time()
+start_time2_shouldertaps_set3 = time.time()
+start_time3_shouldertaps_set3 = time.time()
+time_threshold_shouldertaps_set3 = 1 
+within_range_time1_shouldertaps_set3 = 0
+within_range_time2_shouldertaps_set3 = 0
+
+# gen feedback success
+general_feedback_left_shouldertaps_set3 = ""
+general_feedback_right_shouldertaps_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_shouldertaps_set3 = 0
+dir_gen_feedback_unsuccessful_shouldertaps_set3 = 0
+
+cooldown_timer_shouldertaps_set3 = 0
+cooldown_duration_shouldertaps_set3 = 5
 
 rest_shouldertap_start_time_set3 = time.time()
 
@@ -994,11 +1228,11 @@ def gen_frames():
                 img_with_faces = rest_shouldertap(img)
             if exercise_mode == "shoulder_tap_set2":
                 img_with_faces = detect_shouldertap_set2(img)
-            if exercise_mode == "rest_shouldertap_rest2":
+            if exercise_mode == "rest_shouldertap_set2":
                 img_with_faces = rest_shouldertap_set2(img)
             if exercise_mode == "shoulder_tap_set3":
                 img_with_faces = detect_shouldertap_set3(img)
-            if exercise_mode == "rest_shouldertap_rest3":
+            if exercise_mode == "rest_shouldertap_set3":
                 img_with_faces = rest_shouldertap_set3(img)
             if exercise_mode == "chest_press":
                 img_with_faces = detect_chestpress(img)
@@ -1107,7 +1341,7 @@ def get_exercise_mode():
     return jsonify({'exercise_mode': exercise_mode})
 
 def detect_bicep_curls(img):
-    global countdown_before_exercise, countdown_repetition_time, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time_bicep, repetition_time_bicep, display_info_bicep, rest_bicep_start_time, bar_left_bicep, bar_right_bicep, angle_left_bicep, angle_right_bicep, color_right_bicep, color_left_bicep, feedback_left_bicep, feedback_right_bicep, min_threshold_bicep, max_threshold_bicep, success_threshold_bicep, peak_value_bicep, atrest_value_bicep, reps_count_bicep, unsuccessful_reps_count_left_bicep, successful_reps_count_left_bicep, unsuccessful_reps_count_right_bicep, successful_reps_count_right_bicep, dir_bicep_left_unsuccessful_bicep, dir_bicep_right_unsuccessful_bicep, total_reps_count_bicep, total_reps_count_left_bicep, total_reps_count_right_bicep, start_time1_bicep, start_time2_bicep, general_feedback_left_bicep, general_feedback_right_bicep, dir_gen_feedback_bicep, dir_gen_feedback_unsuccessful_bicep, exercise_mode, per_left_bicep, per_right_bicep, within_range_time1_bicep, within_range_time2_bicep
+    global countdown_before_exercise, countdown_repetition_time, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time_bicep, repetition_time_bicep, display_info_bicep, rest_bicep_start_time, bar_left_bicep, bar_right_bicep, angle_left_bicep, angle_right_bicep, color_right_bicep, color_left_bicep, feedback_left_bicep, feedback_right_bicep, min_threshold_bicep, max_threshold_bicep, success_threshold_bicep, peak_value_bicep, atrest_value_bicep, reps_count_bicep, unsuccessful_reps_count_left_bicep, successful_reps_count_left_bicep, unsuccessful_reps_count_right_bicep, successful_reps_count_right_bicep, dir_bicep_left_unsuccessful_bicep, dir_bicep_right_unsuccessful_bicep, total_reps_count_bicep, total_reps_count_left_bicep, total_reps_count_right_bicep, start_time1_bicep, start_time2_bicep, general_feedback_left_bicep, general_feedback_right_bicep, dir_gen_feedback_bicep, dir_gen_feedback_unsuccessful_bicep, exercise_mode, per_left_bicep, per_right_bicep, within_range_time1_bicep, within_range_time2_bicep, start_time3_bicep
 
     img = cv2.resize(img, (1280, 720))
 
@@ -1118,10 +1352,8 @@ def detect_bicep_curls(img):
         display_info_bicep = True
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_bicep
-    remaining_time = max(0, 70 - elapsed_time) #repetition_time
-
-
+    elapsed_time_bicep = time.time() - start_time_bicep
+    remaining_time_bicep = max(0, 70 - elapsed_time_bicep) #repetition_time
 
     # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -1137,18 +1369,14 @@ def detect_bicep_curls(img):
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
 
-            # angle_left, orientation = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
-            # angle_right, orientation2 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
-
             angle_left_bicep = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
             angle_right_bicep = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
 
-
-            per_left_bicep = np.interp(angle_left_bicep, (30, 130), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            per_left_bicep = np.interp(angle_left_bicep, (30, 130), (100, 0)) 
             bar_left_bicep = np.interp(angle_left_bicep, (30, 140), (200, 400)) 
 
-            per_right_bicep = np.interp(angle_right_bicep, (200, 320), (0, 100)) 
-            bar_right_bicep = np.interp(angle_right_bicep, (200, 320), (400, 200)) 
+            per_right_bicep = np.interp(angle_right_bicep, (200, 340), (0, 100)) 
+            bar_right_bicep = np.interp(angle_right_bicep, (200, 340), (400, 200)) 
 
             # color changer for the bar
             if int(per_left_bicep) == 100:
@@ -1160,9 +1388,9 @@ def detect_bicep_curls(img):
                 color_right_bicep = (0, 0, 255)
 
             #left
-            if 70 <= per_left_bicep <= 90:
+            if 40 <= per_left_bicep <= 90:
                 # Increment the time within range
-                within_range_time1_bicep += time.time() - start_time1_bicep
+                within_range_time1_bicep += time.time() - start_time2_bicep
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time1_bicep >= time_threshold_bicep:
@@ -1173,7 +1401,7 @@ def detect_bicep_curls(img):
             else:
                 within_range_time1_bicep = 0
                 # Update the start time to the current time
-                start_time1_bicep = time.time()
+                start_time2_bicep = time.time()
 
             if 1 <= per_left_bicep <= 10:
                 if dir_bicep_left_unsuccessful_bicep == 1:
@@ -1191,28 +1419,28 @@ def detect_bicep_curls(img):
                     dir_bicep_left = 0
 
             # right
-            if 70 <= per_right_bicep <= 90:
+            if 40 <= per_right_bicep <= 90:
                 # Increment the time within range
-                within_range_time2_bicep += time.time() - start_time2_bicep
-                
+                within_range_time2_bicep += time.time() - start_time3_bicep
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time2_bicep >= time_threshold_bicep:
                     if dir_bicep_right_unsuccessful_bicep == 0:
                         unsuccessful_reps_count_right_bicep += 0.5
                         dir_bicep_right_unsuccessful_bicep = 1
+                        print("right", unsuccessful_reps_count_right_bicep)
 
             else:
                 within_range_time2_bicep = 0
                 # Update the start time to the current time
-                start_time2_bicep = time.time()
+                start_time3_bicep = time.time()
 
             if 1 <= per_right_bicep <= 10:
                 #print("left down val: ", per_left)
                 if dir_bicep_right_unsuccessful_bicep == 1:
                     unsuccessful_reps_count_right_bicep += 0.5
                     dir_bicep_right_unsuccessful_bicep = 0
-
+                    print("right", unsuccessful_reps_count_right_bicep)
 
             if per_right_bicep == success_threshold_bicep:
                 if dir_bicep_right == 0:
@@ -1224,31 +1452,25 @@ def detect_bicep_curls(img):
                     successful_reps_count_right_bicep += 0.5
                     dir_bicep_right = 0
 
-                # feedback for left hand  # TO BE FETCHED 
-                feedback_left_bicep = detector_bicep.feedback_bicep(per_left_bicep)
-                print("FEEDBACK LEFT: ", feedback_left_bicep)
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_bicep = detector_bicep.feedback_bicep(per_left_bicep)
 
-                detector_bicep.update_next_per_left(per_left_bicep)
+            detector_bicep.update_next_per_left(per_left_bicep)
 
-                # feedback for right hand  # TO BE FETCHED 
-                feedback_right_bicep = detector_bicep.feedback_bicep(per_right_bicep)
-                print("FEEDBACK RIGHT: ", feedback_right_bicep)
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_bicep = detector_bicep.feedback_bicep(per_right_bicep)
 
-                detector_bicep.update_next_per_left(per_right_bicep)
+            detector_bicep.update_next_per_left(per_right_bicep)
 
         # label
-        cvzone.putTextRect(img, 'Standing (Front) Bicep Curl', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Facing Bicep Curl', [440, 30], thickness=2, border=2, scale=1.5) 
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bicep)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        # # Orientation
-        # cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        # cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_bicep)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
@@ -1260,63 +1482,55 @@ def detect_bicep_curls(img):
         cv2.rectangle(img, (952, int(bar_left_bicep)), (995, 400), color_left_bicep, -1)
 
     #counter in display
-    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
     cv2.putText(img, f"{int(successful_reps_count_right_bicep)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(successful_reps_count_left_bicep)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_bicep)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # To check if time is still running
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+    if remaining_time_bicep <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep = False
         exercise_mode = "rest_bicep"
         rest_bicep_start_time = time.time()
 
     #total counts
-    total_reps_count_left_bicep = successful_reps_count_left_bicep + unsuccessful_reps_count_left_bicep
-    total_reps_count_right_bicep = successful_reps_count_right_bicep + unsuccessful_reps_count_right_bicep  
+    total_reps_count_left = successful_reps_count_left_bicep + unsuccessful_reps_count_left_bicep
+    total_reps_count_right = successful_reps_count_right_bicep + unsuccessful_reps_count_right_bicep  
 
 
     if successful_reps_count_right_bicep >= 10 and successful_reps_count_left_bicep >= 10:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep = False
-        exercise_mode = "rest_bicep"
-        rest_bicep_start_time = time.time()
         # General feedback after finishing the exercise # TO BE FETCHED
-
         if dir_gen_feedback_bicep == 0:
-            general_feedback_left_bicep = detector_bicep.left_arm_feedback(total_reps_count_left_bicep)
-            print("LEFT GEN FB: ", general_feedback_left_bicep)
-            general_feedback_right_bicep = detector_bicep.right_arm_feedback(total_reps_count_right_bicep)
-            print("RIGHT GEN FB: ", general_feedback_right_bicep)
+            general_feedback_left_bicep = detector_bicep.left_arm_feedback(total_reps_count_left)
+            general_feedback_right_bicep = detector_bicep.right_arm_feedback(total_reps_count_right)
             dir_gen_feedback_bicep = 1
+            exercise_mode = "rest_bicep"
+            rest_bicep_start_time = time.time()
         
-
     # To check for unsuccessful arm rep counter # CHANGED
     if unsuccessful_reps_count_left_bicep == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for left arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep = False
-        exercise_mode = "rest_bicep"
-        rest_bicep_start_time = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep == 0:
-            general_feedback_left_bicep = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left_bicep)
-            print("LEFT GEN FB: ", general_feedback_left_bicep)
-            #general_feedback_outputted = True
+            general_feedback_left_bicep = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left)
             dir_gen_feedback_unsuccessful_bicep = 1
+            exercise_mode = "rest_bicep"
+            rest_bicep_start_time = time.time()
 
     if unsuccessful_reps_count_right_bicep == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for right arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep = False
-        exercise_mode = "rest_bicep"
-        rest_bicep_start_time = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep == 0:
-            general_feedback_right = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right_bicep)
-            print("RIGHT GEN FB: ", general_feedback_right)
-            #general_feedback_outputted = True
+            general_feedback_right_bicep = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right)
             dir_gen_feedback_unsuccessful_bicep == 1
+            exercise_mode = "rest_bicep"
+            rest_bicep_start_time = time.time()
 
 
 
@@ -1344,12 +1558,12 @@ def rest_bicep(img):
 
 
 def detect_bicep_curls_set2(img):
-    global count_bicep_left_set2, count_bicep_right_set2, dir_bicep_left_set2, dir_bicep_right_set2, start_time_bicep_set2, display_info_bicep_set2, rest_bicep_start_time_set2, bar_left_bicep_set2, bar_right_bicep_set2, angle_left_bicep_set2, angle_right_bicep_set2, color_right_bicep_set2, color_left_bicep_set2, feedback_left_bicep_set2, feedback_right_bicep_set2, min_threshold_bicep_set2, max_threshold_bicep_set2, success_threshold_bicep_set2, peak_value_bicep_set2, atrest_value_bicep_set2, reps_count_bicep_set2, unsuccessful_reps_count_left_bicep_set2, successful_reps_count_left_bicep_set2, unsuccessful_reps_count_right_bicep_set2, successful_reps_count_right_bicep_set2, dir_bicep_left_unsuccessful_bicep_set2, dir_bicep_right_unsuccessful_bicep_set2, total_reps_count_bicep_set2, total_reps_count_left_bicep_set2, total_reps_count_right_bicep_set2, start_time1_bicep_set2, start_time2_bicep_set2, general_feedback_left_bicep_set2, general_feedback_right_bicep_set2, dir_gen_feedback_bicep_set2, dir_gen_feedback_unsuccessful_bicep_set2, exercise_mode, per_left_bicep_set2, per_right_bicep_set2, within_range_time1_bicep_set2, within_range_time2_bicep_set2
+    global count_bicep_left_set2, count_bicep_right_set2, dir_bicep_left_set2, dir_bicep_right_set2, start_time_bicep_set2, display_info_bicep_set2, rest_bicep_start_time_set2, bar_left_bicep_set2, bar_right_bicep_set2, angle_left_bicep_set2, angle_right_bicep_set2, color_right_bicep_set2, color_left_bicep_set2, feedback_left_bicep_set2, feedback_right_bicep_set2, min_threshold_bicep_set2, max_threshold_bicep_set2, success_threshold_bicep_set2, peak_value_bicep_set2, atrest_value_bicep_set2, reps_count_bicep_set2, unsuccessful_reps_count_left_bicep_set2, successful_reps_count_left_bicep_set2, unsuccessful_reps_count_right_bicep_set2, successful_reps_count_right_bicep_set2, dir_bicep_left_unsuccessful_bicep_set2, dir_bicep_right_unsuccessful_bicep_set2, total_reps_count_bicep_set2, total_reps_count_left_bicep_set2, total_reps_count_right_bicep_set2, start_time1_bicep_set2, start_time2_bicep_set2, general_feedback_left_bicep_set2, general_feedback_right_bicep_set2, dir_gen_feedback_bicep_set2, dir_gen_feedback_unsuccessful_bicep_set2, exercise_mode, per_left_bicep_set2, per_right_bicep_set2, within_range_time1_bicep_set2, within_range_time2_bicep_set2, start_time3_bicep_set2
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_bicep_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bicep_set2
+    elapsed_time_bicep = time.time() - start_time_bicep_set2
+    remaining_time_bicep = max(0, 60 - elapsed_time_bicep) #repetition_time_bicep_set2
 
 
     if display_info_bicep_set2:  # Check if to display counter, bar, and percentage
@@ -1359,18 +1573,14 @@ def detect_bicep_curls_set2(img):
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
 
-            # angle_left, orientation = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
-            # angle_right, orientation2 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
-
             angle_left_bicep_set2 = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
             angle_right_bicep_set2 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
-
 
             per_left_bicep_set2 = np.interp(angle_left_bicep_set2, (30, 130), (100, 0)) 
             bar_left_bicep_set2 = np.interp(angle_left_bicep_set2, (30, 140), (200, 400)) 
 
-            per_right_bicep_set2 = np.interp(angle_right_bicep_set2, (200, 320), (0, 100)) 
-            bar_right_bicep_set2 = np.interp(angle_right_bicep_set2, (200, 320), (400, 200)) 
+            per_right_bicep_set2 = np.interp(angle_right_bicep_set2, (200, 340), (0, 100)) 
+            bar_right_bicep_set2 = np.interp(angle_right_bicep_set2, (200, 340), (400, 200)) 
 
             # color changer for the bar
             if int(per_left_bicep_set2) == 100:
@@ -1382,9 +1592,9 @@ def detect_bicep_curls_set2(img):
                 color_right_bicep_set2 = (0, 0, 255)
 
             #left
-            if 70 <= per_left_bicep_set2 <= 90:
+            if 40 <= per_left_bicep_set2 <= 90:
                 # Increment the time within range
-                within_range_time1_bicep_set2 += time.time() - start_time1_bicep_set2
+                within_range_time1_bicep_set2 += time.time() - start_time2_bicep_set2
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time1_bicep_set2 >= time_threshold_bicep_set2:
@@ -1395,7 +1605,7 @@ def detect_bicep_curls_set2(img):
             else:
                 within_range_time1_bicep_set2 = 0
                 # Update the start time to the current time
-                start_time1_bicep_set2 = time.time()
+                start_time2_bicep_set2 = time.time()
 
             if 1 <= per_left_bicep_set2 <= 10:
                 if dir_bicep_left_unsuccessful_bicep_set2 == 1:
@@ -1413,28 +1623,28 @@ def detect_bicep_curls_set2(img):
                     dir_bicep_left_set2 = 0
 
             # right
-            if 70 <= per_right_bicep_set2 <= 90:
+            if 40 <= per_right_bicep_set2 <= 90:
                 # Increment the time within range
-                within_range_time2_bicep_set2 += time.time() - start_time2_bicep_set2
-                
+                within_range_time2_bicep_set2 += time.time() - start_time3_bicep_set2
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time2_bicep_set2 >= time_threshold_bicep_set2:
                     if dir_bicep_right_unsuccessful_bicep_set2 == 0:
                         unsuccessful_reps_count_right_bicep_set2 += 0.5
                         dir_bicep_right_unsuccessful_bicep_set2 = 1
+                        print("right", unsuccessful_reps_count_right_bicep_set2)
 
             else:
                 within_range_time2_bicep_set2 = 0
                 # Update the start time to the current time
-                start_time2_bicep_set2 = time.time()
+                start_time3_bicep_set2 = time.time()
 
             if 1 <= per_right_bicep_set2 <= 10:
                 #print("left down val: ", per_left)
                 if dir_bicep_right_unsuccessful_bicep_set2 == 1:
                     unsuccessful_reps_count_right_bicep_set2 += 0.5
                     dir_bicep_right_unsuccessful_bicep_set2 = 0
-
+                    print("right", unsuccessful_reps_count_right_bicep_set2)
 
             if per_right_bicep_set2 == success_threshold_bicep_set2:
                 if dir_bicep_right_set2 == 0:
@@ -1446,31 +1656,25 @@ def detect_bicep_curls_set2(img):
                     successful_reps_count_right_bicep_set2 += 0.5
                     dir_bicep_right_set2 = 0
 
-                # feedback for left hand  # TO BE FETCHED 
-                feedback_left_bicep_set2 = detector_bicep.feedback_bicep(per_left_bicep_set2)
-                print("FEEDBACK LEFT: ", feedback_left_bicep_set2)
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_bicep_set2 = detector_bicep.feedback_bicep(per_left_bicep_set2)
 
-                detector_bicep.update_next_per_left(per_left_bicep_set2)
+            detector_bicep.update_next_per_left(per_left_bicep_set2)
 
-                # feedback for right hand  # TO BE FETCHED 
-                feedback_right_bicep_set2 = detector_bicep.feedback_bicep(per_right_bicep_set2)
-                print("FEEDBACK RIGHT: ", feedback_right_bicep_set2)
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_bicep_set2 = detector_bicep.feedback_bicep(per_right_bicep_set2)
 
-                detector_bicep.update_next_per_left(per_right_bicep_set2)
+            detector_bicep.update_next_per_left(per_right_bicep_set2)
 
         # label
-        cvzone.putTextRect(img, 'Standing (Front) SET 2 Bicep Curl', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Facing Bicep Curl SET 2', [440, 30], thickness=2, border=2, scale=1.5) 
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bicep)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        # # Orientation
-        # cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        # cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_bicep_set2)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
@@ -1482,63 +1686,54 @@ def detect_bicep_curls_set2(img):
         cv2.rectangle(img, (952, int(bar_left_bicep_set2)), (995, 400), color_left_bicep_set2, -1)
 
     #counter in display
-    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
     cv2.putText(img, f"{int(successful_reps_count_right_bicep_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(successful_reps_count_left_bicep_set2)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_bicep_set2)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # To check if time is still running
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+    if remaining_time_bicep <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep_set2 = False
         exercise_mode = "rest_bicep_set2"
         rest_bicep_start_time_set2 = time.time()
 
     #total counts
-    total_reps_count_left_bicep_set2 = successful_reps_count_left_bicep_set2 + unsuccessful_reps_count_left_bicep_set2
-    total_reps_count_right_bicep_set2 = successful_reps_count_right_bicep_set2 + unsuccessful_reps_count_right_bicep_set2  
+    total_reps_count_left_set2 = successful_reps_count_left_bicep_set2 + unsuccessful_reps_count_left_bicep_set2
+    total_reps_count_right_set2 = successful_reps_count_right_bicep_set2 + unsuccessful_reps_count_right_bicep_set2  
 
 
     if successful_reps_count_right_bicep_set2 >= 10 and successful_reps_count_left_bicep_set2 >= 10:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep_set2 = False
-        exercise_mode = "rest_bicep_set2"
-        rest_bicep_start_time_set2 = time.time()
         # General feedback after finishing the exercise # TO BE FETCHED
-
-        if dir_gen_feedback_bicep_set2 == 0:
-            general_feedback_left_bicep_set2 = detector_bicep.left_arm_feedback(total_reps_count_left_bicep_set2)
-            print("LEFT GEN FB: ", general_feedback_left_bicep_set2)
-            general_feedback_right_bicep_set2 = detector_bicep.right_arm_feedback(total_reps_count_right_bicep_set2)
-            print("RIGHT GEN FB: ", general_feedback_right_bicep_set2)
-            dir_gen_feedback_bicep_set2 = 1
-        
-
+        if dir_gen_feedback_bicep == 0:
+            general_feedback_left_bicep_set2 = detector_bicep.left_arm_feedback(total_reps_count_left_set2)
+            general_feedback_right_bicep_set2 = detector_bicep.right_arm_feedback(total_reps_count_right_set2)
+            dir_gen_feedback_bicep = 1
+            exercise_mode = "rest_bicep_set2"
+            rest_bicep_start_time_set2 = time.time()
     # To check for unsuccessful arm rep counter # CHANGED
     if unsuccessful_reps_count_left_bicep_set2 == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for left arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep_set2 = False
-        exercise_mode = "rest_bicep_set2"
-        rest_bicep_start_time_set2 = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep_set2 == 0:
-            general_feedback_left_bicep_set2 = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left_bicep_set2)
-            print("LEFT GEN FB: ", general_feedback_left_bicep_set2)
-            #general_feedback_outputted = True
+            general_feedback_left_bicep_set2 = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left_set2)
             dir_gen_feedback_unsuccessful_bicep_set2 = 1
+            exercise_mode = "rest_bicep_set2"
+            rest_bicep_start_time_set2 = time.time()
 
     if unsuccessful_reps_count_right_bicep_set2 == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for right arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep_set2 = False
-        exercise_mode = "rest_bicep_set2"
-        rest_bicep_start_time_set2 = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep_set2 == 0:
-            general_feedback_right_set2 = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right_bicep_set2)
-            print("RIGHT GEN FB: ", general_feedback_right_set2)
-            #general_feedback_outputted = True
+            general_feedback_right_bicep_set2 = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right_set2)
             dir_gen_feedback_unsuccessful_bicep_set2 == 1
+            exercise_mode = "rest_bicep_set2"
+            rest_bicep_start_time_set2 = time.time()
     return img 
 
 def rest_bicep_set2(img):
@@ -1562,13 +1757,12 @@ def rest_bicep_set2(img):
     return img
 
 def detect_bicep_curls_set3(img):
-    global count_bicep_left_set3, count_bicep_right_set3, dir_bicep_left_set3, dir_bicep_right_set3, start_time_bicep_set3, display_info_bicep_set3, rest_bicep_start_time_set3, bar_left_bicep_set3, bar_right_bicep_set3, angle_left_bicep_set3, angle_right_bicep_set3, color_right_bicep_set3, color_left_bicep_set3, feedback_left_bicep_set3, feedback_right_bicep_set3, min_threshold_bicep_set3, max_threshold_bicep_set3, success_threshold_bicep_set3, peak_value_bicep_set3, atrest_value_bicep_set3, reps_count_bicep_set3, unsuccessful_reps_count_left_bicep_set3, successful_reps_count_left_bicep_set3, unsuccessful_reps_count_right_bicep_set3, successful_reps_count_right_bicep_set3, dir_bicep_left_unsuccessful_bicep_set3, dir_bicep_right_unsuccessful_bicep_set3, total_reps_count_bicep_set3, total_reps_count_left_bicep_set3, total_reps_count_right_bicep_set3, start_time1_bicep_set3, start_time2_bicep_set3, general_feedback_left_bicep_set3, general_feedback_right_bicep_set3, dir_gen_feedback_bicep_set3, dir_gen_feedback_unsuccessful_bicep_set3, exercise_mode, per_left_bicep_set3, per_right_bicep_set3, within_range_time1_bicep_set3, within_range_time2_bicep_set3
+    global count_bicep_left_set3, count_bicep_right_set3, dir_bicep_left_set3, dir_bicep_right_set3, start_time_bicep_set3, display_info_bicep_set3, rest_bicep_start_time_set3, bar_left_bicep_set3, bar_right_bicep_set3, angle_left_bicep_set3, angle_right_bicep_set3, color_right_bicep_set3, color_left_bicep_set3, feedback_left_bicep_set3, feedback_right_bicep_set3, min_threshold_bicep_set3, max_threshold_bicep_set3, success_threshold_bicep_set3, peak_value_bicep_set3, atrest_value_bicep_set3, reps_count_bicep_set3, unsuccessful_reps_count_left_bicep_set3, successful_reps_count_left_bicep_set3, unsuccessful_reps_count_right_bicep_set3, successful_reps_count_right_bicep_set3, dir_bicep_left_unsuccessful_bicep_set3, dir_bicep_right_unsuccessful_bicep_set3, total_reps_count_bicep_set3, total_reps_count_left_bicep_set3, total_reps_count_right_bicep_set3, start_time1_bicep_set3, start_time2_bicep_set3, general_feedback_left_bicep_set3, general_feedback_right_bicep_set3, dir_gen_feedback_bicep_set3, dir_gen_feedback_unsuccessful_bicep_set3, exercise_mode, per_left_bicep_set3, per_right_bicep_set3, within_range_time1_bicep_set3, within_range_time2_bicep_set3, start_time3_bicep_set3
 
     img = cv2.resize(img, (1280, 720))
 
     elapsed_time = time.time() - start_time_bicep_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bicep_set2
-
+    remaining_time_bicep = max(0, 60 - elapsed_time) #repetition_time_bicep_set2
 
     if display_info_bicep_set3:  # Check if to display counter, bar, and percentage
         img = detector_bicep.findPose(img, False) # initializes img as variable for findpose function
@@ -1577,18 +1771,14 @@ def detect_bicep_curls_set3(img):
         # Define hand angles outside the if statement
         if len(lmList_bicep) != 0:
 
-            # angle_left, orientation = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
-            # angle_right, orientation2 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
-
             angle_left_bicep_set3 = detector_bicep.BicepCurl(img, 11 ,13, 15, True)
             angle_right_bicep_set3 = detector_bicep.BicepCurl(img, 12, 14 ,16, True)
 
-
-            per_left_bicep_set3= np.interp(angle_left_bicep_set3, (30, 130), (100, 0)) 
+            per_left_bicep_set3 = np.interp(angle_left_bicep_set3, (30, 130), (100, 0)) 
             bar_left_bicep_set3 = np.interp(angle_left_bicep_set3, (30, 140), (200, 400)) 
 
-            per_right_bicep_set3 = np.interp(angle_right_bicep_set3, (200, 320), (0, 100)) 
-            bar_right_bicep_set3 = np.interp(angle_right_bicep_set3, (200, 320), (400, 200)) 
+            per_right_bicep_set3 = np.interp(angle_right_bicep_set3, (200, 340), (0, 100)) 
+            bar_right_bicep_set3 = np.interp(angle_right_bicep_set3, (200, 340), (400, 200)) 
 
             # color changer for the bar
             if int(per_left_bicep_set3) == 100:
@@ -1600,9 +1790,9 @@ def detect_bicep_curls_set3(img):
                 color_right_bicep_set3 = (0, 0, 255)
 
             #left
-            if 70 <= per_left_bicep_set3 <= 90:
+            if 40 <= per_left_bicep_set3 <= 90:
                 # Increment the time within range
-                within_range_time1_bicep_set3 += time.time() - start_time1_bicep_set3
+                within_range_time1_bicep_set3 += time.time() - start_time2_bicep
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time1_bicep_set3 >= time_threshold_bicep_set3:
@@ -1613,7 +1803,7 @@ def detect_bicep_curls_set3(img):
             else:
                 within_range_time1_bicep_set3 = 0
                 # Update the start time to the current time
-                start_time1_bicep_set3 = time.time()
+                start_time2_bicep_set3 = time.time()
 
             if 1 <= per_left_bicep_set3 <= 10:
                 if dir_bicep_left_unsuccessful_bicep_set3 == 1:
@@ -1631,28 +1821,28 @@ def detect_bicep_curls_set3(img):
                     dir_bicep_left_set3 = 0
 
             # right
-            if 70 <= per_right_bicep_set3 <= 90:
+            if 40 <= per_right_bicep_set3 <= 90:
                 # Increment the time within range
-                within_range_time2_bicep_set3 += time.time() - start_time2_bicep_set3
-                
+                within_range_time2_bicep_set3 += time.time() - start_time3_bicep_set3
 
                 # Check if peak value has been within range for the specified time
                 if within_range_time2_bicep_set3 >= time_threshold_bicep_set3:
                     if dir_bicep_right_unsuccessful_bicep_set3 == 0:
                         unsuccessful_reps_count_right_bicep_set3 += 0.5
                         dir_bicep_right_unsuccessful_bicep_set3 = 1
+                        print("right", unsuccessful_reps_count_right_bicep_set3)
 
             else:
                 within_range_time2_bicep_set3 = 0
                 # Update the start time to the current time
-                start_time2_bicep_set3 = time.time()
+                start_time3_bicep_set3 = time.time()
 
             if 1 <= per_right_bicep_set3 <= 10:
                 #print("left down val: ", per_left)
                 if dir_bicep_right_unsuccessful_bicep_set3 == 1:
                     unsuccessful_reps_count_right_bicep_set3 += 0.5
                     dir_bicep_right_unsuccessful_bicep_set3 = 0
-
+                    print("right", unsuccessful_reps_count_right_bicep_set3)
 
             if per_right_bicep_set3 == success_threshold_bicep_set3:
                 if dir_bicep_right_set3 == 0:
@@ -1664,31 +1854,25 @@ def detect_bicep_curls_set3(img):
                     successful_reps_count_right_bicep_set3 += 0.5
                     dir_bicep_right_set3 = 0
 
-                # feedback for left hand  # TO BE FETCHED 
-                feedback_left_bicep_set3 = detector_bicep.feedback_bicep(per_left_bicep_set3)
-                print("FEEDBACK LEFT: ", feedback_left_bicep_set3)
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_bicep_set3 = detector_bicep.feedback_bicep(per_left_bicep_set3)
 
-                detector_bicep.update_next_per_left(per_left_bicep_set3)
+            detector_bicep.update_next_per_left(per_left_bicep_set3)
 
-                # feedback for right hand  # TO BE FETCHED 
-                feedback_right_bicep_set3 = detector_bicep.feedback_bicep(per_right_bicep_set2)
-                print("FEEDBACK RIGHT: ", feedback_right_bicep_set3)
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_bicep_set3 = detector_bicep.feedback_bicep(per_right_bicep_set3)
 
-                detector_bicep.update_next_per_left(per_right_bicep_set3)
+            detector_bicep.update_next_per_left(per_right_bicep_set3)
 
         # label
-        cvzone.putTextRect(img, 'Standing (Front) SET 3 Bicep Curl', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Facing Bicep Curl SET 3', [440, 30], thickness=2, border=2, scale=1.5) 
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bicep)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        # # Orientation
-        # cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        # cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_bicep_set3)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
@@ -1700,67 +1884,60 @@ def detect_bicep_curls_set3(img):
         cv2.rectangle(img, (952, int(bar_left_bicep_set3)), (995, 400), color_left_bicep_set3, -1)
 
     #counter in display
-    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
     cv2.putText(img, f"{int(successful_reps_count_right_bicep_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(successful_reps_count_left_bicep_set3)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_bicep_set3)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # To check if time is still running
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [345, 30], thickness=2, border=2, scale=2.5)
+    if remaining_time_bicep <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep_set3 = False
         exercise_mode = "rest_bicep_set3"
         rest_bicep_start_time_set3 = time.time()
 
     #total counts
-    total_reps_count_left_bicep_set3 = successful_reps_count_left_bicep_set3 + unsuccessful_reps_count_left_bicep_set3
-    total_reps_count_right_bicep_set3 = successful_reps_count_right_bicep_set3 + unsuccessful_reps_count_right_bicep_set3 
+    total_reps_count_left_set3 = successful_reps_count_left_bicep_set3 + unsuccessful_reps_count_left_bicep_set3
+    total_reps_count_right_set3 = successful_reps_count_right_bicep_set3 + unsuccessful_reps_count_right_bicep_set3  
 
 
     if successful_reps_count_right_bicep_set3 >= 10 and successful_reps_count_left_bicep_set3 >= 10:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep_set3 = False
-        exercise_mode = "rest_bicep_set3"
-        rest_bicep_start_time_set3 = time.time()
         # General feedback after finishing the exercise # TO BE FETCHED
-
         if dir_gen_feedback_bicep_set3 == 0:
-            general_feedback_left_bicep_set3 = detector_bicep.left_arm_feedback(total_reps_count_left_bicep_set3)
-            print("LEFT GEN FB: ", general_feedback_left_bicep_set3)
-            general_feedback_right_bicep_set3 = detector_bicep.right_arm_feedback(total_reps_count_right_bicep_set3)
-            print("RIGHT GEN FB: ", general_feedback_right_bicep_set3)
+            general_feedback_left_bicep_set3 = detector_bicep.left_arm_feedback(total_reps_count_left_set3)
+            general_feedback_right_bicep_set3 = detector_bicep.right_arm_feedback(total_reps_count_right_set3)
             dir_gen_feedback_bicep_set3 = 1
+            exercise_mode = "rest_bicep_set3"
+            rest_bicep_start_time_set3 = time.time()
         
-
     # To check for unsuccessful arm rep counter # CHANGED
     if unsuccessful_reps_count_left_bicep_set3 == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for left arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep_set3 = False
-        exercise_mode = "rest_bicep_set3"
-        rest_bicep_start_time_set3 = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep_set3 == 0:
-            general_feedback_left_bicep_set3 = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left_bicep_set3)
-            print("LEFT GEN FB: ", general_feedback_left_bicep_set3)
-            #general_feedback_outputted = True
+            general_feedback_left_bicep_set3 = detector_bicep.left_arm_unsuccessful_feedback(total_reps_count_left_set3)
             dir_gen_feedback_unsuccessful_bicep_set3 = 1
+            exercise_mode = "rest_bicep_set3"
+            rest_bicep_start_time_set3 = time.time()
 
     if unsuccessful_reps_count_right_bicep_set3 == 3:
-        cvzone.putTextRect(img, 'You have made 5 unsuccessful tries for right arm. Please retry again', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
         display_info_bicep_set3 = False
-        exercise_mode = "rest_bicep_set3"
-        rest_bicep_start_time_set3 = time.time()
 
         if dir_gen_feedback_unsuccessful_bicep_set3 == 0:
-            general_feedback_right_set3 = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right_bicep_set3)
-            print("RIGHT GEN FB: ", general_feedback_right_set3)
-            #general_feedback_outputted = True
-            dir_gen_feedback_unsuccessful_bicep_set3 == 1    
+            general_feedback_right_bicep_set3 = detector_bicep.right_arm_unsuccessful_feedback(total_reps_count_right_set3)
+            dir_gen_feedback_unsuccessful_bicep_set3 == 1
+            exercise_mode = "rest_bicep_set3"
+            rest_bicep_start_time_set3 = time.time()
+
     return img 
 
 def rest_bicep_set3(img):
-    global exercise_mode, rest_bicep_start_time_set3, start_time_pushup
+    global exercise_mode, rest_bicep_start_time_set3, start_time1_pushup
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bicep_start_time_set3
@@ -1775,93 +1952,206 @@ def rest_bicep_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "push_up"
-        start_time_pushup = time.time()
+        start_time1_pushup = time.time()
 
     return img
 
 
 # Function to detect push-ups
 def detect_push_up(img):
-    global exercise_mode, per_left_pushup, per_right_pushup, count_pushup, display_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, pushup_dir, rest_pushup_start_time
+    global exercise_mode, display_info_pushup, per_right_pushup, per_left_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, color_right_pushup, color_left_pushup, feedback_left_pushup, feedback_right_pushup, success_threshold_pushup, peak_value_pushup, atrest_value_pushup, unsuccessful_reps_count_left_pushup, successful_reps_count_left_pushup, unsuccessful_reps_count_right_pushup, successful_reps_count_right_pushup, dir_left_unsuccessful_pushup, dir_right_unsuccessful_pushup, total_reps_count_pushup, total_reps_count_left_pushup, total_reps_count_right_pushup, start_time1_pushup, start_time2_pushup, start_time3_pushup, time_threshold_pushup, within_range_time1_pushup, general_feedback_left_pushup, general_feedback_right_pushup, dir_gen_feedback_pushup, dir_gen_feedback_unsuccessful_pushup, rest_pushup_start_time, dir_left_pushup, dir_right_pushup
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_pushup
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup
-    if exercise_mode == "push_up":
-        if display_pushup:  # Check if to display count_pushup, bar, and percentage
+    elapsed_time_pushup = time.time() - start_time1_pushup
+    remaining_time_pushup = max(0, 60 - elapsed_time_pushup)
 
-            img = detector_pushup.findPose(img, False)
-            lmList = detector_pushup.findPosition(img, False)
+    if display_info_pushup:  # Check if to display counter, bar, and percentage
 
-            # Define hand angles outside the if statement
-            if len(lmList) != 0:
-                leftangle_pushup, rightangle_pushup = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)
+        img = detector_pushup.findPose(img, False) # initializes img as variable for findpose function
+        lmList = detector_pushup.findPosition(img, False) # initializes lmList_pushup as variable for findPosition function
 
-                # Interpolate angles to percentage and position on screen
-                per_left_pushup = np.interp(leftangle_pushup, (190, 300), (100, 0))
-                bar_left_pushup = np.interp(leftangle_pushup, (190, 300), (200, 400))
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+            # Check if the person is in a proper push-up posture
+            leftangle_pushup, rightangle_pushup = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)  # defines left  and right arm landmark keypoints 
 
-                per_right_pushup = np.interp(rightangle_pushup, (30, 170), (0, 100))
-                bar_right_pushup = np.interp(rightangle_pushup, (30, 170), (400, 200))
+            #Interpolate angles to percentage and position on screen
+            per_left_pushup = np.interp(leftangle_pushup, (190, 300), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_pushup = np.interp(leftangle_pushup, (190, 300), (200, 400))
 
+            per_right_pushup = np.interp(rightangle_pushup, (45, 160), (0, 100))
+            bar_right_pushup = np.interp(rightangle_pushup, (45, 160), (400, 200))
+
+            if detector_pushup.isPushUpPosture(lmList):
+                if int(per_left_pushup) == 100:
+                    color_left_pushup = (0, 255, 0)  # Change color of left leg bar to green
+                else:
+                    color_left_pushup = (0, 0, 255)
                 
-                
-                #Check if the person is in a proper push-up posture
-                if detector_pushup.isPushUpPosture(lmList):
-                    if leftangle_pushup >= 260 and rightangle_pushup >= 45:
-                        if pushup_dir == 1:
-                            count_pushup += 0.5
-                            pushup_dir = 0
-                    if leftangle_pushup <= 190 and rightangle_pushup <= 190:
-                        if pushup_dir == 0:
-                            count_pushup += 0.5
-                            pushup_dir = 1
-                      
+                if int(per_right_pushup) == 100:
+                    color_right_pushup = (0, 255, 0)
+                else:
+                    color_right_pushup = (0, 0, 255)
 
-            cvzone.putTextRect(img, 'Push-Up Counter', [345, 30], thickness=2, border=2, scale=2.5)
+                #left
+                if 40 <= per_left_pushup <= 90:
+                    # Increment the time within range
+                    within_range_time1_pushup += time.time() - start_time2_pushup
 
-            # Draw rectangle behind the timer text
-            cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time1_pushup >= time_threshold_pushup:
+                        if dir_left_unsuccessful_pushup == 0:
+                            unsuccessful_reps_count_left_pushup += 0.5
+                            print("left", unsuccessful_reps_count_right_pushup)
+                            dir_left_unsuccessful_pushup = 1
 
-            # Draw timer text above the rectangle
-            timer_text = f"Time left: {int(remaining_time)}s"
-            cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+                else:
+                    within_range_time1_pushup = 0
+                    # Update the start time to the current time
+                    start_time2_pushup = time.time()
 
-            # Draw bars for left and right angles
-            cv2.putText(img, f"R {int(per_right_pushup)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (8, int(bar_right_pushup)), (50, 400), (0, 0, 255), -1)
+                if 1 <= per_left_pushup <= 10:
+                    if dir_left_unsuccessful_pushup == 1:
+                        unsuccessful_reps_count_left_pushup += 0.5
+                        print("left", unsuccessful_reps_count_right_pushup)
+                        dir_left_unsuccessful_pushup = 0
 
-            cv2.putText(img, f"L {int(per_left_pushup)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (952, int(bar_left_pushup)), (995, 400), (0, 0, 255), -1)
+                if per_left_pushup == success_threshold_pushup:
+                    if dir_left_pushup == 0:
+                        successful_reps_count_left_pushup += 0.5
+                        dir_left_pushup = 1
+                    
+                elif per_left_pushup == atrest_value_pushup:
+                    if dir_left_pushup == 1:
+                        successful_reps_count_left_pushup += 0.5
+                        dir_left_pushup = 0
 
-            if leftangle_pushup <= 190:
-                cv2.rectangle(img, (952, int(bar_left_pushup)), (995, 400), (0, 255, 0), -1)
+                # right
+                if 40 <= per_right_pushup <= 90:
+                    # Increment the time within range
+                    within_range_time2_pushup += time.time() - start_time3_pushup
 
-            if rightangle_pushup >= 170:
-                cv2.rectangle(img, (8, int(bar_right_pushup)), (50, 400), (0, 255, 0), -1)
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time2_pushup >= time_threshold_pushup:
+                        if dir_right_unsuccessful_pushup == 0:
+                            unsuccessful_reps_count_right_pushup += 0.5
+                            dir_right_unsuccessful_pushup = 1
+                            print("right", unsuccessful_reps_count_right_pushup)
 
-        cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-        cv2.putText(img, f"{int(count_pushup)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+                else:
+                    within_range_time2_pushup = 0
+                    # Update the start time to the current time
+                    start_time3_pushup = time.time()
 
-        if remaining_time <= 0:
-            cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup = False
+                if 1 <= per_right_pushup <= 10:
+                    #print("left down val: ", per_left)
+                    if dir_right_unsuccessful_pushup == 1:
+                        unsuccessful_reps_count_right_pushup += 0.5
+                        dir_right_unsuccessful_pushup = 0
+                        print("right", unsuccessful_reps_count_right_pushup)
+
+                if per_right_pushup == success_threshold_pushup:
+                    if dir_right_pushup == 0:
+                        successful_reps_count_right_pushup += 0.5
+                        dir_right_pushup = 1
+                    
+                elif per_right_pushup == atrest_value_pushup:
+                    if dir_right_pushup == 1:
+                        successful_reps_count_right_pushup += 0.5
+                        dir_right_pushup = 0
+
+                # feedback for left hand  # TO BE FETCHED 
+                feedback_left_pushup = detector_pushup.feedback_pushup(per_left_pushup)
+
+                detector_pushup.update_next_per_left(per_left_pushup)
+
+                # feedback for right hand  # TO BE FETCHED 
+                feedback_right_pushup = detector_pushup.feedback_pushup(per_right_pushup)
+
+                detector_pushup.update_next_per_left(per_right_pushup)
+
+        cvzone.putTextRect(img, 'Front Facing Push-Up', [430, 30], thickness=2, border=2, scale=1.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time_pushup)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # Draw bars for left and right angles
+        cv2.putText(img, f"R {int(per_right_pushup)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_pushup)), (50, 400), color_right_pushup, -1)
+
+        cv2.putText(img, f"L {int(per_left_pushup)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_pushup)), (995, 400), color_left_pushup, -1)
+
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_pushup)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_pushup)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time_pushup <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup = False
+        exercise_mode = "rest_pushup"
+        rest_pushup_start_time = time.time() 
+
+
+    total_reps_count_left_pushup = successful_reps_count_left_pushup + unsuccessful_reps_count_left_pushup
+    total_reps_count_right_pushup = successful_reps_count_right_pushup + unsuccessful_reps_count_right_pushup  
+
+    if successful_reps_count_right_pushup >= 10 and successful_reps_count_left_pushup >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_pushup == 0:
+            general_feedback_left_pushup = detector_pushup.left_arm_feedback(total_reps_count_left_pushup)
+            general_feedback_right_pushup = detector_pushup.right_arm_feedback(total_reps_count_right_pushup)
+            dir_gen_feedback_pushup = 1
             exercise_mode = "rest_pushup"
-            rest_pushup_start_time = time.time()
+            rest_pushup_start_time = time.time() 
+            print(f"{general_feedback_left_pushup} {general_feedback_right_pushup}")
+        
+    # To check for unsuccessful arm rep counter # CHANGED
+    if unsuccessful_reps_count_left_pushup >= 3 and unsuccessful_reps_count_right_pushup >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup = False
 
-        if int(count_pushup) >= 5:
-            cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup = False
+        if dir_gen_feedback_unsuccessful_pushup == 0:
+            general_feedback_left_pushup = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup)
+            dir_gen_feedback_unsuccessful_pushup = 1
             exercise_mode = "rest_pushup"
-            rest_pushup_start_time = time.time()
+            rest_pushup_start_time = time.time() 
+
+    elif unsuccessful_reps_count_left_pushup >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup = False
+
+        if dir_gen_feedback_unsuccessful_pushup == 0:
+            general_feedback_left_pushup = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup)
+            dir_gen_feedback_unsuccessful_pushup = 1
+            exercise_mode = "rest_pushup"
+            rest_pushup_start_time = time.time() 
+
+    elif unsuccessful_reps_count_right_pushup >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup = False
+
+        if dir_gen_feedback_unsuccessful_pushup == 0:
+            general_feedback_right_pushup = detector_pushup.right_arm_unsuccessful_feedback(total_reps_count_right_pushup)
+            dir_gen_feedback_unsuccessful_pushup == 1
+            exercise_mode = "rest_pushup"
+            rest_pushup_start_time = time.time() 
 
     return img
 
 def rest_pushup(img):
-    global exercise_mode, rest_pushup_start_time, start_time_pushup_set2
+    global exercise_mode, rest_pushup_start_time, start_time1_pushup_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time
@@ -1876,91 +2166,203 @@ def rest_pushup(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "push_up_set2"
-        start_time_pushup_set2 = time.time()
+        start_time1_pushup_set2 = time.time()
     return img
 
 
 def detect_push_up_set2(img):
-    global exercise_mode, per_left_pushup_set2, per_right_pushup_set2, count_pushup_set2, display_pushup_set2, bar_left_pushup_set2, bar_right_pushup_set2, leftangle_pushup_set2, rightangle_pushup_set2, pushup_dir_set2, rest_pushup_start_time_set2
+    global display_info_pushup_set2, per_right_pushup_set2, per_left_pushup_set2, bar_left_pushup_set2, bar_right_pushup_set2, leftangle_pushup_set2, rightangle_pushup_set2, color_right_pushup_set2, color_left_pushup_set2, feedback_left_pushup_set2, feedback_right_pushup_set2, success_threshold_pushup_set2, peak_value_pushup_set2, atrest_value_pushup_set2, unsuccessful_reps_count_left_pushup_set2, successful_reps_count_left_pushup_set2, unsuccessful_reps_count_right_pushup_set2, successful_reps_count_right_pushup_set2, dir_left_unsuccessful_pushup_set2, dir_right_unsuccessful_pushup_set2, total_reps_count_pushup_set2, total_reps_count_left_pushup_set2, total_reps_count_right_pushup_set2, start_time1_pushup_set2, start_time2_pushup_set2, start_time3_pushup_set2, time_threshold_pushup, within_range_time1_pushup_set2, general_feedback_left_pushup_set2, general_feedback_right_pushup_set2, dir_gen_feedback_pushup_set2, dir_gen_feedback_unsuccessful_pushup_set2, rest_pushup_start_time_set2, exercise_mode, dir_left_pushup_set2, dir_right_pushup_set2
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_pushup_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup_set2
-    if exercise_mode == "push_up_set2":
-        if display_pushup_set2:  # Check if to display count_pushup, bar, and percentage
+    elapsed_time_pushup = time.time() - start_time1_pushup_set2
+    remaining_time_pushup = max(0, 60 - elapsed_time_pushup)
 
-            img = detector_pushup.findPose(img, False)
-            lmList = detector_pushup.findPosition(img, False)
+    if display_info_pushup_set2:  # Check if to display counter, bar, and percentage
 
-            # Define hand angles outside the if statement
-            if len(lmList) != 0:
-                leftangle_pushup_set2, rightangle_pushup_set2 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)
+        img = detector_pushup.findPose(img, False) # initializes img as variable for findpose function
+        lmList = detector_pushup.findPosition(img, False) # initializes lmList_pushup as variable for findPosition function
 
-                # Interpolate angles to percentage and position on screen
-                per_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (100, 0))
-                bar_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (200, 400))
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+            # Check if the person is in a proper push-up posture
+            leftangle_pushup_set2, rightangle_pushup_set2 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)  # defines left  and right arm landmark keypoints 
 
-                per_right_pushup_set2 = np.interp(rightangle_pushup_set2, (30, 170), (0, 100))
-                bar_right_pushup_set2 = np.interp(rightangle_pushup_set2, (30, 170), (400, 200))
+            #Interpolate angles to percentage and position on screen
+            per_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_pushup_set2 = np.interp(leftangle_pushup_set2, (190, 300), (200, 400))
 
+            per_right_pushup_set2 = np.interp(rightangle_pushup_set2, (45, 160), (0, 100))
+            bar_right_pushup_set2 = np.interp(rightangle_pushup_set2, (45, 160), (400, 200))
+
+            if detector_pushup.isPushUpPosture(lmList):
+                if int(per_left_pushup_set2) == 100:
+                    color_left_pushup_set2 = (0, 255, 0)  # Change color of left leg bar to green
+                else:
+                    color_left_pushup_set2 = (0, 0, 255)
                 
-                
-                #Check if the person is in a proper push-up posture
-                if detector_pushup.isPushUpPosture(lmList):
-                    if leftangle_pushup_set2 >= 260 and rightangle_pushup_set2 >= 45:
-                        if pushup_dir_set2 == 1:
-                            count_pushup_set2 += 0.5
-                            pushup_dir_set2 = 0
-                    if leftangle_pushup_set2 <= 190 and rightangle_pushup_set2 <= 190:
-                        if pushup_dir_set2 == 0:
-                            count_pushup_set2 += 0.5
-                            pushup_dir_set2 = 1
-                            
+                if int(per_right_pushup_set2) == 100:
+                    color_right_pushup_set2 = (0, 255, 0)
+                else:
+                    color_right_pushup_set2 = (0, 0, 255)
 
-            cvzone.putTextRect(img, 'Push-Up Counter SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+                #left
+                if 40 <= per_left_pushup_set2 <= 90:
+                    # Increment the time within range
+                    within_range_time1_pushup_set2 += time.time() - start_time2_pushup_set2
 
-            # Draw rectangle behind the timer text
-            cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time1_pushup_set2 >= time_threshold_pushup_set2:
+                        if dir_left_unsuccessful_pushup_set2 == 0:
+                            unsuccessful_reps_count_left_pushup_set2 += 0.5
+                            print("left", unsuccessful_reps_count_right_pushup_set2)
+                            dir_left_unsuccessful_pushup_set2 = 1
 
-            # Draw timer text above the rectangle
-            timer_text = f"Time left: {int(remaining_time)}s"
-            cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+                else:
+                    within_range_time1_pushup_set2 = 0
+                    # Update the start time to the current time
+                    start_time2_pushup_set2 = time.time()
 
-            # Draw bars for left and right angles
-            cv2.putText(img, f"R {int(per_right_pushup_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (8, int(bar_right_pushup_set2)), (50, 400), (0, 0, 255), -1)
+                if 1 <= per_left_pushup_set2 <= 10:
+                    if dir_left_unsuccessful_pushup_set2 == 1:
+                        unsuccessful_reps_count_left_pushup_set2 += 0.5
+                        print("left", unsuccessful_reps_count_right_pushup_set2)
+                        dir_left_unsuccessful_pushup_set2 = 0
 
-            cv2.putText(img, f"L {int(per_left_pushup_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (952, int(bar_left_pushup_set2)), (995, 400), (0, 0, 255), -1)
+                if per_left_pushup_set2 == success_threshold_pushup_set2:
+                    if dir_left_pushup_set2 == 0:
+                        successful_reps_count_left_pushup_set2 += 0.5
+                        dir_left_pushup_set2 = 1
+                    
+                elif per_left_pushup_set2 == atrest_value_pushup_set2:
+                    if dir_left_pushup_set2 == 1:
+                        successful_reps_count_left_pushup_set2 += 0.5
+                        dir_left_pushup_set2 = 0
 
-            if leftangle_pushup_set2 <= 190:
-                cv2.rectangle(img, (952, int(bar_left_pushup_set2)), (995, 400), (0, 255, 0), -1)
+                # right
+                if 40 <= per_right_pushup_set2 <= 90:
+                    # Increment the time within range
+                    within_range_time2_pushup_set2 += time.time() - start_time3_pushup_set2
 
-            if rightangle_pushup_set2 >= 170:
-                cv2.rectangle(img, (8, int(bar_right_pushup_set2)), (50, 400), (0, 255, 0), -1)
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time2_pushup_set2 >= time_threshold_pushup_set2:
+                        if dir_right_unsuccessful_pushup_set2 == 0:
+                            unsuccessful_reps_count_right_pushup_set2 += 0.5
+                            dir_right_unsuccessful_pushup_set2 = 1
+                            print("right", unsuccessful_reps_count_right_pushup_set2)
 
-        cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-        cv2.putText(img, f"{int(count_pushup_set2)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+                else:
+                    within_range_time2_pushup_set2 = 0
+                    # Update the start time to the current time
+                    start_time3_pushup_set2 = time.time()
 
-        if remaining_time <= 0:
-            cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup_set2 = False
+                if 1 <= per_right_pushup_set2 <= 10:
+                    #print("left down val: ", per_left)
+                    if dir_right_unsuccessful_pushup_set2 == 1:
+                        unsuccessful_reps_count_right_pushup_set2 += 0.5
+                        dir_right_unsuccessful_pushup_set2 = 0
+                        print("right", unsuccessful_reps_count_right_pushup_set2)
+
+                if per_right_pushup_set2 == success_threshold_pushup_set2:
+                    if dir_right_pushup_set2 == 0:
+                        successful_reps_count_right_pushup_set2 += 0.5
+                        dir_right_pushup_set2 = 1
+                    
+                elif per_right_pushup_set2 == atrest_value_pushup_set2:
+                    if dir_right_pushup_set2 == 1:
+                        successful_reps_count_right_pushup_set2 += 0.5
+                        dir_right_pushup_set2 = 0
+
+                # feedback for left hand  # TO BE FETCHED 
+                feedback_left_pushup_set2 = detector_pushup.feedback_pushup(per_left_pushup_set2)
+
+                detector_pushup.update_next_per_left(per_left_pushup_set2)
+
+                # feedback for right hand  # TO BE FETCHED 
+                feedback_right_pushup_set2 = detector_pushup.feedback_pushup(per_right_pushup_set2)
+
+                detector_pushup.update_next_per_left(per_right_pushup_set2)
+
+        cvzone.putTextRect(img, 'Front Facing Push-Up SET 2', [430, 30], thickness=2, border=2, scale=1.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time_pushup)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # Draw bars for left and right angles
+        cv2.putText(img, f"R {int(per_right_pushup_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_pushup_set2)), (50, 400), color_right_pushup_set2, -1)
+
+        cv2.putText(img, f"L {int(per_left_pushup_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_pushup_set2)), (995, 400), color_left_pushup_set2, -1)
+
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_pushup_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_pushup_set2)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time_pushup <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup_set2 = False
+        exercise_mode = "rest_pushup_set2"
+        rest_pushup_start_time_set2 = time.time() 
+
+
+    total_reps_count_left_pushup_set2 = successful_reps_count_left_pushup_set2 + unsuccessful_reps_count_left_pushup_set2
+    total_reps_count_right_pushup_set2 = successful_reps_count_right_pushup_set2 + unsuccessful_reps_count_right_pushup_set2  
+
+    if successful_reps_count_right_pushup_set2 >= 10 and successful_reps_count_left_pushup_set2 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup_set2 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_pushup_set2 == 0:
+            general_feedback_left_pushup_set2 = detector_pushup.left_arm_feedback(total_reps_count_left_pushup_set2)
+            general_feedback_right_pushup_set2 = detector_pushup.right_arm_feedback(total_reps_count_right_pushup_set2)
+            dir_gen_feedback_pushup_set2 = 1
             exercise_mode = "rest_pushup_set2"
-            rest_pushup_start_time_set2 = time.time()
+            rest_pushup_start_time_set2 = time.time() 
+            print(f"{general_feedback_left_pushup_set2} {general_feedback_right_pushup_set2}")
+        
+    # To check for unsuccessful arm rep counter # CHANGED
+    if unsuccessful_reps_count_left_pushup_set2 >= 3 and unsuccessful_reps_count_right_pushup_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set2 = False
 
-        if int(count_pushup_set2) >= 5:
-            cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup_set2 = False
+        if dir_gen_feedback_unsuccessful_pushup_set2 == 0:
+            general_feedback_left_pushup_set2 = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup_set2)
+            dir_gen_feedback_unsuccessful_pushup_set2 = 1
             exercise_mode = "rest_pushup_set2"
-            rest_pushup_start_time_set2 = time.time()
+            rest_pushup_start_time_set2 = time.time() 
 
+    elif unsuccessful_reps_count_left_pushup_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set2 = False
+
+        if dir_gen_feedback_unsuccessful_pushup_set2 == 0:
+            general_feedback_left_pushup_set2 = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup_set2)
+            dir_gen_feedback_unsuccessful_pushup_set2 = 1
+            exercise_mode = "rest_pushup_set2"
+            rest_pushup_start_time_set2 = time.time() 
+
+    elif unsuccessful_reps_count_right_pushup_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set2 = False
+
+        if dir_gen_feedback_unsuccessful_pushup_set2 == 0:
+            general_feedback_right_pushup_set2 = detector_pushup.right_arm_unsuccessful_feedback(total_reps_count_right_pushup_set2)
+            dir_gen_feedback_unsuccessful_pushup_set2 == 1
+            exercise_mode = "rest_pushup_set2"
+            rest_pushup_start_time_set2 = time.time() 
     return img
 
 def rest_pushup_set2(img):
-    global exercise_mode, rest_pushup_start_time_set2, start_time_pushup_set3
+    global exercise_mode, rest_pushup_start_time_set2, start_time1_pushup_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set2
@@ -1975,90 +2377,204 @@ def rest_pushup_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "push_up_set3"
-        start_time_pushup_set3 = time.time()
+        start_time1_pushup_set3 = time.time()
 
     return img
 
 def detect_push_up_set3(img):
-    global exercise_mode, per_left_pushup_set3, per_right_pushup_set3, count_pushup_set3, display_pushup_set3, bar_left_pushup_set3, bar_right_pushup_set3, leftangle_pushup_set3, rightangle_pushup_set3, pushup_dir_set3, rest_pushup_start_time_set3
+    global exercise_mode, display_info_pushup_set3, per_right_pushup_set3, per_left_pushup_set3, bar_left_pushup_set3, bar_right_pushup_set3, leftangle_pushup_set3, rightangle_pushup_set3, color_right_pushup_set3, color_left_pushup_set3, feedback_left_pushup_set3, feedback_right_pushup_set3, success_threshold_pushup_set3, peak_value_pushup_set3, atrest_value_pushup_set3, unsuccessful_reps_count_left_pushup_set3, successful_reps_count_left_pushup_set3, unsuccessful_reps_count_right_pushup_set3, successful_reps_count_right_pushup_set3, dir_left_unsuccessful_pushup_set3, dir_right_unsuccessful_pushup_set3, total_reps_count_pushup_set3, total_reps_count_left_pushup_set3, total_reps_count_right_pushup_set3, start_time1_pushup_set3, start_time2_pushup_set3, start_time3_pushup_set3, time_threshold_pushup_set3, within_range_time1_pushup_set3, general_feedback_left_pushup_set3, general_feedback_right_pushup_set3, dir_gen_feedback_pushup_set3, dir_gen_feedback_unsuccessful_pushup_set3, rest_pushup_start_time_set3, dir_left_pushup_set3, dir_right_pushup_set3
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_pushup_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_pushup_set3
-    if exercise_mode == "push_up_set3":
-        if display_pushup_set3:  # Check if to display count_pushup, bar, and percentage
+    elapsed_time_pushup = time.time() - start_time1_pushup_set3
+    remaining_time_pushup = max(0, 60 - elapsed_time_pushup)
 
-            img = detector_pushup.findPose(img, False)
-            lmList = detector_pushup.findPosition(img, False)
+    if display_info_pushup_set3:  # Check if to display counter, bar, and percentage
 
-            # Define hand angles outside the if statement
-            if len(lmList) != 0:
-                leftangle_pushup_set3, rightangle_pushup_set3 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)
+        img = detector_pushup.findPose(img, False) # initializes img as variable for findpose function
+        lmList = detector_pushup.findPosition(img, False) # initializes lmList_pushup as variable for findPosition function
 
-                # Interpolate angles to percentage and position on screen
-                per_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (100, 0))
-                bar_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (200, 400))
+        # Define hand angles outside the if statement
+        if len(lmList) != 0:
+            # Check if the person is in a proper push-up posture
+            leftangle_pushup_set3, rightangle_pushup_set3 = detector_pushup.findPushupAngle(img, 11, 13, 15, 12, 14, 16, drawpoints=True)  # defines left  and right arm landmark keypoints 
 
-                per_right_pushup_set3 = np.interp(rightangle_pushup_set3, (30, 170), (0, 100))
-                bar_right_pushup_set3 = np.interp(rightangle_pushup_set3, (30, 170), (400, 200))
+            #Interpolate angles to percentage and position on screen
+            per_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (100, 0)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_pushup_set3 = np.interp(leftangle_pushup_set3, (190, 300), (200, 400))
 
+            per_right_pushup_set3 = np.interp(rightangle_pushup_set3, (45, 160), (0, 100))
+            bar_right_pushup_set3 = np.interp(rightangle_pushup_set3, (45, 160), (400, 200))
+
+            if detector_pushup.isPushUpPosture(lmList):
+                if int(per_left_pushup_set3) == 100:
+                    color_left_pushup_set3 = (0, 255, 0)  # Change color of left leg bar to green
+                else:
+                    color_left_pushup_set3 = (0, 0, 255)
                 
-                
-                #Check if the person is in a proper push-up posture
-                if detector_pushup.isPushUpPosture(lmList):
-                    if leftangle_pushup_set3 >= 260 and rightangle_pushup_set3 >= 45:
-                        if pushup_dir_set3 == 1:
-                            count_pushup_set3 += 0.5
-                            pushup_dir_set3 = 0
-                    if leftangle_pushup_set3 <= 190 and rightangle_pushup_set3 <= 190:
-                        if pushup_dir_set3 == 0:
-                            count_pushup_set3 += 0.5
-                            pushup_dir_set3 = 1
-                            
+                if int(per_right_pushup_set3) == 100:
+                    color_right_pushup_set3 = (0, 255, 0)
+                else:
+                    color_right_pushup_set3 = (0, 0, 255)
 
-            cvzone.putTextRect(img, 'Push-Up Counter SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+                #left
+                if 40 <= per_left_pushup_set3 <= 90:
+                    # Increment the time within range
+                    within_range_time1_pushup_set3 += time.time() - start_time2_pushup_set3
 
-            # Draw rectangle behind the timer text
-            cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time1_pushup_set3 >= time_threshold_pushup_set3:
+                        if dir_left_unsuccessful_pushup_set3 == 0:
+                            unsuccessful_reps_count_left_pushup_set3 += 0.5
+                            print("left", unsuccessful_reps_count_right_pushup_set3)
+                            dir_left_unsuccessful_pushup_set3 = 1
 
-            # Draw timer text above the rectangle
-            timer_text = f"Time left: {int(remaining_time)}s"
-            cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+                else:
+                    within_range_time1_pushup_set3 = 0
+                    # Update the start time to the current time
+                    start_time2_pushup_set3 = time.time()
 
-            # Draw bars for left and right angles
-            cv2.putText(img, f"R {int(per_right_pushup_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (8, 200), (50, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (8, int(bar_right_pushup_set3)), (50, 400), (0, 0, 255), -1)
+                if 1 <= per_left_pushup_set3 <= 10:
+                    if dir_left_unsuccessful_pushup_set3 == 1:
+                        unsuccessful_reps_count_left_pushup_set3 += 0.5
+                        print("left", unsuccessful_reps_count_right_pushup_set3)
+                        dir_left_unsuccessful_pushup_set3 = 0
 
-            cv2.putText(img, f"L {int(per_left_pushup_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
-            cv2.rectangle(img, (952, 200), (995, 400), (255, 255, 255), 5)
-            cv2.rectangle(img, (952, int(bar_left_pushup_set3)), (995, 400), (0, 0, 255), -1)
+                if per_left_pushup_set3 == success_threshold_pushup_set3:
+                    if dir_left_pushup_set3 == 0:
+                        successful_reps_count_left_pushup_set3 += 0.5
+                        dir_left_pushup_set3 = 1
+                    
+                elif per_left_pushup_set3 == atrest_value_pushup_set3:
+                    if dir_left_pushup_set3 == 1:
+                        successful_reps_count_left_pushup_set3 += 0.5
+                        dir_left_pushup_set3 = 0
 
-            if leftangle_pushup_set3 <= 190:
-                cv2.rectangle(img, (952, int(bar_left_pushup_set3)), (995, 400), (0, 255, 0), -1)
+                # right
+                if 40 <= per_right_pushup_set3 <= 90:
+                    # Increment the time within range
+                    within_range_time2_pushup_set3 += time.time() - start_time3_pushup_set3
 
-            if rightangle_pushup_set3 >= 170:
-                cv2.rectangle(img, (8, int(bar_right_pushup_set3)), (50, 400), (0, 255, 0), -1)
+                    # Check if peak value has been within range for the specified time
+                    if within_range_time2_pushup_set3 >= time_threshold_pushup_set3:
+                        if dir_right_unsuccessful_pushup_set3 == 0:
+                            unsuccessful_reps_count_right_pushup_set3 += 0.5
+                            dir_right_unsuccessful_pushup_set3 = 1
+                            print("right", unsuccessful_reps_count_right_pushup_set3)
 
-        cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-        cv2.putText(img, f"{int(count_pushup_set3)}/5", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+                else:
+                    within_range_time2_pushup_set3 = 0
+                    # Update the start time to the current time
+                    start_time3_pushup_set3 = time.time()
 
-        if remaining_time <= 0:
-            cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup_set3 = False
+                if 1 <= per_right_pushup_set3 <= 10:
+                    #print("left down val: ", per_left)
+                    if dir_right_unsuccessful_pushup_set3 == 1:
+                        unsuccessful_reps_count_right_pushup_set3 += 0.5
+                        dir_right_unsuccessful_pushup_set3 = 0
+                        print("right", unsuccessful_reps_count_right_pushup_set3)
+
+                if per_right_pushup_set3 == success_threshold_pushup_set3:
+                    if dir_right_pushup_set3 == 0:
+                        successful_reps_count_right_pushup_set3 += 0.5
+                        dir_right_pushup_set3 = 1
+                    
+                elif per_right_pushup_set3 == atrest_value_pushup_set3:
+                    if dir_right_pushup_set3 == 1:
+                        successful_reps_count_right_pushup_set3 += 0.5
+                        dir_right_pushup_set3 = 0
+
+                # feedback for left hand  # TO BE FETCHED 
+                feedback_left_pushup_set3 = detector_pushup.feedback_pushup(per_left_pushup_set3)
+
+                detector_pushup.update_next_per_left(per_left_pushup_set3)
+
+                # feedback for right hand  # TO BE FETCHED 
+                feedback_right_pushup_set3 = detector_pushup.feedback_pushup(per_right_pushup_set3)
+
+                detector_pushup.update_next_per_left(per_right_pushup_set3)
+
+        cvzone.putTextRect(img, 'Front Facing Push-Up SET 3', [430, 30], thickness=2, border=2, scale=1.5)
+
+        # Draw rectangle behind the timer text
+        cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
+
+        # Draw timer text above the rectangle
+        timer_text = f"Time left: {int(remaining_time_pushup)}s"
+        cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+        # Draw bars for left and right angles
+        cv2.putText(img, f"R {int(per_right_pushup_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (8, int(bar_right_pushup_set3)), (50, 400), color_right_pushup_set3, -1)
+
+        cv2.putText(img, f"L {int(per_left_pushup_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
+        cv2.rectangle(img, (952, int(bar_left_pushup_set3)), (995, 400), color_left_pushup_set3, -1)
+
+    cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_pushup_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_pushup_set3)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    if remaining_time_pushup <= 0:
+        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup_set3 = False
+        exercise_mode = "rest_pushup_set3"
+        rest_pushup_start_time_set3 = time.time() 
+
+
+    total_reps_count_left_pushup_set3 = successful_reps_count_left_pushup_set3 + unsuccessful_reps_count_left_pushup_set3
+    total_reps_count_right_pushup_set3 = successful_reps_count_right_pushup_set3 + unsuccessful_reps_count_right_pushup_set3  
+
+    if successful_reps_count_right_pushup_set3 >= 10 and successful_reps_count_left_pushup_set3 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_pushup_set3 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_pushup_set3 == 0:
+            general_feedback_left_pushup_set3 = detector_pushup.left_arm_feedback(total_reps_count_left_pushup_set3)
+            general_feedback_right_pushup_set3 = detector_pushup.right_arm_feedback(total_reps_count_right_pushup_set3)
+            dir_gen_feedback_pushup_set3 = 1
             exercise_mode = "rest_pushup_set3"
-            rest_pushup_start_time_set3 = time.time()
+            rest_pushup_start_time = time.time() 
+            print(f"{general_feedback_left_pushup_set3} {general_feedback_right_pushup_set3}")
+        
+    # To check for unsuccessful arm rep counter # CHANGED
+    if unsuccessful_reps_count_left_pushup_set3 >= 3 and unsuccessful_reps_count_right_pushup_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set3 = False
 
-        if int(count_pushup_set3) >= 5:
-            cvzone.putTextRect(img, 'Repetition completed', [390, 30], thickness=2, border=2, scale=2.5)
-            display_pushup_set3 = False
+        if dir_gen_feedback_unsuccessful_pushup_set3 == 0:
+            general_feedback_left_pushup_set3 = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup_set3)
+            dir_gen_feedback_unsuccessful_pushup_set3 = 1
             exercise_mode = "rest_pushup_set3"
-            rest_pushup_start_time_set3 = time.time()
+            rest_pushup_start_time_set3 = time.time() 
+
+    elif unsuccessful_reps_count_left_pushup_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set3 = False
+
+        if dir_gen_feedback_unsuccessful_pushup_set3 == 0:
+            general_feedback_left_pushup_set3 = detector_pushup.left_arm_unsuccessful_feedback(total_reps_count_left_pushup_set3)
+            dir_gen_feedback_unsuccessful_pushup_set3 = 1
+            exercise_mode = "rest_pushup_set3"
+            rest_pushup_start_time_set3 = time.time() 
+
+    elif unsuccessful_reps_count_right_pushup_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_pushup_set3 = False
+
+        if dir_gen_feedback_unsuccessful_pushup_set3 == 0:
+            general_feedback_right_pushup_set3 = detector_pushup.right_arm_unsuccessful_feedback(total_reps_count_right_pushup_set3)
+            dir_gen_feedback_unsuccessful_pushup_set3 == 1
+            exercise_mode = "rest_pushup_set3"
+            rest_pushup_start_time_set3 = time.time() 
+
     return img
 
 def rest_pushup_set3(img):
-    global exercise_mode, rest_pushup_start_time_set3, start_time_shouldertap
+    global exercise_mode, rest_pushup_start_time_set3, start_time1_shouldertaps
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_pushup_start_time_set3
@@ -2073,116 +2589,196 @@ def rest_pushup_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "shoulder_tap"
-        start_time_shouldertap = time.time()
+        start_time1_shouldertaps = time.time()
 
     return img
 
 def detect_shouldertap(img):
-    global count_shoulder_tap_left, count_shoulder_tap_right, dir_shoulder_tap_left, dir_shoulder_tap_right, start_time_shouldertap, display_info_shouldertap, per_left_arm_shouldertap, per_right_arm_shouldertap, bar_left_arm_shouldertap, bar_right_arm_shouldertap, color_left_arm_shouldertap, color_right_arm_shouldertap, exercise_mode, rest_shouldertap_start_time
+    global dir_left_shouldertaps, dir_right_shouldertaps, display_info_shouldertaps, orientation_shouldertaps, orientation2_shouldertaps, per_right_shouldertaps, per_left_shouldertaps, bar_left_shouldertaps, bar_right_shouldertaps, color_right_shouldertaps, color_left_shouldertaps, feedback_left_shouldertaps, feedback_right_shouldertaps, success_threshold_shouldertaps, atrest_value_shouldertaps, unsuccessful_reps_count_left_shouldertaps, successful_reps_count_left_shouldertaps, unsuccessful_reps_count_right_shouldertaps, successful_reps_count_right_shouldertaps, dir_left_unsuccessful_shouldertaps, dir_right_unsuccessful_shouldertaps, total_reps_count_shouldertaps, total_reps_count_left_shouldertaps, total_reps_count_right_shouldertaps, start_time1_shouldertaps, start_time2_shouldertaps, start_time3_shouldertaps, time_threshold_shouldertaps, within_range_time1_shouldertaps, within_range_time2_shouldertaps, general_feedback_left_shouldertaps, general_feedback_right_shouldertaps, dir_gen_feedback_shouldertaps, dir_gen_feedback_unsuccessful_shouldertaps, cooldown_timer_shouldertaps, cooldown_duration_shouldertaps, rest_shouldertap_start_time, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_shouldertap
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap
+    elapsed_time_shouldertaps = time.time() - start_time1_shouldertaps
+    remaining_time_shouldertaps = max(0, 60 - elapsed_time_shouldertaps)
 
-    if display_info_shouldertap:  # Check if to display counter, bar, and percentage
-        img = detector_ShoulderTap.findPose(img, False)
-        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+    if display_info_shouldertaps:  # Check if to display counter, bar, and percentage
+        img = detector_shouldertaps.findPose(img, False)
+        lmList_shouldertaps = detector_shouldertaps.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_shouldertaps) != 0:
 
-            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+            distance1_shouldertaps, distance2_shouldertaps = detector_shouldertaps.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
 
             #Interpolate angle to percentage and position on screen
-            per_right_arm_shouldertap = np.interp(distance1, (180, 350), (100, 0))
-            bar_right_arm_shouldertap = np.interp(distance1, (180, 350), (200, 400))
+            per_right_shouldertaps = np.interp(distance1_shouldertaps, (180, 350), (100, 0))
+            bar_right_shouldertaps = np.interp(distance1_shouldertaps, (180, 350), (200, 400))
 
-            per_left_arm_shouldertap = np.interp(distance2, (180, 350), (100, 0))
-            bar_left_arm_shouldertap = np.interp(distance2, (180, 350), (200, 400))
+            per_left_shouldertaps = np.interp(distance2_shouldertaps, (180, 350), (100, 0))
+            bar_left_shouldertaps = np.interp(distance2_shouldertaps, (180, 350), (200, 400))
 
 
-            if int(per_left_arm_shouldertap) == 100 :
-                color_left_arm_shouldertap = (0, 255, 0) 
-            elif int(per_right_arm_shouldertap) == 100:
-                color_right_arm_shouldertap = (0, 255, 0)
+            if int(per_left_shouldertaps) == 100:
+                color_left_shouldertaps = (0, 255, 0)  # Change color of left leg bar to green
             else:
-                color_left_arm_shouldertap = (0, 0, 255)  
-                color_right_arm_shouldertap = (0, 0, 255)
+                color_left_shouldertaps = (0, 0, 255)
+            
+            if int(per_right_shouldertaps) == 100:
+                color_right_shouldertaps = (0, 255, 0)
+            else:
+                color_right_shouldertaps = (0, 0, 255)
 
-            if distance1 <= 180:
-                if dir_shoulder_tap_right == 0 and count_shoulder_tap_right < 5:
-                    count_shoulder_tap_right += 0.5
-                    if count_shoulder_tap_right == 5:
-                        dir_shoulder_tap_right = -1
-                    else:
-                        dir_shoulder_tap_right = 1
-            elif distance1 >= 350:
-                if dir_shoulder_tap_right == 1 and count_shoulder_tap_right < 5:
-                    count_shoulder_tap_right += 0.5
-                    if count_shoulder_tap_right == 5:
-                        dir_shoulder_tap_right = -1
-                    else:
-                        dir_shoulder_tap_right = 0
+            #left
+            if 40 <= per_left_shouldertaps <= 90:
+                # Increment the time within range
+                within_range_time1_shouldertaps += time.time() - start_time2_shouldertaps
 
-            if distance2 <= 180:
-                if dir_shoulder_tap_left == 0 and count_shoulder_tap_left < 5:
-                    count_shoulder_tap_left += 0.5
-                    if count_shoulder_tap_left == 5:
-                        dir_shoulder_tap_left = -1
-                    else:
-                        dir_shoulder_tap_left = 1
-            elif distance2 >= 350:
-                if dir_shoulder_tap_left == 1 and count_shoulder_tap_left < 5:
-                    count_shoulder_tap_left += 0.5
-                    if count_shoulder_tap_left == 5:
-                        dir_shoulder_tap_left = -1
-                    else:
-                        dir_shoulder_tap_left = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_shouldertaps >= time_threshold_shouldertaps:
+                    if dir_left_unsuccessful_shouldertaps == 0:
+                        unsuccessful_reps_count_left_shouldertaps += 0.5
+                        dir_left_unsuccessful_shouldertaps = 1
+            else:
+                within_range_time1_shouldertaps = 0
+                # Update the start time to the current time
+                start_time2_shouldertaps = time.time()
 
-        cvzone.putTextRect(img, 'Shoulder Tap Tracker', [370, 30], thickness=2, border=2, scale=2.5)
+            if 1 <= per_left_shouldertaps <= 10:
+                if dir_left_unsuccessful_shouldertaps == 1:
+                    unsuccessful_reps_count_left_shouldertaps += 0.5
+                    dir_left_unsuccessful_shouldertaps = 0
+
+            if per_left_shouldertaps == success_threshold_shouldertaps:
+                if dir_left_shouldertaps == 0:
+                    successful_reps_count_left_shouldertaps += 0.5
+                    dir_left_shouldertaps = 1
+
+            elif per_left_shouldertaps == atrest_value_shouldertaps:
+                if dir_left_shouldertaps == 1:
+                    successful_reps_count_left_shouldertaps += 0.5
+                    dir_left_shouldertaps = 0
+
+            # right
+            if 40 <= per_right_shouldertaps <= 90:
+                # Increment the time within range
+                within_range_time2_shouldertaps += time.time() - start_time3_shouldertaps
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_shouldertaps >= time_threshold_shouldertaps:
+                    if dir_right_unsuccessful_shouldertaps == 0:
+                        unsuccessful_reps_count_right_shouldertaps += 0.5
+                        dir_right_unsuccessful_shouldertaps = 1
+            else:
+                within_range_time2_shouldertaps = 0
+                # Update the start time to the current time
+                start_time3_shouldertaps = time.time()
+
+            if 1 <= per_right_shouldertaps <= 10:
+                if dir_right_unsuccessful_shouldertaps == 1:
+                    unsuccessful_reps_count_right_shouldertaps += 0.5
+                    dir_right_unsuccessful_shouldertaps = 0
+
+            if per_right_shouldertaps == success_threshold_shouldertaps:
+                if dir_right_shouldertaps == 0:
+                    successful_reps_count_right_shouldertaps += 0.5
+                    dir_right_shouldertaps = 1
+                    cooldown_timer_shouldertaps = cooldown_duration_shouldertaps
+            elif per_right_shouldertaps == atrest_value_shouldertaps: 
+                if dir_right_shouldertaps == 1:
+                    successful_reps_count_right_shouldertaps += 0.5
+                    dir_right_shouldertaps = 0
+                    cooldown_timer_shouldertaps = cooldown_duration_shouldertaps
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_shouldertaps = detector_shouldertaps.feedback_shouldertaps(per_left_shouldertaps)
+
+            detector_shouldertaps.update_next_per_left(per_left_shouldertaps)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_shouldertaps = detector_shouldertaps.feedback_shouldertaps(per_right_shouldertaps)
+
+            detector_shouldertaps.update_next_per_left(per_right_shouldertaps)
+
+        cvzone.putTextRect(img, 'Front Shoulder Tap', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
 
         #Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_shouldertaps)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # ARM RIGHT
-        cv2.putText(img, f"R {int(per_right_arm_shouldertap)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_shouldertaps)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap)), (50, 400), color_right_arm_shouldertap, -1)
+        cv2.rectangle(img, (8, int(bar_right_shouldertaps)), (50, 400), color_right_shouldertaps, -1)
 
         # ARM LEFT
-        cv2.putText(img, f"L {int(per_left_arm_shouldertap)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_shouldertaps)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap)), (995, 400), color_left_arm_shouldertap, -1)
+        cv2.rectangle(img, (952, int(bar_left_shouldertaps)), (995, 400), color_left_shouldertaps, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_shouldertaps)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_left)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_shouldertaps)}/10", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_shouldertaps <= 0:
         cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap = False
+        display_info_shouldertaps = False
         exercise_mode = "rest_shouldertap"
         rest_shouldertap_start_time = time.time()
 
-    if count_shoulder_tap_right >= 5 and count_shoulder_tap_left >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap = False
-        exercise_mode = "rest_shouldertap"
-        rest_shouldertap_start_time = time.time()
+    if successful_reps_count_right_shouldertaps >= 10 and successful_reps_count_left_shouldertaps >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_shouldertaps = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_shouldertaps == 0:
+                general_feedback_left_shouldertaps = detector_shouldertaps.left_leg_feedback(total_reps_count_left_shouldertaps)
+                general_feedback_right_shouldertaps = detector_shouldertaps.right_leg_feedback(total_reps_count_right_shouldertaps)
+                dir_gen_feedback_shouldertaps = 1
+                exercise_mode = "rest_shouldertap"
+                rest_shouldertap_start_time = time.time()
+                print(f"{general_feedback_left_shouldertaps} {general_feedback_right_shouldertaps}")
+
+    if unsuccessful_reps_count_left_shouldertaps >= 3 and unsuccessful_reps_count_right_shouldertaps >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps == 0:
+            general_feedback_left_shouldertaps = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps)
+            general_feedback_right_shouldertaps = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps)
+            dir_gen_feedback_unsuccessful_shouldertaps = 1
+            exercise_mode = "rest_shouldertap"
+            rest_shouldertap_start_time = time.time()
+            
+    if unsuccessful_reps_count_left_shouldertaps >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps == 0:
+            general_feedback_left_shouldertaps = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps)
+            dir_gen_feedback_unsuccessful_shouldertaps = 1
+            exercise_mode = "rest_shouldertap"
+            rest_shouldertap_start_time = time.time()
+
+    if unsuccessful_reps_count_right_shouldertaps >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps == 0:
+            general_feedback_right_shouldertaps = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps)
+            dir_gen_feedback_unsuccessful_shouldertaps == 1
+            exercise_mode = "rest_shouldertap"
+            rest_shouldertap_start_time = time.time()
 
     return img
 
 def rest_shouldertap(img):
-    global exercise_mode, rest_shouldertap_start_time, start_time_shouldertap_set2
+    global exercise_mode, rest_shouldertap_start_time, start_time1_shouldertaps_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time
@@ -2197,114 +2793,196 @@ def rest_shouldertap(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "shoulder_tap_set2"
-        start_time_shouldertap_set2 = time.time()
+        start_time1_shouldertaps_set2 = time.time()
     return img
 
 def detect_shouldertap_set2(img):
-    global count_shoulder_tap_left_set2, count_shoulder_tap_right_set2, dir_shoulder_tap_left_set2, dir_shoulder_tap_right_set2, start_time_shouldertap_set2, display_info_shouldertap_set2, per_left_arm_shouldertap_set2, per_right_arm_shouldertap_set2, bar_left_arm_shouldertap_set2, bar_right_arm_shouldertap_set2, color_left_arm_shouldertap_set2, color_right_arm_shouldertap_set2, exercise_mode, rest_shouldertap_start_time_set2
+    global dir_left_shouldertaps_set2, dir_right_shouldertaps_set2, display_info_shouldertaps_set2, orientation_shouldertaps_set2, orientation2_shouldertaps_set2, per_right_shouldertaps_set2, per_left_shouldertaps_set2, bar_left_shouldertaps_set2, bar_right_shouldertaps_set2, color_right_shouldertaps_set2, color_left_shouldertaps_set2, feedback_left_shouldertaps_set2, feedback_right_shouldertaps_set2, success_threshold_shouldertaps_set2, atrest_value_shouldertaps_set2, unsuccessful_reps_count_left_shouldertaps_set2, successful_reps_count_left_shouldertaps_set2, unsuccessful_reps_count_right_shouldertaps_set2, successful_reps_count_right_shouldertaps_set2, dir_left_unsuccessful_shouldertaps_set2, dir_right_unsuccessful_shouldertaps_set2, total_reps_count_shouldertaps_set2, total_reps_count_left_shouldertaps_set2, total_reps_count_right_shouldertaps_set2, start_time1_shouldertaps_set2, start_time2_shouldertaps_set2, start_time3_shouldertaps_set2, time_threshold_shouldertaps_set2, within_range_time1_shouldertaps_set2, within_range_time2_shouldertaps_set2, general_feedback_left_shouldertaps_set2, general_feedback_right_shouldertaps_set2, dir_gen_feedback_shouldertaps_set2, dir_gen_feedback_unsuccessful_shouldertaps_set2, cooldown_timer_shouldertaps_set2, cooldown_duration_shouldertaps_set2, rest_shouldertap_start_time_set2, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_shouldertap_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap_set2
+    elapsed_time_shouldertaps = time.time() - start_time1_shouldertaps_set2
+    remaining_time_shouldertaps = max(0, 60 - elapsed_time_shouldertaps)
 
-    if display_info_shouldertap_set2:  # Check if to display counter, bar, and percentage
-        img = detector_ShoulderTap.findPose(img, False)
-        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+    if display_info_shouldertaps_set2:  # Check if to display counter, bar, and percentage
+        img = detector_shouldertaps.findPose(img, False)
+        lmList_shouldertaps = detector_shouldertaps.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_shouldertaps) != 0:
 
-            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+            distance1_shouldertaps_set2, distance2_shouldertaps_set2 = detector_shouldertaps.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
 
             #Interpolate angle to percentage and position on screen
-            per_right_arm_shouldertap_set2 = np.interp(distance1, (180, 350), (100, 0))
-            bar_right_arm_shouldertap_set2 = np.interp(distance1, (180, 350), (200, 400))
+            per_right_shouldertaps_set2 = np.interp(distance1_shouldertaps_set2, (180, 350), (100, 0))
+            bar_right_shouldertaps_set2 = np.interp(distance1_shouldertaps_set2, (180, 350), (200, 400))
 
-            per_left_arm_shouldertap_set2 = np.interp(distance2, (180, 350), (100, 0))
-            bar_left_arm_shouldertap_set2 = np.interp(distance2, (180, 350), (200, 400))
+            per_left_shouldertaps_set2 = np.interp(distance2_shouldertaps_set2, (180, 350), (100, 0))
+            bar_left_shouldertaps_set2 = np.interp(distance2_shouldertaps_set2, (180, 350), (200, 400))
 
 
-            if int(per_left_arm_shouldertap_set2) == 100 :
-                color_left_arm_shouldertap_set2 = (0, 255, 0) 
-            elif int(per_right_arm_shouldertap_set2) == 100:
-                color_right_arm_shouldertap_set2 = (0, 255, 0)
+            if int(per_left_shouldertaps_set2) == 100:
+                color_left_shouldertaps_set2 = (0, 255, 0)  # Change color of left leg bar to green
             else:
-                color_left_arm_shouldertap_set2 = (0, 0, 255)  
-                color_right_arm_shouldertap_set2 = (0, 0, 255)
+                color_left_shouldertaps_set2 = (0, 0, 255)
+            
+            if int(per_right_shouldertaps_set2) == 100:
+                color_right_shouldertaps_set2 = (0, 255, 0)
+            else:
+                color_right_shouldertaps_set2 = (0, 0, 255)
 
-            if distance1 <= 180:
-                if dir_shoulder_tap_right_set2 == 0 and count_shoulder_tap_right_set2 < 5:
-                    count_shoulder_tap_right_set2 += 0.5
-                    if count_shoulder_tap_right_set2 == 5:
-                        dir_shoulder_tap_right_set2 = -1
-                    else:
-                        dir_shoulder_tap_right_set2 = 1
-            elif distance1 >= 350:
-                if dir_shoulder_tap_right_set2 == 1 and count_shoulder_tap_right_set2 < 5:
-                    count_shoulder_tap_right_set2 += 0.5
-                    if count_shoulder_tap_right_set2 == 5:
-                        dir_shoulder_tap_right_set2 = -1
-                    else:
-                        dir_shoulder_tap_right_set2 = 0
+            #left
+            if 40 <= per_left_shouldertaps_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_shouldertaps_set2 += time.time() - start_time2_shouldertaps_set2
 
-            if distance2 <= 180:
-                if dir_shoulder_tap_left_set2 == 0 and count_shoulder_tap_left_set2 < 5:
-                    count_shoulder_tap_left_set2 += 0.5
-                    if count_shoulder_tap_left_set2 == 5:
-                        dir_shoulder_tap_left_set2 = -1
-                    else:
-                        dir_shoulder_tap_left_set2 = 1
-            elif distance2 >= 350:
-                if dir_shoulder_tap_left_set2 == 1 and count_shoulder_tap_left_set2 < 5:
-                    count_shoulder_tap_left_set2 += 0.5
-                    if count_shoulder_tap_left_set2 == 5:
-                        dir_shoulder_tap_left_set2 = -1
-                    else:
-                        dir_shoulder_tap_left_set2 = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_shouldertaps_set2 >= time_threshold_shouldertaps_set2:
+                    if dir_left_unsuccessful_shouldertaps_set2 == 0:
+                        unsuccessful_reps_count_left_shouldertaps_set2 += 0.5
+                        dir_left_unsuccessful_shouldertaps_set2 = 1
+            else:
+                within_range_time1_shouldertaps_set2 = 0
+                # Update the start time to the current time
+                start_time2_shouldertaps_set2 = time.time()
 
-        cvzone.putTextRect(img, 'Shoulder Tap Tracker SET 2', [370, 30], thickness=2, border=2, scale=2.5)
+            if 1 <= per_left_shouldertaps_set2 <= 10:
+                if dir_left_unsuccessful_shouldertaps_set2 == 1:
+                    unsuccessful_reps_count_left_shouldertaps_set2 += 0.5
+                    dir_left_unsuccessful_shouldertaps_set2 = 0
+
+            if per_left_shouldertaps_set2 == success_threshold_shouldertaps_set2:
+                if dir_left_shouldertaps_set2 == 0:
+                    successful_reps_count_left_shouldertaps_set2 += 0.5
+                    dir_left_shouldertaps_set2 = 1
+
+            elif per_left_shouldertaps_set2 == atrest_value_shouldertaps_set2:
+                if dir_left_shouldertaps_set2 == 1:
+                    successful_reps_count_left_shouldertaps_set2 += 0.5
+                    dir_left_shouldertaps_set2 = 0
+
+            # right
+            if 40 <= per_right_shouldertaps_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_shouldertaps_set2 += time.time() - start_time3_shouldertaps_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_shouldertaps_set2 >= time_threshold_shouldertaps_set2:
+                    if dir_right_unsuccessful_shouldertaps_set2 == 0:
+                        unsuccessful_reps_count_right_shouldertaps_set2 += 0.5
+                        dir_right_unsuccessful_shouldertaps_set2 = 1
+            else:
+                within_range_time2_shouldertaps_set2 = 0
+                # Update the start time to the current time
+                start_time3_shouldertaps_set2 = time.time()
+
+            if 1 <= per_right_shouldertaps_set2 <= 10:
+                if dir_right_unsuccessful_shouldertaps_set2 == 1:
+                    unsuccessful_reps_count_right_shouldertaps_set2 += 0.5
+                    dir_right_unsuccessful_shouldertaps_set2 = 0
+
+            if per_right_shouldertaps_set2 == success_threshold_shouldertaps_set2:
+                if dir_right_shouldertaps_set2 == 0:
+                    successful_reps_count_right_shouldertaps_set2 += 0.5
+                    dir_right_shouldertaps_set2 = 1
+                    cooldown_timer_shouldertaps_set2 = cooldown_duration_shouldertaps_set2
+            elif per_right_shouldertaps_set2 == atrest_value_shouldertaps_set2: 
+                if dir_right_shouldertaps_set2 == 1:
+                    successful_reps_count_right_shouldertaps_set2 += 0.5
+                    dir_right_shouldertaps_set2 = 0
+                    cooldown_timer_shouldertaps_set2 = cooldown_duration_shouldertaps_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_shouldertaps_set2 = detector_shouldertaps.feedback_shouldertaps(per_left_shouldertaps_set2)
+
+            detector_shouldertaps.update_next_per_left(per_left_shouldertaps_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_shouldertaps_set2 = detector_shouldertaps.feedback_shouldertaps(per_right_shouldertaps_set2)
+
+            detector_shouldertaps.update_next_per_left(per_right_shouldertaps_set2)
+
+
+        cvzone.putTextRect(img, 'Front Shoulder Tap SET 2', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
 
         #Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_shouldertaps)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # ARM RIGHT
-        cv2.putText(img, f"R {int(per_right_arm_shouldertap_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_shouldertaps_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap_set2)), (50, 400), color_right_arm_shouldertap_set2, -1)
+        cv2.rectangle(img, (8, int(bar_right_shouldertaps_set2)), (50, 400), color_right_shouldertaps_set2, -1)
 
         # ARM LEFT
-        cv2.putText(img, f"L {int(per_left_arm_shouldertap_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_shouldertaps_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap_set2)), (995, 400), color_left_arm_shouldertap_set2, -1)
+        cv2.rectangle(img, (952, int(bar_left_shouldertaps_set2)), (995, 400), color_left_shouldertaps_set2, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_right_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_shouldertaps_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_left_set2)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_shouldertaps_set2)}/10", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_shouldertaps <= 0:
         cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap_set2 = False
-        exercise_mode = "rest_shouldertap_rest2"
+        display_info_shouldertaps_set2 = False
+        exercise_mode = "rest_shouldertap_set2"
         rest_shouldertap_start_time_set2 = time.time()
 
-    if count_shoulder_tap_right_set2 >= 5 and count_shoulder_tap_left_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap_set2 = False
-        exercise_mode = "rest_shouldertap_rest2"
-        rest_shouldertap_start_time_set2 = time.time()
+    if successful_reps_count_right_shouldertaps_set2 >= 10 and successful_reps_count_left_shouldertaps_set2 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_shouldertaps_set2 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_shouldertaps_set2 == 0:
+                general_feedback_left_shouldertaps_set2 = detector_shouldertaps.left_leg_feedback(total_reps_count_left_shouldertaps_set2)
+                general_feedback_right_shouldertaps_set2 = detector_shouldertaps.right_leg_feedback(total_reps_count_right_shouldertaps_set2)
+                dir_gen_feedback_shouldertaps_set2 = 1
+                exercise_mode = "rest_shouldertap_set2"
+                rest_shouldertap_start_time_set2 = time.time()
+                print(f"{general_feedback_left_shouldertaps_set2} {general_feedback_right_shouldertaps_set2}")
+
+    if unsuccessful_reps_count_left_shouldertaps_set2 >= 3 and unsuccessful_reps_count_right_shouldertaps_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set2 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set2 == 0:
+            general_feedback_left_shouldertaps_set2 = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps_set2)
+            general_feedback_right_shouldertaps_set2 = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps_set2)
+            dir_gen_feedback_unsuccessful_shouldertaps_set2 = 1
+            exercise_mode = "rest_shouldertap_set2"
+            rest_shouldertap_start_time_set2 = time.time()
+            
+    if unsuccessful_reps_count_left_shouldertaps_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set2 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set2 == 0:
+            general_feedback_left_shouldertaps_set2 = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps_set2)
+            dir_gen_feedback_unsuccessful_shouldertaps_set2 = 1
+            exercise_mode = "rest_shouldertap_set2"
+            rest_shouldertap_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_shouldertaps_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set2 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set2 == 0:
+            general_feedback_right_shouldertaps_set2 = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps_set2)
+            dir_gen_feedback_unsuccessful_shouldertaps_set2 == 1
+            exercise_mode = "rest_shouldertap_set2"
+            rest_shouldertap_start_time_set2 = time.time()
+
     return img
 
 def rest_shouldertap_set2(img):
-    global exercise_mode, rest_shouldertap_start_time_set2, start_time_shouldertap_set3
+    global exercise_mode, rest_shouldertap_start_time_set2, start_time1_shouldertaps_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time_set2
@@ -2319,110 +2997,192 @@ def rest_shouldertap_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "shoulder_tap_set3"
-        start_time_shouldertap_set3 = time.time()
+        start_time1_shouldertaps_set3 = time.time()
     return img
 
 def detect_shouldertap_set3(img):
-    global count_shoulder_tap_left_set3, count_shoulder_tap_right_set3, dir_shoulder_tap_left_set3, dir_shoulder_tap_right_set3, start_time_shouldertap_set3, display_info_shouldertap_set3, per_left_arm_shouldertap_set3, per_right_arm_shouldertap_set3, bar_left_arm_shouldertap_set3, bar_right_arm_shouldertap_set3, color_left_arm_shouldertap_set3, color_right_arm_shouldertap_set3, exercise_mode, rest_shouldertap_start_time_set3
+    global dir_left_shouldertaps_set3, dir_right_shouldertaps_set3, display_info_shouldertaps_set3, orientation_shouldertaps_set3, orientation2_shouldertaps_set3, per_right_shouldertaps_set3, per_left_shouldertaps_set3, bar_left_shouldertaps_set3, bar_right_shouldertaps_set3, color_right_shouldertaps_set3, color_left_shouldertaps_set3, feedback_left_shouldertaps_set3, feedback_right_shouldertaps_set3, success_threshold_shouldertaps_set3, atrest_value_shouldertaps_set3, unsuccessful_reps_count_left_shouldertaps_set3, successful_reps_count_left_shouldertaps_set3, unsuccessful_reps_count_right_shouldertaps_set3, successful_reps_count_right_shouldertaps_set3, dir_left_unsuccessful_shouldertaps_set3, dir_right_unsuccessful_shouldertaps_set3, total_reps_count_shouldertaps_set3, total_reps_count_left_shouldertaps_set3, total_reps_count_right_shouldertaps_set3, start_time1_shouldertaps_set3, start_time2_shouldertaps_set3, start_time3_shouldertaps_set3, time_threshold_shouldertaps_set3, within_range_time1_shouldertaps_set3, within_range_time2_shouldertaps_set3, general_feedback_left_shouldertaps_set3, general_feedback_right_shouldertaps_set3, dir_gen_feedback_shouldertaps_set3, dir_gen_feedback_unsuccessful_shouldertaps_set3, cooldown_timer_shouldertaps_set3, cooldown_duration_shouldertaps_set3, rest_shouldertap_start_time_set3, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_shouldertap_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_shouldertap_set3
+    elapsed_time_shouldertaps = time.time() - start_time1_shouldertaps_set3
+    remaining_time_shouldertaps = max(0, 60 - elapsed_time_shouldertaps)
 
-    if display_info_shouldertap_set3:  # Check if to display counter, bar, and percentage
-        img = detector_ShoulderTap.findPose(img, False)
-        lmList_jumping_jacks = detector_ShoulderTap.findPosition(img, False)
+    if display_info_shouldertaps_set3:  # Check if to display counter, bar, and percentage
+        img = detector_shouldertaps.findPose(img, False)
+        lmList_shouldertaps = detector_shouldertaps.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_shouldertaps) != 0:
 
-            distance1, distance2 = detector_ShoulderTap.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
+            distance1_shouldertaps_set3, distance2_shouldertaps_set3 = detector_shouldertaps.ShoulderTap(img, 12, 14, 16, 11, 13, 15, drawpoints=True) 
 
             #Interpolate angle to percentage and position on screen
-            per_right_arm_shouldertap_set3 = np.interp(distance1, (180, 350), (100, 0))
-            bar_right_arm_shouldertap_set3 = np.interp(distance1, (180, 350), (200, 400))
+            per_right_shouldertaps_set3 = np.interp(distance1_shouldertaps_set3, (180, 350), (100, 0))
+            bar_right_shouldertaps_set3 = np.interp(distance1_shouldertaps_set3, (180, 350), (200, 400))
 
-            per_left_arm_shouldertap_set3 = np.interp(distance2, (180, 350), (100, 0))
-            bar_left_arm_shouldertap_set3 = np.interp(distance2, (180, 350), (200, 400))
+            per_left_shouldertaps_set3 = np.interp(distance2_shouldertaps_set3, (180, 350), (100, 0))
+            bar_left_shouldertaps_set3 = np.interp(distance2_shouldertaps_set3, (180, 350), (200, 400))
 
 
-            if int(per_left_arm_shouldertap_set3) == 100 :
-                color_left_arm_shouldertap_set3 = (0, 255, 0) 
-            elif int(per_right_arm_shouldertap_set3) == 100:
-                color_right_arm_shouldertap_set3 = (0, 255, 0)
+            if int(per_left_shouldertaps_set3) == 100:
+                color_left_shouldertaps_set3 = (0, 255, 0)  # Change color of left leg bar to green
             else:
-                color_left_arm_shouldertap_set3 = (0, 0, 255)  
-                color_right_arm_shouldertap_set3 = (0, 0, 255)
+                color_left_shouldertaps_set3 = (0, 0, 255)
+            
+            if int(per_right_shouldertaps_set3) == 100:
+                color_right_shouldertaps_set3 = (0, 255, 0)
+            else:
+                color_right_shouldertaps_set3 = (0, 0, 255)
 
-            if distance1 <= 180:
-                if dir_shoulder_tap_right_set3 == 0 and count_shoulder_tap_right_set3 < 5:
-                    count_shoulder_tap_right_set3 += 0.5
-                    if count_shoulder_tap_right_set3 == 5:
-                        dir_shoulder_tap_right_set3 = -1
-                    else:
-                        dir_shoulder_tap_right_set3 = 1
-            elif distance1 >= 350:
-                if dir_shoulder_tap_right_set3 == 1 and count_shoulder_tap_right_set3 < 5:
-                    count_shoulder_tap_right_set3 += 0.5
-                    if count_shoulder_tap_right_set3 == 5:
-                        dir_shoulder_tap_right_set3 = -1
-                    else:
-                        dir_shoulder_tap_right_set3 = 0
+            #left
+            if 40 <= per_left_shouldertaps_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_shouldertaps_set3 += time.time() - start_time2_shouldertaps_set3
 
-            if distance2 <= 180:
-                if dir_shoulder_tap_left_set3 == 0 and count_shoulder_tap_left_set3 < 5:
-                    count_shoulder_tap_left_set3 += 0.5
-                    if count_shoulder_tap_left_set3 == 5:
-                        dir_shoulder_tap_left_set3 = -1
-                    else:
-                        dir_shoulder_tap_left_set3 = 1
-            elif distance2 >= 350:
-                if dir_shoulder_tap_left_set3 == 1 and count_shoulder_tap_left_set3 < 5:
-                    count_shoulder_tap_left_set3 += 0.5
-                    if count_shoulder_tap_left_set3 == 5:
-                        dir_shoulder_tap_left_set3 = -1
-                    else:
-                        dir_shoulder_tap_left_set3 = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_shouldertaps_set3 >= time_threshold_shouldertaps_set3:
+                    if dir_left_unsuccessful_shouldertaps_set3 == 0:
+                        unsuccessful_reps_count_left_shouldertaps_set3 += 0.5
+                        dir_left_unsuccessful_shouldertaps_set3 = 1
+            else:
+                within_range_time1_shouldertaps_set3 = 0
+                # Update the start time to the current time
+                start_time2_shouldertaps_set3 = time.time()
 
-        cvzone.putTextRect(img, 'Shoulder Tap Tracker SET 3', [370, 30], thickness=2, border=2, scale=2.5)
+            if 1 <= per_left_shouldertaps_set3 <= 10:
+                if dir_left_unsuccessful_shouldertaps_set3 == 1:
+                    unsuccessful_reps_count_left_shouldertaps_set3 += 0.5
+                    dir_left_unsuccessful_shouldertaps_set3 = 0
+
+            if per_left_shouldertaps_set3 == success_threshold_shouldertaps_set3:
+                if dir_left_shouldertaps_set3 == 0:
+                    successful_reps_count_left_shouldertaps_set3 += 0.5
+                    dir_left_shouldertaps_set3 = 1
+
+            elif per_left_shouldertaps_set3 == atrest_value_shouldertaps_set3:
+                if dir_left_shouldertaps_set3 == 1:
+                    successful_reps_count_left_shouldertaps_set3 += 0.5
+                    dir_left_shouldertaps_set3 = 0
+
+            # right
+            if 40 <= per_right_shouldertaps_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_shouldertaps_set3 += time.time() - start_time3_shouldertaps_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_shouldertaps_set3 >= time_threshold_shouldertaps_set3:
+                    if dir_right_unsuccessful_shouldertaps_set3 == 0:
+                        unsuccessful_reps_count_right_shouldertaps_set3 += 0.5
+                        dir_right_unsuccessful_shouldertaps_set3 = 1
+            else:
+                within_range_time2_shouldertaps_set3 = 0
+                # Update the start time to the current time
+                start_time3_shouldertaps_set3 = time.time()
+
+            if 1 <= per_right_shouldertaps_set3 <= 10:
+                if dir_right_unsuccessful_shouldertaps_set3 == 1:
+                    unsuccessful_reps_count_right_shouldertaps_set3 += 0.5
+                    dir_right_unsuccessful_shouldertaps_set3 = 0
+
+            if per_right_shouldertaps_set3 == success_threshold_shouldertaps_set3:
+                if dir_right_shouldertaps_set3 == 0:
+                    successful_reps_count_right_shouldertaps_set3 += 0.5
+                    dir_right_shouldertaps_set3 = 1
+                    cooldown_timer_shouldertaps_set3 = cooldown_duration_shouldertaps_set3
+            elif per_right_shouldertaps_set3 == atrest_value_shouldertaps_set3: 
+                if dir_right_shouldertaps_set3 == 1:
+                    successful_reps_count_right_shouldertaps_set3 += 0.5
+                    dir_right_shouldertaps_set3 = 0
+                    cooldown_timer_shouldertaps_set3 = cooldown_duration_shouldertaps_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_shouldertaps_set3 = detector_shouldertaps.feedback_shouldertaps(per_left_shouldertaps_set3)
+
+            detector_shouldertaps.update_next_per_left(per_left_shouldertaps_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_shouldertaps_set3 = detector_shouldertaps.feedback_shouldertaps(per_right_shouldertaps_set3)
+
+            detector_shouldertaps.update_next_per_left(per_right_shouldertaps_set3)
+
+
+        cvzone.putTextRect(img, 'Front Shoulder Tap SET 3', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
 
         #Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_shouldertaps)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # ARM RIGHT
-        cv2.putText(img, f"R {int(per_right_arm_shouldertap_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_shouldertaps_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_arm_shouldertap_set3)), (50, 400), color_right_arm_shouldertap_set3, -1)
+        cv2.rectangle(img, (8, int(bar_right_shouldertaps_set3)), (50, 400), color_right_shouldertaps_set3, -1)
 
         # ARM LEFT
-        cv2.putText(img, f"L {int(per_left_arm_shouldertap_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_shouldertaps_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_arm_shouldertap_set3)), (995, 400), color_left_arm_shouldertap_set3, -1)
+        cv2.rectangle(img, (952, int(bar_left_shouldertaps_set3)), (995, 400), color_left_shouldertaps_set3, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (150, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_right_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_shouldertaps_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (170, 20), (300, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_shoulder_tap_left_set3)}/5", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_shouldertaps_set3)}/10", (180, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_shouldertaps <= 0:
         cvzone.putTextRect(img, "Time's Up", [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap_set3 = False
-        exercise_mode = "rest_shouldertap_rest3"
+        display_info_shouldertaps_set3 = False
+        exercise_mode = "rest_shouldertap_set3"
         rest_shouldertap_start_time_set3 = time.time()
 
-    if count_shoulder_tap_right_set3 >= 5 and count_shoulder_tap_left_set3 >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [370, 30], thickness=2, border=2, scale=2.5)
-        display_info_shouldertap_set3 = False
-        exercise_mode = "rest_shouldertap_rest3"
-        rest_shouldertap_start_time_set3 = time.time()
+    if successful_reps_count_right_shouldertaps_set3 >= 10 and successful_reps_count_left_shouldertaps_set3 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_shouldertaps_set3 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_shouldertaps_set3 == 0:
+                general_feedback_left_shouldertaps_set3 = detector_shouldertaps.left_leg_feedback(total_reps_count_left_shouldertaps_set3)
+                general_feedback_right_shouldertaps_set3 = detector_shouldertaps.right_leg_feedback(total_reps_count_right_shouldertaps_set3)
+                dir_gen_feedback_shouldertaps_set3 = 1
+                exercise_mode = "rest_shouldertap_set3"
+                rest_shouldertap_start_time_set3 = time.time()
+                print(f"{general_feedback_left_shouldertaps_set3} {general_feedback_right_shouldertaps_set3}")
+
+    if unsuccessful_reps_count_left_shouldertaps_set3 >= 3 and unsuccessful_reps_count_right_shouldertaps_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set3 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set3 == 0:
+            general_feedback_left_shouldertaps_set3 = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps_set3)
+            general_feedback_right_shouldertaps_set3 = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps_set3)
+            dir_gen_feedback_unsuccessful_shouldertaps_set3 = 1
+            exercise_mode = "rest_shouldertap_set3"
+            rest_shouldertap_start_time_set3 = time.time()
+            
+    if unsuccessful_reps_count_left_shouldertaps_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set3 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set3 == 0:
+            general_feedback_left_shouldertaps_set3 = detector_shouldertaps.left_leg_unsuccessful_feedback(total_reps_count_left_shouldertaps_set3)
+            dir_gen_feedback_unsuccessful_shouldertaps_set3 = 1
+            exercise_mode = "rest_shouldertap_set3"
+            rest_shouldertap_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_shouldertaps_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_shouldertaps_set3 = False
+
+        if dir_gen_feedback_unsuccessful_shouldertaps_set3 == 0:
+            general_feedback_right_shouldertaps_set3 = detector_shouldertaps.right_leg_unsuccessful_feedback(total_reps_count_right_shouldertaps_set3)
+            dir_gen_feedback_unsuccessful_shouldertaps_set3 == 1
+            exercise_mode = "rest_shouldertap_set3"
+            rest_shouldertap_start_time_set3 = time.time()
+
     return img
 
 def rest_shouldertap_set3(img):

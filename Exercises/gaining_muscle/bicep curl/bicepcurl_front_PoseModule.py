@@ -4,9 +4,10 @@ import mediapipe as mp
 import time
 import math
 
-
+# for gemini api
 import os
-
+import google.generativeai as genai
+from dotenv import load_dotenv
 
 # Define a class for pose detection
 class poseDetector():
@@ -50,28 +51,6 @@ class poseDetector():
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lmList
 
-    # def get_pose_orientation(self, landmarks):
-    #     # Define the indices of the landmarks for shoulders and hips
-    #     shoulder_indices = [11, 12]  # Left and right shoulders
-    #     hip_indices = [23, 24]  # Left and right hips
-        
-    #     # Extract coordinates for shoulders and hips
-    #     shoulders = [landmarks.landmark[index] for index in shoulder_indices]
-    #     hips = [landmarks.landmark[index] for index in hip_indices]
-        
-    #     # Extract x-coordinates of shoulders and hips
-    #     shoulder_x = [shoulder.z for shoulder in shoulders]
-    #     hip_x = [hip.z for hip in hips] 
-    #     #print(shoulder_x[0], shoulder_x[1], hip_x[0], hip_x[1])
-    #     if shoulder_x[0] <= -0.20 and shoulder_x[1] >= 0.03 and hip_x[0] <= -0.05 and hip_x[1] >= 0.05:
-    #         return 'right'
-    #     elif shoulder_x[0] >= 0.03 and shoulder_x[1] <= -0.20 and hip_x[0] >= 0.05 and hip_x[1] <= -0.05:
-    #         return 'left'
-    #     elif shoulder_x[0] <= -0.01 and shoulder_x[1] <= -0.01 and -0.06 <= hip_x[0] <= 0.06 and -0.06 <= hip_x[1] <= 0.06 :
-    #         return 'front'
-    #     else:
-    #         return 'none'
-
     def BicepCurl(self, img, p1, p2, p3, drawpoints):
         if len(self.lmList) != 0:
 
@@ -79,48 +58,6 @@ class poseDetector():
             x2, y2 = self.lmList[p2][1], self.lmList[p2][2]
             x3, y3 = self.lmList[p3][1], self.lmList[p3][2]
 
-            # orientation = self.get_pose_orientation(self.results.pose_landmarks)
-
-            # Calculate the angle only if the leg is stepping forward
-            # if orientation == 'right':
-            #     measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-            #     if measure < 0:
-            #         measure += 360
-                    
-            #     if drawpoints:
-            #         cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
-            #         cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
-            #         cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
-
-            #         cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
-            #         cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
-
-            #         cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-            #         return int(measure), 'right'
-            
-            # elif orientation == 'left':
-            #     measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-            #     if measure < 0:
-            #         measure += 360
-                    
-            #     if drawpoints:
-            #         cv2.circle(img, (x1, y1), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x1, y1), 15, (0, 255, 0), 5)
-            #         cv2.circle(img, (x2, y2), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x2, y2), 15, (0, 255, 0), 5)
-            #         cv2.circle(img, (x3, y3), 10, (255, 0, 255), 5)
-            #         cv2.circle(img, (x3, y3), 15, (0, 255, 0), 5)
-
-            #         cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 6)
-            #         cv2.line(img, (x2, y2), (x3, y3), (0, 0, 255), 6)
-
-            #         cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-            #         return int(measure), 'left'
-            
-            # elif orientation == 'front':
             measure = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
             if measure < 0:
                 measure += 360
@@ -138,9 +75,6 @@ class poseDetector():
 
                 cv2.putText(img, str(int(measure)), (x2 - 50, y2 + 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
                 return int(measure)
-            
-        # return None, 'None'
-    
             
     def feedback_bicep(self, value):
     # Check if the condition for feedback is met
