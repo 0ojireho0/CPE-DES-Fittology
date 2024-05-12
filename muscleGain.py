@@ -7,9 +7,9 @@ import numpy as np
 import poseModules.bicepcurl_front_PoseModule as pm_bicep
 import poseModules.pushup_front_PoseModule as pm_pushup
 import poseModules.shouldertaps_front_PoseModule as pm_shouldertap
-import poseModules.chestpress_PoseModule as pm_chestpress
-import poseModules.dumbbellfrontraise_PoseModule as pm_dumbbellfrontraise
-import poseModules.alternatinglunge_PoseModule as pm_alternatinglunge
+import poseModules.chestpress_front_PoseModule as pm_chestpress
+import poseModules.dumbbellfrontraise_front_PoseModule as pm_dumbbellfrontraise
+import poseModules.alternating_leg_lunge_front_PoseModule as pm_alternatinglunge
 import poseModules.bodyweightsquat_PoseModule as pm_bws
 import poseModules.gobletsquat_PoseModule as pm_gs
 import poseModules.highkneetap_PoseModule as pm_hkt
@@ -606,21 +606,66 @@ rest_shouldertap_start_time_set3 = time.time()
 #import class
 detector_chestpress = pm_chestpress.poseDetector()
 
-#Initialize Variables
-count_chestpress_left = 0
-count_chestpress_right = 0
 
-dir_chestpress_left = 0
-dir_chestpress_right = 0
+dir_left_chestpress = 0
+dir_right_chestpress = 0
 
-start_time_chestpress = time.time() # starts time
-repetition_time_chestpress = 60 # duration time
-display_info_chestpress = True # display features
+repetition_time_chestpress = 60  # Repetition time
 
-bar_left_chestpress = 0
-bar_right_chestpress = 0
-per_left_chestpress = 0
+# Display info
+display_info_chestpress = True
+
+orientation_chestpress = ""
+orientation2_chestpress = ""
+
 per_right_chestpress = 0
+per_left_chestpress = 0
+bar_left_chestpress = 0
+bar_right_chestpress = 0 
+
+
+color_right_chestpress = (0, 0, 255)
+color_left_chestpress = (0, 0, 255)
+
+feedback_left_chestpress = ""
+feedback_right_chestpress = ""
+
+success_threshold_chestpress = 100
+
+atrest_value_chestpress = 0
+
+unsuccessful_reps_count_left_chestpress = 0
+successful_reps_count_left_chestpress = 0
+
+unsuccessful_reps_count_right_chestpress = 0
+successful_reps_count_right_chestpress = 0
+
+dir_left_unsuccessful_chestpress = 0
+dir_right_unsuccessful_chestpress = 0
+
+total_reps_count_chestpress = 0
+
+total_reps_count_left_chestpress = 0
+total_reps_count_right_chestpress = 0
+
+start_time1_chestpress = time.time()
+start_time2_chestpress = time.time()
+start_time3_chestpress = time.time()
+time_threshold_chestpress = 10 
+within_range_time1_chestpress = 0
+within_range_time2_chestpress = 0
+
+# gen feedback success
+general_feedback_left_chestpress = ""
+general_feedback_right_chestpress = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_chestpress = 0
+dir_gen_feedback_unsuccessful_chestpress = 0
+
+cooldown_timer_chestpress = 0
+cooldown_duration_chestpress = 5
+
 angle_left_chestpress = 0
 angle_right_chestpress = 0
 
@@ -633,23 +678,68 @@ rest_chestpress_start_time = time.time()
 #import class
 detector_chestpress = pm_chestpress.poseDetector()
 
-#Initialize Variables
-count_chestpress_left_set2 = 0
-count_chestpress_right_set2 = 0
+dir_left_chestpress_set2 = 0
+dir_right_chestpress_set2 = 0
 
-dir_chestpress_left_set2 = 0
-dir_chestpress_right_set2 = 0
+#repetition_time_chestpress_set2 = 60  # Repetition time
 
-start_time_chestpress_set2 = time.time() # starts time
-repetition_time_chestpress_set2 = 60 # duration time
-display_info_chestpress_set2 = True # display features
+# Display info
+display_info_chestpress_set2 = True
 
-bar_left_chestpress_set2 = 0
-bar_right_chestpress_set2 = 0
-per_left_chestpress_set2 = 0
+orientation_chestpress_set2 = ""
+orientation2_chestpress_set2 = ""
+
 per_right_chestpress_set2 = 0
+per_left_chestpress_set2 = 0
+bar_left_chestpress_set2 = 0
+bar_right_chestpress_set2 = 0 
+
+
+color_right_chestpress_set2 = (0, 0, 255)
+color_left_chestpress_set2 = (0, 0, 255)
+
+feedback_left_chestpress_set2 = ""
+feedback_right_chestpress_set2 = ""
+
+success_threshold_chestpress_set2 = 100
+
+atrest_value_chestpress_set2 = 0
+
+unsuccessful_reps_count_left_chestpress_set2 = 0
+successful_reps_count_left_chestpress_set2 = 0
+
+unsuccessful_reps_count_right_chestpress_set2 = 0
+successful_reps_count_right_chestpress_set2 = 0
+
+dir_left_unsuccessful_chestpress_set2 = 0
+dir_right_unsuccessful_chestpress_set2 = 0
+
+total_reps_count_chestpress_set2 = 0
+
+total_reps_count_left_chestpress_set2 = 0
+total_reps_count_right_chestpress_set2 = 0
+
+start_time1_chestpress_set2 = time.time()
+start_time2_chestpress_set2 = time.time()
+start_time3_chestpress_set2 = time.time()
+time_threshold_chestpress_set2 = 10 
+within_range_time1_chestpress_set2 = 0
+within_range_time2_chestpress_set2 = 0
+
+# gen feedback success
+general_feedback_left_chestpress_set2 = ""
+general_feedback_right_chestpress_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_chestpress_set2 = 0
+dir_gen_feedback_unsuccessful_chestpress = 0
+
+cooldown_timer_chestpress = 0
+cooldown_duration_chestpress_set2 = 5
+
 angle_left_chestpress_set2 = 0
 angle_right_chestpress_set2 = 0
+
 
 rest_chestpress_start_time_set2 = time.time()
 
@@ -660,21 +750,65 @@ rest_chestpress_start_time_set2 = time.time()
 #import class
 detector_chestpress = pm_chestpress.poseDetector()
 
-#Initialize Variables
-count_chestpress_left_set3 = 0
-count_chestpress_right_set3 = 0
+dir_left_chestpress_set3 = 0
+dir_right_chestpress_set3 = 0
 
-dir_chestpress_left_set3 = 0
-dir_chestpress_right_set3 = 0
+#repetition_time_chestpress_set3 = 60  # Repetition time
 
-start_time_chestpress_set3 = time.time() # starts time
-repetition_time_chestpress_set3 = 60 # duration time
-display_info_chestpress_set3 = True # display features
+# Display info
+display_info_chestpress_set3 = True
 
-bar_left_chestpress_set3 = 0
-bar_right_chestpress_set3 = 0
-per_left_chestpress_set3 = 0
+orientation_chestpress_set3 = ""
+orientation2_chestpress_set3 = ""
+
 per_right_chestpress_set3 = 0
+per_left_chestpress_set3 = 0
+bar_left_chestpress_set3 = 0
+bar_right_chestpress_set3 = 0 
+
+
+color_right_chestpress_set3 = (0, 0, 255)
+color_left_chestpress_set3 = (0, 0, 255)
+
+feedback_left_chestpress_set3 = ""
+feedback_right_chestpress_set3 = ""
+
+success_threshold_chestpress_set3 = 100
+
+atrest_value_chestpress_set3 = 0
+
+unsuccessful_reps_count_left_chestpress_set3 = 0
+successful_reps_count_left_chestpress_set3 = 0
+
+unsuccessful_reps_count_right_chestpress_set3 = 0
+successful_reps_count_right_chestpress_set3 = 0
+
+dir_left_unsuccessful_chestpress_set3 = 0
+dir_right_unsuccessful_chestpress_set3 = 0
+
+total_reps_count_chestpress_set3 = 0
+
+total_reps_count_left_chestpress_set3 = 0
+total_reps_count_right_chestpress_set3 = 0
+
+start_time1_chestpress_set3 = time.time()
+start_time2_chestpress_set3 = time.time()
+start_time3_chestpress_set3 = time.time()
+time_threshold_chestpress_set3 = 10 
+within_range_time1_chestpress_set3 = 0
+within_range_time2_chestpress_set3 = 0
+
+# gen feedback success
+general_feedback_left_chestpress_set3 = ""
+general_feedback_right_chestpress_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_chestpress_set3 = 0
+dir_gen_feedback_unsuccessful_chestpress_set3 = 0
+
+cooldown_timer_chestpress_set3 = 0
+cooldown_duration_chestpress_set3 = 5
+
 angle_left_chestpress_set3 = 0
 angle_right_chestpress_set3 = 0
 
@@ -683,23 +817,64 @@ rest_chestpress_start_time_set3 = time.time()
 # ----------- END FOR CHEST PRESS SET 3---------------
 
 # ----------- FOR DUMBBELL FRONT RAISE ---------------
-detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
-
-# Initialize Variables
-count_left_dumbbellfrontraise = 0
-count_right_dumbbellfrontraise = 0
+detector_dumbbellfrontraise = pm_dumbbellfrontraise.poseDetector()
 
 dir_left_dumbbellfrontraise = 0
 dir_right_dumbbellfrontraise = 0
 
-start_time_dumbbellfrontraise = time.time()  # starts time
-repetition_time_dumbbellfrontraise = 60  # duration time
-display_info_dumbbellfrontraise = True  # display features
+repetition_time_dumbbellfrontraise = 60  # Repetition time
 
-bar_left_dumbbellfrontraise = 0
-bar_right_dumbbellfrontraise = 0
-per_left_dumbbellfrontraise = 0
+# Display info
+display_info_dumbbellfrontraise = True
+
 per_right_dumbbellfrontraise = 0
+per_left_dumbbellfrontraise = 0
+bar_left_dumbbellfrontraise = 0
+bar_right_dumbbellfrontraise = 0 
+
+
+color_right_dumbbellfrontraise = (0, 0, 255)
+color_left_dumbbellfrontraise = (0, 0, 255)
+
+feedback_left_dumbbellfrontraise = ""
+feedback_right_dumbbellfrontraise = ""
+
+success_threshold_dumbbellfrontraise = 100
+
+atrest_value_dumbbellfrontraise = 0
+
+unsuccessful_reps_count_left_dumbbellfrontraise = 0
+successful_reps_count_left_dumbbellfrontraise = 0
+
+unsuccessful_reps_count_right_dumbbellfrontraise = 0
+successful_reps_count_right_dumbbellfrontraise = 0
+
+dir_left_unsuccessful_dumbbellfrontraise = 0
+dir_right_unsuccessful_dumbbellfrontraise = 0
+
+total_reps_count_dumbbellfrontraise = 0
+
+total_reps_count_left_dumbbellfrontraise = 0
+total_reps_count_right_dumbbellfrontraise = 0
+
+start_time1_dumbbellfrontraise = time.time()
+start_time2_dumbbellfrontraise = time.time()
+start_time3_dumbbellfrontraise = time.time()
+time_threshold_dumbbellfrontraise = 10 # Specify the time threshold in seconds # can be changed for testing but default should be 1, 0.2 is for testing
+within_range_time1_dumbbellfrontraise = 0
+within_range_time2_dumbbellfrontraise = 0
+
+# gen feedback success
+general_feedback_left_dumbbellfrontraise = ""
+general_feedback_right_dumbbellfrontraise = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellfrontraise = 0
+dir_gen_feedback_unsuccessful_dumbbellfrontraise = 0
+
+cooldown_timer_dumbbellfrontraise = 0
+cooldown_duration_dumbbellfrontraise = 5
+
 angle_left_dumbbellfrontraise = 0
 angle_right_dumbbellfrontraise = 0
 
@@ -707,23 +882,64 @@ rest_dumbbellfrontraise_start_time = time.time()
 # ----------- END FOR DUMBBELL FRONT RAISE ---------------
 
 # ----------- FOR DUMBBELL FRONT RAISE SET 2 ---------------
-detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
 
-# Initialize Variables
-count_left_dumbbellfrontraise_set2 = 0
-count_right_dumbbellfrontraise_set2 = 0
 
 dir_left_dumbbellfrontraise_set2 = 0
 dir_right_dumbbellfrontraise_set2 = 0
 
-start_time_dumbbellfrontraise_set2 = time.time()  # starts time
-repetition_time_dumbbellfrontraise_set2 = 60  # duration time
-display_info_dumbbellfrontraise_set2 = True  # display features
+repetition_time_dumbbellfrontraise_set2 = 60  # Repetition time
 
-bar_left_dumbbellfrontraise_set2 = 0
-bar_right_dumbbellfrontraise_set2 = 0
-per_left_dumbbellfrontraise_set2 = 0
+# Display info
+display_info_dumbbellfrontraise_set2 = True
+
 per_right_dumbbellfrontraise_set2 = 0
+per_left_dumbbellfrontraise_set2 = 0
+bar_left_dumbbellfrontraise_set2 = 0
+bar_right_dumbbellfrontraise_set2 = 0 
+
+
+color_right_dumbbellfrontraise_set2 = (0, 0, 255)
+color_left_dumbbellfrontraise_set2 = (0, 0, 255)
+
+feedback_left_dumbbellfrontraise_set2 = ""
+feedback_right_dumbbellfrontraise_set2 = ""
+
+success_threshold_dumbbellfrontraise_set2 = 100
+
+atrest_value_dumbbellfrontraise_set2 = 0
+
+unsuccessful_reps_count_left_dumbbellfrontraise_set2 = 0
+successful_reps_count_left_dumbbellfrontraise_set2 = 0
+
+unsuccessful_reps_count_right_dumbbellfrontraise_set2 = 0
+successful_reps_count_right_dumbbellfrontraise_set2 = 0
+
+dir_left_unsuccessful_dumbbellfrontraise_set2 = 0
+dir_right_unsuccessful_dumbbellfrontraise_set2 = 0
+
+total_reps_count_dumbbellfrontraise_set2 = 0
+
+total_reps_count_left_dumbbellfrontraise_set2 = 0
+total_reps_count_right_dumbbellfrontraise_set2 = 0
+
+start_time1_dumbbellfrontraise_set2 = time.time()
+start_time2_dumbbellfrontraise_set2 = time.time()
+start_time3_dumbbellfrontraise_set2 = time.time()
+time_threshold_dumbbellfrontraise_set2 = 10 # Specify the time threshold in seconds # can be changed for testing but default should be 1, 0.2 is for testing
+within_range_time1_dumbbellfrontraise_set2 = 0
+within_range_time2_dumbbellfrontraise_set2 = 0
+
+# gen feedback success
+general_feedback_left_dumbbellfrontraise_set2 = ""
+general_feedback_right_dumbbellfrontraise_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellfrontraise_set2 = 0
+dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 = 0
+
+cooldown_timer_dumbbellfrontraise_set2 = 0
+cooldown_duration_dumbbellfrontraise_set2 = 5
+
 angle_left_dumbbellfrontraise_set2 = 0
 angle_right_dumbbellfrontraise_set2 = 0
 
@@ -731,23 +947,63 @@ rest_dumbbellfrontraise_start_time_set2 = time.time()
 # ----------- END FOR DUMBBELL FRONT RAISE SET 2---------------
 
 # ----------- FOR DUMBBELL FRONT RAISE SET 3 ---------------
-detector_dumbbell = pm_dumbbellfrontraise.poseDetector()
-
-# Initialize Variables
-count_left_dumbbellfrontraise_set3 = 0
-count_right_dumbbellfrontraise_set3 = 0
 
 dir_left_dumbbellfrontraise_set3 = 0
 dir_right_dumbbellfrontraise_set3 = 0
 
-start_time_dumbbellfrontraise_set3 = time.time()  # starts time
-repetition_time_dumbbellfrontraise_set3 = 60  # duration time
-display_info_dumbbellfrontraise_set3 = True  # display features
+repetition_time_dumbbellfrontraise_set3 = 60  # Repetition time
 
-bar_left_dumbbellfrontraise_set3 = 0
-bar_right_dumbbellfrontraise_set3 = 0
-per_left_dumbbellfrontraise_set3 = 0
+# Display info
+display_info_dumbbellfrontraise_set3 = True
+
 per_right_dumbbellfrontraise_set3 = 0
+per_left_dumbbellfrontraise_set3 = 0
+bar_left_dumbbellfrontraise_set3 = 0
+bar_right_dumbbellfrontraise_set3 = 0 
+
+
+color_right_dumbbellfrontraise_set3 = (0, 0, 255)
+color_left_dumbbellfrontraise_set3 = (0, 0, 255)
+
+feedback_left_dumbbellfrontraise_set3 = ""
+feedback_right_dumbbellfrontraise_set3 = ""
+
+success_threshold_dumbbellfrontraise_set3 = 100
+
+atrest_value_dumbbellfrontraise_set3 = 0
+
+unsuccessful_reps_count_left_dumbbellfrontraise_set3 = 0
+successful_reps_count_left_dumbbellfrontraise_set3 = 0
+
+unsuccessful_reps_count_right_dumbbellfrontraise_set3 = 0
+successful_reps_count_right_dumbbellfrontraise_set3 = 0
+
+dir_left_unsuccessful_dumbbellfrontraise_set3 = 0
+dir_right_unsuccessful_dumbbellfrontraise_set3 = 0
+
+total_reps_count_dumbbellfrontraise_set3 = 0
+
+total_reps_count_left_dumbbellfrontraise_set3 = 0
+total_reps_count_right_dumbbellfrontraise_set3 = 0
+
+start_time1_dumbbellfrontraise_set3 = time.time()
+start_time2_dumbbellfrontraise_set3 = time.time()
+start_time3_dumbbellfrontraise_set3 = time.time()
+time_threshold_dumbbellfrontraise_set3 = 10
+within_range_time1_dumbbellfrontraise_set3 = 0
+within_range_time2_dumbbellfrontraise_set3 = 0
+
+# gen feedback success
+general_feedback_left_dumbbellfrontraise_set3 = ""
+general_feedback_right_dumbbellfrontraise_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellfrontraise_set3 = 0
+dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 = 0
+
+cooldown_timer_dumbbellfrontraise_set3 = 0
+cooldown_duration_dumbbellfrontraise_set3 = 5
+
 angle_left_dumbbellfrontraise_set3 = 0
 angle_right_dumbbellfrontraise_set3 = 0
 
@@ -755,98 +1011,190 @@ rest_dumbbellfrontraise_start_time_set3 = time.time()
 # ----------- END FOR DUMBBELL FRONT RAISE SET 3---------------
 
 # ----------- FOR ALTERNATING LUNGE ---------------
-detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
-count_alternating_right_lunge = 0
-count_alternating_left_lunge = 0
+detector_leglunge = pm_alternatinglunge.poseDetectoralternatinglunge()
+dir_left_leglunge = 0
+dir_right_leglunge = 0
 
-dir_alternating_left_lunge = 0
-dir_alternating_right_lunge = 0
+repetition_time_leglunge = 60  # Repetition time
 
+# Display info
+display_info_leglunge = True
 
-start_time_alternatinglunge = time.time()
-repetition_time_alternatinglunge = 60
-display_info_alternatinglunge = True
+per_right_leglunge = 0
+per_left_leglunge = 0
+bar_left_leglunge = 0
+bar_right_leglunge = 0 
 
-per_left_leg_alternatinglunge = 0
-bar_left_leg_alternatinglunge = 0
+leftangle_leglunge = 0
+rightangle_leglunge = 0
 
-per_right_leg_alternatinglunge = 0
-bar_right_leg_alternatinglunge = 0
+color_right_leglunge = (0, 0, 255)
+color_left_leglunge = (0, 0, 255)
 
-leftleg_alternatinglunge  = 0
-rightleg_alternatinglunge = 0
+feedback_left_leglunge = ""
+feedback_right_leglunge = ""
 
+success_threshold_leglunge = 100
 
-cooldown_duration_alternatinglunge = 5
-cooldown_timer_alternatinglunge = 0
+peak_value_leglunge = 0
+atrest_value_leglunge = 0
 
-color_right_leg_alternatinglunge = (0, 0, 255)
-color_left_leg_alternatinglunge = (0, 0, 255)
+unsuccessful_reps_count_left_leglunge = 0
+successful_reps_count_left_leglunge = 0
+
+unsuccessful_reps_count_right_leglunge = 0
+successful_reps_count_right_leglunge = 0
+
+dir_left_unsuccessful_leglunge = 0
+dir_right_unsuccessful_leglunge = 0
+
+total_reps_count_leglunge = 0
+
+total_reps_count_left_leglunge = 0
+total_reps_count_right_leglunge = 0
+
+start_time1_leglunge = time.time()
+start_time2_leglunge = time.time()
+start_time3_leglunge = time.time()
+time_threshold_leglunge = 10 # Specify the time threshold in seconds # can be changed for testing but default should be 1, 0.2 is for testing
+within_range_time1_leglunge = 0
+within_range_time2_leglunge = 0
+
+# gen feedback success
+general_feedback_left_leglunge = ""
+general_feedback_right_leglunge = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_leglunge = 0
+dir_gen_feedback_unsuccessful_leglunge = 0
+
+cooldown_timer_leglunge = 0
+cooldown_duration_leglunge = 5
+
 rest_alternatinglunge_start_time = time.time()
-
-orientation = ''
-orientation2 = ''
 # ----------- END FOR ALTERNATING LUNGE ---------------
 
 # ----------- FOR ALTERNATING LUNGE SET 2 ---------------
-detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
-count_alternating_right_lunge_set2 = 0
-count_alternating_left_lunge_set2 = 0
+dir_left_leglunge_set2 = 0
+dir_right_leglunge_set2 = 0
 
-dir_alternating_left_lunge_set2 = 0
-dir_alternating_right_lunge_set2 = 0
+repetition_time_leglunge_set2 = 60  # Repetition time
 
+# Display info
+display_info_leglunge_set2 = True
 
-start_time_alternatinglunge_set2 = time.time()
-repetition_time_alternatinglunge_set2 = 60
-display_info_alternatinglunge_set2 = True
+per_right_leglunge_set2 = 0
+per_left_leglunge_set2 = 0
+bar_left_leglunge_set2 = 0
+bar_right_leglunge_set2 = 0 
 
-per_left_leg_alternatinglunge_set2 = 0
-bar_left_leg_alternatinglunge_set2 = 0
+leftangle_leglunge_set2 = 0
+rightangle_leglunge_set2 = 0
 
-per_right_leg_alternatinglunge_set2 = 0
-bar_right_leg_alternatinglunge_set2 = 0
+color_right_leglunge_set2 = (0, 0, 255)
+color_left_leglunge_set2 = (0, 0, 255)
 
-leftleg_alternatinglunge_set2 = 0
-rightleg_alternatinglunge_set2 = 0
+feedback_left_leglunge_set2 = ""
+feedback_right_leglunge_set2 = ""
 
+success_threshold_leglunge_set2 = 100
 
-cooldown_duration_alternatinglunge_set2 = 5
-cooldown_timer_alternatinglunge_set2 = 0
+peak_value_leglunge_set2 = 0
+atrest_value_leglunge_set2 = 0
 
-color_right_leg_alternatinglunge_set2 = (0, 0, 255)
-color_left_leg_alternatinglunge_set2 = (0, 0, 255)
+unsuccessful_reps_count_left_leglunge_set2 = 0
+successful_reps_count_left_leglunge_set2 = 0
+
+unsuccessful_reps_count_right_leglunge_set2 = 0
+successful_reps_count_right_leglunge_set2 = 0
+
+dir_left_unsuccessful_leglunge_set2 = 0
+dir_right_unsuccessful_leglunge_set2 = 0
+
+total_reps_count_leglunge_set2 = 0
+
+total_reps_count_left_leglunge_set2 = 0
+total_reps_count_right_leglunge_set2 = 0
+
+start_time1_leglunge_set2 = time.time()
+start_time2_leglunge_set2 = time.time()
+start_time3_leglunge_set2 = time.time()
+time_threshold_leglunge_set2 = 10
+within_range_time1_leglunge_set2 = 0
+within_range_time2_leglunge_set2 = 0
+
+# gen feedback success
+general_feedback_left_leglunge_set2 = ""
+general_feedback_right_leglunge_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_leglunge_set2 = 0
+dir_gen_feedback_unsuccessful_leglunge_set2 = 0
+
+cooldown_timer_leglunge_set2 = 0
+cooldown_duration_leglunge_set2 = 5
 rest_alternatinglunge_start_time_set2 = time.time()
 # ----------- END FOR ALTERNATING LUNGE SET 2 ---------------
 
 # ----------- FOR ALTERNATING LUNGE SET 3 ---------------
-detector_alternatingleftlunge = pm_alternatinglunge.poseDetectoralternatinglunge()
-count_alternating_right_lunge_set3 = 0
-count_alternating_left_lunge_set3 = 0
+dir_left_leglunge_set3 = 0
+dir_right_leglunge_set3 = 0
 
-dir_alternating_left_lunge_set3 = 0
-dir_alternating_right_lunge_set3 = 0
+repetition_time_leglunge_set3 = 60  # Repetition time
 
+# Display info
+display_info_leglunge_set3 = True
 
-start_time_alternatinglunge_set3 = time.time()
-repetition_time_alternatinglunge_set3 = 60
-display_info_alternatinglunge_set3 = True
+per_right_leglunge_set3 = 0
+per_left_leglunge_set3 = 0
+bar_left_leglunge_set3 = 0
+bar_right_leglunge_set3 = 0 
 
-per_left_leg_alternatinglunge_set3 = 0
-bar_left_leg_alternatinglunge_set3 = 0
+leftangle_leglunge_set3 = 0
+rightangle_leglunge_set3 = 0
 
-per_right_leg_alternatinglunge_set3 = 0
-bar_right_leg_alternatinglunge_set3 = 0
+color_right_leglunge_set3 = (0, 0, 255)
+color_left_leglunge_set3 = (0, 0, 255)
 
-leftleg_alternatinglunge_set3  = 0
-rightleg_alternatinglunge_set3 = 0
+feedback_left_leglunge_set3 = ""
+feedback_right_leglunge_set3 = ""
 
+success_threshold_leglunge_set3 = 100
 
-cooldown_duration_alternatinglunge_set3 = 5
-cooldown_timer_alternatinglunge_set3 = 0
+peak_value_leglunge_set3 = 0
+atrest_value_leglunge_set3 = 0
 
-color_right_leg_alternatinglunge_set3 = (0, 0, 255)
-color_left_leg_alternatinglunge_set3 = (0, 0, 255)
+unsuccessful_reps_count_left_leglunge_set3 = 0
+successful_reps_count_left_leglunge_set3 = 0
+
+unsuccessful_reps_count_right_leglunge_set3 = 0
+successful_reps_count_right_leglunge_set3 = 0
+
+dir_left_unsuccessful_leglunge_set3 = 0
+dir_right_unsuccessful_leglunge_set3 = 0
+
+total_reps_count_leglunge_set3 = 0
+
+total_reps_count_left_leglunge_set3 = 0
+total_reps_count_right_leglunge_set3 = 0
+
+start_time1_leglunge_set3 = time.time()
+start_time2_leglunge_set3 = time.time()
+start_time3_leglunge_set3 = time.time()
+time_threshold_leglunge_set3 = 10 
+within_range_time1_leglunge_set3 = 0
+within_range_time2_leglunge_set3 = 0
+
+# gen feedback success
+general_feedback_left_leglunge_set3 = ""
+general_feedback_right_leglunge_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_leglunge_set3 = 0
+dir_gen_feedback_unsuccessful_leglunge_set3 = 0
+
+cooldown_timer_leglunge_set3 = 0
+cooldown_duration_leglunge_set3 = 5
 rest_alternatinglunge_start_time_set3 = time.time()
 # ----------- END FOR ALTERNATING LUNGE SET 3 ---------------
 
@@ -3186,7 +3534,7 @@ def detect_shouldertap_set3(img):
     return img
 
 def rest_shouldertap_set3(img):
-    global exercise_mode, rest_shouldertap_start_time_set3, start_time_chestpress
+    global exercise_mode, rest_shouldertap_start_time_set3, start_time1_chestpress
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_shouldertap_start_time_set3
@@ -3201,118 +3549,213 @@ def rest_shouldertap_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "chest_press"
-        start_time_chestpress = time.time()
+        start_time1_chestpress = time.time()
     return img
 
 def detect_chestpress(img):
-    global count_chestpress_left, count_chestpress_right, dir_chestpress_right, dir_chestpress_left, start_time_chestpress, repetition_time_chestpress, display_info_chestpress, bar_left_chestpress, bar_right_chestpress, per_left_chestpress, per_right_chestpress, angle_left_chestpress, angle_right_chestpress, exercise_mode, rest_chestpress_start_time
+    global dir_left_chestpress, dir_right_chestpress, display_info_chestpress, orientation_chestpress, orientation2_chestpress, per_right_chestpress, per_left_chestpress, bar_left_chestpress, bar_right_chestpress, color_right_chestpress, color_left_chestpress, feedback_left_chestpress, feedback_right_chestpress, success_threshold_chestpress, atrest_value_chestpress, unsuccessful_reps_count_left_chestpress, successful_reps_count_left_chestpress, unsuccessful_reps_count_right_chestpress, successful_reps_count_right_chestpress, dir_left_unsuccessful_chestpress, dir_right_unsuccessful_chestpress, total_reps_count_chestpress, total_reps_count_left_chestpress, total_reps_count_right_chestpress, start_time1_chestpress, start_time2_chestpress, start_time3_chestpress, time_threshold_chestpress, within_range_time1_chestpress, within_range_time2_chestpress, general_feedback_left_chestpress, general_feedback_right_chestpress, dir_gen_feedback_chestpress, dir_gen_feedback_unsuccessful_chestpress, cooldown_timer_chestpress, cooldown_duration_chestpress, angle_left_chestpress, angle_right_chestpress, rest_chestpress_start_time, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_chestpress
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress
+    elapsed_time_chestpress = time.time() - start_time1_chestpress
+    remaining_time_chestpress = max(0, 10 - elapsed_time_chestpress)
 
 
     if display_info_chestpress:  # Check if to display counter, bar, and percentage
         img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
-        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+        lmList_chestpress = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList_bicep) != 0:
+        if len(lmList_chestpress) != 0:
             angle_left_chestpress = detector_chestpress.findAngle(img, 11, 13, 15)
             angle_right_chestpress = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
             # (refer to mediapipe landmark mapping for number equivalent)
 
-            # Interpolate angle to percentage and position on screen
-            per_left_chestpress = np.interp(angle_left_chestpress, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
-            bar_left_chestpress = np.interp(angle_left_chestpress, (50, 165), (400, 200)) # 
+            per_left_chestpress = np.interp(angle_left_chestpress, (60, 200), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress = np.interp(angle_left_chestpress, (60, 200), (400, 200)) # 
 
-            per_right_chestpress = np.interp(angle_right_chestpress, (190, 300), (100, 0)) # 
-            bar_right_chestpress = np.interp(angle_right_chestpress, (190, 300), (200, 400)) # 
+            per_right_chestpress = np.interp(angle_right_chestpress, (150, 300), (100, 0)) # 
+            bar_right_chestpress = np.interp(angle_right_chestpress, (150, 300), (200, 400)) # 
 
-            if angle_left_chestpress >= 155:
-                if dir_chestpress_left == 0 and count_chestpress_left < 5:
-                    count_chestpress_left += 0.5
-                    if count_chestpress_left == 5:
-                        dir_chestpress_left = -1
-                    else:
-                        dir_chestpress_left = 1 
-            elif angle_left_chestpress <= 50:
-                if dir_chestpress_left == 1 and count_chestpress_left < 5:
-                    count_chestpress_left += 0.5
-                    if count_chestpress_left == 5:
-                        dir_chestpress_left = -1
-                    else:
-                        dir_chestpress_left = 0  
 
-            if angle_right_chestpress <= 190: 
-                if dir_chestpress_right == 0 and count_chestpress_right < 5:
-                    count_chestpress_right += 0.5
-                    if count_chestpress_right == 5:
-                        dir_chestpress_right = -1
-                    else:
-                        dir_chestpress_right = 1 
+            if int(per_left_chestpress) == 100:
+                color_left_chestpress = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_chestpress = (0, 0, 255)
+            
+            if int(per_right_chestpress) == 100:
+                color_right_chestpress = (0, 255, 0)
+            else:
+                color_right_chestpress = (0, 0, 255)
 
-            if angle_right_chestpress >= 270:
-                if dir_chestpress_right == 1 and count_chestpress_right < 5:
-                    count_chestpress_right += 0.5
-                    if count_chestpress_right == 5:
-                        dir_chestpress_right = -1
-                    else:
-                        dir_chestpress_right = 0
+            #left
+            if 40 <= per_left_chestpress <= 90:
+                # Increment the time within range
+                within_range_time1_chestpress += time.time() - start_time2_chestpress
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_chestpress >= time_threshold_chestpress:
+                    if dir_left_unsuccessful_chestpress == 0:
+                        unsuccessful_reps_count_left_chestpress += 0.5
+                        dir_left_unsuccessful_chestpress = 1
+                        print("UP WRONG LEFT: ", unsuccessful_reps_count_left_chestpress)
+
+            else:
+                within_range_time1_chestpress = 0
+                # Update the start time to the current time
+                start_time2_chestpress = time.time()
+
+            if 1 <= per_left_chestpress <= 10:
+                if dir_left_unsuccessful_chestpress == 1:
+                    unsuccessful_reps_count_left_chestpress += 0.5
+                    dir_left_unsuccessful_chestpress = 0
+                    print("DOWN WRONG LEFT: ", unsuccessful_reps_count_left_chestpress)
+
+            if per_left_chestpress == success_threshold_chestpress:
+                if dir_left_chestpress == 0:
+                    successful_reps_count_left_chestpress += 0.5
+                    dir_left_chestpress = 1
+
+            elif per_left_chestpress == atrest_value_chestpress:
+                if dir_left_chestpress == 1:
+                    successful_reps_count_left_chestpress += 0.5
+                    dir_left_chestpress = 0
+
+            # right
+            if 40 <= per_right_chestpress <= 90:
+                # Increment the time within range
+                within_range_time2_chestpress += time.time() - start_time3_chestpress
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_chestpress >= time_threshold_chestpress:
+                    if dir_right_unsuccessful_chestpress == 0:
+                        unsuccessful_reps_count_right_chestpress += 0.5
+                        dir_right_unsuccessful_chestpress = 1
+                        print("UP RIGHT WRONG", unsuccessful_reps_count_right_chestpress)
+            else:
+                within_range_time2_chestpress = 0
+                # Update the start time to the current time
+                start_time3_chestpress = time.time()
+
+            if 1 <= per_right_chestpress <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_chestpress == 1:
+                    unsuccessful_reps_count_right_chestpress += 0.5
+                    dir_right_unsuccessful_chestpress = 0
+                    print("DOWN RIGHT WRONG", unsuccessful_reps_count_right_chestpress)
+
+            if per_right_chestpress == success_threshold_chestpress:
+                if dir_right_chestpress == 0:
+                    successful_reps_count_right_chestpress += 0.5
+                    dir_right_chestpress = 1
+                    cooldown_timer_chestpress = cooldown_duration_chestpress
+            elif per_right_chestpress == atrest_value_chestpress: 
+                if dir_right_chestpress == 1:
+                    successful_reps_count_right_chestpress += 0.5
+                    dir_right_chestpress = 0
+                    cooldown_timer_chestpress = cooldown_duration_chestpress
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_chestpress = detector_chestpress.feedback_chestpress(per_left_chestpress)
+
+            detector_chestpress.update_next_per_left(per_left_chestpress)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_chestpress = detector_chestpress.feedback_chestpress(per_right_chestpress)
+
+            detector_chestpress.update_next_per_left(per_right_chestpress)
 
         # label
-        cvzone.putTextRect(img, 'Chest Press Tracker', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Chest Press', [430, 30], thickness=2, border=2, scale=1.5)
+
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_chestpress)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_chestpress)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_chestpress)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_chestpress)), (50, 400), color_right_chestpress, -1)
 
         cv2.putText(img, f"L {int(per_left_chestpress)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_chestpress)), (995, 400), (0, 0, 255), -1)
-        
-        if angle_left_chestpress >= 155:
-            cv2.rectangle(img, (952, int(bar_left_chestpress)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_chestpress <= 190:
-            cv2.rectangle(img, (8, int(bar_right_chestpress)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_chestpress)), (995, 400), color_left_chestpress, -1)
 
     #count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_chestpress_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_chestpress)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_chestpress_right)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_chestpress)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_chestpress <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress = False
         exercise_mode = "rest_chestpress"
         rest_chestpress_start_time = time.time()
 
-    if count_chestpress_right >= 5 and count_chestpress_left >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_chestpress >= 5 and successful_reps_count_left_chestpress >= 5:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress = False
-        exercise_mode = "rest_chestpress"
-        rest_chestpress_start_time = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_chestpress == 0:
+            general_feedback_left_chestpress = detector_chestpress.left_arm_feedback(total_reps_count_left_chestpress)
+            general_feedback_right_chestpress = detector_chestpress.right_arm_feedback(total_reps_count_right_chestpress)
+            dir_gen_feedback_chestpress = 1
+            display_info_chestpress = False
+            exercise_mode = "rest_chestpress"
+            rest_chestpress_start_time = time.time()
+            print(f"{general_feedback_left_chestpress} {general_feedback_right_chestpress}")
+
+
+    if unsuccessful_reps_count_left_chestpress >= 2 and unsuccessful_reps_count_right_chestpress >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress = False
+
+        if dir_gen_feedback_unsuccessful_chestpress == 0:
+            general_feedback_left_chestpress = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress)
+            general_feedback_right_chestpress = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress)
+            dir_gen_feedback_unsuccessful_chestpress = 1
+            display_info_chestpress = False
+            exercise_mode = "rest_chestpress"
+            rest_chestpress_start_time = time.time()
+    
+    
+    if unsuccessful_reps_count_left_chestpress >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress = False
+
+        if dir_gen_feedback_unsuccessful_chestpress == 0:
+            general_feedback_left_chestpress = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress)
+            dir_gen_feedback_unsuccessful_chestpress = 1
+            display_info_chestpress = False
+            exercise_mode = "rest_chestpress"
+            rest_chestpress_start_time = time.time()
+
+    if unsuccessful_reps_count_right_chestpress >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress = False
+
+        if dir_gen_feedback_unsuccessful_chestpress == 0:
+            general_feedback_right_chestpress = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress)
+            dir_gen_feedback_unsuccessful_chestpress == 1
+            display_info_chestpress = False
+            exercise_mode = "rest_chestpress"
+            rest_chestpress_start_time = time.time()
+
     return img
 
 def rest_chestpress(img):
-    global exercise_mode, rest_chestpress_start_time, start_time_chestpress_set2
+    global exercise_mode, rest_chestpress_start_time, start_time1_chestpress_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3323,119 +3766,212 @@ def rest_chestpress(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "chest_press_set2"
-        start_time_chestpress_set2 = time.time()
+        start_time1_chestpress_set2 = time.time()
     return img
 
 def detect_chestpress_set2(img):
-    global count_chestpress_left_set2, count_chestpress_right_set2, dir_chestpress_right_set2, dir_chestpress_left_set2, start_time_chestpress_set2, repetition_time_chestpress_set2, display_info_chestpress_set2, bar_left_chestpress_set2, bar_right_chestpress_set2, per_left_chestpress_set2, per_right_chestpress_set2, angle_left_chestpress_set2, angle_right_chestpress_set2, exercise_mode, rest_chestpress_start_time_set2
+    global dir_left_chestpress_set2, dir_right_chestpress_set2, display_info_chestpress_set2, orientation_chestpress_set2, orientation2_chestpress_set2, per_right_chestpress_set2, per_left_chestpress_set2, bar_left_chestpress_set2, bar_right_chestpress_set2, color_right_chestpress_set2, color_left_chestpress_set2, feedback_left_chestpress_set2, feedback_right_chestpress_set2, success_threshold_chestpress_set2, atrest_value_chestpress_set2, unsuccessful_reps_count_left_chestpress_set2, successful_reps_count_left_chestpress_set2, unsuccessful_reps_count_right_chestpress_set2, successful_reps_count_right_chestpress_set2, dir_left_unsuccessful_chestpress_set2, dir_right_unsuccessful_chestpress_set2, total_reps_count_chestpress_set2, total_reps_count_left_chestpress_set2, total_reps_count_right_chestpress_set2, start_time1_chestpress_set2, start_time2_chestpress_set2, start_time3_chestpress_set2, time_threshold_chestpress_set2, within_range_time1_chestpress_set2, within_range_time2_chestpress_set2, general_feedback_left_chestpress_set2, general_feedback_right_chestpress_set2, dir_gen_feedback_chestpress_set2, dir_gen_feedback_unsuccessful_chestpress_set2, cooldown_timer_chestpress_set2, cooldown_duration_chestpress_set2, angle_left_chestpress_set2, angle_right_chestpress_set2, rest_chestpress_start_time_set2, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_chestpress_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress_set2
+    elapsed_time_chestpress = time.time() - start_time1_chestpress_set2
+    remaining_time_chestpress = max(0, 10 - elapsed_time_chestpress)
 
 
     if display_info_chestpress_set2:  # Check if to display counter, bar, and percentage
         img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
-        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+        lmList_chestpress = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList_bicep) != 0:
+        if len(lmList_chestpress) != 0:
             angle_left_chestpress_set2 = detector_chestpress.findAngle(img, 11, 13, 15)
             angle_right_chestpress_set2 = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
             # (refer to mediapipe landmark mapping for number equivalent)
 
-            # Interpolate angle to percentage and position on screen
-            per_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
-            bar_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (50, 165), (400, 200)) # 
+            per_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (60, 200), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress_set2 = np.interp(angle_left_chestpress_set2, (60, 200), (400, 200)) # 
 
-            per_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (190, 300), (100, 0)) # 
-            bar_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (190, 300), (200, 400)) # 
+            per_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (150, 300), (100, 0)) # 
+            bar_right_chestpress_set2 = np.interp(angle_right_chestpress_set2, (150, 300), (200, 400)) # 
 
-            if angle_left_chestpress_set2 >= 155:
-                if dir_chestpress_left_set2 == 0 and count_chestpress_left_set2 < 5:
-                    count_chestpress_left_set2 += 0.5
-                    if count_chestpress_left_set2 == 5:
-                        dir_chestpress_left_set2 = -1
-                    else:
-                        dir_chestpress_left_set2 = 1 
-            elif angle_left_chestpress_set2 <= 50:
-                if dir_chestpress_left_set2 == 1 and count_chestpress_left_set2 < 5:
-                    count_chestpress_left_set2 += 0.5
-                    if count_chestpress_left_set2 == 5:
-                        dir_chestpress_left_set2 = -1
-                    else:
-                        dir_chestpress_left_set2 = 0  
 
-            if angle_right_chestpress_set2 <= 190: 
-                if dir_chestpress_right_set2 == 0 and count_chestpress_right_set2 < 5:
-                    count_chestpress_right_set2 += 0.5
-                    if count_chestpress_right_set2 == 5:
-                        dir_chestpress_right_set2 = -1
-                    else:
-                        dir_chestpress_right_set2 = 1 
+            if int(per_left_chestpress_set2) == 100:
+                color_left_chestpress_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_chestpress_set2 = (0, 0, 255)
+            
+            if int(per_right_chestpress_set2) == 100:
+                color_right_chestpress_set2 = (0, 255, 0)
+            else:
+                color_right_chestpress_set2 = (0, 0, 255)
 
-            if angle_right_chestpress_set2 >= 270:
-                if dir_chestpress_right_set2 == 1 and count_chestpress_right_set2 < 5:
-                    count_chestpress_right_set2 += 0.5
-                    if count_chestpress_right_set2 == 5:
-                        dir_chestpress_right_set2 = -1
-                    else:
-                        dir_chestpress_right_set2 = 0
+            #left
+            if 40 <= per_left_chestpress_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_chestpress_set2 += time.time() - start_time2_chestpress_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_chestpress_set2 >= time_threshold_chestpress_set2:
+                    if dir_left_unsuccessful_chestpress_set2 == 0:
+                        unsuccessful_reps_count_left_chestpress_set2 += 0.5
+                        dir_left_unsuccessful_chestpress_set2 = 1
+                        #print("UP WRONG LEFT: ", unsuccessful_reps_count_left_chestpress_set2)
+
+            else:
+                within_range_time1_chestpress_set2 = 0
+                # Update the start time to the current time
+                start_time2_chestpress_set2 = time.time()
+
+            if 1 <= per_left_chestpress_set2 <= 10:
+                if dir_left_unsuccessful_chestpress_set2 == 1:
+                    unsuccessful_reps_count_left_chestpress_set2 += 0.5
+                    dir_left_unsuccessful_chestpress_set2 = 0
+                    #print("DOWN WRONG LEFT: ", unsuccessful_reps_count_left_chestpress_set2)
+
+            if per_left_chestpress_set2 == success_threshold_chestpress_set2:
+                if dir_left_chestpress_set2 == 0:
+                    successful_reps_count_left_chestpress_set2 += 0.5
+                    dir_left_chestpress_set2 = 1
+
+            elif per_left_chestpress_set2 == atrest_value_chestpress_set2:
+                if dir_left_chestpress_set2 == 1:
+                    successful_reps_count_left_chestpress_set2 += 0.5
+                    dir_left_chestpress_set2 = 0
+
+            # right
+            if 40 <= per_right_chestpress_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_chestpress_set2 += time.time() - start_time3_chestpress_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_chestpress_set2 >= time_threshold_chestpress_set2:
+                    if dir_right_unsuccessful_chestpress_set2 == 0:
+                        unsuccessful_reps_count_right_chestpress_set2 += 0.5
+                        dir_right_unsuccessful_chestpress_set2 = 1
+                        #print("UP RIGHT WRONG", unsuccessful_reps_count_right_chestpress_set2)
+            else:
+                within_range_time2_chestpress_set2 = 0
+                # Update the start time to the current time
+                start_time3_chestpress_set2 = time.time()
+
+            if 1 <= per_right_chestpress_set2 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_chestpress_set2 == 1:
+                    unsuccessful_reps_count_right_chestpress_set2 += 0.5
+                    dir_right_unsuccessful_chestpress_set2 = 0
+                    #print("DOWN RIGHT WRONG", unsuccessful_reps_count_right_chestpress_set2)
+
+            if per_right_chestpress_set2 == success_threshold_chestpress_set2:
+                if dir_right_chestpress_set2 == 0:
+                    successful_reps_count_right_chestpress_set2 += 0.5
+                    dir_right_chestpress_set2 = 1
+                    cooldown_timer_chestpress_set2 = cooldown_duration_chestpress_set2
+            elif per_right_chestpress_set2 == atrest_value_chestpress_set2: 
+                if dir_right_chestpress_set2 == 1:
+                    successful_reps_count_right_chestpress_set2 += 0.5
+                    dir_right_chestpress_set2 = 0
+                    cooldown_timer_chestpress_set2 = cooldown_duration_chestpress_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_chestpress_set2 = detector_chestpress.feedback_chestpress(per_left_chestpress_set2)
+
+            detector_chestpress.update_next_per_left(per_left_chestpress_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_chestpress_set2 = detector_chestpress.feedback_chestpress(per_right_chestpress_set2)
+
+            detector_chestpress.update_next_per_left(per_right_chestpress_set2)
 
         # label
-        cvzone.putTextRect(img, 'Chest Press Tracker SET 2', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Chest Press SET 2', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_chestpress)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_chestpress_set2)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_chestpress_set2)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_chestpress_set2)), (50, 400), color_right_chestpress_set2, -1)
 
         cv2.putText(img, f"L {int(per_left_chestpress_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_chestpress_set2)), (995, 400), (0, 0, 255), -1)
-        
-        if angle_left_chestpress_set2 >= 155:
-            cv2.rectangle(img, (952, int(bar_left_chestpress_set2)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_chestpress_set2 <= 190:
-            cv2.rectangle(img, (8, int(bar_right_chestpress_set2)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_chestpress_set2)), (995, 400), color_left_chestpress_set2, -1)
 
     #count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_chestpress_right_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_chestpress_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_chestpress_right_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_chestpress_set2)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_chestpress <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress_set2 = False
         exercise_mode = "rest_chestpress_set2"
         rest_chestpress_start_time_set2 = time.time()
 
-    if count_chestpress_right_set2 >= 5 and count_chestpress_left_set2 >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_chestpress_set2 >= 10 and successful_reps_count_left_chestpress_set2 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress_set2 = False
-        exercise_mode = "rest_chestpress_set2"
-        rest_chestpress_start_time_set2 = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_chestpress_set2 == 0:
+            general_feedback_left_chestpress_set2 = detector_chestpress.left_arm_feedback(total_reps_count_left_chestpress_set2)
+            general_feedback_right_chestpress_set2 = detector_chestpress.right_arm_feedback(total_reps_count_right_chestpress_set2)
+            dir_gen_feedback_chestpress_set2 = 1
+            display_info_chestpress_set2 = False
+            exercise_mode = "rest_chestpress_set2"
+            rest_chestpress_start_time_set2 = time.time()
+            print(f"{general_feedback_left_chestpress_set2} {general_feedback_right_chestpress_set2}")
+
+
+    if unsuccessful_reps_count_left_chestpress_set2 >= 2 and unsuccessful_reps_count_right_chestpress_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set2 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set2 == 0:
+            general_feedback_left_chestpress_set2 = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress_set2)
+            general_feedback_right_chestpress_set2 = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress_set2)
+            dir_gen_feedback_unsuccessful_chestpress_set2 = 1
+            display_info_chestpress_set2 = False
+            exercise_mode = "rest_chestpress_set2"
+            rest_chestpress_start_time_set2 = time.time()
+    
+    
+    if unsuccessful_reps_count_left_chestpress_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set2 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set2 == 0:
+            general_feedback_left_chestpress_set2 = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress_set2)
+            dir_gen_feedback_unsuccessful_chestpress_set2 = 1
+            display_info_chestpress_set2 = False
+            exercise_mode = "rest_chestpress_set2"
+            rest_chestpress_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_chestpress_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set2 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set2 == 0:
+            general_feedback_right_chestpress_set2 = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress_set2)
+            dir_gen_feedback_unsuccessful_chestpress_set2 == 1
+            display_info_chestpress_set2 = False
+            exercise_mode = "rest_chestpress_set2"
+            rest_chestpress_start_time_set2 = time.time()
 
     return img
 
 def rest_chestpress_set2(img):
-    global exercise_mode, rest_chestpress_start_time_set2, start_time_chestpress_set3
+    global exercise_mode, rest_chestpress_start_time_set2, start_time1_chestpress_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time_set2
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3446,115 +3982,210 @@ def rest_chestpress_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "chest_press_set3"
-        start_time_chestpress_set3 = time.time()
+        start_time1_chestpress_set3 = time.time()
 
     return img
 
 def detect_chestpress_set3(img):
-    global count_chestpress_left_set3, count_chestpress_right_set3, dir_chestpress_right_set3, dir_chestpress_left_set3, start_time_chestpress_set3, repetition_time_chestpress_set3, display_info_chestpress_set3, bar_left_chestpress_set3, bar_right_chestpress_set3, per_left_chestpress_set3, per_right_chestpress_set3, angle_left_chestpress_set3, angle_right_chestpress_set3, exercise_mode, rest_chestpress_start_time_set3
+
+    global dir_left_chestpress_set3, dir_right_chestpress_set3, display_info_chestpress_set3, orientation_chestpress_set3, orientation2_chestpress_set3, per_right_chestpress_set3, per_left_chestpress_set3, bar_left_chestpress_set3, bar_right_chestpress_set3, color_right_chestpress_set3, color_left_chestpress_set3, feedback_left_chestpress_set3, feedback_right_chestpress_set3, success_threshold_chestpress_set3, atrest_value_chestpress_set3, unsuccessful_reps_count_left_chestpress_set3, successful_reps_count_left_chestpress_set3, unsuccessful_reps_count_right_chestpress_set3, successful_reps_count_right_chestpress_set3, dir_left_unsuccessful_chestpress_set3, dir_right_unsuccessful_chestpress_set3, total_reps_count_chestpress_set3, total_reps_count_left_chestpress_set3, total_reps_count_right_chestpress_set3, start_time1_chestpress_set3, start_time2_chestpress_set3, start_time3_chestpress_set3, time_threshold_chestpress_set3, within_range_time1_chestpress_set3, within_range_time2_chestpress_set3, general_feedback_left_chestpress_set3, general_feedback_right_chestpress_set3, dir_gen_feedback_chestpress_set3, dir_gen_feedback_unsuccessful_chestpress_set3, cooldown_timer_chestpress_set3, cooldown_duration_chestpress_set3, angle_left_chestpress_set3, angle_right_chestpress_set3, rest_chestpress_start_time_set3, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_chestpress_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_chestpress_set3
+    elapsed_time_chestpress = time.time() - start_time1_chestpress_set3
+    remaining_time_chestpress = max(0, 10 - elapsed_time_chestpress)
 
 
     if display_info_chestpress_set3:  # Check if to display counter, bar, and percentage
         img = detector_chestpress.findPose(img, False) # initializes img as variable for findpose function
-        lmList_bicep = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
+        lmList_chestpress = detector_chestpress.findPosition(img, False) # initializes lmList_bicep as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList_bicep) != 0:
+        if len(lmList_chestpress) != 0:
             angle_left_chestpress_set3 = detector_chestpress.findAngle(img, 11, 13, 15)
             angle_right_chestpress_set3 = detector_chestpress.findAngle(img, 12, 14, 16) # defines right arm landmark keypoints
             # (refer to mediapipe landmark mapping for number equivalent)
 
-            # Interpolate angle to percentage and position on screen
-            per_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (50, 155), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
-            bar_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (50, 165), (400, 200)) # 
+            per_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (60, 200), (0, 100)) # first parenthesis, the value threshold of the angle. Second, represents the interp value
+            bar_left_chestpress_set3 = np.interp(angle_left_chestpress_set3, (60, 200), (400, 200)) # 
 
-            per_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (190, 300), (100, 0)) # 
-            bar_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (190, 300), (200, 400)) # 
+            per_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (150, 300), (100, 0)) # 
+            bar_right_chestpress_set3 = np.interp(angle_right_chestpress_set3, (150, 300), (200, 400)) # 
 
-            if angle_left_chestpress_set3 >= 155:
-                if dir_chestpress_left_set3 == 0 and count_chestpress_left_set3 < 5:
-                    count_chestpress_left_set3 += 0.5
-                    if count_chestpress_left_set3 == 5:
-                        dir_chestpress_left_set3 = -1
-                    else:
-                        dir_chestpress_left_set3 = 1 
-            elif angle_left_chestpress_set3 <= 50:
-                if dir_chestpress_left_set3 == 1 and count_chestpress_left_set3 < 5:
-                    count_chestpress_left_set3 += 0.5
-                    if count_chestpress_left_set3 == 5:
-                        dir_chestpress_left_set3 = -1
-                    else:
-                        dir_chestpress_left_set3 = 0  
 
-            if angle_right_chestpress_set3 <= 190: 
-                if dir_chestpress_right_set3 == 0 and count_chestpress_right_set3 < 5:
-                    count_chestpress_right_set3 += 0.5
-                    if count_chestpress_right_set3 == 5:
-                        dir_chestpress_right_set3 = -1
-                    else:
-                        dir_chestpress_right_set3 = 1 
+            if int(per_left_chestpress_set3) == 100:
+                color_left_chestpress_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_chestpress_set3 = (0, 0, 255)
+            
+            if int(per_right_chestpress_set3) == 100:
+                color_right_chestpress_set3 = (0, 255, 0)
+            else:
+                color_right_chestpress_set3 = (0, 0, 255)
 
-            if angle_right_chestpress_set3 >= 270:
-                if dir_chestpress_right_set3 == 1 and count_chestpress_right_set3 < 5:
-                    count_chestpress_right_set3 += 0.5
-                    if count_chestpress_right_set3 == 5:
-                        dir_chestpress_right_set3 = -1
-                    else:
-                        dir_chestpress_right_set3 = 0
+            #left
+            if 40 <= per_left_chestpress_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_chestpress_set3 += time.time() - start_time2_chestpress_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_chestpress_set3 >= time_threshold_chestpress_set3:
+                    if dir_left_unsuccessful_chestpress_set3 == 0:
+                        unsuccessful_reps_count_left_chestpress_set3 += 0.5
+                        dir_left_unsuccessful_chestpress_set3 = 1
+                        #print("UP WRONG LEFT: ", unsuccessful_reps_count_left_chestpress_set3)
+
+            else:
+                within_range_time1_chestpress_set3 = 0
+                # Update the start time to the current time
+                start_time2_chestpress_set3 = time.time()
+
+            if 1 <= per_left_chestpress_set3 <= 10:
+                if dir_left_unsuccessful_chestpress_set3 == 1:
+                    unsuccessful_reps_count_left_chestpress_set3 += 0.5
+                    dir_left_unsuccessful_chestpress_set3 = 0
+                    #print("DOWN WRONG LEFT: ", unsuccessful_reps_count_left_chestpress_set3)
+
+            if per_left_chestpress_set3 == success_threshold_chestpress_set3:
+                if dir_left_chestpress_set3 == 0:
+                    successful_reps_count_left_chestpress_set3 += 0.5
+                    dir_left_chestpress_set3 = 1
+
+            elif per_left_chestpress_set3 == atrest_value_chestpress_set3:
+                if dir_left_chestpress_set3 == 1:
+                    successful_reps_count_left_chestpress_set3 += 0.5
+                    dir_left_chestpress_set3 = 0
+
+            # right
+            if 40 <= per_right_chestpress_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_chestpress_set3 += time.time() - start_time3_chestpress_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_chestpress_set3 >= time_threshold_chestpress_set3:
+                    if dir_right_unsuccessful_chestpress_set3 == 0:
+                        unsuccessful_reps_count_right_chestpress_set3 += 0.5
+                        dir_right_unsuccessful_chestpress_set3 = 1
+                        #print("UP RIGHT WRONG", unsuccessful_reps_count_right_chestpress_set3)
+            else:
+                within_range_time2_chestpress_set3 = 0
+                # Update the start time to the current time
+                _set3start_time3_chestpress = time.time()
+
+            if 1 <= per_right_chestpress_set3 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_chestpress_set3 == 1:
+                    unsuccessful_reps_count_right_chestpress_set3 += 0.5
+                    dir_right_unsuccessful_chestpress_set3 = 0
+                    #print("DOWN RIGHT WRONG", unsuccessful_reps_count_right_chestpress_set3)
+
+            if per_right_chestpress_set3 == success_threshold_chestpress_set3:
+                if dir_right_chestpress_set3 == 0:
+                    successful_reps_count_right_chestpress_set3 += 0.5
+                    dir_right_chestpress_set3 = 1
+                    cooldown_timer_chestpress_set3 = cooldown_duration_chestpress_set3
+            elif per_right_chestpress_set3 == atrest_value_chestpress_set3: 
+                if dir_right_chestpress_set3 == 1:
+                    successful_reps_count_right_chestpress_set3 += 0.5
+                    dir_right_chestpress_set3 = 0
+                    cooldown_timer_chestpress_set3 = cooldown_duration_chestpress_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_chestpress_set3 = detector_chestpress.feedback_chestpress(per_left_chestpress_set3)
+
+            detector_chestpress.update_next_per_left(per_left_chestpress_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_chestpress_set3 = detector_chestpress.feedback_chestpress(per_right_chestpress_set3)
+
+            detector_chestpress.update_next_per_left(per_right_chestpress_set3)
 
         # label
-        cvzone.putTextRect(img, 'Chest Press Tracker SET 3', [345, 30], thickness=2, border=2, scale=2.5) 
+        cvzone.putTextRect(img, 'Front Chest Press SET 3', [430, 30], thickness=2, border=2, scale=1.5)
+
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_chestpress)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_chestpress_set3)}%" , (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_chestpress_set3)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_chestpress_set3)), (50, 400), color_right_chestpress_set3, -1)
 
         cv2.putText(img, f"L {int(per_left_chestpress_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_chestpress_set3)), (995, 400), (0, 0, 255), -1)
-        
-        if angle_left_chestpress_set3 >= 155:
-            cv2.rectangle(img, (952, int(bar_left_chestpress_set3)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_chestpress_set3 <= 190:
-            cv2.rectangle(img, (8, int(bar_right_chestpress_set3)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_chestpress_set3)), (995, 400), color_left_chestpress_set3, -1)
 
     #count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_chestpress_right_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_chestpress_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_chestpress_right_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_chestpress_set3)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255 ,255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_chestpress <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress_set3 = False
         exercise_mode = "rest_chestpress_set3"
         rest_chestpress_start_time_set3 = time.time()
 
-    if count_chestpress_right_set3 >= 5 and count_chestpress_left_set3 >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_chestpress_set3 >= 10 and successful_reps_count_left_chestpress_set3 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress_set3 = False
-        exercise_mode = "rest_chestpress_set3"
-        rest_chestpress_start_time_set3 = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_chestpress_set3 == 0:
+            general_feedback_left_chestpress_set3 = detector_chestpress.left_arm_feedback(total_reps_count_left_chestpress_set3)
+            general_feedback_right_chestpress_set3 = detector_chestpress.right_arm_feedback(total_reps_count_right_chestpress_set3)
+            dir_gen_feedback_chestpress_set3 = 1
+            display_info_chestpress_set3 = False
+            exercise_mode = "rest_chestpress_set3"
+            rest_chestpress_start_time_set3 = time.time()
+            print(f"{general_feedback_left_chestpress_set3} {general_feedback_right_chestpress_set3}")
+
+
+    if unsuccessful_reps_count_left_chestpress_set3 >= 2 and unsuccessful_reps_count_right_chestpress_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set3 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set3 == 0:
+            general_feedback_left_chestpress_set3 = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress_set3)
+            general_feedback_right_chestpress_set3 = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress_set3)
+            dir_gen_feedback_unsuccessful_chestpress_set3 = 1
+            display_info_chestpress_set3 = False
+            exercise_mode = "rest_chestpress_set3"
+            rest_chestpress_start_time_set3 = time.time()
+    
+    
+    if unsuccessful_reps_count_left_chestpress_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set3 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set3 == 0:
+            general_feedback_left_chestpress_set3 = detector_chestpress.left_arm_unsuccessful_feedback(total_reps_count_left_chestpress_set3)
+            dir_gen_feedback_unsuccessful_chestpress_set3 = 1
+            display_info_chestpress_set3 = False
+            exercise_mode = "rest_chestpress_set3"
+            rest_chestpress_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_chestpress_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_chestpress_set3 = False
+
+        if dir_gen_feedback_unsuccessful_chestpress_set3 == 0:
+            general_feedback_right_chestpress_set3 = detector_chestpress.right_arm_unsuccessful_feedback(total_reps_count_right_chestpress_set3)
+            dir_gen_feedback_unsuccessful_chestpress_set3 == 1
+            display_info_chestpress_set3 = False
+            exercise_mode = "rest_chestpress_set3"
+            rest_chestpress_start_time_set3 = time.time()
     return img
 
 def rest_chestpress_set3(img):
-    global exercise_mode, rest_chestpress_start_time_set3, start_time_dumbbellfrontraise
+    global exercise_mode, rest_chestpress_start_time_set3, start_time1_dumbbellfrontraise
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_chestpress_start_time_set3
@@ -3569,119 +4200,199 @@ def rest_chestpress_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "dumbbell_frontraise"
-        start_time_dumbbellfrontraise = time.time()
+        start_time1_dumbbellfrontraise = time.time()
     return img
 
 def detect_dumbbellfrontraise(img):
-    global count_left_dumbbellfrontraise, count_right_dumbbellfrontraise, dir_left_dumbbellfrontraise, dir_right_dumbbellfrontraise, start_time_dumbbellfrontraise, repetition_time_dumbbellfrontraise, display_info_dumbbellfrontraise, bar_left_dumbbellfrontraise, bar_right_dumbbellfrontraise, per_left_dumbbellfrontraise, per_right_dumbbellfrontraise, angle_left_dumbbellfrontraise, angle_right_dumbbellfrontraise, rest_dumbbellfrontraise_start_time, exercise_mode
+    global dir_left_dumbbellfrontraise, dir_right_dumbbellfrontraise, display_info_dumbbellfrontraise, per_right_dumbbellfrontraise, per_left_dumbbellfrontraise, bar_left_dumbbellfrontraise, bar_right_dumbbellfrontraise, color_right_dumbbellfrontraise, color_left_dumbbellfrontraise, feedback_left_dumbbellfrontraise, feedback_right_dumbbellfrontraise, success_threshold_dumbbellfrontraise, atrest_value_dumbbellfrontraise,unsuccessful_reps_count_left_dumbbellfrontraise, successful_reps_count_left_dumbbellfrontraise, unsuccessful_reps_count_right_dumbbellfrontraise, successful_reps_count_right_dumbbellfrontraise, dir_left_unsuccessful_dumbbellfrontraise, dir_right_unsuccessful_dumbbellfrontraise, total_reps_count_dumbbellfrontraise, total_reps_count_left_dumbbellfrontraise, total_reps_count_right_dumbbellfrontraise, start_time1_dumbbellfrontraise, start_time2_dumbbellfrontraise, start_time3_dumbbellfrontraise, time_threshold_dumbbellfrontraise, within_range_time1_dumbbellfrontraise, within_range_time2_dumbbellfrontraise, general_feedback_left_dumbbellfrontraise, general_feedback_right_dumbbellfrontraise, dir_gen_feedback_dumbbellfrontraise, dir_gen_feedback_unsuccessful_dumbbellfrontraise, cooldown_timer_dumbbellfrontraise, cooldown_duration_dumbbellfrontraise, angle_left_dumbbellfrontraise, angle_right_dumbbellfrontraise, rest_dumbbellfrontraise_start_time, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_dumbbellfrontraise
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise
+    elapsed_time_dumbbellfrontraise = time.time() - start_time1_dumbbellfrontraise
+    remaining_time_dumbbellfrontraise = max(0, 10 - elapsed_time_dumbbellfrontraise)
 
     if display_info_dumbbellfrontraise:  # Check if to display counter, bar, and percentage
-        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
-        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+        img = detector_dumbbellfrontraise.findPose(img, False)  # initializes img as variable for findpose function
+        lmList_dumbbellfrontraise = detector_dumbbellfrontraise.findPosition(img, False)  # initializes lmList as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList) != 0:
+        if len(lmList_dumbbellfrontraise) != 0:
 
-            angle_left_dumbbellfrontraise = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
-            angle_right_dumbbellfrontraise = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
-
+            angle_left_dumbbellfrontraise = detector_dumbbellfrontraise.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise = detector_dumbbellfrontraise.findAngle2(img, 24, 12, 16, 14) 
 
             # # Interpolate angle to percentage and position on screen
             per_left_dumbbellfrontraise = np.interp(angle_left_dumbbellfrontraise, (20, 150), (0, 100))
-            bar_left_dumbbellfrontraise = np.interp(angle_left_dumbbellfrontraise, (20, 160), (400, 200))
+            bar_left_dumbbellfrontraise = np.interp(angle_left_dumbbellfrontraise, (20, 150), (400, 200))
 
             per_right_dumbbellfrontraise = np.interp(angle_right_dumbbellfrontraise, (20, 150), (0, 100))
-            bar_right_dumbbellfrontraise = np.interp(angle_right_dumbbellfrontraise, (20, 160), (400, 200))
+            bar_right_dumbbellfrontraise = np.interp(angle_right_dumbbellfrontraise, (20, 150), (400, 200))
 
-            #Check for the left dumbbell front raises
-            if angle_left_dumbbellfrontraise >= 150:
-                if dir_left_dumbbellfrontraise == 0 and count_left_dumbbellfrontraise < 5:
-                    count_left_dumbbellfrontraise += 0.5
-                    if count_left_dumbbellfrontraise == 5:
-                        dir_left_dumbbellfrontraise = -1
-                    else:
-                        dir_left_dumbbellfrontraise = 1
-            elif angle_left_dumbbellfrontraise <= 20:
-                if dir_left_dumbbellfrontraise == 1 and count_left_dumbbellfrontraise < 5:
-                    count_left_dumbbellfrontraise += 0.5
-                    if count_left_dumbbellfrontraise == 5:
-                        dir_left_dumbbellfrontraise = -1
-                    else:
-                        dir_left_dumbbellfrontraise = 0
+            if int(per_left_dumbbellfrontraise) == 100:
+                color_left_dumbbellfrontraise = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellfrontraise = (0, 0, 255)
+            
+            if int(per_right_dumbbellfrontraise) == 100:
+                color_right_dumbbellfrontraise = (0, 255, 0)
+            else:
+                color_right_dumbbellfrontraise = (0, 0, 255)
 
-            # Check for the right dumbbell front raises
-            if angle_right_dumbbellfrontraise >= 150:
-                if dir_right_dumbbellfrontraise == 0 and count_right_dumbbellfrontraise < 5:
-                    count_right_dumbbellfrontraise += 0.5
-                    if count_right_dumbbellfrontraise == 5:
-                        dir_right_dumbbellfrontraise = -1
-                    else:
-                        dir_right_dumbbellfrontraise = 1
-            if angle_right_dumbbellfrontraise <= 20:
-                if dir_right_dumbbellfrontraise == 1 and count_right_dumbbellfrontraise < 5:
-                    count_right_dumbbellfrontraise += 0.5
-                    if count_right_dumbbellfrontraise == 5:
-                        dir_right_dumbbellfrontraise = -1
-                    else:
-                        dir_right_dumbbellfrontraise = 0
+            #left
+            if 40 <= per_left_dumbbellfrontraise <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellfrontraise += time.time() - start_time2_dumbbellfrontraise
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellfrontraise >= time_threshold_dumbbellfrontraise:
+                    if dir_left_unsuccessful_dumbbellfrontraise == 0:
+                        unsuccessful_reps_count_left_dumbbellfrontraise += 0.5
+                        dir_left_unsuccessful_dumbbellfrontraise = 1
+            else:
+                within_range_time1_dumbbellfrontraise = 0
+                # Update the start time to the current time
+                start_time2_dumbbellfrontraise = time.time()
+
+            if 1 <= per_left_dumbbellfrontraise <= 10:
+                if dir_left_unsuccessful_dumbbellfrontraise == 1:
+                    unsuccessful_reps_count_left_dumbbellfrontraise += 0.5
+                    dir_left_unsuccessful_dumbbellfrontraise = 0
+
+            if per_left_dumbbellfrontraise == success_threshold_dumbbellfrontraise:
+                if dir_left_dumbbellfrontraise == 0:
+                    successful_reps_count_left_dumbbellfrontraise += 0.5
+                    dir_left_dumbbellfrontraise = 1
+
+            elif per_left_dumbbellfrontraise == atrest_value_dumbbellfrontraise:
+                if dir_left_dumbbellfrontraise == 1:
+                    successful_reps_count_left_dumbbellfrontraise += 0.5
+                    dir_left_dumbbellfrontraise = 0
+
+            # right
+            if 40 <= per_right_dumbbellfrontraise <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellfrontraise += time.time() - start_time3_dumbbellfrontraise
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellfrontraise >= time_threshold_dumbbellfrontraise:
+                    if dir_right_unsuccessful_dumbbellfrontraise == 0:
+                        unsuccessful_reps_count_right_dumbbellfrontraise += 0.5
+                        dir_right_unsuccessful_dumbbellfrontraise = 1
+            else:
+                within_range_time2_dumbbellfrontraise = 0
+                # Update the start time to the current time
+                start_time3_dumbbellfrontraise = time.time()
+
+            if 1 <= per_right_dumbbellfrontraise <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_dumbbellfrontraise == 1:
+                    unsuccessful_reps_count_right_dumbbellfrontraise += 0.5
+                    dir_right_unsuccessful_dumbbellfrontraise = 0
+
+            if per_right_dumbbellfrontraise == success_threshold_dumbbellfrontraise:
+                if dir_right_dumbbellfrontraise == 0:
+                    successful_reps_count_right_dumbbellfrontraise += 0.5
+                    dir_right_dumbbellfrontraise = 1
+                    cooldown_timer_dumbbellfrontraise = cooldown_duration_dumbbellfrontraise
+            elif per_right_dumbbellfrontraise == atrest_value_dumbbellfrontraise: 
+                if dir_right_dumbbellfrontraise == 1:
+                    successful_reps_count_right_dumbbellfrontraise += 0.5
+                    dir_right_dumbbellfrontraise = 0
+                    cooldown_timer_dumbbellfrontraise = cooldown_duration_dumbbellfrontraise
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellfrontraise = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_left_dumbbellfrontraise)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_left_dumbbellfrontraise)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellfrontraise = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_right_dumbbellfrontraise)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_right_dumbbellfrontraise)
 
         # label
-        cvzone.putTextRect(img, 'Dumbbell Raise Tracker', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'Dumbbell Raise Front', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellfrontraise)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_dumbbellfrontraise)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise)), (50, 400), color_right_dumbbellfrontraise, -1)
 
         cv2.putText(img, f"L {int(per_left_dumbbellfrontraise)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise)), (995, 400), (0, 0, 255), -1)
-
-        if angle_left_dumbbellfrontraise >= 150:
-            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_dumbbellfrontraise >= 150:
-            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise)), (995, 400), color_left_dumbbellfrontraise, -1)
 
     # count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_right_dumbbellfrontraise)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellfrontraise)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_left_dumbbellfrontraise)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellfrontraise)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_dumbbellfrontraise <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise = False
         exercise_mode = "rest_dumbbellfrontraise"
         rest_dumbbellfrontraise_start_time = time.time()
 
-    if count_right_dumbbellfrontraise >= 5 and count_left_dumbbellfrontraise >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_dumbbellfrontraise >= 10 and successful_reps_count_left_dumbbellfrontraise >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise = False
-        exercise_mode = "rest_dumbbellfrontraise"
-        rest_dumbbellfrontraise_start_time = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_dumbbellfrontraise == 0:
+            general_feedback_left_dumbbellfrontraise = detector_dumbbellfrontraise.left_arm_feedback(total_reps_count_left_dumbbellfrontraise)
+            general_feedback_right_dumbbellfrontraise = detector_dumbbellfrontraise.right_arm_feedback(total_reps_count_right_dumbbellfrontraise)
+            dir_gen_feedback_dumbbellfrontraise = 1
+            exercise_mode = "rest_dumbbellfrontraise"
+            rest_dumbbellfrontraise_start_time = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellfrontraise >= 2 and unsuccessful_reps_count_right_dumbbellfrontraise >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise == 0:
+            general_feedback_left_dumbbellfrontraise = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise)
+            general_feedback_right_dumbbellfrontraise = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise = 1
+            exercise_mode = "rest_dumbbellfrontraise"
+            rest_dumbbellfrontraise_start_time = time.time()
+    
+    if unsuccessful_reps_count_left_dumbbellfrontraise >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise == 0:
+            general_feedback_left_dumbbellfrontraise = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise = 1
+            exercise_mode = "rest_dumbbellfrontraise"
+            rest_dumbbellfrontraise_start_time = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellfrontraise >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise == 0:
+            general_feedback_right_dumbbellfrontraise = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise == 1
+            exercise_mode = "rest_dumbbellfrontraise"
+            rest_dumbbellfrontraise_start_time = time.time()
+
     return img
 
 def rest_dumbbellfrontraise(img):
-    global exercise_mode, rest_dumbbellfrontraise_start_time, start_time_dumbbellfrontraise_set2
+    global exercise_mode, rest_dumbbellfrontraise_start_time, start_time1_dumbbellfrontraise_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3692,120 +4403,199 @@ def rest_dumbbellfrontraise(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "dumbbell_frontraise_set2"
-        start_time_dumbbellfrontraise_set2 = time.time()
+        start_time1_dumbbellfrontraise_set2 = time.time()
 
     return img
 
 def detect_dumbbellfrontraise_set2(img):
-    global count_left_dumbbellfrontraise_set2, count_right_dumbbellfrontraise_set2, dir_left_dumbbellfrontraise_set2, dir_right_dumbbellfrontraise_set2, start_time_dumbbellfrontraise_set2, repetition_time_dumbbellfrontraise_set2, display_info_dumbbellfrontraise_set2, bar_left_dumbbellfrontraise_set2, bar_right_dumbbellfrontraise_set2, per_left_dumbbellfrontraise_set2, per_right_dumbbellfrontraise_set2, angle_left_dumbbellfrontraise_set2, angle_right_dumbbellfrontraise_set2, rest_dumbbellfrontraise_start_time_set2, exercise_mode
+    global dir_left_dumbbellfrontraise_set2, dir_right_dumbbellfrontraise_set2, display_info_dumbbellfrontraise_set2, per_right_dumbbellfrontraise_set2, per_left_dumbbellfrontraise_set2, bar_left_dumbbellfrontraise_set2, bar_right_dumbbellfrontraise_set2, color_right_dumbbellfrontraise_set2, color_left_dumbbellfrontraise_set2, feedback_left_dumbbellfrontraise_set2, feedback_right_dumbbellfrontraise_set2, success_threshold_dumbbellfrontraise_set2, atrest_value_dumbbellfrontraise_set2,unsuccessful_reps_count_left_dumbbellfrontraise_set2, successful_reps_count_left_dumbbellfrontraise_set2, unsuccessful_reps_count_right_dumbbellfrontraise_set2, successful_reps_count_right_dumbbellfrontraise_set2, dir_left_unsuccessful_dumbbellfrontraise_set2, dir_right_unsuccessful_dumbbellfrontraise_set2, total_reps_count_dumbbellfrontraise_set2, total_reps_count_left_dumbbellfrontraise_set2, total_reps_count_right_dumbbellfrontraise_set2, start_time1_dumbbellfrontraise_set2, start_time2_dumbbellfrontraise_set2, start_time3_dumbbellfrontraise_set2, time_threshold_dumbbellfrontraise_set2, within_range_time1_dumbbellfrontraise_set2, within_range_time2_dumbbellfrontraise_set2, general_feedback_left_dumbbellfrontraise_set2, general_feedback_right_dumbbellfrontraise_set2, dir_gen_feedback_dumbbellfrontraise_set2, dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2, cooldown_timer_dumbbellfrontraise_set2, cooldown_duration_dumbbellfrontraise_set2, angle_left_dumbbellfrontraise_set2, angle_right_dumbbellfrontraise_set2, rest_dumbbellfrontraise_start_time_set2, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_dumbbellfrontraise_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise_set2
+    elapsed_time_dumbbellfrontraise = time.time() - start_time1_dumbbellfrontraise_set2
+    remaining_time_dumbbellfrontraise = max(0, 10 - elapsed_time_dumbbellfrontraise)
 
     if display_info_dumbbellfrontraise_set2:  # Check if to display counter, bar, and percentage
-        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
-        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+        img = detector_dumbbellfrontraise.findPose(img, False)  # initializes img as variable for findpose function
+        lmList_dumbbellfrontraise = detector_dumbbellfrontraise.findPosition(img, False)  # initializes lmList as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList) != 0:
+        if len(lmList_dumbbellfrontraise) != 0:
 
-            angle_left_dumbbellfrontraise_set2 = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
-            angle_right_dumbbellfrontraise_set2 = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
-
+            angle_left_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.findAngle2(img, 24, 12, 16, 14) 
 
             # # Interpolate angle to percentage and position on screen
             per_left_dumbbellfrontraise_set2 = np.interp(angle_left_dumbbellfrontraise_set2, (20, 150), (0, 100))
-            bar_left_dumbbellfrontraise_set2 = np.interp(angle_left_dumbbellfrontraise_set2, (20, 160), (400, 200))
+            bar_left_dumbbellfrontraise_set2 = np.interp(angle_left_dumbbellfrontraise_set2, (20, 150), (400, 200))
 
             per_right_dumbbellfrontraise_set2 = np.interp(angle_right_dumbbellfrontraise_set2, (20, 150), (0, 100))
-            bar_right_dumbbellfrontraise_set2 = np.interp(angle_right_dumbbellfrontraise_set2, (20, 160), (400, 200))
+            bar_right_dumbbellfrontraise_set2 = np.interp(angle_right_dumbbellfrontraise_set2, (20, 150), (400, 200))
 
-            #Check for the left dumbbell front raises
-            if angle_left_dumbbellfrontraise_set2 >= 150:
-                if dir_left_dumbbellfrontraise_set2 == 0 and count_left_dumbbellfrontraise_set2 < 5:
-                    count_left_dumbbellfrontraise_set2 += 0.5
-                    if count_left_dumbbellfrontraise_set2 == 5:
-                        dir_left_dumbbellfrontraise_set2 = -1
-                    else:
-                        dir_left_dumbbellfrontraise_set2 = 1
-            elif angle_left_dumbbellfrontraise_set2 <= 20:
-                if dir_left_dumbbellfrontraise_set2 == 1 and count_left_dumbbellfrontraise_set2 < 5:
-                    count_left_dumbbellfrontraise_set2 += 0.5
-                    if count_left_dumbbellfrontraise_set2 == 5:
-                        dir_left_dumbbellfrontraise_set2 = -1
-                    else:
-                        dir_left_dumbbellfrontraise_set2 = 0
+            if int(per_left_dumbbellfrontraise_set2) == 100:
+                color_left_dumbbellfrontraise_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellfrontraise_set2 = (0, 0, 255)
+            
+            if int(per_right_dumbbellfrontraise_set2) == 100:
+                color_right_dumbbellfrontraise_set2 = (0, 255, 0)
+            else:
+                color_right_dumbbellfrontraise_set2 = (0, 0, 255)
 
-            # Check for the right dumbbell front raises
-            if angle_right_dumbbellfrontraise_set2 >= 150:
-                if dir_right_dumbbellfrontraise_set2 == 0 and count_right_dumbbellfrontraise_set2 < 5:
-                    count_right_dumbbellfrontraise_set2 += 0.5
-                    if count_right_dumbbellfrontraise_set2 == 5:
-                        dir_right_dumbbellfrontraise_set2 = -1
-                    else:
-                        dir_right_dumbbellfrontraise_set2 = 1
-            if angle_right_dumbbellfrontraise_set2 <= 20:
-                if dir_right_dumbbellfrontraise_set2 == 1 and count_right_dumbbellfrontraise_set2 < 5:
-                    count_right_dumbbellfrontraise_set2 += 0.5
-                    if count_right_dumbbellfrontraise_set2 == 5:
-                        dir_right_dumbbellfrontraise_set2 = -1
-                    else:
-                        dir_right_dumbbellfrontraise_set2 = 0
+            #left
+            if 40 <= per_left_dumbbellfrontraise_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellfrontraise_set2 += time.time() - start_time2_dumbbellfrontraise_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellfrontraise_set2 >= time_threshold_dumbbellfrontraise_set2:
+                    if dir_left_unsuccessful_dumbbellfrontraise_set2 == 0:
+                        unsuccessful_reps_count_left_dumbbellfrontraise_set2 += 0.5
+                        dir_left_unsuccessful_dumbbellfrontraise_set2 = 1
+            else:
+                within_range_time1_dumbbellfrontraise_set2 = 0
+                # Update the start time to the current time
+                start_time2_dumbbellfrontraise_set2 = time.time()
+
+            if 1 <= per_left_dumbbellfrontraise_set2 <= 10:
+                if dir_left_unsuccessful_dumbbellfrontraise_set2 == 1:
+                    unsuccessful_reps_count_left_dumbbellfrontraise_set2 += 0.5
+                    dir_left_unsuccessful_dumbbellfrontraise_set2 = 0
+
+            if per_left_dumbbellfrontraise_set2 == success_threshold_dumbbellfrontraise_set2:
+                if dir_left_dumbbellfrontraise_set2 == 0:
+                    successful_reps_count_left_dumbbellfrontraise_set2 += 0.5
+                    dir_left_dumbbellfrontraise_set2 = 1
+
+            elif per_left_dumbbellfrontraise_set2 == atrest_value_dumbbellfrontraise_set2:
+                if dir_left_dumbbellfrontraise_set2 == 1:
+                    successful_reps_count_left_dumbbellfrontraise_set2 += 0.5
+                    dir_left_dumbbellfrontraise_set2 = 0
+
+            # right
+            if 40 <= per_right_dumbbellfrontraise_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellfrontraise_set2 += time.time() - start_time3_dumbbellfrontraise_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellfrontraise_set2 >= time_threshold_dumbbellfrontraise_set2:
+                    if dir_right_unsuccessful_dumbbellfrontraise_set2 == 0:
+                        unsuccessful_reps_count_right_dumbbellfrontraise_set2 += 0.5
+                        dir_right_unsuccessful_dumbbellfrontraise_set2 = 1
+            else:
+                within_range_time2_dumbbellfrontraise_set2 = 0
+                # Update the start time to the current time
+                start_time3_dumbbellfrontraise_set2 = time.time()
+
+            if 1 <= per_right_dumbbellfrontraise_set2 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_dumbbellfrontraise_set2 == 1:
+                    unsuccessful_reps_count_right_dumbbellfrontraise_set2 += 0.5
+                    dir_right_unsuccessful_dumbbellfrontraise_set2 = 0
+
+            if per_right_dumbbellfrontraise_set2 == success_threshold_dumbbellfrontraise_set2:
+                if dir_right_dumbbellfrontraise_set2 == 0:
+                    successful_reps_count_right_dumbbellfrontraise_set2 += 0.5
+                    dir_right_dumbbellfrontraise_set2 = 1
+                    cooldown_timer_dumbbellfrontraise_set2 = cooldown_duration_dumbbellfrontraise_set2
+            elif per_right_dumbbellfrontraise_set2 == atrest_value_dumbbellfrontraise_set2: 
+                if dir_right_dumbbellfrontraise_set2 == 1:
+                    successful_reps_count_right_dumbbellfrontraise_set2 += 0.5
+                    dir_right_dumbbellfrontraise_set2 = 0
+                    cooldown_timer_dumbbellfrontraise_set2 = cooldown_duration_dumbbellfrontraise_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_left_dumbbellfrontraise_set2)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_left_dumbbellfrontraise_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_right_dumbbellfrontraise_set2)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_right_dumbbellfrontraise_set2)
 
         # label
-        cvzone.putTextRect(img, 'Dumbbell Raise SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'Dumbbell Raise Front SET 2', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellfrontraise)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_dumbbellfrontraise_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set2)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set2)), (50, 400), color_right_dumbbellfrontraise_set2, -1)
 
         cv2.putText(img, f"L {int(per_left_dumbbellfrontraise_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set2)), (995, 400), (0, 0, 255), -1)
-
-        if angle_left_dumbbellfrontraise_set2 >= 150:
-            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set2)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_dumbbellfrontraise_set2 >= 150:
-            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set2)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set2)), (995, 400), color_left_dumbbellfrontraise_set2, -1)
 
     # count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_right_dumbbellfrontraise_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellfrontraise_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_left_dumbbellfrontraise_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellfrontraise_set2)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_dumbbellfrontraise <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set2 = False
         exercise_mode = "rest_dumbbellfrontraise_set2"
         rest_dumbbellfrontraise_start_time_set2 = time.time()
 
-    if count_right_dumbbellfrontraise >= 5 and count_left_dumbbellfrontraise >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_dumbbellfrontraise_set2 >= 10 and successful_reps_count_left_dumbbellfrontraise_set2 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set2 = False
-        exercise_mode = "rest_dumbbellfrontraise_set2"
-        rest_dumbbellfrontraise_start_time_set2 = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_dumbbellfrontraise_set2 == 0:
+            general_feedback_left_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.left_arm_feedback(total_reps_count_left_dumbbellfrontraise_set2)
+            general_feedback_right_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.right_arm_feedback(total_reps_count_right_dumbbellfrontraise_set2)
+            dir_gen_feedback_dumbbellfrontraise_set2 = 1
+            exercise_mode = "rest_dumbbellfrontraise_set2"
+            rest_dumbbellfrontraise_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellfrontraise_set2 >= 2 and unsuccessful_reps_count_right_dumbbellfrontraise_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set2 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 == 0:
+            general_feedback_left_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise_set2)
+            general_feedback_right_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise_set2)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 = 1
+            exercise_mode = "rest_dumbbellfrontraise_set2"
+            rest_dumbbellfrontraise_start_time_set2 = time.time()
+    
+    if unsuccessful_reps_count_left_dumbbellfrontraise_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set2 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 == 0:
+            general_feedback_left_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise_set2)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 = 1
+            exercise_mode = "rest_dumbbellfrontraise_set2"
+            rest_dumbbellfrontraise_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellfrontraise_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set2 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set2 == 0:
+            general_feedback_right_dumbbellfrontraise_set2 = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise_set2)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise == 1
+            exercise_mode = "rest_dumbbellfrontraise_set2"
+            rest_dumbbellfrontraise_start_time_set2 = time.time()
     return img
 
 def rest_dumbbellfrontraise_set2(img):
-    global exercise_mode, rest_dumbbellfrontraise_start_time_set2, start_time_dumbbellfrontraise_set3
+    global exercise_mode, rest_dumbbellfrontraise_start_time_set2, start_time1_dumbbellfrontraise_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set2
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -3816,116 +4606,195 @@ def rest_dumbbellfrontraise_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "dumbbell_frontraise_set3"
-        start_time_dumbbellfrontraise_set3 = time.time()
+        start_time1_dumbbellfrontraise_set3 = time.time()
     return img
 
 def detect_dumbbellfrontraise_set3(img):
-    global count_left_dumbbellfrontraise_set3, count_right_dumbbellfrontraise_set3, dir_left_dumbbellfrontraise_set3, dir_right_dumbbellfrontraise_set3, start_time_dumbbellfrontraise_set3, repetition_time_dumbbellfrontraise_set3, display_info_dumbbellfrontraise_set3, bar_left_dumbbellfrontraise_set3, bar_right_dumbbellfrontraise_set3, per_left_dumbbellfrontraise_set3, per_right_dumbbellfrontraise_set3, angle_left_dumbbellfrontraise_set3, angle_right_dumbbellfrontraise_set3, rest_dumbbellfrontraise_start_time_set3, exercise_mode
+    global dir_left_dumbbellfrontraise_set3, dir_right_dumbbellfrontraise_set3, display_info_dumbbellfrontraise_set3, per_right_dumbbellfrontraise_set3, per_left_dumbbellfrontraise_set3, bar_left_dumbbellfrontraise_set3, bar_right_dumbbellfrontraise_set3, color_right_dumbbellfrontraise_set3, color_left_dumbbellfrontraise_set3, feedback_left_dumbbellfrontraise_set3, feedback_right_dumbbellfrontraise_set3, success_threshold_dumbbellfrontraise_set3, atrest_value_dumbbellfrontraise_set3,unsuccessful_reps_count_left_dumbbellfrontraise_set3, successful_reps_count_left_dumbbellfrontraise_set3, unsuccessful_reps_count_right_dumbbellfrontraise_set3, successful_reps_count_right_dumbbellfrontraise_set3, dir_left_unsuccessful_dumbbellfrontraise_set3, dir_right_unsuccessful_dumbbellfrontraise_set3, total_reps_count_dumbbellfrontraise_set3, total_reps_count_left_dumbbellfrontraise_set3, total_reps_count_right_dumbbellfrontraise_set3, start_time1_dumbbellfrontraise_set3, start_time2_dumbbellfrontraise_set3, start_time3_dumbbellfrontraise_set3, time_threshold_dumbbellfrontraise_set3, within_range_time1_dumbbellfrontraise_set3, within_range_time2_dumbbellfrontraise_set3, general_feedback_left_dumbbellfrontraise_set3, general_feedback_right_dumbbellfrontraise_set3, dir_gen_feedback_dumbbellfrontraise_set3, dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3, cooldown_timer_dumbbellfrontraise_set3, cooldown_duration_dumbbellfrontraise_set3, angle_left_dumbbellfrontraise_set3, angle_right_dumbbellfrontraise_set3, rest_dumbbellfrontraise_start_time_set3, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
     # Timer - starts timer based on set duration
-    elapsed_time = time.time() - start_time_dumbbellfrontraise_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_dumbbellfrontraise_set3
+    elapsed_time_dumbbellfrontraise = time.time() - start_time1_dumbbellfrontraise_set3
+    remaining_time_dumbbellfrontraise = max(0, 10 - elapsed_time_dumbbellfrontraise)
 
     if display_info_dumbbellfrontraise_set3:  # Check if to display counter, bar, and percentage
-        img = detector_dumbbell.findPose(img, False)  # initializes img as variable for findpose function
-        lmList = detector_dumbbell.findPosition(img, False)  # initializes lmList as variable for findPosition function
+        img = detector_dumbbellfrontraise.findPose(img, False)  # initializes img as variable for findpose function
+        lmList_dumbbellfrontraise = detector_dumbbellfrontraise.findPosition(img, False)  # initializes lmList as variable for findPosition function
 
         # Define hand angles outside the if statement
-        if len(lmList) != 0:
+        if len(lmList_dumbbellfrontraise) != 0:
 
-            angle_left_dumbbellfrontraise_set3 = detector_dumbbell.findAngle(img, 15, 11, 23, 13)
-            angle_right_dumbbellfrontraise_set3 = detector_dumbbell.findAngle2(img, 24, 12, 16, 14) 
-
+            angle_left_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.findAngle(img, 15, 11, 23, 13)
+            angle_right_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.findAngle2(img, 24, 12, 16, 14) 
 
             # # Interpolate angle to percentage and position on screen
             per_left_dumbbellfrontraise_set3 = np.interp(angle_left_dumbbellfrontraise_set3, (20, 150), (0, 100))
-            bar_left_dumbbellfrontraise_set3 = np.interp(angle_left_dumbbellfrontraise_set3, (20, 160), (400, 200))
+            bar_left_dumbbellfrontraise_set3 = np.interp(angle_left_dumbbellfrontraise_set3, (20, 150), (400, 200))
 
             per_right_dumbbellfrontraise_set3 = np.interp(angle_right_dumbbellfrontraise_set3, (20, 150), (0, 100))
-            bar_right_dumbbellfrontraise_set3 = np.interp(angle_right_dumbbellfrontraise_set3, (20, 160), (400, 200))
+            bar_right_dumbbellfrontraise_set3 = np.interp(angle_right_dumbbellfrontraise_set3, (20, 150), (400, 200))
 
-            #Check for the left dumbbell front raises
-            if angle_left_dumbbellfrontraise_set3 >= 150:
-                if dir_left_dumbbellfrontraise_set3 == 0 and count_left_dumbbellfrontraise_set3 < 5:
-                    count_left_dumbbellfrontraise_set3 += 0.5
-                    if count_left_dumbbellfrontraise_set3 == 5:
-                        dir_left_dumbbellfrontraise_set3 = -1
-                    else:
-                        dir_left_dumbbellfrontraise_set3 = 1
-            elif angle_left_dumbbellfrontraise_set3 <= 20:
-                if dir_left_dumbbellfrontraise_set3 == 1 and count_left_dumbbellfrontraise_set3 < 5:
-                    count_left_dumbbellfrontraise_set3 += 0.5
-                    if count_left_dumbbellfrontraise_set3 == 5:
-                        dir_left_dumbbellfrontraise_set3 = -1
-                    else:
-                        dir_left_dumbbellfrontraise_set3 = 0
+            if int(per_left_dumbbellfrontraise_set3) == 100:
+                color_left_dumbbellfrontraise_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellfrontraise_set3 = (0, 0, 255)
+            
+            if int(per_right_dumbbellfrontraise_set3) == 100:
+                color_right_dumbbellfrontraise_set3 = (0, 255, 0)
+            else:
+                color_right_dumbbellfrontraise_set3 = (0, 0, 255)
 
-            # Check for the right dumbbell front raises
-            if angle_right_dumbbellfrontraise_set3 >= 150:
-                if dir_right_dumbbellfrontraise_set3 == 0 and count_right_dumbbellfrontraise_set3 < 5:
-                    count_right_dumbbellfrontraise_set3 += 0.5
-                    if count_right_dumbbellfrontraise_set3 == 5:
-                        dir_right_dumbbellfrontraise_set3 = -1
-                    else:
-                        dir_right_dumbbellfrontraise_set3 = 1
-            if angle_right_dumbbellfrontraise_set3 <= 20:
-                if dir_right_dumbbellfrontraise_set3 == 1 and count_right_dumbbellfrontraise_set3 < 5:
-                    count_right_dumbbellfrontraise_set3 += 0.5
-                    if count_right_dumbbellfrontraise_set3 == 5:
-                        dir_right_dumbbellfrontraise_set3 = -1
-                    else:
-                        dir_right_dumbbellfrontraise_set3 = 0
+            #left
+            if 40 <= per_left_dumbbellfrontraise_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellfrontraise_set3 += time.time() - start_time2_dumbbellfrontraise_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellfrontraise_set3 >= time_threshold_dumbbellfrontraise_set3:
+                    if dir_left_unsuccessful_dumbbellfrontraise_set3 == 0:
+                        unsuccessful_reps_count_left_dumbbellfrontraise_set3 += 0.5
+                        dir_left_unsuccessful_dumbbellfrontraise_set3 = 1
+            else:
+                within_range_time1_dumbbellfrontraise_set3 = 0
+                # Update the start time to the current time
+                start_time2_dumbbellfrontraise_set3 = time.time()
+
+            if 1 <= per_left_dumbbellfrontraise_set3 <= 10:
+                if dir_left_unsuccessful_dumbbellfrontraise_set3 == 1:
+                    unsuccessful_reps_count_left_dumbbellfrontraise_set3 += 0.5
+                    dir_left_unsuccessful_dumbbellfrontraise_set3 = 0
+
+            if per_left_dumbbellfrontraise_set3 == success_threshold_dumbbellfrontraise_set3:
+                if dir_left_dumbbellfrontraise_set3 == 0:
+                    successful_reps_count_left_dumbbellfrontraise_set3 += 0.5
+                    dir_left_dumbbellfrontraise_set3 = 1
+
+            elif per_left_dumbbellfrontraise_set3 == atrest_value_dumbbellfrontraise_set3:
+                if dir_left_dumbbellfrontraise_set3 == 1:
+                    successful_reps_count_left_dumbbellfrontraise_set3 += 0.5
+                    dir_left_dumbbellfrontraise_set3 = 0
+
+            # right
+            if 40 <= per_right_dumbbellfrontraise_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellfrontraise_set3 += time.time() - start_time3_dumbbellfrontraise_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellfrontraise_set3 >= time_threshold_dumbbellfrontraise_set3:
+                    if dir_right_unsuccessful_dumbbellfrontraise_set3 == 0:
+                        unsuccessful_reps_count_right_dumbbellfrontraise_set3 += 0.5
+                        dir_right_unsuccessful_dumbbellfrontraise_set3 = 1
+            else:
+                within_range_time2_dumbbellfrontraise_set3 = 0
+                # Update the start time to the current time
+                start_time3_dumbbellfrontraise_set3 = time.time()
+
+            if 1 <= per_right_dumbbellfrontraise_set3 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_dumbbellfrontraise_set3 == 1:
+                    unsuccessful_reps_count_right_dumbbellfrontraise_set3 += 0.5
+                    dir_right_unsuccessful_dumbbellfrontraise_set3 = 0
+
+            if per_right_dumbbellfrontraise_set3 == success_threshold_dumbbellfrontraise_set3:
+                if dir_right_dumbbellfrontraise_set3 == 0:
+                    successful_reps_count_right_dumbbellfrontraise_set3 += 0.5
+                    dir_right_dumbbellfrontraise_set3 = 1
+                    cooldown_timer_dumbbellfrontraise_set3 = cooldown_duration_dumbbellfrontraise_set3
+            elif per_right_dumbbellfrontraise_set3 == atrest_value_dumbbellfrontraise_set3: 
+                if dir_right_dumbbellfrontraise_set3 == 1:
+                    successful_reps_count_right_dumbbellfrontraise_set3 += 0.5
+                    dir_right_dumbbellfrontraise_set3 = 0
+                    cooldown_timer_dumbbellfrontraise_set3 = cooldown_duration_dumbbellfrontraise_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_left_dumbbellfrontraise_set3)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_left_dumbbellfrontraise_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.feedback_dumbbellfrontraise(per_right_dumbbellfrontraise_set3)
+
+            detector_dumbbellfrontraise.update_next_per_left(per_right_dumbbellfrontraise_set3)
 
         # label
-        cvzone.putTextRect(img, 'Dumbbell Raise SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+        cvzone.putTextRect(img, 'Dumbbell Raise Front SET 3', [430, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellfrontraise)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # bar
         cv2.putText(img, f"R {int(per_right_dumbbellfrontraise_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set3)), (50, 400), (0, 0, 255), -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set3)), (50, 400), color_right_dumbbellfrontraise_set3, -1)
 
         cv2.putText(img, f"L {int(per_left_dumbbellfrontraise_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set3)), (995, 400), (0, 0, 255), -1)
-
-        if angle_left_dumbbellfrontraise_set3 >= 150:
-            cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set3)), (995, 400), (0, 255, 0), -1)
-
-        if angle_right_dumbbellfrontraise_set3 >= 150:
-            cv2.rectangle(img, (8, int(bar_right_dumbbellfrontraise_set3)), (50, 400), (0, 255, 0), -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellfrontraise_set3)), (995, 400), color_left_dumbbellfrontraise_set3, -1)
 
     # count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_right_dumbbellfrontraise_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellfrontraise_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_left_dumbbellfrontraise_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellfrontraise_set3)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_dumbbellfrontraise <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set3 = False
         exercise_mode = "rest_dumbbellfrontraise_set3"
         rest_dumbbellfrontraise_start_time_set3 = time.time()
 
-    if count_right_dumbbellfrontraise_set3 >= 5 and count_left_dumbbellfrontraise_set3 >= 5:
-        cvzone.putTextRect(img, 'All Repetitions Completed', [390, 30], thickness=2, border=2, scale=2.5)
+    if successful_reps_count_right_dumbbellfrontraise_set3 >= 10 and successful_reps_count_left_dumbbellfrontraise_set3 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set3 = False
-        exercise_mode = "rest_dumbbellfrontraise_set3"
-        rest_dumbbellfrontraise_start_time_set3 = time.time()
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_dumbbellfrontraise_set3 == 0:
+            general_feedback_left_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.left_arm_feedback(total_reps_count_left_dumbbellfrontraise_set3)
+            general_feedback_right_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.right_arm_feedback(total_reps_count_right_dumbbellfrontraise_set3)
+            dir_gen_feedback_dumbbellfrontraise_set3 = 1
+            exercise_mode = "rest_dumbbellfrontraise_set3"
+            rest_dumbbellfrontraise_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellfrontraise_set3 >= 2 and unsuccessful_reps_count_right_dumbbellfrontraise_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set3 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 == 0:
+            general_feedback_left_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise_set3)
+            general_feedback_right_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise_set3)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 = 1
+            exercise_mode = "rest_dumbbellfrontraise_set3"
+            rest_dumbbellfrontraise_start_time_set3 = time.time()
+    
+    if unsuccessful_reps_count_left_dumbbellfrontraise_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set3 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 == 0:
+            general_feedback_left_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellfrontraise_set3)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise = 1
+            exercise_mode = "rest_dumbbellfrontraise_set3"
+            rest_dumbbellfrontraise_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellfrontraise_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellfrontraise_set3 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 == 0:
+            general_feedback_right_dumbbellfrontraise_set3 = detector_dumbbellfrontraise.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellfrontraise_set3)
+            dir_gen_feedback_unsuccessful_dumbbellfrontraise_set3 == 1
+            exercise_mode = "rest_dumbbellfrontraise_set3"
+            rest_dumbbellfrontraise_start_time_set3 = time.time()
 
     return img
 
 def rest_dumbbellfrontraise_set3(img):
-    global exercise_mode, rest_dumbbellfrontraise_start_time_set3, start_time_alternatinglunge
+    global exercise_mode, rest_dumbbellfrontraise_start_time_set3, start_time1_leglunge
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dumbbellfrontraise_start_time_set3
@@ -3940,191 +4809,201 @@ def rest_dumbbellfrontraise_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "alternating_lunge"
-        start_time_alternatinglunge = time.time()
+        start_time1_leglunge = time.time()
     return img
 
 def detect_alternatinglunge(img):
-    global count_alternating_left_lunge, count_alternating_right_lunge, dir_alternating_left_lunge, dir_alternating_right_lunge, start_time_alternatinglunge, repetition_time_alternatinglunge, per_left_leg_alternatinglunge, per_right_leg_alternatinglunge, display_info_alternatinglunge, bar_left_leg_alternatinglunge, bar_right_leg_alternatinglunge, leftleg_alternatinglunge, rightleg_alternatinglunge, cooldown_duration_alternatinglunge, cooldown_timer_alternatinglunge, color_right_leg_alternatinglunge, color_left_leg_alternatinglunge, exercise_mode, rest_alternatinglunge_start_time, orientation, orientation2
+    global dir_left_leglunge, dir_right_leglunge, display_info_leglunge, per_right_leglunge, per_left_leglunge, bar_left_leglunge, bar_right_leglunge, leftangle_leglunge, rightangle_leglunge, color_right_leglunge, color_left_leglunge, feedback_left_leglunge, feedback_right_leglunge, success_threshold_leglunge, peak_value_leglunge, atrest_value_leglunge, unsuccessful_reps_count_left_leglunge, successful_reps_count_left_leglunge, unsuccessful_reps_count_right_leglunge, successful_reps_count_right_leglunge, dir_left_unsuccessful_leglunge, dir_right_unsuccessful_leglunge, total_reps_count_leglunge, total_reps_count_left_leglunge, total_reps_count_right_leglunge, start_time1_leglunge, start_time2_leglunge, start_time3_leglunge, time_threshold_leglunge, within_range_time1_leglunge, within_range_time2_leglunge, general_feedback_left_leglunge, general_feedback_right_leglunge, dir_gen_feedback_leglunge, dir_gen_feedback_unsuccessful_leglunge, cooldown_timer_leglunge, cooldown_duration_leglunge, rest_alternatinglunge_start_time, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_alternatinglunge
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge
+    elapsed_time_leglunge = time.time() - start_time1_leglunge
+    remaining_time_leglunge = max(0, 60 - elapsed_time_leglunge)
 
-    if display_info_alternatinglunge:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+    if display_info_leglunge:  # Check if to display counter, bar, and percentage
+        img = detector_leglunge.findPose(img, False)
+        lmList_leglunge = detector_leglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_leglunge) != 0:
 
             # Right and Left keypoints
-            rightleg_alternatinglunge, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
-            leftleg_alternatinglunge, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+            rightleg_leglunge = detector_leglunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_leglunge = detector_leglunge.AlternatingLunge(img, 23, 25, 27, True)
 
-            if cooldown_timer_alternatinglunge > 0:
-                cooldown_timer_alternatinglunge -= 1
+            if cooldown_timer_leglunge > 0:
+                cooldown_timer_leglunge -= 1
 
-            #print(orientation, orientation2)
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (90, 170), (100, 0))
-                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (90, 170), (480, 680))
-                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (90, 170), (100, 0))
-                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (90, 170), (480, 680))
+            per_right_leglunge = np.interp(rightleg_leglunge, (150, 200), (100, 0))
+            bar_right_leglunge = np.interp(rightleg_leglunge, (150, 200), (480, 680))
 
-                    if int(per_left_leg_alternatinglunge) == 100:
-                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge) == 100:
-                        color_right_leg_alternatinglunge = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge = (0, 0, 255)
+            per_left_leglunge = np.interp(leftleg_leglunge, (150, 200), (100, 0))
+            bar_left_leglunge = np.interp(leftleg_leglunge, (150, 200), (480, 680))
 
-                    if rightleg_alternatinglunge <= 80:
-                        if dir_alternating_right_lunge == 0:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    elif rightleg_alternatinglunge >= 150:
-                        if dir_alternating_right_lunge == 1:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    
-                    if leftleg_alternatinglunge <= 80:
-                        if dir_alternating_left_lunge == 0:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    elif leftleg_alternatinglunge >= 150:
-                        if dir_alternating_left_lunge == 1:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+            if int(per_left_leglunge) == 100:
+                color_left_leglunge = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_leglunge = (0, 0, 255)
+            
+            if int(per_right_leglunge) == 100:
+                color_right_leglunge = (0, 255, 0)
+            else:
+                color_right_leglunge = (0, 0, 255)
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg_alternatinglunge is not None and rightleg_alternatinglunge is not None:
-                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (190, 280), (0, 100))
-                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (190, 280), (680, 480))
-                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (190, 280), (0, 100))
-                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (190, 280), (680, 480))
+            #left
+            if 40 <= per_left_leglunge <= 90:
+                # Increment the time within range
+                within_range_time1_leglunge += time.time() - start_time2_leglunge
 
-                    if int(per_left_leg_alternatinglunge) == 100:
-                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge) == 100:
-                        color_right_leg_alternatinglunge = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge = (0, 0, 255)
-
-                    if rightleg_alternatinglunge > 280:
-                        if dir_alternating_right_lunge == 0:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    elif rightleg_alternatinglunge < 179:
-                        if dir_alternating_right_lunge == 1:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    if leftleg_alternatinglunge > 280:
-                        if dir_alternating_left_lunge == 0:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    elif leftleg_alternatinglunge < 179:
-                        if dir_alternating_left_lunge == 1:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (100, 200), (100, 0))
-                    bar_right_leg_alternatinglunge = np.interp(rightleg_alternatinglunge, (100, 200), (480, 680))
-                    per_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (100, 200), (100, 0))
-                    bar_left_leg_alternatinglunge = np.interp(leftleg_alternatinglunge, (100, 200), (480, 680))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_leglunge >= time_threshold_leglunge:
+                    if dir_left_unsuccessful_leglunge == 0:
+                        unsuccessful_reps_count_left_leglunge += 0.5
+                        dir_left_unsuccessful_leglunge = 1
+                        print("UP LEFT: ", unsuccessful_reps_count_left_leglunge)
 
 
-                    if int(per_left_leg_alternatinglunge) == 100:
-                        color_left_leg_alternatinglunge = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge) == 100:
-                        color_right_leg_alternatinglunge = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge = (0, 0, 255)
+            else:
+                within_range_time1_leglunge = 0
+                # Update the start time to the current time
+                start_time2_leglunge = time.time()
 
-                    if rightleg_alternatinglunge <= 150 and leftleg_alternatinglunge <= 100:
-                        if dir_alternating_right_lunge == 0:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    else: 
-                        if dir_alternating_right_lunge == 1:
-                            count_alternating_right_lunge += 0.5
-                            dir_alternating_right_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
+            if 1 <= per_left_leglunge <= 10:
+                if dir_left_unsuccessful_leglunge == 1:
+                    unsuccessful_reps_count_left_leglunge += 0.5
+                    dir_left_unsuccessful_leglunge = 0
+                    print("UP DOWN: ", unsuccessful_reps_count_left_leglunge)
 
-                    if rightleg_alternatinglunge <= 100 and leftleg_alternatinglunge <= 150:
-                        if dir_alternating_left_lunge == 0:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 1
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
-                    else:
-                        if dir_alternating_left_lunge == 1:
-                            count_alternating_left_lunge += 0.5
-                            dir_alternating_left_lunge = 0
-                            cooldown_timer_alternatinglunge = cooldown_duration_alternatinglunge
 
-  
-        cvzone.putTextRect(img, 'Leg Lunge (alternate)', [345, 30], thickness=2, border=2, scale=2.5)
+            if rightleg_leglunge <= 100 and leftleg_leglunge <= 150:
+                if dir_left_leglunge == 0:
+                    successful_reps_count_left_leglunge += 0.5
+                    dir_left_leglunge = 1
+                    cooldown_timer_leglunge = cooldown_duration_leglunge
+            else:
+                if dir_left_leglunge == 1:
+                    successful_reps_count_left_leglunge += 0.5
+                    dir_left_leglunge = 0
+                    cooldown_timer_leglunge = cooldown_duration_leglunge
+    
+            # right
+            if 40 <= per_right_leglunge <= 90:
+                # Increment the time within range
+                within_range_time2_leglunge += time.time() - start_time3_leglunge
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_leglunge >= time_threshold_leglunge:
+                    if dir_right_unsuccessful_leglunge == 0:
+                        unsuccessful_reps_count_right_leglunge += 0.5
+                        dir_right_unsuccessful_leglunge = 1
+                        print("right UP", unsuccessful_reps_count_right_leglunge)
+            else:
+                within_range_time2_leglunge = 0
+                # Update the start time to the current time
+                start_time3_leglunge = time.time()
+
+            if 1 <= per_right_leglunge <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_leglunge == 1:
+                    unsuccessful_reps_count_right_leglunge += 0.5
+                    dir_right_unsuccessful_leglunge = 0
+                    print("right DOWN", unsuccessful_reps_count_right_leglunge)
+
+            if rightleg_leglunge <= 150 and leftleg_leglunge <= 100:
+                if dir_right_leglunge == 0:
+                    successful_reps_count_right_leglunge += 0.5
+                    dir_right_leglunge = 1
+                    cooldown_timer_leglunge = cooldown_duration_leglunge
+            else: 
+                if dir_right_leglunge == 1:
+                    successful_reps_count_right_leglunge += 0.5
+                    dir_right_leglunge = 0
+                    cooldown_timer_leglunge = cooldown_duration_leglunge
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_leglunge = detector_leglunge.feedback_leglunge(per_left_leglunge)
+
+            detector_leglunge.update_next_per_left(per_left_leglunge)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_leglunge = detector_leglunge.feedback_leglunge(per_right_leglunge)
+
+            detector_leglunge.update_next_per_left(per_right_leglunge)
+
+        cvzone.putTextRect(img, 'Leg Lunge Front', [430, 30], thickness=2, border=2, scale=1.5)
+
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_leglunge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_leglunge)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge)), (50, 680), color_right_leg_alternatinglunge, -1)
+        cv2.rectangle(img, (8, int(bar_right_leglunge)), (50, 680), color_right_leglunge, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_leglunge)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge)), (995, 680), color_left_leg_alternatinglunge, -1)
+        cv2.rectangle(img, (952, int(bar_left_leglunge)), (995, 680), color_left_leglunge, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_alternating_right_lunge)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_leglunge)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_alternating_left_lunge)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_leglunge)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Timer
-    if remaining_time <= 0:
+    if remaining_time_leglunge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge = False
+        display_info_leglunge = False
         exercise_mode = "rest_alternatinglunge"
         rest_alternatinglunge_start_time = time.time()
 
-    # Repetition
-    if count_alternating_left_lunge >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge = False
-        exercise_mode = "rest_alternatinglunge"
-        rest_alternatinglunge_start_time = time.time()
+    total_reps_count_left_leglunge = successful_reps_count_left_leglunge + unsuccessful_reps_count_left_leglunge
+    total_reps_count_right_leglunge = successful_reps_count_right_leglunge + unsuccessful_reps_count_right_leglunge  
+
+
+    if successful_reps_count_right_leglunge >= 10 and successful_reps_count_left_leglunge >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_leglunge = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_leglunge == 0:
+            general_feedback_left_leglunge = detector_leglunge.left_leg_feedback(total_reps_count_left_leglunge)
+            general_feedback_right_leglunge = detector_leglunge.right_leg_feedback(total_reps_count_right_leglunge)
+            dir_gen_feedback_leglunge = 1
+            exercise_mode = "rest_alternatinglunge"
+            rest_alternatinglunge_start_time = time.time()
+        
+
+    if unsuccessful_reps_count_left_leglunge >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge = False
+
+        if dir_gen_feedback_unsuccessful_leglunge == 0:
+            general_feedback_left_leglunge = detector_leglunge.left_leg_unsuccessful_feedback(total_reps_count_left_leglunge)
+            dir_gen_feedback_unsuccessful_leglunge = 1
+            exercise_mode = "rest_alternatinglunge"
+            rest_alternatinglunge_start_time = time.time()
+
+    if unsuccessful_reps_count_right_leglunge >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge = False
+
+        if dir_gen_feedback_unsuccessful_leglunge == 0:
+            general_feedback_right_leglunge = detector_leglunge.right_leg_unsuccessful_feedback(total_reps_count_right_leglunge)
+            dir_gen_feedback_unsuccessful_leglunge == 1
+            exercise_mode = "rest_alternatinglunge"
+            rest_alternatinglunge_start_time = time.time()
 
     return img
 
 def rest_alternatinglunge(img):
-    global exercise_mode, rest_alternatinglunge_start_time, start_time_alternatinglunge_set2
+    global exercise_mode, rest_alternatinglunge_start_time, start_time1_leglunge_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time
@@ -4139,191 +5018,201 @@ def rest_alternatinglunge(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "alternating_lunge_set2"
-        start_time_alternatinglunge_set2 = time.time()
+        start_time1_leglunge_set2 = time.time()
 
     return img
 
 def detect_alternatinglunge_set2(img):
-    global count_alternating_left_lunge_set2, count_alternating_right_lunge_set2, dir_alternating_left_lunge_set2, dir_alternating_right_lunge_set2, start_time_alternatinglunge_set2, repetition_time_alternatinglunge_set2, per_left_leg_alternatinglunge_set2, per_right_leg_alternatinglunge_set2, display_info_alternatinglunge_set2, bar_left_leg_alternatinglunge_set2, bar_right_leg_alternatinglunge_set2, leftleg_alternatinglunge_set2, rightleg_alternatinglunge_set2, cooldown_duration_alternatinglunge_set2, cooldown_timer_alternatinglunge_set2, color_right_leg_alternatinglunge_set2, color_left_leg_alternatinglunge_set2, exercise_mode, rest_alternatinglunge_start_time_set2, orientation, orientation2
+    global dir_left_leglunge_set2, dir_right_leglunge_set2, display_info_leglunge_set2, per_right_leglunge_set2, per_left_leglunge_set2, bar_left_leglunge_set2, bar_right_leglunge_set2, leftangle_leglunge_set2, rightangle_leglunge_set2, color_right_leglunge_set2, color_left_leglunge_set2, feedback_left_leglunge_set2, feedback_right_leglunge_set2, success_threshold_leglunge_set2, peak_value_leglunge_set2, atrest_value_leglunge_set2, unsuccessful_reps_count_left_leglunge_set2, successful_reps_count_left_leglunge_set2, unsuccessful_reps_count_right_leglunge_set2, successful_reps_count_right_leglunge_set2, dir_left_unsuccessful_leglunge_set2, dir_right_unsuccessful_leglunge_set2, total_reps_count_leglunge_set2, total_reps_count_left_leglunge_set2, total_reps_count_right_leglunge_set2, start_time1_leglunge_set2, start_time2_leglunge_set2, start_time3_leglunge_set2, time_threshold_leglunge_set2, within_range_time1_leglunge_set2, within_range_time2_leglunge_set2, general_feedback_left_leglunge_set2, general_feedback_right_leglunge_set2, dir_gen_feedback_leglunge_set2, dir_gen_feedback_unsuccessful_leglunge_set2, cooldown_timer_leglunge_set2, cooldown_duration_leglunge_set2, rest_alternatinglunge_start_time_set2, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_alternatinglunge_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge_set2
+    elapsed_time_leglunge = time.time() - start_time1_leglunge_set2
+    remaining_time_leglunge = max(0, 60 - elapsed_time_leglunge)
 
-    if display_info_alternatinglunge_set2:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+    if display_info_leglunge_set2:  # Check if to display counter, bar, and percentage
+        img = detector_leglunge.findPose(img, False)
+        lmList_leglunge = detector_leglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_leglunge) != 0:
 
             # Right and Left keypoints
-            rightleg_alternatinglunge_set2, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
-            leftleg_alternatinglunge_set2, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+            rightleg_leglunge_set2 = detector_leglunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_leglunge_set2 = detector_leglunge.AlternatingLunge(img, 23, 25, 27, True)
 
-            if cooldown_timer_alternatinglunge_set2 > 0:
-                cooldown_timer_alternatinglunge_set2 -= 1
+            if cooldown_timer_leglunge_set2 > 0:
+                cooldown_timer_leglunge_set2 -= 1
 
-            #print(orientation, orientation2)
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (90, 170), (100, 0))
-                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (90, 170), (480, 680))
-                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (90, 170), (100, 0))
-                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (90, 170), (480, 680))
+            per_right_leglunge_set2 = np.interp(rightleg_leglunge_set2, (150, 200), (100, 0))
+            bar_right_leglunge_set2 = np.interp(rightleg_leglunge_set2, (150, 200), (480, 680))
 
-                    if int(per_left_leg_alternatinglunge_set2) == 100:
-                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set2) == 100:
-                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+            per_left_leglunge_set2 = np.interp(leftleg_leglunge_set2, (150, 200), (100, 0))
+            bar_left_leglunge_set2 = np.interp(leftleg_leglunge_set2, (150, 200), (480, 680))
 
-                    if rightleg_alternatinglunge_set2 <= 80:
-                        if dir_alternating_right_lunge_set2 == 0:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    elif rightleg_alternatinglunge_set2 >= 150:
-                        if dir_alternating_right_lunge_set2 == 1:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    
-                    if leftleg_alternatinglunge_set2 <= 80:
-                        if dir_alternating_left_lunge_set2 == 0:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    elif leftleg_alternatinglunge_set2 >= 150:
-                        if dir_alternating_left_lunge_set2 == 1:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+            if int(per_left_leglunge_set2) == 100:
+                color_left_leglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_leglunge_set2 = (0, 0, 255)
+            
+            if int(per_right_leglunge_set2) == 100:
+                color_right_leglunge_set2 = (0, 255, 0)
+            else:
+                color_right_leglunge_set2 = (0, 0, 255)
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg_alternatinglunge_set2 is not None and rightleg_alternatinglunge_set2 is not None:
-                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (190, 280), (0, 100))
-                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (190, 280), (680, 480))
-                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (190, 280), (0, 100))
-                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (190, 280), (680, 480))
+            #left
+            if 40 <= per_left_leglunge_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_leglunge_set2 += time.time() - start_time2_leglunge_set2
 
-                    if int(per_left_leg_alternatinglunge_set2) == 100:
-                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set2) == 100:
-                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
-
-                    if rightleg_alternatinglunge_set2 > 280:
-                        if dir_alternating_right_lunge_set2 == 0:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    elif rightleg_alternatinglunge_set2 < 179:
-                        if dir_alternating_right_lunge_set2 == 1:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    if leftleg_alternatinglunge_set2 > 280:
-                        if dir_alternating_left_lunge_set2 == 0:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    elif leftleg_alternatinglunge_set2 < 179:
-                        if dir_alternating_left_lunge_set2 == 1:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (100, 200), (100, 0))
-                    bar_right_leg_alternatinglunge_set2 = np.interp(rightleg_alternatinglunge_set2, (100, 200), (480, 680))
-                    per_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (100, 200), (100, 0))
-                    bar_left_leg_alternatinglunge_set2 = np.interp(leftleg_alternatinglunge_set2, (100, 200), (480, 680))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_leglunge_set2 >= time_threshold_leglunge_set2:
+                    if dir_left_unsuccessful_leglunge_set2 == 0:
+                        unsuccessful_reps_count_left_leglunge_set2 += 0.5
+                        dir_left_unsuccessful_leglunge_set2 = 1
+                        #print("UP LEFT: ", unsuccessful_reps_count_left_leglunge_set2)
 
 
-                    if int(per_left_leg_alternatinglunge_set2) == 100:
-                        color_left_leg_alternatinglunge_set2 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set2) == 100:
-                        color_right_leg_alternatinglunge_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set2 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set2 = (0, 0, 255)
+            else:
+                within_range_time1_leglunge_set2 = 0
+                # Update the start time to the current time
+                start_time2_leglunge_set2 = time.time()
 
-                    if rightleg_alternatinglunge_set2 <= 150 and leftleg_alternatinglunge_set2 <= 100:
-                        if dir_alternating_right_lunge_set2 == 0:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    else: 
-                        if dir_alternating_right_lunge_set2 == 1:
-                            count_alternating_right_lunge_set2 += 0.5
-                            dir_alternating_right_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
+            if 1 <= per_left_leglunge_set2 <= 10:
+                if dir_left_unsuccessful_leglunge_set2 == 1:
+                    unsuccessful_reps_count_left_leglunge_set2 += 0.5
+                    dir_left_unsuccessful_leglunge_set2 = 0
+                    #print("UP DOWN: ", unsuccessful_reps_count_left_leglunge_set2)
 
-                    if rightleg_alternatinglunge_set2 <= 100 and leftleg_alternatinglunge_set2 <= 150:
-                        if dir_alternating_left_lunge_set2 == 0:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 1
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
-                    else:
-                        if dir_alternating_left_lunge_set2 == 1:
-                            count_alternating_left_lunge_set2 += 0.5
-                            dir_alternating_left_lunge_set2 = 0
-                            cooldown_timer_alternatinglunge_set2 = cooldown_duration_alternatinglunge_set2
 
-  
-        cvzone.putTextRect(img, 'Leg Lunge (alternate) SET 2', [345, 30], thickness=2, border=2, scale=2.5)
+            if rightleg_leglunge_set2 <= 100 and leftleg_leglunge_set2 <= 150:
+                if dir_left_leglunge_set2 == 0:
+                    successful_reps_count_left_leglunge_set2 += 0.5
+                    dir_left_leglunge_set2 = 1
+                    cooldown_timer_leglunge_set2 = cooldown_duration_leglunge_set2
+            else:
+                if dir_left_leglunge_set2 == 1:
+                    successful_reps_count_left_leglunge_set2 += 0.5
+                    dir_left_leglunge_set2 = 0
+                    cooldown_timer_leglunge_set2 = cooldown_duration_leglunge_set2
+    
+            # right
+            if 40 <= per_right_leglunge_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_leglunge_set2 += time.time() - start_time3_leglunge_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_leglunge_set2 >= time_threshold_leglunge_set2:
+                    if dir_right_unsuccessful_leglunge_set2 == 0:
+                        unsuccessful_reps_count_right_leglunge_set2 += 0.5
+                        dir_right_unsuccessful_leglunge_set2 = 1
+                        #print("right UP", unsuccessful_reps_count_right_leglunge_set2)
+            else:
+                within_range_time2_leglunge_set2 = 0
+                # Update the start time to the current time
+                start_time3_leglunge_set2 = time.time()
+
+            if 1 <= per_right_leglunge_set2 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_leglunge_set2 == 1:
+                    unsuccessful_reps_count_right_leglunge_set2 += 0.5
+                    dir_right_unsuccessful_leglunge_set2 = 0
+                    #print("right DOWN", unsuccessful_reps_count_right_leglunge_set2)
+
+            if rightleg_leglunge_set2 <= 150 and leftleg_leglunge_set2 <= 100:
+                if dir_right_leglunge_set2 == 0:
+                    successful_reps_count_right_leglunge_set2 += 0.5
+                    dir_right_leglunge_set2 = 1
+                    cooldown_timer_leglunge_set2 = cooldown_duration_leglunge_set2
+            else: 
+                if dir_right_leglunge_set2 == 1:
+                    successful_reps_count_right_leglunge_set2 += 0.5
+                    dir_right_leglunge_set2 = 0
+                    cooldown_timer_leglunge_set2 = cooldown_duration_leglunge_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_leglunge_set2 = detector_leglunge.feedback_leglunge(per_left_leglunge_set2)
+
+            detector_leglunge.update_next_per_left(per_left_leglunge_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_leglunge_set2 = detector_leglunge.feedback_leglunge(per_right_leglunge_set2)
+
+            detector_leglunge.update_next_per_left(per_right_leglunge_set2)
+
+        cvzone.putTextRect(img, 'Leg Lunge Front SET 2', [430, 30], thickness=2, border=2, scale=1.5)
+
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_leglunge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_leglunge_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge_set2)), (50, 680), color_right_leg_alternatinglunge_set2, -1)
+        cv2.rectangle(img, (8, int(bar_right_leglunge_set2)), (50, 680), color_right_leglunge_set2, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_leglunge_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge_set2)), (995, 680), color_left_leg_alternatinglunge_set2, -1)
+        cv2.rectangle(img, (952, int(bar_left_leglunge_set2)), (995, 680), color_left_leglunge_set2, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_alternating_right_lunge_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_leglunge_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_alternating_left_lunge_set2)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_leglunge_set2)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Timer
-    if remaining_time <= 0:
+    if remaining_time_leglunge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge_set2 = False
+        display_info_leglunge_set2 = False
         exercise_mode = "rest_alternatinglunge_set2"
         rest_alternatinglunge_start_time_set2 = time.time()
 
-    # Repetition
-    if count_alternating_left_lunge_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge_set2 = False
-        exercise_mode = "rest_alternatinglunge_set2"
-        rest_alternatinglunge_start_time_set2 = time.time()
+    total_reps_count_left_leglunge_set2 = successful_reps_count_left_leglunge_set2 + unsuccessful_reps_count_left_leglunge_set2
+    total_reps_count_right_leglunge_set2 = successful_reps_count_right_leglunge_set2 + unsuccessful_reps_count_right_leglunge_set2  
+
+
+    if successful_reps_count_right_leglunge_set2 >= 10 and successful_reps_count_left_leglunge_set2 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_leglunge_set2 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_leglunge_set2 == 0:
+            general_feedback_left_leglunge_set2 = detector_leglunge.left_leg_feedback(total_reps_count_left_leglunge_set2)
+            general_feedback_right_leglunge_set2 = detector_leglunge.right_leg_feedback(total_reps_count_right_leglunge_set2)
+            dir_gen_feedback_leglunge_set2 = 1
+            exercise_mode = "rest_alternatinglunge_set2"
+            rest_alternatinglunge_start_time_set2 = time.time()
+        
+
+    if unsuccessful_reps_count_left_leglunge_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge_set2 = False
+
+        if dir_gen_feedback_unsuccessful_leglunge_set2 == 0:
+            general_feedback_left_leglunge_set2 = detector_leglunge.left_leg_unsuccessful_feedback(total_reps_count_left_leglunge_set2)
+            dir_gen_feedback_unsuccessful_leglunge_set2 = 1
+            exercise_mode = "rest_alternatinglunge_set2"
+            rest_alternatinglunge_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_leglunge_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge_set2 = False
+
+        if dir_gen_feedback_unsuccessful_leglunge_set2 == 0:
+            general_feedback_right_leglunge_set2 = detector_leglunge.right_leg_unsuccessful_feedback(total_reps_count_right_leglunge_set2)
+            dir_gen_feedback_unsuccessful_leglunge_set2 == 1
+            exercise_mode = "rest_alternatinglunge_set2"
+            rest_alternatinglunge_start_time_set2 = time.time()
     return img
 
 def rest_alternatinglunge_set2(img):
-    global exercise_mode, rest_alternatinglunge_start_time_set2, start_time_alternatinglunge_set3
+    global exercise_mode, rest_alternatinglunge_start_time_set2, start_time1_leglunge_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set2
@@ -4338,186 +5227,196 @@ def rest_alternatinglunge_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "alternating_lunge_set3"
-        start_time_alternatinglunge_set3 = time.time()
+        start_time1_leglunge_set3 = time.time()
     return img
 
 def detect_alternatinglunge_set3(img):
-    global count_alternating_left_lunge_set3, count_alternating_right_lunge_set3, dir_alternating_left_lunge_set3, dir_alternating_right_lunge_set3, start_time_alternatinglunge_set3, repetition_time_alternatinglunge_set3, per_left_leg_alternatinglunge_set3, per_right_leg_alternatinglunge_set3, display_info_alternatinglunge_set3, bar_left_leg_alternatinglunge_set3, bar_right_leg_alternatinglunge_set3, leftleg_alternatinglunge_set3, rightleg_alternatinglunge_set3, cooldown_duration_alternatinglunge_set3, cooldown_timer_alternatinglunge_set3, color_right_leg_alternatinglunge_set3, color_left_leg_alternatinglunge_set3, exercise_mode, rest_alternatinglunge_start_time_set3, orientation, orientation2
+    global dir_left_leglunge_set3, dir_right_leglunge_set3, display_info_leglunge_set3, per_right_leglunge_set3, per_left_leglunge_set3, bar_left_leglunge_set3, bar_right_leglunge_set3, leftangle_leglunge_set3, rightangle_leglunge_set3, color_right_leglunge_set3, color_left_leglunge_set3, feedback_left_leglunge_set3, feedback_right_leglunge_set3, success_threshold_leglunge_set3, peak_value_leglunge_set3, atrest_value_leglunge_set3, unsuccessful_reps_count_left_leglunge_set3, successful_reps_count_left_leglunge_set3, unsuccessful_reps_count_right_leglunge_set3, successful_reps_count_right_leglunge_set3, dir_left_unsuccessful_leglunge_set3, dir_right_unsuccessful_leglunge_set3, total_reps_count_leglunge_set3, total_reps_count_left_leglunge_set3, total_reps_count_right_leglunge_set3, start_time1_leglunge_set3, start_time2_leglunge_set3, start_time3_leglunge_set3, time_threshold_leglunge_set3, within_range_time1_leglunge_set3, within_range_time2_leglunge_set3, general_feedback_left_leglunge_set3, general_feedback_right_leglunge_set3, dir_gen_feedback_leglunge_set3, dir_gen_feedback_unsuccessful_leglunge_set3, cooldown_timer_leglunge_set3, cooldown_duration_leglunge_set3, rest_alternatinglunge_start_time_set3, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_alternatinglunge_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_alternatinglunge_set3
+    elapsed_time_leglunge = time.time() - start_time1_leglunge_set3
+    remaining_time_leglunge = max(0, 60 - elapsed_time_leglunge)
 
-    if display_info_alternatinglunge_set3:  # Check if to display counter, bar, and percentage
-        img = detector_alternatingleftlunge.findPose(img, False)
-        lmList_jumping_jacks = detector_alternatingleftlunge.findPosition(img, False)
+    if display_info_leglunge_set3:  # Check if to display counter, bar, and percentage
+        img = detector_leglunge.findPose(img, False)
+        lmList_leglunge = detector_leglunge.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_leglunge) != 0:
 
             # Right and Left keypoints
-            rightleg_alternatinglunge_set3, orientation = detector_alternatingleftlunge.AlternatingLunge(img, 24, 26, 28, True)
-            leftleg_alternatinglunge_set3, orientation2 = detector_alternatingleftlunge.AlternatingLunge(img, 23, 25, 27, True)
+            rightleg_leglunge_set3 = detector_leglunge.AlternatingLunge(img, 24, 26, 28, True)
+            leftleg_leglunge_set3 = detector_leglunge.AlternatingLunge(img, 23, 25, 27, True)
 
-            if cooldown_timer_alternatinglunge_set3 > 0:
-                cooldown_timer_alternatinglunge_set3 -= 1
+            if cooldown_timer_leglunge_set3 > 0:
+                cooldown_timer_leglunge_set3 -= 1
 
-            #print(orientation, orientation2)
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (90, 170), (100, 0))
-                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (90, 170), (480, 680))
-                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (90, 170), (100, 0))
-                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (90, 170), (480, 680))
+            per_right_leglunge_set3 = np.interp(rightleg_leglunge_set3, (150, 200), (100, 0))
+            bar_right_leglunge_set3 = np.interp(rightleg_leglunge_set3, (150, 200), (480, 680))
 
-                    if int(per_left_leg_alternatinglunge_set3) == 100:
-                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set3) == 100:
-                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+            per_left_leglunge_set3 = np.interp(leftleg_leglunge_set3, (150, 200), (100, 0))
+            bar_left_leglunge_set3 = np.interp(leftleg_leglunge_set3, (150, 200), (480, 680))
 
-                    if rightleg_alternatinglunge_set3 <= 80:
-                        if dir_alternating_right_lunge_set3 == 0:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    elif rightleg_alternatinglunge_set3 >= 150:
-                        if dir_alternating_right_lunge_set3 == 1:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    
-                    if leftleg_alternatinglunge_set3 <= 80:
-                        if dir_alternating_left_lunge_set3 == 0:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    elif leftleg_alternatinglunge_set3 >= 150:
-                        if dir_alternating_left_lunge_set3 == 1:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+            if int(per_left_leglunge_set3) == 100:
+                color_left_leglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_leglunge_set3 = (0, 0, 255)
+            
+            if int(per_right_leglunge_set3) == 100:
+                color_right_leglunge_set3 = (0, 255, 0)
+            else:
+                color_right_leglunge_set3 = (0, 0, 255)
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg_alternatinglunge_set3 is not None and rightleg_alternatinglunge_set3 is not None:
-                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (190, 280), (0, 100))
-                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (190, 280), (680, 480))
-                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (190, 280), (0, 100))
-                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (190, 280), (680, 480))
+            #left
+            if 40 <= per_left_leglunge_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_leglunge_set3 += time.time() - start_time2_leglunge_set3
 
-                    if int(per_left_leg_alternatinglunge_set3) == 100:
-                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set3) == 100:
-                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
-
-                    if rightleg_alternatinglunge_set3 > 280:
-                        if dir_alternating_right_lunge_set3 == 0:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    elif rightleg_alternatinglunge_set3 < 179:
-                        if dir_alternating_right_lunge_set3 == 1:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    if leftleg_alternatinglunge_set3 > 280:
-                        if dir_alternating_left_lunge_set3 == 0:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    elif leftleg_alternatinglunge_set3 < 179:
-                        if dir_alternating_left_lunge_set3 == 1:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (100, 200), (100, 0))
-                    bar_right_leg_alternatinglunge_set3 = np.interp(rightleg_alternatinglunge_set3, (100, 200), (480, 680))
-                    per_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (100, 200), (100, 0))
-                    bar_left_leg_alternatinglunge_set3 = np.interp(leftleg_alternatinglunge_set3, (100, 200), (480, 680))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_leglunge_set3 >= time_threshold_leglunge_set3:
+                    if dir_left_unsuccessful_leglunge_set3 == 0:
+                        unsuccessful_reps_count_left_leglunge_set3 += 0.5
+                        dir_left_unsuccessful_leglunge_set3 = 1
+                        #print("UP LEFT: ", unsuccessful_reps_count_left_leglunge_set3)
 
 
-                    if int(per_left_leg_alternatinglunge_set3) == 100:
-                        color_left_leg_alternatinglunge_set3 = (0, 255, 0)  # Change color of left leg bar to green
-                    elif int(per_right_leg_alternatinglunge_set3) == 100:
-                        color_right_leg_alternatinglunge_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_alternatinglunge_set3 = (0, 0, 255)  # Keep color of left leg bar as red
-                        color_right_leg_alternatinglunge_set3 = (0, 0, 255)
+            else:
+                within_range_time1_leglunge_set3 = 0
+                # Update the start time to the current time
+                start_time2_leglunge_set3 = time.time()
 
-                    if rightleg_alternatinglunge_set3 <= 150 and leftleg_alternatinglunge_set3 <= 100:
-                        if dir_alternating_right_lunge_set3 == 0:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    else: 
-                        if dir_alternating_right_lunge_set3 == 1:
-                            count_alternating_right_lunge_set3 += 0.5
-                            dir_alternating_right_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
+            if 1 <= per_left_leglunge_set3 <= 10:
+                if dir_left_unsuccessful_leglunge_set3 == 1:
+                    unsuccessful_reps_count_left_leglunge_set3 += 0.5
+                    dir_left_unsuccessful_leglunge_set3 = 0
+                    #print("UP DOWN: ", unsuccessful_reps_count_left_leglunge_set3)
 
-                    if rightleg_alternatinglunge_set3 <= 100 and leftleg_alternatinglunge_set3 <= 150:
-                        if dir_alternating_left_lunge_set3 == 0:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 1
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
-                    else:
-                        if dir_alternating_left_lunge_set3 == 1:
-                            count_alternating_left_lunge_set3 += 0.5
-                            dir_alternating_left_lunge_set3 = 0
-                            cooldown_timer_alternatinglunge_set3 = cooldown_duration_alternatinglunge_set3
 
-  
-        cvzone.putTextRect(img, 'Leg Lunge (alternate) SET 3', [345, 30], thickness=2, border=2, scale=2.5)
+            if rightleg_leglunge_set3 <= 100 and leftleg_leglunge_set3 <= 150:
+                if dir_left_leglunge_set3 == 0:
+                    successful_reps_count_left_leglunge_set3 += 0.5
+                    dir_left_leglunge_set3 = 1
+                    cooldown_timer_leglunge_set3 = cooldown_duration_leglunge_set3
+            else:
+                if dir_left_leglunge_set3 == 1:
+                    successful_reps_count_left_leglunge_set3 += 0.5
+                    dir_left_leglunge_set3 = 0
+                    cooldown_timer_leglunge_set3 = cooldown_duration_leglunge_set3
+    
+            # right
+            if 40 <= per_right_leglunge_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_leglunge_set3 += time.time() - start_time3_leglunge_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_leglunge_set3 >= time_threshold_leglunge_set3:
+                    if dir_right_unsuccessful_leglunge_set3 == 0:
+                        unsuccessful_reps_count_right_leglunge_set3 += 0.5
+                        dir_right_unsuccessful_leglunge_set3 = 1
+                        #print("right UP", unsuccessful_reps_count_right_leglunge_set3)
+            else:
+                within_range_time2_leglunge_set3 = 0
+                # Update the start time to the current time
+                start_time3_leglunge_set3 = time.time()
+
+            if 1 <= per_right_leglunge_set3 <= 10:
+                #print("left down val: ", per_left)
+                if dir_right_unsuccessful_leglunge_set3 == 1:
+                    unsuccessful_reps_count_right_leglunge_set3 += 0.5
+                    dir_right_unsuccessful_leglunge_set3 = 0
+                    #print("right DOWN", unsuccessful_reps_count_right_leglunge_set3)
+
+            if rightleg_leglunge_set3 <= 150 and leftleg_leglunge_set3 <= 100:
+                if dir_right_leglunge == 0:
+                    successful_reps_count_right_leglunge_set3 += 0.5
+                    dir_right_leglunge_set3 = 1
+                    cooldown_timer_leglunge_set3 = cooldown_duration_leglunge_set3
+            else: 
+                if dir_right_leglunge_set3 == 1:
+                    successful_reps_count_right_leglunge_set3 += 0.5
+                    dir_right_leglunge_set3 = 0
+                    cooldown_timer_leglunge_set3 = cooldown_duration_leglunge_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_leglunge_set3 = detector_leglunge.feedback_leglunge(per_left_leglunge_set3)
+
+            detector_leglunge.update_next_per_left(per_left_leglunge_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_leglunge_set3 = detector_leglunge.feedback_leglunge(per_right_leglunge_set3)
+
+            detector_leglunge.update_next_per_left(per_right_leglunge_set3)
+
+        cvzone.putTextRect(img, 'Leg Lunge Front SET 3', [430, 30], thickness=2, border=2, scale=1.5)
+
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_leglunge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_alternatinglunge_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_leglunge_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_alternatinglunge_set3)), (50, 680), color_right_leg_alternatinglunge_set3, -1)
+        cv2.rectangle(img, (8, int(bar_right_leglunge_set3)), (50, 680), color_right_leglunge_set3, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_alternatinglunge_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_leglunge_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_alternatinglunge_set3)), (995, 680), color_left_leg_alternatinglunge_set3, -1)
+        cv2.rectangle(img, (952, int(bar_left_leglunge_set3)), (995, 680), color_left_leglunge_set3, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_alternating_right_lunge_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_leglunge_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_alternating_left_lunge_set3)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_leglunge_set3)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Timer
-    if remaining_time <= 0:
+    if remaining_time_leglunge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge_set3 = False
+        display_info_leglunge_set3 = False
         exercise_mode = "rest_alternatinglunge_set3"
         rest_alternatinglunge_start_time_set3 = time.time()
 
-    # Repetition
-    if count_alternating_left_lunge_set2 >= 5:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_alternatinglunge_set3 = False
-        exercise_mode = "rest_alternatinglunge_set3"
-        rest_alternatinglunge_start_time_set3 = time.time()
+    total_reps_count_left_leglunge_set3 = successful_reps_count_left_leglunge_set3 + unsuccessful_reps_count_left_leglunge_set3
+    total_reps_count_right_leglunge_set3 = successful_reps_count_right_leglunge_set3 + unsuccessful_reps_count_right_leglunge_set3  
+
+
+    if successful_reps_count_right_leglunge_set3 >= 10 and successful_reps_count_left_leglunge_set3 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_leglunge_set3 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_leglunge_set3 == 0:
+            general_feedback_left_leglunge_set3 = detector_leglunge.left_leg_feedback(total_reps_count_left_leglunge_set3)
+            general_feedback_right_leglunge_set3 = detector_leglunge.right_leg_feedback(total_reps_count_right_leglunge_set3)
+            dir_gen_feedback_leglunge_set3 = 1
+            exercise_mode = "rest_alternatinglunge_set3"
+            rest_alternatinglunge_start_time_set3 = time.time()
+        
+
+    if unsuccessful_reps_count_left_leglunge_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for left leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge_set3 = False
+
+        if dir_gen_feedback_unsuccessful_leglunge_set3 == 0:
+            general_feedback_left_leglunge_set3 = detector_leglunge.left_leg_unsuccessful_feedback(total_reps_count_left_leglunge_set3)
+            dir_gen_feedback_unsuccessful_leglunge_set3 = 1
+            exercise_mode = "rest_alternatinglunge_set3"
+            rest_alternatinglunge_start_time_set3= time.time()
+
+    if unsuccessful_reps_count_right_leglunge_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for right leg. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_leglunge_set3 = False
+
+        if dir_gen_feedback_unsuccessful_leglunge_set3 == 0:
+            general_feedback_right_leglunge_set3 = detector_leglunge.right_leg_unsuccessful_feedback(total_reps_count_right_leglunge_set3)
+            dir_gen_feedback_unsuccessful_leglunge_set3 == 1
+            exercise_mode = "rest_alternatinglunge_set3"
+            rest_alternatinglunge_start_time_set3 = time.time()
     return img
 
 def rest_alternatinglunge_set3(img):

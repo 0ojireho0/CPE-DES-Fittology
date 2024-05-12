@@ -56,7 +56,7 @@ total_reps_count_right_chestpress = 0
 start_time1_chestpress = time.time()
 start_time2_chestpress = time.time()
 start_time3_chestpress = time.time()
-time_threshold_chestpress = 10 # Specify the time threshold in seconds # can be changed for testing but default should be 1, 0.2 is for testing
+time_threshold_chestpress = 10 
 within_range_time1_chestpress = 0
 within_range_time2_chestpress = 0
 

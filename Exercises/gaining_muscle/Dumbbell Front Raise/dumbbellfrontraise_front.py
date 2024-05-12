@@ -19,9 +19,6 @@ repetition_time_dumbbellfrontraise = 60  # Repetition time
 # Display info
 display_info_dumbbellfrontraise = True
 
-orientation_dumbbellfrontraise = ""
-orientation2_dumbbellfrontraise = ""
-
 per_right_dumbbellfrontraise = 0
 per_left_dumbbellfrontraise = 0
 bar_left_dumbbellfrontraise = 0

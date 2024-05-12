@@ -19,9 +19,6 @@ repetition_time_leglunge = 60  # Repetition time
 # Display info
 display_info_leglunge = True
 
-orientation_leglunge = ""
-orientation2_leglunge = ""
-
 per_right_leglunge = 0
 per_left_leglunge = 0
 bar_left_leglunge = 0
