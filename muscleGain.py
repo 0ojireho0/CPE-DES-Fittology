@@ -1960,7 +1960,7 @@ def home():
     else:
         return render_template('home.html')
     
-exercise_mode = "bicep_curl"
+exercise_mode = "push_up"
 
 
 def gen_frames():
@@ -2734,7 +2734,7 @@ def rest_bicep_set3(img):
 
 # Function to detect push-ups
 def detect_push_up(img):
-    global exercise_mode, display_info_pushup, per_right_pushup, per_left_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, color_right_pushup, color_left_pushup, feedback_left_pushup, feedback_right_pushup, success_threshold_pushup, peak_value_pushup, atrest_value_pushup, unsuccessful_reps_count_left_pushup, successful_reps_count_left_pushup, unsuccessful_reps_count_right_pushup, successful_reps_count_right_pushup, dir_left_unsuccessful_pushup, dir_right_unsuccessful_pushup, total_reps_count_pushup, total_reps_count_left_pushup, total_reps_count_right_pushup, start_time1_pushup, start_time2_pushup, start_time3_pushup, time_threshold_pushup, within_range_time1_pushup, general_feedback_left_pushup, general_feedback_right_pushup, dir_gen_feedback_pushup, dir_gen_feedback_unsuccessful_pushup, rest_pushup_start_time, dir_left_pushup, dir_right_pushup
+    global exercise_mode, display_info_pushup, per_right_pushup, per_left_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, color_right_pushup, color_left_pushup, feedback_left_pushup, feedback_right_pushup, success_threshold_pushup, peak_value_pushup, atrest_value_pushup, unsuccessful_reps_count_left_pushup, successful_reps_count_left_pushup, unsuccessful_reps_count_right_pushup, successful_reps_count_right_pushup, dir_left_unsuccessful_pushup, dir_right_unsuccessful_pushup, total_reps_count_pushup, total_reps_count_left_pushup, total_reps_count_right_pushup, start_time1_pushup, start_time2_pushup, start_time3_pushup, time_threshold_pushup, within_range_time1_pushup, general_feedback_left_pushup, general_feedback_right_pushup, dir_gen_feedback_pushup, dir_gen_feedback_unsuccessful_pushup, rest_pushup_start_time, dir_left_pushup, dir_right_pushup, within_range_time2_pushup
 
     img = cv2.resize(img, (1280, 720))
 
@@ -2948,7 +2948,7 @@ def rest_pushup(img):
 
 
 def detect_push_up_set2(img):
-    global display_info_pushup_set2, per_right_pushup_set2, per_left_pushup_set2, bar_left_pushup_set2, bar_right_pushup_set2, leftangle_pushup_set2, rightangle_pushup_set2, color_right_pushup_set2, color_left_pushup_set2, feedback_left_pushup_set2, feedback_right_pushup_set2, success_threshold_pushup_set2, peak_value_pushup_set2, atrest_value_pushup_set2, unsuccessful_reps_count_left_pushup_set2, successful_reps_count_left_pushup_set2, unsuccessful_reps_count_right_pushup_set2, successful_reps_count_right_pushup_set2, dir_left_unsuccessful_pushup_set2, dir_right_unsuccessful_pushup_set2, total_reps_count_pushup_set2, total_reps_count_left_pushup_set2, total_reps_count_right_pushup_set2, start_time1_pushup_set2, start_time2_pushup_set2, start_time3_pushup_set2, time_threshold_pushup, within_range_time1_pushup_set2, general_feedback_left_pushup_set2, general_feedback_right_pushup_set2, dir_gen_feedback_pushup_set2, dir_gen_feedback_unsuccessful_pushup_set2, rest_pushup_start_time_set2, exercise_mode, dir_left_pushup_set2, dir_right_pushup_set2
+    global display_info_pushup_set2, per_right_pushup_set2, per_left_pushup_set2, bar_left_pushup_set2, bar_right_pushup_set2, leftangle_pushup_set2, rightangle_pushup_set2, color_right_pushup_set2, color_left_pushup_set2, feedback_left_pushup_set2, feedback_right_pushup_set2, success_threshold_pushup_set2, peak_value_pushup_set2, atrest_value_pushup_set2, unsuccessful_reps_count_left_pushup_set2, successful_reps_count_left_pushup_set2, unsuccessful_reps_count_right_pushup_set2, successful_reps_count_right_pushup_set2, dir_left_unsuccessful_pushup_set2, dir_right_unsuccessful_pushup_set2, total_reps_count_pushup_set2, total_reps_count_left_pushup_set2, total_reps_count_right_pushup_set2, start_time1_pushup_set2, start_time2_pushup_set2, start_time3_pushup_set2, time_threshold_pushup, within_range_time1_pushup_set2, general_feedback_left_pushup_set2, general_feedback_right_pushup_set2, dir_gen_feedback_pushup_set2, dir_gen_feedback_unsuccessful_pushup_set2, rest_pushup_start_time_set2, exercise_mode, dir_left_pushup_set2, dir_right_pushup_set2, within_range_time2_pushup_set2
 
     img = cv2.resize(img, (1280, 720))
 
@@ -3159,7 +3159,7 @@ def rest_pushup_set2(img):
     return img
 
 def detect_push_up_set3(img):
-    global exercise_mode, display_info_pushup_set3, per_right_pushup_set3, per_left_pushup_set3, bar_left_pushup_set3, bar_right_pushup_set3, leftangle_pushup_set3, rightangle_pushup_set3, color_right_pushup_set3, color_left_pushup_set3, feedback_left_pushup_set3, feedback_right_pushup_set3, success_threshold_pushup_set3, peak_value_pushup_set3, atrest_value_pushup_set3, unsuccessful_reps_count_left_pushup_set3, successful_reps_count_left_pushup_set3, unsuccessful_reps_count_right_pushup_set3, successful_reps_count_right_pushup_set3, dir_left_unsuccessful_pushup_set3, dir_right_unsuccessful_pushup_set3, total_reps_count_pushup_set3, total_reps_count_left_pushup_set3, total_reps_count_right_pushup_set3, start_time1_pushup_set3, start_time2_pushup_set3, start_time3_pushup_set3, time_threshold_pushup_set3, within_range_time1_pushup_set3, general_feedback_left_pushup_set3, general_feedback_right_pushup_set3, dir_gen_feedback_pushup_set3, dir_gen_feedback_unsuccessful_pushup_set3, rest_pushup_start_time_set3, dir_left_pushup_set3, dir_right_pushup_set3
+    global exercise_mode, display_info_pushup_set3, per_right_pushup_set3, per_left_pushup_set3, bar_left_pushup_set3, bar_right_pushup_set3, leftangle_pushup_set3, rightangle_pushup_set3, color_right_pushup_set3, color_left_pushup_set3, feedback_left_pushup_set3, feedback_right_pushup_set3, success_threshold_pushup_set3, peak_value_pushup_set3, atrest_value_pushup_set3, unsuccessful_reps_count_left_pushup_set3, successful_reps_count_left_pushup_set3, unsuccessful_reps_count_right_pushup_set3, successful_reps_count_right_pushup_set3, dir_left_unsuccessful_pushup_set3, dir_right_unsuccessful_pushup_set3, total_reps_count_pushup_set3, total_reps_count_left_pushup_set3, total_reps_count_right_pushup_set3, start_time1_pushup_set3, start_time2_pushup_set3, start_time3_pushup_set3, time_threshold_pushup_set3, within_range_time1_pushup_set3, general_feedback_left_pushup_set3, general_feedback_right_pushup_set3, dir_gen_feedback_pushup_set3, dir_gen_feedback_unsuccessful_pushup_set3, rest_pushup_start_time_set3, dir_left_pushup_set3, dir_right_pushup_set3, within_range_time2_pushup_set3
 
     img = cv2.resize(img, (1280, 720))
 
