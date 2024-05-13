@@ -5,7 +5,7 @@ import time
 import bodyweightsquat_front_PoseModule as pm
 import cvzone
 
-cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\Body Weight Squat\bwscomplete.mp4')
+cap = cv2.VideoCapture(0)
 detector_bodyweightsquat = pm.poseDetectorBodyWeightSquat()
 
 dir_left_bodyweightsquat = 0
@@ -16,8 +16,6 @@ repetition_time_bodyweightsquat = 60  # Repetition time
 # Display info
 display_info_bodyweightsquat = True
 
-orientation_bodyweightsquat = ""
-orientation2_bodyweightsquat = ""
 
 per_right_bodyweightsquat = 0
 per_left_bodyweightsquat = 0

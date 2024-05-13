@@ -20,8 +20,6 @@ repetition_time_dumbbellhiphinge = 60  # Repetition time
 # Display info
 display_info_dumbbellhiphinge = True
 
-orientation_dumbbellhiphinge = ""
-orientation2_dumbbellhiphinge = ""
 
 per_right_dumbbellhiphinge = 0
 per_left_dumbbellhiphinge = 0
@@ -79,7 +77,6 @@ while True:
     if not success:
         break
     img = cv2.resize(img, (1280, 720))
-    #img = cv2.cvtColor(cv2.flip(img, 1), cv2.COLOR_BGR2RGB)
 
     elapsed_time_dumbbellhiphinge = time.time() - start_time1_dumbbellhiphinge
     remaining_time_dumbbellhiphinge = max(0, repetition_time_dumbbellhiphinge - elapsed_time_dumbbellhiphinge)
@@ -203,10 +200,10 @@ while True:
     
     # count
     cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellhiphinge)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellhiphinge)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellhiphinge)}/5", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellhiphinge)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Check if time's up
     if remaining_time_dumbbellhiphinge <= 0:

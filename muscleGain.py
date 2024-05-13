@@ -10,10 +10,10 @@ import poseModules.shouldertaps_front_PoseModule as pm_shouldertap
 import poseModules.chestpress_front_PoseModule as pm_chestpress
 import poseModules.dumbbellfrontraise_front_PoseModule as pm_dumbbellfrontraise
 import poseModules.alternating_leg_lunge_front_PoseModule as pm_alternatinglunge
-import poseModules.bodyweightsquat_PoseModule as pm_bws
-import poseModules.gobletsquat_PoseModule as pm_gs
-import poseModules.highkneetap_PoseModule as pm_hkt
-import poseModules.dumbbellhiphinge_PoseModule as pm_dhh
+import poseModules.bodyweightsquat_front_PoseModule as pm_bws
+import poseModules.gobletsquat_front_PoseModule as pm_gs
+import poseModules.highkneetap_front_PoseModule as pm_hkt
+import poseModules.dumbbellhiphinge_front_PoseModule as pm_dhh
 
 muscleGain = Blueprint("muscleGain", __name__,static_folder="static", template_folder="templates")
 
@@ -1199,81 +1199,170 @@ rest_alternatinglunge_start_time_set3 = time.time()
 # ----------- END FOR ALTERNATING LUNGE SET 3 ---------------
 
 # ----------- FOR BODY WEIGHT SQUAT ---------------
-detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
+detector_bodyweightsquat = pm_bws.poseDetectorBodyWeightSquat()
 
-count_body_weight_squat = 0
-dir_body_weight_squat = 0
+dir_left_bodyweightsquat = 0
+dir_right_bodyweightsquat = 0
+
+repetition_time_bodyweightsquat = 60  # Repetition time
+
+# Display info
+display_info_bodyweightsquat = True
 
 
-start_time_bws = time.time()
-repetition_time_bws = 60
-display_info_bws = True
+per_right_bodyweightsquat = 0
+per_left_bodyweightsquat = 0
+bar_left_bodyweightsquat = 0
+bar_right_bodyweightsquat = 0 
 
-leftbody_bws = 0
-rightbody_bws = 0
+leftbody_bodyweightsquat = 0
+rightbody_bodyweightsquat = 0
 
-per_left_body_bws = 0
-bar_left_body_bws = 0
+color_right_bodyweightsquat = (0, 0, 255)
+color_left_bodyweightsquat = (0, 0, 255)
 
-per_right_body_bws = 0
-bar_right_body_bws = 0
+feedback_body_bodyweightsquat = ""
 
-color_right_body_bws = 0
-color_left_body_bws = 0
+success_threshold_bodyweightsquat = 100
 
+peak_value_bodyweightsquat = 0
+atrest_value_bodyweightsquat = 0
+
+unsuccessful_reps_count_body_bodyweightsquat = 0
+successful_reps_count_body_bodyweightsquat = 0
+
+dir_left_unsuccessful_bodyweightsquat = 0
+
+total_reps_count_body_bodyweightsquat = 0
+
+start_time1_bodyweightsquat = time.time()
+start_time2_bodyweightsquat = time.time()
+start_time3_bodyweightsquat = time.time()
+time_threshold_bodyweightsquat = 3 
+within_range_time1_bodyweightsquat = 0
+within_range_time2_bodyweightsquat = 0
+
+# gen feedback success
+general_feedback_body_bodyweightsquat = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_bodyweightsquat = 0
+dir_gen_feedback_unsuccessful_bodyweightsquat = 0
+
+cooldown_timer_bodyweightsquat = 0
+cooldown_duration_bodyweightsquat = 5
 rest_bws_start_time = time.time()
 
 # ----------- END FOR BODY WEIGHT SQUAT ---------------
 
 # ----------- FOR BODY WEIGHT SQUAT SET 2 ---------------
-detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
 
-count_body_weight_squat_set2 = 0
-dir_body_weight_squat_set2 = 0
+dir_left_bodyweightsquat_set2 = 0
+dir_right_bodyweightsquat_set2 = 0
+
+repetition_time_bodyweightsquat_set2 = 60  # Repetition time
+
+# Display info
+display_info_bodyweightsquat_set2 = True
 
 
-start_time_bws_set2 = time.time()
-repetition_time_bws_set2 = 60
-display_info_bws_set2 = True
+per_right_bodyweightsquat_set2 = 0
+per_left_bodyweightsquat_set2 = 0
+bar_left_bodyweightsquat_set2 = 0
+bar_right_bodyweightsquat_set2 = 0 
 
-leftbody_bws_set2 = 0
-rightbody_bws_set2 = 0
+leftbody_bodyweightsquat_set2 = 0
+rightbody_bodyweightsquat_set2 = 0
 
-per_left_body_bws_set2 = 0
-bar_left_body_bws_set2 = 0
+color_right_bodyweightsquat_set2 = (0, 0, 255)
+color_left_bodyweightsquat_set2 = (0, 0, 255)
 
-per_right_body_bws_set2 = 0
-bar_right_body_bws_set2 = 0
+feedback_body_bodyweightsquat_set2 = ""
 
-color_right_body_bws_set2 = 0
-color_left_body_bws_set2 = 0
+success_threshold_bodyweightsquat_set2 = 100
+
+peak_value_bodyweightsquat_set2 = 0
+atrest_value_bodyweightsquat_set2 = 0
+
+unsuccessful_reps_count_body_bodyweightsquat_set2 = 0
+successful_reps_count_body_bodyweightsquat_set2 = 0
+
+dir_left_unsuccessful_bodyweightsquat_set2 = 0
+
+total_reps_count_body_bodyweightsquat_set2 = 0
+
+start_time1_bodyweightsquat_set2 = time.time()
+start_time2_bodyweightsquat_set2 = time.time()
+start_time3_bodyweightsquat_set2 = time.time()
+time_threshold_bodyweightsquat_set2 = 3 
+within_range_time1_bodyweightsquat_set2 = 0
+within_range_time2_bodyweightsquat_set2 = 0
+
+# gen feedback success
+general_feedback_body_bodyweightsquat_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_bodyweightsquat_set2 = 0
+dir_gen_feedback_unsuccessful_bodyweightsquat_set2 = 0
+
+cooldown_timer_bodyweightsquat_set2 = 0
+cooldown_duration_bodyweightsquat_set2 = 5
 
 rest_bws_start_time_set2 = time.time()
 
 # ----------- END FOR BODY WEIGHT SQUAT SET 2 ---------------
 
 # ----------- FOR BODY WEIGHT SQUAT SET 3 ---------------
-detector_BodyWeightSquat = pm_bws.poseDetectorBodyWeightSquat()
+dir_left_bodyweightsquat_set3 = 0
+dir_right_bodyweightsquat_set3 = 0
 
-count_body_weight_squat_set3 = 0
-dir_body_weight_squat_set3 = 0
+repetition_time_bodyweightsquat_set3 = 60  # Repetition time
+
+# Display info
+display_info_bodyweightsquat_set3 = True
 
 
-start_time_bws_set3 = time.time()
-repetition_time_bws_set3 = 60
-display_info_bws_set3 = True
+per_right_bodyweightsquat_set3 = 0
+per_left_bodyweightsquat_set3 = 0
+bar_left_bodyweightsquat_set3 = 0
+bar_right_bodyweightsquat_set3 = 0 
 
-leftbody_bws_set3 = 0
-rightbody_bws_set3 = 0
+leftbody_bodyweightsquat_set3 = 0
+rightbody_bodyweightsquat_set3 = 0
 
-per_left_body_bws_set3 = 0
-bar_left_body_bws_set3 = 0
+color_right_bodyweightsquat_set3 = (0, 0, 255)
+color_left_bodyweightsquat_set3 = (0, 0, 255)
 
-per_right_body_bws_set3 = 0
-bar_right_body_bws_set3 = 0
+feedback_body_bodyweightsquat_set3 = ""
 
-color_right_body_bws_set3 = 0
-color_left_body_bws_set3 = 0
+success_threshold_bodyweightsquat_set3 = 100
+
+peak_value_bodyweightsquat_set3 = 0
+atrest_value_bodyweightsquat_set3 = 0
+
+unsuccessful_reps_count_body_bodyweightsquat_set3 = 0
+successful_reps_count_body_bodyweightsquat_set3 = 0
+
+dir_left_unsuccessful_bodyweightsquat_set3 = 0
+
+total_reps_count_body_bodyweightsquat_set3 = 0
+
+start_time1_bodyweightsquat_set3 = time.time()
+start_time2_bodyweightsquat_set3 = time.time()
+start_time3_bodyweightsquat_set3 = time.time()
+time_threshold_bodyweightsquat_set3 = 3 
+within_range_time1_bodyweightsquat_set3 = 0
+within_range_time2_bodyweightsquat_set3 = 0
+
+# gen feedback success
+general_feedback_body_bodyweightsquat_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_bodyweightsquat_set3 = 0
+dir_gen_feedback_unsuccessful_bodyweightsquat_set3 = 0
+
+cooldown_timer_bodyweightsquat_set3 = 0
+cooldown_duration_bodyweightsquat_set3 = 5
 
 rest_bws_start_time_set3 = time.time()
 
@@ -1282,45 +1371,124 @@ rest_bws_start_time_set3 = time.time()
 # ------------- FOR GOBLET SQUAT ---------------------
 detector_gobletsquat = pm_gs.poseDetectorGobletSquat()
 
-count_goblet_squat = 0
-dir_goblet_squat = 0
+dir_left_gobletsquat = 0
+dir_right_gobletsquat = 0
+
+repetition_time_gobletsquat = 60  # Repetition time
+
+# Display info
+display_info_gobletsquat = True
+
+per_right_gobletsquat = 0
+per_left_gobletsquat = 0
+bar_left_gobletsquat = 0
+bar_right_gobletsquat = 0 
 
 
-start_time_goblet_squat = time.time()
-repetition_time_goblet_squat = 60
-display_info_goblet_squat = True
+color_right_gobletsquat = (0, 0, 255)
+color_left_gobletsquat = (0, 0, 255)
 
-cooldown_duration_goblet_squat = 5
-cooldown_timer_goblet_squat = 0
+feedback_left_gobletsquat = ""
+feedback_right_gobletsquat = ""
 
-color_left_leg_goblet_squat = (0, 0, 255)
-color_right_leg_goblet_squat = (0, 0, 255)
+success_threshold_gobletsquat = 100
+
+atrest_value_gobletsquat = 0
+
+unsuccessful_reps_count_left_gobletsquat = 0
+successful_reps_count_left_gobletsquat = 0
+
+unsuccessful_reps_count_right_gobletsquat = 0
+successful_reps_count_right_gobletsquat = 0
+
+dir_left_unsuccessful_gobletsquat = 0
+dir_right_unsuccessful_gobletsquat = 0
+
+total_reps_count_gobletsquat = 0
+
+total_reps_count_left_gobletsquat = 0
+total_reps_count_right_gobletsquat = 0
+
+start_time1_gobletsquat = time.time()
+start_time2_gobletsquat = time.time()
+start_time3_gobletsquat = time.time()
+time_threshold_gobletsquat = 10 
+within_range_time1_gobletsquat = 0
+within_range_time2_gobletsquat = 0
+
+# gen feedback success
+general_feedback_left_gobletsquat = ""
+general_feedback_right_gobletsquat = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_gobletsquat = 0
+dir_gen_feedback_unsuccessful_gobletsquat = 0
+
+cooldown_timer_gobletsquat = 0
+cooldown_duration_gobletsquat = 5
+
 rest_goblet_squat_start_time = time.time()
-per_right_leg = 0
-per_left_leg = 0
-bar_right_leg = 0
-bar_left_leg = 0
-color_left_leg = (0, 0, 255)
-color_right_leg = (0, 0, 255)
 
 # ------------- END FOR GOBLET SQUAT -----------------
 
 # ------------- FOR GOBLET SQUAT SET 2 ---------------------
 detector_gobletsquat = pm_gs.poseDetectorGobletSquat()
 
-count_goblet_squat_set2 = 0
-dir_goblet_squat_set2 = 0
+dir_left_gobletsquat_set2 = 0
+dir_right_gobletsquat_set2 = 0
+
+repetition_time_gobletsquat_set2 = 60  # Repetition time
+
+# Display info
+display_info_gobletsquat_set2 = True
+
+per_right_gobletsquat_set2 = 0
+per_left_gobletsquat_set2 = 0
+bar_left_gobletsquat_set2 = 0
+bar_right_gobletsquat_set2 = 0 
 
 
-start_time_goblet_squat_set2 = time.time()
-repetition_time_goblet_squat_set2 = 60
-display_info_goblet_squat_set2 = True
+color_right_gobletsquat_set2 = (0, 0, 255)
+color_left_gobletsquat_set2 = (0, 0, 255)
 
-cooldown_duration_goblet_squat_set2 = 5
-cooldown_timer_goblet_squat_set2 = 0
+feedback_left_gobletsquat_set2 = ""
+feedback_right_gobletsquat_set2 = ""
 
-color_left_leg_goblet_squat_set2 = (0, 0, 255)
-color_right_leg_goblet_squat_set2 = (0, 0, 255)
+success_threshold_gobletsquat_set2 = 100
+
+atrest_value_gobletsquat_set2 = 0
+
+unsuccessful_reps_count_left_gobletsquat_set2 = 0
+successful_reps_count_left_gobletsquat_set2 = 0
+
+unsuccessful_reps_count_right_gobletsquat_set2 = 0
+successful_reps_count_right_gobletsquat_set2 = 0
+
+dir_left_unsuccessful_gobletsquat_set2 = 0
+dir_right_unsuccessful_gobletsquat_set2 = 0
+
+total_reps_count_gobletsquat_set2 = 0
+
+total_reps_count_left_gobletsquat_set2 = 0
+total_reps_count_right_gobletsquat_set2 = 0
+
+start_time1_gobletsquat_set2 = time.time()
+start_time2_gobletsquat_set2 = time.time()
+start_time3_gobletsquat_set2 = time.time()
+time_threshold_gobletsquat_set2 = 10 
+within_range_time1_gobletsquat_set2 = 0
+within_range_time2_gobletsquat_set2 = 0
+
+# gen feedback success
+general_feedback_left_gobletsquat_set2 = ""
+general_feedback_right_gobletsquat_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_gobletsquat_set2 = 0
+dir_gen_feedback_unsuccessful_gobletsquat_set2 = 0
+
+cooldown_timer_gobletsquat_set2 = 0
+cooldown_duration_gobletsquat_set2 = 5
 rest_goblet_squat_start_time_set2 = time.time()
 
 # ------------- END FOR GOBLET SQUAT SET 2 -----------------
@@ -1328,188 +1496,446 @@ rest_goblet_squat_start_time_set2 = time.time()
 # ------------- FOR GOBLET SQUAT SET 3---------------------
 detector_gobletsquat = pm_gs.poseDetectorGobletSquat()
 
-count_goblet_squat_set3 = 0
-dir_goblet_squat_set3 = 0
+dir_left_gobletsquat_set3 = 0
+dir_right_gobletsquat_set3 = 0
+
+repetition_time_gobletsquat_set3 = 60  # Repetition time
+
+# Display info
+display_info_gobletsquat_set3 = True
+
+per_right_gobletsquat_set3 = 0
+per_left_gobletsquat_set3 = 0
+bar_left_gobletsquat_set3 = 0
+bar_right_gobletsquat_set3 = 0 
 
 
-start_time_goblet_squat_set3 = time.time()
-repetition_time_goblet_squat_set3 = 60
-display_info_goblet_squat_set3 = True
+color_right_gobletsquat_set3 = (0, 0, 255)
+color_left_gobletsquat_set3 = (0, 0, 255)
 
-cooldown_duration_goblet_squat_set3 = 5
-cooldown_timer_goblet_squat_set3 = 0
+feedback_left_gobletsquat_set3 = ""
+feedback_right_gobletsquat_set3 = ""
 
-color_left_leg_goblet_squat_set3 = (0, 0, 255)
-color_right_leg_goblet_squat_set3 = (0, 0, 255)
+success_threshold_gobletsquat_set3 = 100
+
+atrest_value_gobletsquat_set3 = 0
+
+unsuccessful_reps_count_left_gobletsquat_set3 = 0
+successful_reps_count_left_gobletsquat_set3 = 0
+
+unsuccessful_reps_count_right_gobletsquat_set3 = 0
+successful_reps_count_right_gobletsquat_set3 = 0
+
+dir_left_unsuccessful_gobletsquat_set3 = 0
+dir_right_unsuccessful_gobletsquat_set3 = 0
+
+total_reps_count_gobletsquat_set3 = 0
+
+total_reps_count_left_gobletsquat_set3 = 0
+total_reps_count_right_gobletsquat_set3 = 0
+
+start_time1_gobletsquat_set3 = time.time()
+start_time2_gobletsquat_set3 = time.time()
+start_time3_gobletsquat_set3 = time.time()
+time_threshold_gobletsquat_set3 = 10 
+within_range_time1_gobletsquat_set3 = 0
+within_range_time2_gobletsquat_set3 = 0
+
+# gen feedback success
+general_feedback_left_gobletsquat_set3 = ""
+general_feedback_right_gobletsquat_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_gobletsquat_set3 = 0
+dir_gen_feedback_unsuccessful_gobletsquat_set3 = 0
+
+cooldown_timer_gobletsquat_set3 = 0
+cooldown_duration_gobletsquat_set3 = 5
 rest_goblet_squat_start_time_set3 = time.time()
 
 # ------------- END FOR GOBLET SQUAT SET 3-----------------
 
 # ------------- FOR HIGH KNEE TAP --------------------
-detector_HighKneeTap = pm_hkt.poseDetectorHighKneeTap()
+detector_highkneetap = pm_hkt.poseDetectorHighKneeTap()
 
-count_high_knee_tap_right = 0
-count_high_knee_tap_left = 0
+dir_left_highkneetap = 0
+dir_right_highkneetap = 0
 
-dir_high_knee_tap_right = 0
+repetition_time_highkneetap = 60  # Repetition time
 
-dir_high_knee_tap_left = 0
+# Display info
+display_info_highkneetap = True
+
+per_right_highkneetap = 0
+per_left_highkneetap = 0
+bar_left_highkneetap = 0
+bar_right_highkneetap = 0 
 
 
-start_time_hkt = time.time()
-repetition_time_hkt = 60
-display_info_hkt = True
+color_right_highkneetap = (0, 0, 255)
+color_left_highkneetap = (0, 0, 255)
 
-leftbody_hkt = 0
-rightbody_hkt = 0
+feedback_left_highkneetap = ""
+feedback_right_highkneetap = ""
 
-per_left_leg_hkt = 0
-bar_left_leg_hkt = 0
+success_threshold_highkneetap = 100
 
-per_right_leg_hkt = 0
-bar_right_leg_hkt = 0
+atrest_value_highkneetap = 0
 
-cooldown_duration_hkt = 5
-cooldown_timer_hkt = 0
+unsuccessful_reps_count_left_highkneetap = 0
+successful_reps_count_left_highkneetap = 0
 
-color_left_leg_hkt = (0, 0, 255)
-color_right_leg_hkt = (0, 0, 255)
+unsuccessful_reps_count_right_highkneetap = 0
+successful_reps_count_right_highkneetap = 0
+
+dir_left_unsuccessful_highkneetap = 0
+dir_right_unsuccessful_highkneetap = 0
+
+total_reps_count_highkneetap = 0
+
+total_reps_count_left_highkneetap = 0
+total_reps_count_right_highkneetap = 0
+
+start_time1_highkneetap = time.time()
+start_time2_highkneetap = time.time()
+start_time3_highkneetap = time.time()
+time_threshold_highkneetap = 1 # Specify the time threshold in seconds # can be changed for testing but default should be 1, 0.2 is for testing
+within_range_time1_highkneetap = 0
+within_range_time2_highkneetap = 0
+
+# gen feedback success
+general_feedback_left_highkneetap = ""
+general_feedback_right_highkneetap = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_highkneetap = 0
+dir_gen_feedback_unsuccessful_highkneetap = 0
+
+cooldown_timer_highkneetap = 0
+cooldown_duration_highkneetap = 5
+
+leftleg_highkneetap = 0
+rightleg_highkneetap = 0
 rest_hkt_start_time = time.time()
 # ------------- FOR HIGH KNEE TAP --------------------
 
 # ------------- FOR HIGH KNEE TAP SET 2 --------------------
-detector_HighKneeTap = pm_hkt.poseDetectorHighKneeTap()
 
-count_high_knee_tap_right_set2 = 0
-count_high_knee_tap_left_set2 = 0
+dir_left_highkneetap_set2 = 0
+dir_right_highkneetap_set2 = 0
 
-dir_high_knee_tap_right_set2 = 0
+repetition_time_highkneetap_set2 = 60  # Repetition time
 
-dir_high_knee_tap_left_set2 = 0
+# Display info
+display_info_highkneetap_set2 = True
+
+per_right_highkneetap_set2 = 0
+per_left_highkneetap_set2 = 0
+bar_left_highkneetap_set2 = 0
+bar_right_highkneetap_set2 = 0 
 
 
-start_time_hkt_set2 = time.time()
-repetition_time_hkt_set2 = 60
-display_info_hkt_set2 = True
+color_right_highkneetap_set2 = (0, 0, 255)
+color_left_highkneetap_set2 = (0, 0, 255)
 
-leftbody_hkt_set2 = 0
-rightbody_hkt_set2 = 0
+feedback_left_highkneetap_set2 = ""
+feedback_right_highkneetap_set2 = ""
 
-per_left_leg_hkt_set2 = 0
-bar_left_leg_hkt_set2 = 0
+success_threshold_highkneetap_set2 = 100
 
-per_right_leg_hkt_set2 = 0
-bar_right_leg_hkt_set2 = 0
+atrest_value_highkneetap_set2 = 0
 
-cooldown_duration_hkt_set2 = 5
-cooldown_timer_hkt_set2 = 0
+unsuccessful_reps_count_left_highkneetap_set2 = 0
+successful_reps_count_left_highkneetap_set2 = 0
 
-color_left_leg_hkt_set2 = (0, 0, 255)
-color_right_leg_hkt_set2 = (0, 0, 255)
+unsuccessful_reps_count_right_highkneetap_set2 = 0
+successful_reps_count_right_highkneetap_set2 = 0
+
+dir_left_unsuccessful_highkneetap_set2 = 0
+dir_right_unsuccessful_highkneetap_set2 = 0
+
+total_reps_count_highkneetap_set2 = 0
+
+total_reps_count_left_highkneetap_set2 = 0
+total_reps_count_right_highkneetap_set2 = 0
+
+start_time1_highkneetap_set2 = time.time()
+start_time2_highkneetap_set2 = time.time()
+start_time3_highkneetap_set2 = time.time()
+time_threshold_highkneetap_set2 = 1 
+within_range_time1_highkneetap_set2 = 0
+within_range_time2_highkneetap_set2 = 0
+
+# gen feedback success
+general_feedback_left_highkneetap_set2 = ""
+general_feedback_right_highkneetap_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_highkneetap_set2 = 0
+dir_gen_feedback_unsuccessful_highkneetap_set2 = 0
+
+cooldown_timer_highkneetap_set2 = 0
+cooldown_duration_highkneetap_set2 = 5
+
+leftleg_highkneetap_set2 = 0
+rightleg_highkneetap_set2 = 0
 rest_hkt_start_time_set2 = time.time()
 # ------------- FOR HIGH KNEE TAP SET 2 --------------------
 
 # ------------- FOR HIGH KNEE TAP SET 3 --------------------
-detector_HighKneeTap = pm_hkt.poseDetectorHighKneeTap()
 
-count_high_knee_tap_right_set3 = 0
-count_high_knee_tap_left_set3 = 0
+dir_left_highkneetap_set3 = 0
+dir_right_highkneetap_set3 = 0
 
-dir_high_knee_tap_right_set3 = 0
+repetition_time_highkneetap_set3 = 60  # Repetition time
 
-dir_high_knee_tap_left_set3 = 0
+# Display info
+display_info_highkneetap_set3 = True
+
+per_right_highkneetap_set3 = 0
+per_left_highkneetap_set3 = 0
+bar_left_highkneetap_set3 = 0
+bar_right_highkneetap_set3 = 0 
 
 
-start_time_hkt_set3 = time.time()
-repetition_time_hkt_set3 = 60
-display_info_hkt_set3 = True
+color_right_highkneetap_set3 = (0, 0, 255)
+color_left_highkneetap_set3 = (0, 0, 255)
 
-leftbody_hkt_set3 = 0
-rightbody_hkt_set3 = 0
+feedback_left_highkneetap_set3 = ""
+feedback_right_highkneetap_set3 = ""
 
-per_left_leg_hkt_set3 = 0
-bar_left_leg_hkt_set3 = 0
+success_threshold_highkneetap_set3= 100
 
-per_right_leg_hkt_set3 = 0
-bar_right_leg_hkt_set3 = 0
+atrest_value_highkneetap_set3 = 0
 
-cooldown_duration_hkt_set3 = 5
-cooldown_timer_hkt_set3 = 0
+unsuccessful_reps_count_left_highkneetap_set3 = 0
+successful_reps_count_left_highkneetap_set3 = 0
 
-color_left_leg_hkt_set3 = (0, 0, 255)
-color_right_leg_hkt_set3 = (0, 0, 255)
+unsuccessful_reps_count_right_highkneetap_set3 = 0
+successful_reps_count_right_highkneetap_set3 = 0
+
+dir_left_unsuccessful_highkneetap_set3 = 0
+dir_right_unsuccessful_highkneetap_set3 = 0
+
+total_reps_count_highkneetap_set3 = 0
+
+total_reps_count_left_highkneetap_set3 = 0
+total_reps_count_right_highkneetap_set3 = 0
+
+start_time1_highkneetap_set3 = time.time()
+start_time2_highkneetap_set3 = time.time()
+start_time3_highkneetap_set3 = time.time()
+time_threshold_highkneetap_set3 = 1
+within_range_time1_highkneetap_set3 = 0
+within_range_time2_highkneetap_set3 = 0
+
+# gen feedback success
+general_feedback_left_highkneetap_set3 = ""
+general_feedback_right_highkneetap_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_highkneetap_set3 = 0
+dir_gen_feedback_unsuccessful_highkneetap_set3 = 0
+
+cooldown_timer_highkneetap_set3 = 0
+cooldown_duration_highkneetap_set3 = 5
+
+leftleg_highkneetap_set3 = 0
+rightleg_highkneetap_set3 = 0
 rest_hkt_start_time_set3 = time.time()
 # ------------- FOR HIGH KNEE TAP SET 3 --------------------
 
 # ------------- FOR DUMBBELL HIP HINGE ---------------------
-detector_HipHinge = pm_dhh.poseDetectorBodyHipHinge()
+detector_dumbbellhiphinge = pm_dhh.poseDetectordumbbellhiphinge()
 
 # Initialize variables
-count_hip_hinge = 0
-dir_hip_hinge = 0
+dir_left_dumbbellhiphinge = 0
+dir_right_dumbbellhiphinge = 0
 
-start_time_hpp = time.time()
-repetition_time_hpp = 60
-display_info_hpp = True
+repetition_time_dumbbellhiphinge = 60  # Repetition time
 
-per_left_hip_angle = 0
-bar_left_hip_angle = 0
+# Display info
+display_info_dumbbellhiphinge = True
 
-per_right_hip_angle = 0
-bar_right_hip_angle = 0
 
-leftbody_hpp = 0
-rightbody_hpp = 0
+per_right_dumbbellhiphinge = 0
+per_left_dumbbellhiphinge = 0
+bar_left_dumbbellhiphinge = 0
+bar_right_dumbbellhiphinge = 0 
 
-color_hip = (0, 0, 255)
+
+color_right_dumbbellhiphinge = (0, 0, 255)
+color_left_dumbbellhiphinge = (0, 0, 255)
+
+feedback_left_dumbbellhiphinge = ""
+feedback_right_dumbbellhiphinge = ""
+
+success_threshold_dumbbellhiphinge = 100
+
+atrest_value_dumbbellhiphinge = 0
+
+unsuccessful_reps_count_left_dumbbellhiphinge = 0
+successful_reps_count_left_dumbbellhiphinge = 0
+
+unsuccessful_reps_count_right_dumbbellhiphinge = 0
+successful_reps_count_right_dumbbellhiphinge = 0
+
+dir_left_unsuccessful_dumbbellhiphinge = 0
+dir_right_unsuccessful_dumbbellhiphinge = 0
+
+total_reps_count_dumbbellhiphinge = 0
+
+total_reps_count_left_dumbbellhiphinge = 0
+total_reps_count_right_dumbbellhiphinge = 0
+
+start_time1_dumbbellhiphinge = time.time()
+start_time2_dumbbellhiphinge = time.time()
+start_time3_dumbbellhiphinge = time.time()
+time_threshold_dumbbellhiphinge = 10 
+within_range_time1_dumbbellhiphinge = 0
+within_range_time2_dumbbellhiphinge = 0
+
+# gen feedback success
+general_feedback_left_dumbbellhiphinge = ""
+general_feedback_right_dumbbellhiphinge = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellhiphinge = 0
+dir_gen_feedback_unsuccessful_dumbbellhiphinge = 0
+
+cooldown_timer_dumbbellhiphinge = 0
+cooldown_duration_dumbbellhiphinge = 5
+
+leftbody_dumbbellhiphinge = 0
+rightbody_dumbbellhiphinge = 0
 rest_dhh_start_time = time.time()
 # ------------- END FOR DUMBBELL HIP HINGE ---------------------
 
 # ------------- FOR DUMBBELL HIP HINGE SET 2---------------------
-detector_HipHinge = pm_dhh.poseDetectorBodyHipHinge()
 
-# Initialize variables
-count_hip_hinge_set2 = 0
-dir_hip_hinge_set2 = 0
+dir_left_dumbbellhiphinge_set2 = 0
+dir_right_dumbbellhiphinge_set2 = 0
 
-start_time_hpp_set2 = time.time()
-repetition_time_hpp_set2 = 60
-display_info_hpp_set2 = True
+repetition_time_dumbbellhiphinge_set2 = 60  # Repetition time
 
-per_left_hip_angle_set2 = 0
-bar_left_hip_angle_set2 = 0
+# Display info
+display_info_dumbbellhiphinge_set2 = True
 
-per_right_hip_angle_set2 = 0
-bar_right_hip_angle_set2 = 0
 
-leftbody_hpp_set2 = 0
-rightbody_hpp_set2 = 0
+per_right_dumbbellhiphinge_set2 = 0
+per_left_dumbbellhiphinge_set2 = 0
+bar_left_dumbbellhiphinge_set2 = 0
+bar_right_dumbbellhiphinge_set2 = 0 
 
-color_hip_set2 = (0, 0, 255)
+
+color_right_dumbbellhiphinge_set2 = (0, 0, 255)
+color_left_dumbbellhiphinge_set2 = (0, 0, 255)
+
+feedback_left_dumbbellhiphinge_set2 = ""
+feedback_right_dumbbellhiphinge_set2 = ""
+
+success_threshold_dumbbellhiphinge_set2 = 100
+
+atrest_value_dumbbellhiphinge_set2 = 0
+
+unsuccessful_reps_count_left_dumbbellhiphinge_set2 = 0
+successful_reps_count_left_dumbbellhiphinge_set2 = 0
+
+unsuccessful_reps_count_right_dumbbellhiphinge_set2 = 0
+successful_reps_count_right_dumbbellhiphinge_set2 = 0
+
+dir_left_unsuccessful_dumbbellhiphinge_set2 = 0
+dir_right_unsuccessful_dumbbellhiphinge_set2 = 0
+
+total_reps_count_dumbbellhiphinge_set2 = 0
+
+total_reps_count_left_dumbbellhiphinge_set2 = 0
+total_reps_count_right_dumbbellhiphinge_set2 = 0
+
+start_time1_dumbbellhiphinge_set2 = time.time()
+start_time2_dumbbellhiphinge_set2 = time.time()
+start_time3_dumbbellhiphinge_set2 = time.time()
+time_threshold_dumbbellhiphinge_set2 = 10 
+within_range_time1_dumbbellhiphinge_set2 = 0
+within_range_time2_dumbbellhiphinge_set2 = 0
+
+# gen feedback success
+general_feedback_left_dumbbellhiphinge_set2 = ""
+general_feedback_right_dumbbellhiphinge_set2 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellhiphinge_set2 = 0
+dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 = 0
+
+cooldown_timer_dumbbellhiphinge_set2 = 0
+cooldown_duration_dumbbellhiphinge_set2 = 5
+
+leftbody_dumbbellhiphinge_set2 = 0
+rightbody_dumbbellhiphinge_set2 = 0
 rest_dhh_start_time_set2 = time.time()
 # ------------- END FOR DUMBBELL HIP HINGE SET 2 ---------------------
 
 # ------------- FOR DUMBBELL HIP HINGE SET 3 ---------------------
-detector_HipHinge = pm_dhh.poseDetectorBodyHipHinge()
 
-# Initialize variables
-count_hip_hinge_set3 = 0
-dir_hip_hinge_set3 = 0
+dir_left_dumbbellhiphinge_set3 = 0
+dir_right_dumbbellhiphinge_set3 = 0
 
-start_time_hpp_set3 = time.time()
-repetition_time_hpp_set3 = 60
-display_info_hpp_set3 = True
+repetition_time_dumbbellhiphinge_set3 = 60  # Repetition time
 
-per_left_hip_angle_set3 = 0
-bar_left_hip_angle_set3 = 0
+# Display info
+display_info_dumbbellhiphinge_set3 = True
 
-per_right_hip_angle_set3 = 0
-bar_right_hip_angle_set3 = 0
 
-leftbody_hpp_set3 = 0
-rightbody_hpp_set3 = 0
+per_right_dumbbellhiphinge_set3 = 0
+per_left_dumbbellhiphinge_set3 = 0
+bar_left_dumbbellhiphinge_set3 = 0
+bar_right_dumbbellhiphinge_set3 = 0 
 
-color_hip_set3 = (0, 0, 255)
+
+color_right_dumbbellhiphinge_set3 = (0, 0, 255)
+color_left_dumbbellhiphinge_set3 = (0, 0, 255)
+
+feedback_left_dumbbellhiphinge_set3 = ""
+feedback_right_dumbbellhiphinge_set3 = ""
+
+success_threshold_dumbbellhiphinge_set3 = 100
+
+atrest_value_dumbbellhiphinge_set3 = 0
+
+unsuccessful_reps_count_left_dumbbellhiphinge_set3 = 0
+successful_reps_count_left_dumbbellhiphinge_set3 = 0
+
+unsuccessful_reps_count_right_dumbbellhiphinge_set3 = 0
+successful_reps_count_right_dumbbellhiphinge_set3 = 0
+
+dir_left_unsuccessful_dumbbellhiphinge = 0
+dir_right_unsuccessful_dumbbellhiphinge_set3 = 0
+
+total_reps_count_dumbbellhiphinge_set3 = 0
+
+total_reps_count_left_dumbbellhiphinge_set3 = 0
+total_reps_count_right_dumbbellhiphinge_set3 = 0
+
+start_time1_dumbbellhiphinge_set3 = time.time()
+start_time2_dumbbellhiphinge_set3 = time.time()
+start_time3_dumbbellhiphinge_set3 = time.time()
+time_threshold_dumbbellhiphinge_set3 = 10
+within_range_time1_dumbbellhiphinge_set3 = 0
+within_range_time2_dumbbellhiphinge_set3 = 0
+
+# gen feedback success
+general_feedback_left_dumbbellhiphinge_set3 = ""
+general_feedback_right_dumbbellhiphinge_set3 = ""
+
+# gen feedback unsuccess
+dir_gen_feedback_dumbbellhiphinge_set3 = 0
+dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 = 0
+
+cooldown_timer_dumbbellhiphinge_set3 = 0
+cooldown_duration_dumbbellhiphinge_set3 = 5
+
+leftbody_dumbbellhiphinge_set3 = 0
+rightbody_dumbbellhiphinge_set3 = 0
 rest_dhh_start_time_set3 = time.time()
 # ------------- END FOR DUMBBELL HIP HINGE SET 3 ---------------------
 
@@ -5420,7 +5846,7 @@ def detect_alternatinglunge_set3(img):
     return img
 
 def rest_alternatinglunge_set3(img):
-    global exercise_mode, rest_alternatinglunge_start_time_set3, start_time_bws
+    global exercise_mode, rest_alternatinglunge_start_time_set3, start_time1_bodyweightsquat
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_alternatinglunge_start_time_set3
@@ -5435,138 +5861,133 @@ def rest_alternatinglunge_set3(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "bws"
-        start_time_bws = time.time()
+        start_time1_bodyweightsquat = time.time()
 
     return img
 
 def detect_bws(img):
-    global count_body_weight_squat, dir_body_weight_squat, start_time_bws, repetition_time_bws, display_info_bws, leftbody_bws, rightbody_bws, per_left_body_bws, bar_left_body_bws, per_right_body_bws, bar_right_body_bws, color_right_body_bws, color_left_body_bws, rest_bws_start_time, exercise_mode
+    global dir_left_bodyweightsquat, dir_right_bodyweightsquat, display_info_bodyweightsquat, per_right_bodyweightsquat, per_left_bodyweightsquat, bar_left_bodyweightsquat, bar_right_bodyweightsquat, leftbody_bodyweightsquat, rightbody_bodyweightsquat, color_right_bodyweightsquat, color_left_bodyweightsquat, feedback_body_bodyweightsquat, success_threshold_bodyweightsquat, peak_value_bodyweightsquat, atrest_value_bodyweightsquat, unsuccessful_reps_count_body_bodyweightsquat, successful_reps_count_body_bodyweightsquat, dir_left_unsuccessful_bodyweightsquat, start_time1_bodyweightsquat, start_time2_bodyweightsquat, start_time3_bodyweightsquat, time_threshold_bodyweightsquat, within_range_time1_bodyweightsquat, within_range_time2_bodyweightsquat, general_feedback_body_bodyweightsquat, dir_gen_feedback_bodyweightsquat, dir_gen_feedback_unsuccessful_bodyweightsquat, cooldown_timer_bodyweightsquat, cooldown_duration_bodyweightsquat, rest_bws_start_time, exercise_mode, per_right_body_bodyweightsquat, bar_right_body_bodyweightsquat, per_left_body_bodyweightsquat, bar_left_body_bodyweightsquat
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_bws
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws
+    elapsed_time_bodyweightsquat = time.time() - start_time1_bodyweightsquat
+    remaining_time_bodyweightsquat = max(0, 60 - elapsed_time_bodyweightsquat)
 
-    if display_info_bws:  # Check if to display counter, bar, and percentage
-        img = detector_BodyWeightSquat.findPose(img, False)
-        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+    if display_info_bodyweightsquat:  # Check if to display counter, bar, and percentage
+        img = detector_bodyweightsquat.findPose(img, False)
+        lmList_bodyweightsquat = detector_bodyweightsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_bodyweightsquat) != 0:
             
-            leftbody_bws, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
-            rightbody_bws, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
-            
-            if orientation == 'right' and orientation2 == 'right':
-                per_right_body_bws = np.interp(rightbody_bws, (180, 280), (0, 100))
-                bar_right_body_bws = np.interp(rightbody_bws, (180, 280), (400, 200))
+            leftbody_bodyweightsquat = detector_bodyweightsquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bodyweightsquat = detector_bodyweightsquat.WeightSquat(img, 11, 23, 25, True)
+                     
+            per_right_body_bodyweightsquat = np.interp(rightbody_bodyweightsquat, (180, 270), (100, 0))
+            bar_right_body_bodyweightsquat = np.interp(rightbody_bodyweightsquat, (180, 270), (200, 400))
 
-                per_left_body_bws = np.interp(leftbody_bws, (180, 280), (0, 100))
-                bar_left_body_bws = np.interp(leftbody_bws, (180, 280), (400, 200))
+            per_left_body_bodyweightsquat = np.interp(leftbody_bodyweightsquat, (180, 270), (100, 0))
+            bar_left_body_bodyweightsquat = np.interp(leftbody_bodyweightsquat, (180, 270), (200, 400))
 
-                if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
-                    color_left_body_bws = (0, 255, 0)
-                    color_right_body_bws = (0, 255, 0)  
-                else:
-                    color_left_body_bws = (0, 0, 255)  
-                    color_right_body_bws = (0, 0, 255)  
-            
-                if leftbody_bws >= 280 and rightbody_bws >= 280:
-                    if dir_body_weight_squat == 0:
-                        count_body_weight_squat += 0.5
-                        dir_body_weight_squat = 1
-                elif leftbody_bws <= 180 and rightbody_bws <= 180:
-                    if dir_body_weight_squat == 1:
-                        count_body_weight_squat +=0.5
-                        dir_body_weight_squat = 0
-                    
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_bws is not None and rightbody_bws is not None:
+            if int(per_left_body_bodyweightsquat) == 100 and int(per_right_body_bodyweightsquat) == 100:
+                color_left_bodyweightsquat = (0, 255, 0)
+                color_right_bodyweightsquat = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_bodyweightsquat = (0, 0, 255)
+                color_right_bodyweightsquat = (0, 0, 255)
 
-                    per_right_body_bws = np.interp(rightbody_bws, (90, 170), (100, 0))
-                    bar_right_body_bws = np.interp(rightbody_bws, (90, 170), (200, 400))
+            #body checker for successful and unsuccessful
+            if 50 <= per_left_bodyweightsquat <= 90 or 50 <= per_right_body_bodyweightsquat <= 90:
+                # Increment the time within range
+                within_range_time1_bodyweightsquat += time.time() - start_time2_bodyweightsquat
+                #print(within_range_time1_bodyweightsquat)
 
-                    per_left_body_bws = np.interp(leftbody_bws, (90, 170), (100, 0))
-                    bar_left_body_bws = np.interp(leftbody_bws, (90, 170), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_bodyweightsquat >= time_threshold_bodyweightsquat:
+                    if dir_left_unsuccessful_bodyweightsquat == 0:
+                        unsuccessful_reps_count_body_bodyweightsquat += 0.5
+                        dir_left_unsuccessful_bodyweightsquat = 1
+                        #print("UP LEFT: ", unsuccessful_reps_count_body_bodyweightsquat)
+            else:
+                within_range_time1_bodyweightsquat = 0
+                # Update the start time to the current time
+                start_time2_bodyweightsquat = time.time()
 
-                    if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
-                        color_left_body_bws = (0, 255, 0)
-                        color_right_body_bws = (0, 255, 0)  
-                    else:
-                        color_left_body_bws = (0, 0, 255)  
-                        color_right_body_bws = (0, 0, 255)  
- 
-                    if leftbody_bws <= 90 and rightbody_bws <= 90:
-                        if dir_body_weight_squat == 0:
-                            count_body_weight_squat += 0.5
-                            dir_body_weight_squat = 1
-                    elif leftbody_bws >= 170 and rightbody_bws >= 170:
-                        if dir_body_weight_squat == 1:
-                            count_body_weight_squat +=0.5
-                            dir_body_weight_squat = 0
+            if 1 <= per_left_bodyweightsquat <= 10 or 1 <= per_right_body_bodyweightsquat <= 10:
+                if dir_left_unsuccessful_bodyweightsquat == 1:
+                    unsuccessful_reps_count_body_bodyweightsquat += 0.5
+                    dir_left_unsuccessful_bodyweightsquat = 0
+                    #print("UP DOWN: ", unsuccessful_reps_count_body_bodyweightsquat)
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_body_bws = np.interp(rightbody_bws, (180, 270), (100, 0))
-                    bar_right_body_bws = np.interp(rightbody_bws, (180, 270), (200, 400))
+            if rightbody_bodyweightsquat <= 180 and leftbody_bodyweightsquat <= 180: 
+                if dir_left_bodyweightsquat == 0:
+                    successful_reps_count_body_bodyweightsquat += 0.5
+                    dir_left_bodyweightsquat = 1
+            elif rightbody_bodyweightsquat >= 270 and leftbody_bodyweightsquat >= 270:
+                if dir_left_bodyweightsquat == 1:
+                    successful_reps_count_body_bodyweightsquat += 0.5
+                    dir_left_bodyweightsquat = 0
 
-                    per_left_body_bws = np.interp(leftbody_bws, (180, 270), (100, 0))
-                    bar_left_body_bws = np.interp(leftbody_bws, (180, 270), (200, 400))
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_body_bodyweightsquat = detector_bodyweightsquat.feedback_bodyweightsquat(per_right_bodyweightsquat)
 
-                    if int(per_left_body_bws) == 100 and int(per_left_body_bws) == 100:
-                        color_left_body_bws = (0, 255, 0)
-                        color_right_body_bws = (0, 255, 0)  
-                    else:
-                        color_left_body_bws = (0, 0, 255)  
-                        color_right_body_bws = (0, 0, 255)  
+            detector_bodyweightsquat.update_next_per_left(per_right_bodyweightsquat)
 
-                    if rightbody_bws <= 180 and leftbody_bws <= 180: 
-                        if dir_body_weight_squat == 0:
-                            count_body_weight_squat += 0.5
-                            dir_body_weight_squat =1
-                    elif rightbody_bws >= 270 and leftbody_bws >= 270:
-                        if dir_body_weight_squat == 1:
-                            count_body_weight_squat += 0.5
-                            dir_body_weight_squat = 0
-                    
-
-        cvzone.putTextRect(img, 'Body Weight Squat Tracker', [220, 30], thickness=2, border=2, scale=2.5)
+    
+        cvzone.putTextRect(img, 'Front Body Weight Squat', [420, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bodyweightsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_body_bws)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_body_bodyweightsquat)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_body_bws)), (50, 400), color_right_body_bws, -1)
+        cv2.rectangle(img, (8, int(bar_right_body_bodyweightsquat)), (50, 400), color_right_bodyweightsquat, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_body_bws)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_body_bodyweightsquat)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_body_bws)), (995, 400), color_left_body_bws, -1)
+        cv2.rectangle(img, (952, int(bar_left_body_bodyweightsquat)), (995, 400), color_left_bodyweightsquat, -1)
 
     cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_body_weight_squat)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_body_bodyweightsquat)}/10", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_bodyweightsquat <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws = False
+        display_info_bodyweightsquat = False
         exercise_mode = "rest_bws"
         rest_bws_start_time = time.time()
 
-    if count_body_weight_squat >= 6:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws = False
-        exercise_mode = "rest_bws"
-        rest_bws_start_time = time.time()
+    total_reps_count_body_bodyweightsquat = successful_reps_count_body_bodyweightsquat + unsuccessful_reps_count_body_bodyweightsquat
+
+    if successful_reps_count_body_bodyweightsquat >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_bodyweightsquat = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_bodyweightsquat == 0:
+            general_feedback_left_bodyweightsquat = detector_bodyweightsquat.body_feedback(total_reps_count_body_bodyweightsquat)
+            print(general_feedback_left_bodyweightsquat)
+            dir_gen_feedback_bodyweightsquat = 1
+            exercise_mode = "rest_bws"
+            rest_bws_start_time = time.time()
+        
+    if unsuccessful_reps_count_body_bodyweightsquat >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_bodyweightsquat = False
+
+        if dir_gen_feedback_unsuccessful_bodyweightsquat == 0:
+            general_feedback_left_bodyweightsquat = detector_bodyweightsquat.body_unsuccessful_feedback(total_reps_count_body_bodyweightsquat)
+            dir_gen_feedback_unsuccessful_bodyweightsquat = 1
+            exercise_mode = "rest_bws"
+            rest_bws_start_time = time.time()
     return img
 
 def rest_bws(img):
-    global exercise_mode, rest_bws_start_time, start_time_bws_set2
+    global exercise_mode, rest_bws_start_time, start_time1_bodyweightsquat_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bws_start_time
@@ -5581,137 +6002,132 @@ def rest_bws(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "bws_set2"
-        start_time_bws_set2 = time.time()
+        start_time1_bodyweightsquat_set2 = time.time()
     return img
 
 def detect_bws_set2(img):
-    global count_body_weight_squat_set2, dir_body_weight_squat_set2, start_time_bws_set2, repetition_time_bws_set2, display_info_bws_set2, leftbody_bws_set2, rightbody_bws_set2, per_left_body_bws_set2, bar_left_body_bws_set2, per_right_body_bws_set2, bar_right_body_bws_set2, color_right_body_bws_set2, color_left_body_bws_set2, rest_bws_start_time_set2, exercise_mode
+    global dir_left_bodyweightsquat_set2, dir_right_bodyweightsquat_set2, display_info_bodyweightsquat_set2, per_right_bodyweightsquat_set2, per_left_bodyweightsquat_set2, bar_left_bodyweightsquat_set2, bar_right_bodyweightsquat_set2, leftbody_bodyweightsquat_set2, rightbody_bodyweightsquat_set2, color_right_bodyweightsquat_set2, color_left_bodyweightsquat_set2, feedback_body_bodyweightsquat_set2, success_threshold_bodyweightsquat_set2, peak_value_bodyweightsquat_set2, atrest_value_bodyweightsquat_set2, unsuccessful_reps_count_body_bodyweightsquat_set2, successful_reps_count_body_bodyweightsquat_set2, dir_left_unsuccessful_bodyweightsquat_set2, start_time1_bodyweightsquat_set2, start_time2_bodyweightsquat_set2, start_time3_bodyweightsquat_set2, time_threshold_bodyweightsquat_set2, within_range_time1_bodyweightsquat_set2, within_range_time2_bodyweightsquat_set2, general_feedback_body_bodyweightsquat_set2, dir_gen_feedback_bodyweightsquat_set2, dir_gen_feedback_unsuccessful_bodyweightsquat_set2, cooldown_timer_bodyweightsquat_set2, cooldown_duration_bodyweightsquat_set2, rest_bws_start_time_set2, exercise_mode, per_right_body_bodyweightsquat_set2, bar_right_body_bodyweightsquat_set2, per_left_body_bodyweightsquat_set2, bar_left_body_bodyweightsquat_set2
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_bws_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws_set2
+    elapsed_time_bodyweightsquat = time.time() - start_time1_bodyweightsquat_set2
+    remaining_time_bodyweightsquat = max(0, 60 - elapsed_time_bodyweightsquat)
 
-    if display_info_bws_set2:  # Check if to display counter, bar, and percentage
-        img = detector_BodyWeightSquat.findPose(img, False)
-        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+    if display_info_bodyweightsquat_set2:  # Check if to display counter, bar, and percentage
+        img = detector_bodyweightsquat.findPose(img, False)
+        lmList_bodyweightsquat = detector_bodyweightsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_bodyweightsquat) != 0:
             
-            leftbody_bws_set2, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
-            rightbody_bws_set2, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
-            
-            if orientation == 'right' and orientation2 == 'right':
-                per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 280), (0, 100))
-                bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 280), (400, 200))
+            leftbody_bodyweightsquat_set2 = detector_bodyweightsquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bodyweightsquat_set2 = detector_bodyweightsquat.WeightSquat(img, 11, 23, 25, True)
+                     
+            per_right_body_bodyweightsquat_set2 = np.interp(rightbody_bodyweightsquat_set2, (180, 270), (100, 0))
+            bar_right_body_bodyweightsquat_set2 = np.interp(rightbody_bodyweightsquat_set2, (180, 270), (200, 400))
 
-                per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 280), (0, 100))
-                bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 280), (400, 200))
+            per_left_body_bodyweightsquat_set2 = np.interp(leftbody_bodyweightsquat_set2, (180, 270), (100, 0))
+            bar_left_body_bodyweightsquat_set2 = np.interp(leftbody_bodyweightsquat_set2, (180, 270), (200, 400))
 
-                if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
-                    color_left_body_bws_set2 = (0, 255, 0)
-                    color_right_body_bws_set2 = (0, 255, 0)  
-                else:
-                    color_left_body_bws_set2 = (0, 0, 255)  
-                    color_right_body_bws_set2 = (0, 0, 255)  
-            
-                if leftbody_bws_set2 >= 280 and rightbody_bws_set2 >= 280:
-                    if dir_body_weight_squat_set2 == 0:
-                        count_body_weight_squat_set2 += 0.5
-                        dir_body_weight_squat_set2 = 1
-                elif leftbody_bws_set2 <= 180 and rightbody_bws_set2 <= 180:
-                    if dir_body_weight_squat_set2 == 1:
-                        count_body_weight_squat_set2 +=0.5
-                        dir_body_weight_squat_set2 = 0
-                    
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_bws_set2 is not None and rightbody_bws_set2 is not None:
+            if int(per_left_body_bodyweightsquat_set2) == 100 and int(per_right_body_bodyweightsquat_set2) == 100:
+                color_left_bodyweightsquat_set2 = (0, 255, 0)
+                color_right_bodyweightsquat_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_bodyweightsquat_set2 = (0, 0, 255)
+                color_right_bodyweightsquat_set2 = (0, 0, 255)
 
-                    per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (90, 170), (100, 0))
-                    bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (90, 170), (200, 400))
+            #body checker for successful and unsuccessful
+            if 50 <= per_left_bodyweightsquat_set2 <= 90 or 50 <= per_right_body_bodyweightsquat_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_bodyweightsquat += time.time() - start_time2_bodyweightsquat
+                #print(within_range_time1_bodyweightsquat)
 
-                    per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (90, 170), (100, 0))
-                    bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (90, 170), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_bodyweightsquat_set2 >= time_threshold_bodyweightsquat_set2:
+                    if dir_left_unsuccessful_bodyweightsquat_set2 == 0:
+                        unsuccessful_reps_count_body_bodyweightsquat_set2 += 0.5
+                        dir_left_unsuccessful_bodyweightsquat_set2 = 1
+                        #print("UP LEFT: ", unsuccessful_reps_count_body_bodyweightsquat)
+            else:
+                within_range_time1_bodyweightsquat_set2 = 0
+                # Update the start time to the current time
+                start_time2_bodyweightsquat_set2 = time.time()
 
-                    if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
-                        color_left_body_bws_set2 = (0, 255, 0)
-                        color_right_body_bws_set2 = (0, 255, 0)  
-                    else:
-                        color_left_body_bws_set2 = (0, 0, 255)  
-                        color_right_body_bws_set2 = (0, 0, 255)  
- 
-                    if leftbody_bws_set2 <= 90 and rightbody_bws_set2 <= 90:
-                        if dir_body_weight_squat_set2 == 0:
-                            count_body_weight_squat_set2 += 0.5
-                            dir_body_weight_squat_set2 = 1
-                    elif leftbody_bws_set2 >= 170 and rightbody_bws_set2 >= 170:
-                        if dir_body_weight_squat_set2 == 1:
-                            count_body_weight_squat_set2 +=0.5
-                            dir_body_weight_squat_set2 = 0
+            if 1 <= per_left_bodyweightsquat_set2 <= 10 or 1 <= per_right_body_bodyweightsquat_set2 <= 10:
+                if dir_left_unsuccessful_bodyweightsquat_set2 == 1:
+                    unsuccessful_reps_count_body_bodyweightsquat_set2 += 0.5
+                    dir_left_unsuccessful_bodyweightsquat_set2 = 0
+                    #print("UP DOWN: ", unsuccessful_reps_count_body_bodyweightsquat)
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 270), (100, 0))
-                    bar_right_body_bws_set2 = np.interp(rightbody_bws_set2, (180, 270), (200, 400))
+            if rightbody_bodyweightsquat_set2 <= 180 and leftbody_bodyweightsquat_set2 <= 180: 
+                if dir_left_bodyweightsquat_set2 == 0:
+                    successful_reps_count_body_bodyweightsquat_set2 += 0.5
+                    dir_left_bodyweightsquat_set2 = 1
+            elif rightbody_bodyweightsquat_set2 >= 270 and leftbody_bodyweightsquat_set2 >= 270:
+                if dir_left_bodyweightsquat_set2 == 1:
+                    successful_reps_count_body_bodyweightsquat_set2 += 0.5
+                    dir_left_bodyweightsquat_set2 = 0
 
-                    per_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 270), (100, 0))
-                    bar_left_body_bws_set2 = np.interp(leftbody_bws_set2, (180, 270), (200, 400))
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_body_bodyweightsquat_set2 = detector_bodyweightsquat.feedback_bodyweightsquat(per_right_bodyweightsquat_set2)
 
-                    if int(per_left_body_bws_set2) == 100 and int(per_left_body_bws_set2) == 100:
-                        color_left_body_bws_set2 = (0, 255, 0)
-                        color_right_body_bws_set2 = (0, 255, 0)  
-                    else:
-                        color_left_body_bws_set2 = (0, 0, 255)  
-                        color_right_body_bws_set2 = (0, 0, 255)  
+            detector_bodyweightsquat.update_next_per_left(per_right_bodyweightsquat_set2)
 
-                    if rightbody_bws_set2 <= 180 and leftbody_bws_set2 <= 180: 
-                        if dir_body_weight_squat_set2 == 0:
-                            count_body_weight_squat_set2 += 0.5
-                            dir_body_weight_squat_set2 =1
-                    elif rightbody_bws_set2 >= 270 and leftbody_bws_set2 >= 270:
-                        if dir_body_weight_squat_set2 == 1:
-                            count_body_weight_squat_set2 += 0.5
-                            dir_body_weight_squat_set2 = 0
-                    
-
-        cvzone.putTextRect(img, 'Body Weight Squat Tracker SET 2', [220, 30], thickness=2, border=2, scale=2.5)
+    
+        cvzone.putTextRect(img, 'Front Body Weight Squat SET 2', [420, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bodyweightsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_body_bws_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_body_bodyweightsquat_set2)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_body_bws_set2)), (50, 400), color_right_body_bws_set2, -1)
+        cv2.rectangle(img, (8, int(bar_right_body_bodyweightsquat_set2)), (50, 400), color_right_bodyweightsquat_set2, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_body_bws_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_body_bodyweightsquat_set2)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_body_bws_set2)), (995, 400), color_left_body_bws_set2, -1)
+        cv2.rectangle(img, (952, int(bar_left_body_bodyweightsquat_set2)), (995, 400), color_left_bodyweightsquat_set2, -1)
 
     cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_body_weight_squat_set2)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_body_bodyweightsquat_set2)}/10", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_bodyweightsquat <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws_set2 = False
+        display_info_bodyweightsquat_set2 = False
         exercise_mode = "rest_bws_set2"
         rest_bws_start_time_set2 = time.time()
 
-    if count_body_weight_squat_set2 >= 6:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws_set2 = False
-        exercise_mode = "rest_bws_set2"
-        rest_bws_start_time_set2 = time.time()
+    total_reps_count_body_bodyweightsquat_set2 = successful_reps_count_body_bodyweightsquat_set2 + unsuccessful_reps_count_body_bodyweightsquat_set2
+
+    if successful_reps_count_body_bodyweightsquat >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_bodyweightsquat_set2 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_bodyweightsquat_set2 == 0:
+            general_feedback_left_bodyweightsquat_set2 = detector_bodyweightsquat.body_feedback(total_reps_count_body_bodyweightsquat_set2)
+            #print(general_feedback_left_bodyweightsquat_set2)
+            dir_gen_feedback_bodyweightsquat_set2 = 1
+            exercise_mode = "rest_bws_set2"
+            rest_bws_start_time_set2 = time.time()
+        
+    if unsuccessful_reps_count_body_bodyweightsquat_set2 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_bodyweightsquat_set2 = False
+
+        if dir_gen_feedback_unsuccessful_bodyweightsquat_set2 == 0:
+            general_feedback_left_bodyweightsquat_set2 = detector_bodyweightsquat.body_unsuccessful_feedback(total_reps_count_body_bodyweightsquat_set2)
+            dir_gen_feedback_unsuccessful_bodyweightsquat_set2 = 1
+            exercise_mode = "rest_bws_set2"
+            rest_bws_start_time_set2 = time.time()
     return img
 
 def rest_bws_set2(img):
-    global exercise_mode, rest_bws_start_time_set2, start_time_bws_set3
+    global exercise_mode, rest_bws_start_time_set2, start_time1_bodyweightsquat_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_bws_start_time_set2
@@ -5726,133 +6142,128 @@ def rest_bws_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "bws_set3"
-        start_time_bws_set3 = time.time()
+        start_time1_bodyweightsquat_set3 = time.time()
     return img
 
 def detect_bws_set3(img):
-    global count_body_weight_squat_set3, dir_body_weight_squat_set3, start_time_bws_set3, repetition_time_bws_set3, display_info_bws_set3, leftbody_bws_set3, rightbody_bws_set3, per_left_body_bws_set3, bar_left_body_bws_set3, per_right_body_bws_set3, bar_right_body_bws_set3, color_right_body_bws_set3, color_left_body_bws_set3, rest_bws_start_time_set3, exercise_mode
+    global dir_left_bodyweightsquat_set3, dir_right_bodyweightsquat_set3, display_info_bodyweightsquat_set3, per_right_bodyweightsquat_set3, per_left_bodyweightsquat_set3, bar_left_bodyweightsquat_set3, bar_right_bodyweightsquat_set3, leftbody_bodyweightsquat_set3, rightbody_bodyweightsquat_set3, color_right_bodyweightsquat_set3, color_left_bodyweightsquat_set3, feedback_body_bodyweightsquat_set3, success_threshold_bodyweightsquat_set3, peak_value_bodyweightsquat_set3, atrest_value_bodyweightsquat_set3, unsuccessful_reps_count_body_bodyweightsquat_set3, successful_reps_count_body_bodyweightsquat_set3, dir_left_unsuccessful_bodyweightsquat_set3, start_time1_bodyweightsquat_set3, start_time2_bodyweightsquat_set3, start_time3_bodyweightsquat_set3, time_threshold_bodyweightsquat_set3, within_range_time1_bodyweightsquat_set3, within_range_time2_bodyweightsquat_set3, general_feedback_body_bodyweightsquat_set3, dir_gen_feedback_bodyweightsquat_set3, dir_gen_feedback_unsuccessful_bodyweightsquat_set3, cooldown_timer_bodyweightsquat_set3, cooldown_duration_bodyweightsquat_set3, rest_bws_start_time_set3, exercise_mode, per_right_body_bodyweightsquat_set3, bar_right_body_bodyweightsquat_set3, per_left_body_bodyweightsquat_set3, bar_left_body_bodyweightsquat_set3
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_bws_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_bws_set3
+    elapsed_time_bodyweightsquat = time.time() - start_time1_bodyweightsquat_set3
+    remaining_time_bodyweightsquat = max(0, 60 - elapsed_time_bodyweightsquat)
 
-    if display_info_bws_set3:  # Check if to display counter, bar, and percentage
-        img = detector_BodyWeightSquat.findPose(img, False)
-        lmList_jumping_jacks = detector_BodyWeightSquat.findPosition(img, False)
+    if display_info_bodyweightsquat_set3:  # Check if to display counter, bar, and percentage
+        img = detector_bodyweightsquat.findPose(img, False)
+        lmList_bodyweightsquat = detector_bodyweightsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_bodyweightsquat) != 0:
             
-            leftbody_bws_set3, orientation = detector_BodyWeightSquat.WeightSquat(img, 12, 24, 26, True)
-            rightbody_bws_set3, orientation2 = detector_BodyWeightSquat.WeightSquat(img, 11, 23, 25, True)
-            
-            if orientation == 'right' and orientation2 == 'right':
-                per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 280), (0, 100))
-                bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 280), (400, 200))
+            leftbody_bodyweightsquat_set3 = detector_bodyweightsquat.WeightSquat(img, 12, 24, 26, True)
+            rightbody_bodyweightsquat_set3 = detector_bodyweightsquat.WeightSquat(img, 11, 23, 25, True)
+                     
+            per_right_body_bodyweightsquat_set3 = np.interp(rightbody_bodyweightsquat_set3, (180, 270), (100, 0))
+            bar_right_body_bodyweightsquat_set3 = np.interp(rightbody_bodyweightsquat_set3, (180, 270), (200, 400))
 
-                per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 280), (0, 100))
-                bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 280), (400, 200))
+            per_left_body_bodyweightsquat_set3 = np.interp(leftbody_bodyweightsquat_set3, (180, 270), (100, 0))
+            bar_left_body_bodyweightsquat_set3 = np.interp(leftbody_bodyweightsquat_set3, (180, 270), (200, 400))
 
-                if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
-                    color_left_body_bws_set3 = (0, 255, 0)
-                    color_right_body_bws_set3 = (0, 255, 0)  
-                else:
-                    color_left_body_bws_set3 = (0, 0, 255)  
-                    color_right_body_bws_set3 = (0, 0, 255)  
-            
-                if leftbody_bws_set3 >= 280 and rightbody_bws_set3 >= 280:
-                    if dir_body_weight_squat_set3 == 0:
-                        count_body_weight_squat_set3 += 0.5
-                        dir_body_weight_squat_set3 = 1
-                elif leftbody_bws_set3 <= 180 and rightbody_bws_set3 <= 180:
-                    if dir_body_weight_squat_set3 == 1:
-                        count_body_weight_squat_set3 +=0.5
-                        dir_body_weight_squat_set3 = 0
-                    
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_bws_set3 is not None and rightbody_bws_set3 is not None:
+            if int(per_left_body_bodyweightsquat_set3) == 100 and int(per_right_body_bodyweightsquat_set3) == 100:
+                color_left_bodyweightsquat_set3 = (0, 255, 0)
+                color_right_bodyweightsquat_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_bodyweightsquat_set3 = (0, 0, 255)
+                color_right_bodyweightsquat_set3 = (0, 0, 255)
 
-                    per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (90, 170), (100, 0))
-                    bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (90, 170), (200, 400))
+            #body checker for successful and unsuccessful
+            if 50 <= per_left_bodyweightsquat_set3 <= 90 or 50 <= per_right_body_bodyweightsquat_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_bodyweightsquat_set3 += time.time() - start_time2_bodyweightsquat_set3
+                #print(within_range_time1_bodyweightsquat)
 
-                    per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (90, 170), (100, 0))
-                    bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (90, 170), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_bodyweightsquat_set3 >= time_threshold_bodyweightsquat_set3:
+                    if dir_left_unsuccessful_bodyweightsquat_set3 == 0:
+                        unsuccessful_reps_count_body_bodyweightsquat_set3 += 0.5
+                        dir_left_unsuccessful_bodyweightsquat_set3 = 1
+                        #print("UP LEFT: ", unsuccessful_reps_count_body_bodyweightsquat)
+            else:
+                within_range_time1_bodyweightsquat_set3 = 0
+                # Update the start time to the current time
+                start_time2_bodyweightsquat_set3 = time.time()
 
-                    if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
-                        color_left_body_bws_set3 = (0, 255, 0)
-                        color_right_body_bws_set3 = (0, 255, 0)  
-                    else:
-                        color_left_body_bws_set3 = (0, 0, 255)  
-                        color_right_body_bws_set3 = (0, 0, 255)  
- 
-                    if leftbody_bws_set3 <= 90 and rightbody_bws_set3 <= 90:
-                        if dir_body_weight_squat_set3 == 0:
-                            count_body_weight_squat_set3 += 0.5
-                            dir_body_weight_squat_set3 = 1
-                    elif leftbody_bws_set3 >= 170 and rightbody_bws_set3 >= 170:
-                        if dir_body_weight_squat_set3 == 1:
-                            count_body_weight_squat_set3 +=0.5
-                            dir_body_weight_squat_set3 = 0
+            if 1 <= per_left_bodyweightsquat_set3 <= 10 or 1 <= per_right_body_bodyweightsquat_set3 <= 10:
+                if dir_left_unsuccessful_bodyweightsquat_set3 == 1:
+                    unsuccessful_reps_count_body_bodyweightsquat_set3 += 0.5
+                    dir_left_unsuccessful_bodyweightsquat_set3 = 0
+                    #print("UP DOWN: ", unsuccessful_reps_count_body_bodyweightsquat)
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    
-                    per_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 270), (100, 0))
-                    bar_right_body_bws_set3 = np.interp(rightbody_bws_set3, (180, 270), (200, 400))
+            if rightbody_bodyweightsquat_set3 <= 180 and leftbody_bodyweightsquat_set3 <= 180: 
+                if dir_left_bodyweightsquat_set3 == 0:
+                    successful_reps_count_body_bodyweightsquat_set3 += 0.5
+                    dir_left_bodyweightsquat_set3 = 1
+            elif rightbody_bodyweightsquat_set3 >= 270 and leftbody_bodyweightsquat_set3 >= 270:
+                if dir_left_bodyweightsquat_set3 == 1:
+                    successful_reps_count_body_bodyweightsquat_set3 += 0.5
+                    dir_left_bodyweightsquat_set3 = 0
 
-                    per_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 270), (100, 0))
-                    bar_left_body_bws_set3 = np.interp(leftbody_bws_set3, (180, 270), (200, 400))
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_body_bodyweightsquat_set3 = detector_bodyweightsquat.feedback_bodyweightsquat(per_right_bodyweightsquat_set3)
 
-                    if int(per_left_body_bws_set3) == 100 and int(per_left_body_bws_set3) == 100:
-                        color_left_body_bws_set3 = (0, 255, 0)
-                        color_right_body_bws_set3 = (0, 255, 0)  
-                    else:
-                        color_left_body_bws_set3 = (0, 0, 255)  
-                        color_right_body_bws_set3 = (0, 0, 255)  
+            detector_bodyweightsquat.update_next_per_left(per_right_bodyweightsquat_set3)
 
-                    if rightbody_bws_set3 <= 180 and leftbody_bws_set3 <= 180: 
-                        if dir_body_weight_squat_set3 == 0:
-                            count_body_weight_squat_set3 += 0.5
-                            dir_body_weight_squat_set3 =1
-                    elif rightbody_bws_set3 >= 270 and leftbody_bws_set3 >= 270:
-                        if dir_body_weight_squat_set3 == 1:
-                            count_body_weight_squat_set3 += 0.5
-                            dir_body_weight_squat_set3 = 0
-                    
-
-        cvzone.putTextRect(img, 'Body Weight Squat Tracker SET 3', [220, 30], thickness=2, border=2, scale=2.5)
+    
+        cvzone.putTextRect(img, 'Front Body Weight Squat SET 3', [420, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_bodyweightsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_body_bws_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_body_bodyweightsquat_set3)}%", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_body_bws_set3)), (50, 400), color_right_body_bws_set3, -1)
+        cv2.rectangle(img, (8, int(bar_right_body_bodyweightsquat_set3)), (50, 400), color_right_bodyweightsquat_set3, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_body_bws_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_body_bodyweightsquat_set3)}%", (962, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_body_bws_set3)), (995, 400), color_left_body_bws_set3, -1)
+        cv2.rectangle(img, (952, int(bar_left_body_bodyweightsquat_set3)), (995, 400), color_left_bodyweightsquat_set3, -1)
 
     cv2.rectangle(img, (20, 10), (140, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_body_weight_squat_set3)}/6", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_body_bodyweightsquat_set3)}/10", (30, 80), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
-    if remaining_time <= 0:
+    if remaining_time_bodyweightsquat <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws_set3 = False
+        display_info_bodyweightsquat_set3 = False
         exercise_mode = "rest_bws_set3"
         rest_bws_start_time_set3 = time.time()
 
-    if count_body_weight_squat_set2 >= 6:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_bws_set3 = False
-        exercise_mode = "rest_bws_set3"
-        rest_bws_start_time_set3 = time.time()
+    total_reps_count_body_bodyweightsquat_set3 = successful_reps_count_body_bodyweightsquat_set3 + unsuccessful_reps_count_body_bodyweightsquat_set3
+
+    if successful_reps_count_body_bodyweightsquat_set3 >= 10:
+        cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_bodyweightsquat_set3 = False
+        # General feedback after finishing the exercise # TO BE FETCHED
+        if dir_gen_feedback_bodyweightsquat_set3 == 0:
+            general_feedback_left_bodyweightsquat_set3 = detector_bodyweightsquat.body_feedback(total_reps_count_body_bodyweightsquat_set3)
+            #print(general_feedback_left_bodyweightsquat_set3)
+            dir_gen_feedback_bodyweightsquat_set3 = 1
+            exercise_mode = "rest_bws_set3"
+            rest_bws_start_time_set3 = time.time()
+        
+    if unsuccessful_reps_count_body_bodyweightsquat_set3 >= 2:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_bodyweightsquat_set3 = False
+
+        if dir_gen_feedback_unsuccessful_bodyweightsquat_set3 == 0:
+            general_feedback_left_bodyweightsquat_set3 = detector_bodyweightsquat.body_unsuccessful_feedback(total_reps_count_body_bodyweightsquat_set3)
+            dir_gen_feedback_unsuccessful_bodyweightsquat_set3 = 1
+            exercise_mode = "rest_bws_set3"
+            rest_bws_start_time_set3 = time.time()
     return img
 
 def rest_bws_set3(img):
@@ -5875,156 +6286,194 @@ def rest_bws_set3(img):
     return img
 
 def detect_gs(img):
-    global count_goblet_squat, dir_goblet_squat, start_time_goblet_squat, repetition_time_goblet_squat, display_info_goblet_squat, cooldown_timer_goblet_squat, cooldown_duration_goblet_squat, color_left_leg_goblet_squat, color_right_leg_goblet_squat, rest_goblet_squat_start_time, orientation, orientation2, exercise_mode, per_right_leg, per_left_leg, bar_right_leg, bar_left_leg, color_left_leg, color_right_leg
+    global dir_left_gobletsquat, dir_right_gobletsquat, display_info_gobletsquat, per_right_gobletsquat, per_left_gobletsquat, bar_left_gobletsquat, bar_right_gobletsquat, color_right_gobletsquat, color_left_gobletsquat, feedback_left_gobletsquat, feedback_right_gobletsquat, success_threshold_gobletsquat, atrest_value_gobletsquat, unsuccessful_reps_count_left_gobletsquat, successful_reps_count_left_gobletsquat, unsuccessful_reps_count_right_gobletsquat, successful_reps_count_right_gobletsquat, dir_left_unsuccessful_gobletsquat, dir_right_unsuccessful_gobletsquat, total_reps_count_gobletsquat, total_reps_count_left_gobletsquat, total_reps_count_right_gobletsquat, start_time1_gobletsquat, start_time2_gobletsquat, start_time3_gobletsquat, time_threshold_gobletsquat, within_range_time1_gobletsquat, within_range_time2_gobletsquat, general_feedback_left_gobletsquat, general_feedback_right_gobletsquat, dir_gen_feedback_gobletsquat, dir_gen_feedback_unsuccessful_gobletsquat, cooldown_timer_gobletsquat, cooldown_duration_gobletsquat, rest_goblet_squat_start_time, exercise_mode
+
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_goblet_squat
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat
+    elapsed_time_gobletsquat = time.time() - start_time1_gobletsquat
+    remaining_time_gobletsquat = max(0, 60 - elapsed_time_gobletsquat)
 
-    if display_info_goblet_squat:  # Check if to display counter, bar, and percentage
+    if display_info_gobletsquat:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
-        lmList_jumping_jacks = detector_gobletsquat.findPosition(img, False)
+        lmList_gobletsquat = detector_gobletsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_gobletsquat) != 0:
 
             # Right and Left keypoints
-            rightleg, orientation = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
-            leftleg, orientation2 = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
+            rightleg_gobletsquat = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
+            leftleg_gobletsquat = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
 
-            if cooldown_timer_goblet_squat > 0:
-                cooldown_timer_goblet_squat -= 1
+            if cooldown_timer_gobletsquat > 0:
+                cooldown_timer_gobletsquat -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    
-                    per_right_leg = np.interp(rightleg, (90, 170), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (90, 170), (480, 680))
-                    per_left_leg = np.interp(leftleg, (90, 170), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (90, 170), (480, 680))
+            per_right_gobletsquat = np.interp(rightleg_gobletsquat, (160, 240), (100, 0))
+            bar_right_gobletsquat = np.interp(rightleg_gobletsquat, (160, 240), (480, 680))
+            per_left_gobletsquat = np.interp(leftleg_gobletsquat, (160, 240), (100, 0))
+            bar_left_gobletsquat = np.interp(leftleg_gobletsquat, (160, 240), (480, 680))
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
+            if int(per_left_gobletsquat) == 100:
+                color_left_gobletsquat = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_gobletsquat = (0, 0, 255)
+            
+            if int(per_right_gobletsquat) == 100:
+                color_right_gobletsquat = (0, 255, 0)
+            else:
+                color_right_gobletsquat = (0, 0, 255)
 
-                    if rightleg <= 90 and leftleg <= 90:
-                        if dir_goblet_squat == 0:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 1
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
-                    elif rightleg >= 170 and leftleg >= 170:
-                        if dir_goblet_squat == 1:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 0
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
+            #left
+            if 40 <= per_left_gobletsquat <= 90:
+                # Increment the time within range
+                within_range_time1_gobletsquat += time.time() - start_time2_gobletsquat
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg is not None and rightleg is not None:
-                    per_right_leg = np.interp(rightleg, (190, 270), (0, 100))
-                    bar_right_leg = np.interp(rightleg, (190, 270), (680, 480))
-                    per_left_leg = np.interp(leftleg, (190, 270), (0, 100))
-                    bar_left_leg = np.interp(leftleg, (190, 270), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_gobletsquat >= time_threshold_gobletsquat:
+                    if dir_left_unsuccessful_gobletsquat == 0:
+                        unsuccessful_reps_count_left_gobletsquat += 0.5
+                        dir_left_unsuccessful_gobletsquat = 1
+            else:
+                within_range_time1_gobletsquat = 0
+                # Update the start time to the current time
+                start_time2_gobletsquat = time.time()
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
-              
-                    if rightleg >= 270 and leftleg >= 270:
-                        if dir_goblet_squat == 0:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 1
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
-                    elif rightleg <= 190 and leftleg <= 190:
-                        if dir_goblet_squat == 1:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 0
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
+            if 1 <= per_left_gobletsquat <= 10:
+                if dir_left_unsuccessful_gobletsquat == 1:
+                    unsuccessful_reps_count_left_gobletsquat += 0.5
+                    dir_left_unsuccessful_gobletsquat = 0
+
+            if per_left_gobletsquat == success_threshold_gobletsquat:
+                if dir_left_gobletsquat == 0:
+                    successful_reps_count_left_gobletsquat += 0.5
+                    dir_left_gobletsquat = 1
+
+            elif per_left_gobletsquat == atrest_value_gobletsquat:
+                if dir_left_gobletsquat == 1:
+                    successful_reps_count_left_gobletsquat += 0.5
+                    dir_left_gobletsquat = 0
+
+            # right
+            if 40 <= per_right_gobletsquat <= 90:
+                # Increment the time within range
+                within_range_time2_gobletsquat += time.time() - start_time3_gobletsquat
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_gobletsquat >= time_threshold_gobletsquat:
+                    if dir_right_unsuccessful_gobletsquat == 0:
+                        unsuccessful_reps_count_right_gobletsquat += 0.5
+                        dir_right_unsuccessful_gobletsquat = 1
+            else:
+                within_range_time2_gobletsquat = 0
+                # Update the start time to the current time
+                start_time3_gobletsquat = time.time()
+
+            if 1 <= per_right_gobletsquat <= 10:
+                if dir_right_unsuccessful_gobletsquat == 1:
+                    unsuccessful_reps_count_right_gobletsquat += 0.5
+                    dir_right_unsuccessful_gobletsquat = 0
+
+            if per_right_gobletsquat == success_threshold_gobletsquat:
+                if dir_right_gobletsquat == 0:
+                    successful_reps_count_right_gobletsquat += 0.5
+                    dir_right_gobletsquat = 1
+                    cooldown_timer_gobletsquat = cooldown_duration_gobletsquat
+            elif per_right_gobletsquat == atrest_value_gobletsquat: 
+                if dir_right_gobletsquat == 1:
+                    successful_reps_count_right_gobletsquat += 0.5
+                    dir_right_gobletsquat = 0
+                    cooldown_timer_gobletsquat = cooldown_duration_gobletsquat
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_gobletsquat = detector_gobletsquat.feedback_gobletsquat(per_left_gobletsquat)
+
+            detector_gobletsquat.update_next_per_left(per_left_gobletsquat)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_gobletsquat = detector_gobletsquat.feedback_gobletsquat(per_right_gobletsquat)
+
+            detector_gobletsquat.update_next_per_left(per_right_gobletsquat)
 
 
-
-            elif orientation == 'front' and orientation2 == 'front':
-
-                    per_right_leg = np.interp(rightleg, (150, 240), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (150, 240), (480, 680))
-                    per_left_leg = np.interp(leftleg, (150, 240), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (150, 240), (480, 680))
-                    
-                    
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)  # Keep color of right leg bar as red
-
-                    if rightleg <= 160 and leftleg <= 160:
-                        if dir_goblet_squat == 0:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 1
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
-                    elif rightleg >= 240 and leftleg >= 240: 
-                        if dir_goblet_squat == 1:
-                            count_goblet_squat += 0.5
-                            dir_goblet_squat = 0
-                            cooldown_timer_goblet_squat = cooldown_duration_goblet_squat
-
-        cvzone.putTextRect(img, 'Goblet Squat Tracker', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front Goblet Squat', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_gobletsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_gobletsquat)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg)), (50, 680), color_right_leg, -1)
+        cv2.rectangle(img, (8, int(bar_right_gobletsquat)), (50, 680), color_right_gobletsquat, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_gobletsquat)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg)), (995, 680), color_left_leg, -1)
+        cv2.rectangle(img, (952, int(bar_left_gobletsquat)), (995, 680), color_left_gobletsquat, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_goblet_squat)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_gobletsquat)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_goblet_squat)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
-
+    cv2.putText(img, f"{int(successful_reps_count_left_gobletsquat)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
 
     #Timer
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat = False
+    if remaining_time_gobletsquat <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_gobletsquat = False
         exercise_mode = "rest_gs"
         rest_goblet_squat_start_time = time.time()
 
-    # Repetition
-    if count_goblet_squat >= 6:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat = False
-        exercise_mode = "rest_gs"
-        rest_goblet_squat_start_time = time.time()
+    if successful_reps_count_right_gobletsquat >= 10 and successful_reps_count_left_gobletsquat >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_gobletsquat = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_gobletsquat == 0:
+                general_feedback_left_gobletsquat = detector_gobletsquat.left_leg_feedback(total_reps_count_left_gobletsquat)
+                general_feedback_right_gobletsquat = detector_gobletsquat.right_leg_feedback(total_reps_count_right_gobletsquat)
+                dir_gen_feedback_gobletsquat = 1
+                exercise_mode = "rest_gs"
+                rest_goblet_squat_start_time = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat >= 3 and unsuccessful_reps_count_right_gobletsquat >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat == 0:
+            general_feedback_left_gobletsquat = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat)
+            general_feedback_right_gobletsquat = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat)
+            dir_gen_feedback_unsuccessful_gobletsquat = 1
+            exercise_mode = "rest_gs"
+            rest_goblet_squat_start_time = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat == 0:
+            general_feedback_left_gobletsquat = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat)
+            dir_gen_feedback_unsuccessful_gobletsquat = 1
+            exercise_mode = "rest_gs"
+            rest_goblet_squat_start_time = time.time()
+
+    if unsuccessful_reps_count_right_gobletsquat >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat == 0:
+            general_feedback_right_gobletsquat = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat)
+            dir_gen_feedback_unsuccessful_gobletsquat == 1
+            exercise_mode = "rest_gs"
+            rest_goblet_squat_start_time = time.time()
 
     return img
 
 def rest_gs(img):
-    global exercise_mode, rest_goblet_squat_start_time, start_time_goblet_squat_set2
+    global exercise_mode, rest_goblet_squat_start_time, start_time1_gobletsquat_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time
@@ -6039,160 +6488,198 @@ def rest_gs(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "goblet_squat_set2"
-        start_time_goblet_squat_set2 = time.time()
+        start_time1_gobletsquat_set2 = time.time()
     return img
 
 def detect_gs_set2(img):
-    global count_goblet_squat_set2, dir_goblet_squat_set2, start_time_goblet_squat_set2, repetition_time_goblet_squat_set2, display_info_goblet_squat_set2, cooldown_timer_goblet_squat_set2, cooldown_duration_goblet_squat_set2, color_left_leg_goblet_squat_set2, color_right_leg_goblet_squat_set2, rest_goblet_squat_start_time_set2, orientation, orientation2, exercise_mode, per_right_leg, per_left_leg, bar_right_leg, bar_left_leg, color_left_leg, color_right_leg
+    global dir_left_gobletsquat_set2, dir_right_gobletsquat_set2, display_info_gobletsquat_set2, per_right_gobletsquat_set2, per_left_gobletsquat_set2, bar_left_gobletsquat_set2, bar_right_gobletsquat_set2, color_right_gobletsquat_set2, color_left_gobletsquat_set2, feedback_left_gobletsquat_set2, feedback_right_gobletsquat_set2, success_threshold_gobletsquat_set2, atrest_value_gobletsquat_set2, unsuccessful_reps_count_left_gobletsquat_set2, successful_reps_count_left_gobletsquat_set2, unsuccessful_reps_count_right_gobletsquat_set2, successful_reps_count_right_gobletsquat_set2, dir_left_unsuccessful_gobletsquat_set2, dir_right_unsuccessful_gobletsquat_set2, total_reps_count_gobletsquat_set2, total_reps_count_left_gobletsquat_set2, total_reps_count_right_gobletsquat_set2, start_time1_gobletsquat_set2, start_time2_gobletsquat_set2, start_time3_gobletsquat_set2, time_threshold_gobletsquat_set2, within_range_time1_gobletsquat_set2, within_range_time2_gobletsquat_set2, general_feedback_left_gobletsquat_set2, general_feedback_right_gobletsquat_set2, dir_gen_feedback_gobletsquat_set2, dir_gen_feedback_unsuccessful_gobletsquat_set2, cooldown_timer_gobletsquat_set2, cooldown_duration_gobletsquat_set2, rest_goblet_squat_start_time_set2, exercise_mode
+
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_goblet_squat_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat_set2
+    elapsed_time_gobletsquat = time.time() - start_time1_gobletsquat_set2
+    remaining_time_gobletsquat = max(0, 60 - elapsed_time_gobletsquat)
 
-    if display_info_goblet_squat_set2:  # Check if to display counter, bar, and percentage
+    if display_info_gobletsquat_set2:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
-        lmList_jumping_jacks = detector_gobletsquat.findPosition(img, False)
+        lmList_gobletsquat = detector_gobletsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_gobletsquat) != 0:
 
             # Right and Left keypoints
-            rightleg, orientation = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
-            leftleg, orientation2 = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
+            rightleg_gobletsquat_set2 = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
+            leftleg_gobletsquat_set2 = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
 
-            if cooldown_timer_goblet_squat_set2 > 0:
-                cooldown_timer_goblet_squat_set2 -= 1
+            if cooldown_timer_gobletsquat_set2 > 0:
+                cooldown_timer_gobletsquat_set2 -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    
-                    per_right_leg = np.interp(rightleg, (90, 170), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (90, 170), (480, 680))
-                    per_left_leg = np.interp(leftleg, (90, 170), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (90, 170), (480, 680))
+            per_right_gobletsquat_set2 = np.interp(rightleg_gobletsquat_set2, (160, 240), (100, 0))
+            bar_right_gobletsquat_set2 = np.interp(rightleg_gobletsquat_set2, (160, 240), (480, 680))
+            per_left_gobletsquat_set2 = np.interp(leftleg_gobletsquat_set2, (160, 240), (100, 0))
+            bar_left_gobletsquat_set2 = np.interp(leftleg_gobletsquat_set2, (160, 240), (480, 680))
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
+            if int(per_left_gobletsquat_set2) == 100:
+                color_left_gobletsquat_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_gobletsquat_set2 = (0, 0, 255)
+            
+            if int(per_right_gobletsquat_set2) == 100:
+                color_right_gobletsquat_set2 = (0, 255, 0)
+            else:
+                color_right_gobletsquat_set2 = (0, 0, 255)
 
-                    if rightleg <= 90 and leftleg <= 90:
-                        if dir_goblet_squat_set2 == 0:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 1
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
-                    elif rightleg >= 170 and leftleg >= 170:
-                        if dir_goblet_squat_set2 == 1:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 0
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
+            #left
+            if 40 <= per_left_gobletsquat_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_gobletsquat_set2 += time.time() - start_time2_gobletsquat_set2
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg is not None and rightleg is not None:
-                    per_right_leg = np.interp(rightleg, (190, 270), (0, 100))
-                    bar_right_leg = np.interp(rightleg, (190, 270), (680, 480))
-                    per_left_leg = np.interp(leftleg, (190, 270), (0, 100))
-                    bar_left_leg = np.interp(leftleg, (190, 270), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_gobletsquat_set2 >= time_threshold_gobletsquat_set2:
+                    if dir_left_unsuccessful_gobletsquat_set2 == 0:
+                        unsuccessful_reps_count_left_gobletsquat_set2 += 0.5
+                        dir_left_unsuccessful_gobletsquat_set2 = 1
+            else:
+                within_range_time1_gobletsquat_set2 = 0
+                # Update the start time to the current time
+                start_time2_gobletsquat_set2 = time.time()
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
-              
-                    if rightleg >= 270 and leftleg >= 270:
-                        if dir_goblet_squat_set2 == 0:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 1
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
-                    elif rightleg <= 190 and leftleg <= 190:
-                        if dir_goblet_squat_set2 == 1:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 0
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
+            if 1 <= per_left_gobletsquat_set2 <= 10:
+                if dir_left_unsuccessful_gobletsquat_set2 == 1:
+                    unsuccessful_reps_count_left_gobletsquat_set2 += 0.5
+                    dir_left_unsuccessful_gobletsquat_set2 = 0
+
+            if per_left_gobletsquat_set2 == success_threshold_gobletsquat_set2:
+                if dir_left_gobletsquat_set2 == 0:
+                    successful_reps_count_left_gobletsquat_set2 += 0.5
+                    dir_left_gobletsquat_set2 = 1
+
+            elif per_left_gobletsquat_set2 == atrest_value_gobletsquat_set2:
+                if dir_left_gobletsquat_set2 == 1:
+                    successful_reps_count_left_gobletsquat_set2 += 0.5
+                    dir_left_gobletsquat_set2 = 0
+
+            # right
+            if 40 <= per_right_gobletsquat_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_gobletsquat_set2 += time.time() - start_time3_gobletsquat_set2
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_gobletsquat_set2 >= time_threshold_gobletsquat_set2:
+                    if dir_right_unsuccessful_gobletsquat_set2 == 0:
+                        unsuccessful_reps_count_right_gobletsquat_set2 += 0.5
+                        dir_right_unsuccessful_gobletsquat_set2 = 1
+            else:
+                within_range_time2_gobletsquat_set2 = 0
+                # Update the start time to the current time
+                start_time3_gobletsquat_set2 = time.time()
+
+            if 1 <= per_right_gobletsquat_set2 <= 10:
+                if dir_right_unsuccessful_gobletsquat_set2 == 1:
+                    unsuccessful_reps_count_right_gobletsquat_set2 += 0.5
+                    dir_right_unsuccessful_gobletsquat_set2 = 0
+
+            if per_right_gobletsquat_set2 == success_threshold_gobletsquat_set2:
+                if dir_right_gobletsquat_set2 == 0:
+                    successful_reps_count_right_gobletsquat_set2 += 0.5
+                    dir_right_gobletsquat_set2 = 1
+                    cooldown_timer_gobletsquat_set2 = cooldown_duration_gobletsquat_set2
+            elif per_right_gobletsquat_set2 == atrest_value_gobletsquat_set2: 
+                if dir_right_gobletsquat_set2 == 1:
+                    successful_reps_count_right_gobletsquat_set2 += 0.5
+                    dir_right_gobletsquat_set2 = 0
+                    cooldown_timer_gobletsquat_set2 = cooldown_duration_gobletsquat_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_gobletsquat_set2 = detector_gobletsquat.feedback_gobletsquat(per_left_gobletsquat_set2)
+
+            detector_gobletsquat.update_next_per_left(per_left_gobletsquat_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_gobletsquat_set2 = detector_gobletsquat.feedback_gobletsquat(per_right_gobletsquat_set2)
+
+            detector_gobletsquat.update_next_per_left(per_right_gobletsquat_set2)
 
 
-
-            elif orientation == 'front' and orientation2 == 'front':
-
-                    per_right_leg = np.interp(rightleg, (150, 240), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (150, 240), (480, 680))
-                    per_left_leg = np.interp(leftleg, (150, 240), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (150, 240), (480, 680))
-                    
-                    
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)  # Keep color of right leg bar as red
-
-                    if rightleg <= 160 and leftleg <= 160:
-                        if dir_goblet_squat_set2 == 0:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 1
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
-                    elif rightleg >= 240 and leftleg >= 240: 
-                        if dir_goblet_squat_set2 == 1:
-                            count_goblet_squat_set2 += 0.5
-                            dir_goblet_squat_set2 = 0
-                            cooldown_timer_goblet_squat_set2 = cooldown_duration_goblet_squat_set2
-
-        cvzone.putTextRect(img, 'Goblet Squat Tracker SET 2', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front Goblet Squat SET 2', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_gobletsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_gobletsquat_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg)), (50, 680), color_right_leg, -1)
+        cv2.rectangle(img, (8, int(bar_right_gobletsquat_set2)), (50, 680), color_right_gobletsquat_set2, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_gobletsquat_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg)), (995, 680), color_left_leg, -1)
+        cv2.rectangle(img, (952, int(bar_left_gobletsquat_set2)), (995, 680), color_left_gobletsquat_set2, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_goblet_squat_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_gobletsquat_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_goblet_squat_set2)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
-
+    cv2.putText(img, f"{int(successful_reps_count_left_gobletsquat_set2)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
 
     #Timer
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat_set2 = False
+    if remaining_time_gobletsquat <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_gobletsquat_set2 = False
         exercise_mode = "rest_gs_set2"
         rest_goblet_squat_start_time_set2 = time.time()
 
-    # Repetition
-    if count_goblet_squat_set2 >= 6:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat_set2 = False
-        exercise_mode = "rest_gs_set2"
-        rest_goblet_squat_start_time_set2 = time.time()
+    if successful_reps_count_right_gobletsquat_set2 >= 10 and successful_reps_count_left_gobletsquat_set2 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_gobletsquat_set2 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_gobletsquat_set2 == 0:
+                general_feedback_left_gobletsquat_set2 = detector_gobletsquat.left_leg_feedback(total_reps_count_left_gobletsquat_set2)
+                general_feedback_right_gobletsquat_set2 = detector_gobletsquat.right_leg_feedback(total_reps_count_right_gobletsquat_set2)
+                dir_gen_feedback_gobletsquat_set2 = 1
+                exercise_mode = "rest_gs_set2"
+                rest_goblet_squat_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat_set2 >= 3 and unsuccessful_reps_count_right_gobletsquat_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set2 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set2 == 0:
+            general_feedback_left_gobletsquat_set2 = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat_set2)
+            general_feedback_right_gobletsquat_set2 = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat_set2)
+            dir_gen_feedback_unsuccessful_gobletsquat_set2 = 1
+            exercise_mode = "rest_gs_set2"
+            rest_goblet_squat_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set2 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set2 == 0:
+            general_feedback_left_gobletsquat_set2 = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat_set2)
+            dir_gen_feedback_unsuccessful_gobletsquat_set2 = 1
+            exercise_mode = "rest_gs_set2"
+            rest_goblet_squat_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_gobletsquat_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set2 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set2 == 0:
+            general_feedback_right_gobletsquat_set2 = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat_set2)
+            dir_gen_feedback_unsuccessful_gobletsquat_set2 == 1
+            exercise_mode = "rest_gs_set2"
+            rest_goblet_squat_start_time_set2 = time.time()
 
     return img
 
 def rest_gs_set2(img):
-    global exercise_mode, rest_goblet_squat_start_time_set2, start_time_goblet_squat_set3
+    global exercise_mode, rest_goblet_squat_start_time_set2, start_time1_gobletsquat_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time_set2
@@ -6207,155 +6694,193 @@ def rest_gs_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "goblet_squat_set3"
-        start_time_goblet_squat_set3 = time.time()
+        start_time1_gobletsquat_set3 = time.time()
     return img
 
 def detect_gs_set3(img):
-    global count_goblet_squat_set3, dir_goblet_squat_set3, start_time_goblet_squat_set3, repetition_time_goblet_squat_set3, display_info_goblet_squat_set3, cooldown_timer_goblet_squat_set3, cooldown_duration_goblet_squat_set3, color_left_leg_goblet_squat_set3, color_right_leg_goblet_squat_set3, rest_goblet_squat_start_time_set3, orientation, orientation2, exercise_mode, per_right_leg, per_left_leg, bar_right_leg, bar_left_leg, color_left_leg, color_right_leg
+    global dir_left_gobletsquat_set3, dir_right_gobletsquat_set3, display_info_gobletsquat_set3, per_right_gobletsquat_set3, per_left_gobletsquat_set3, bar_left_gobletsquat_set3, bar_right_gobletsquat_set3, color_right_gobletsquat_set3, color_left_gobletsquat_set3, feedback_left_gobletsquat_set3, feedback_right_gobletsquat_set3, success_threshold_gobletsquat_set3, atrest_value_gobletsquat_set3, unsuccessful_reps_count_left_gobletsquat_set3, successful_reps_count_left_gobletsquat_set3, unsuccessful_reps_count_right_gobletsquat_set3, successful_reps_count_right_gobletsquat_set3, dir_left_unsuccessful_gobletsquat_set3, dir_right_unsuccessful_gobletsquat_set3, total_reps_count_gobletsquat_set3, total_reps_count_left_gobletsquat_set3, total_reps_count_right_gobletsquat_set3, start_time1_gobletsquat_set3, start_time2_gobletsquat_set3, start_time3_gobletsquat_set3, time_threshold_gobletsquat_set3, within_range_time1_gobletsquat_set3, within_range_time2_gobletsquat_set3, general_feedback_left_gobletsquat_set3, general_feedback_right_gobletsquat_set3, dir_gen_feedback_gobletsquat_set3, dir_gen_feedback_unsuccessful_gobletsquat_set3, cooldown_timer_gobletsquat_set3, cooldown_duration_gobletsquat_set3, rest_goblet_squat_start_time_set3, exercise_mode
+
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_goblet_squat_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_goblet_squat_set3
+    elapsed_time_gobletsquat = time.time() - start_time1_gobletsquat_set3
+    remaining_time_gobletsquat = max(0, 60 - elapsed_time_gobletsquat)
 
-    if display_info_goblet_squat_set3:  # Check if to display counter, bar, and percentage
+    if display_info_gobletsquat_set3:  # Check if to display counter, bar, and percentage
         img = detector_gobletsquat.findPose(img, False)
-        lmList_jumping_jacks = detector_gobletsquat.findPosition(img, False)
+        lmList_gobletsquat = detector_gobletsquat.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_gobletsquat) != 0:
 
             # Right and Left keypoints
-            rightleg, orientation = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
-            leftleg, orientation2 = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
+            rightleg_gobletsquat_set3 = detector_gobletsquat.GobletSquat(img, 24, 26, 28, True)
+            leftleg_gobletsquat_set3 = detector_gobletsquat.GobletSquat(img, 23, 25, 27, True)
 
-            if cooldown_timer_goblet_squat_set3 > 0:
-                cooldown_timer_goblet_squat_set3 -= 1
+            if cooldown_timer_gobletsquat_set3 > 0:
+                cooldown_timer_gobletsquat_set3 -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    
-                    per_right_leg = np.interp(rightleg, (90, 170), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (90, 170), (480, 680))
-                    per_left_leg = np.interp(leftleg, (90, 170), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (90, 170), (480, 680))
+            per_right_gobletsquat_set3 = np.interp(rightleg_gobletsquat_set3, (160, 240), (100, 0))
+            bar_right_gobletsquat_set3 = np.interp(rightleg_gobletsquat_set3, (160, 240), (480, 680))
+            per_left_gobletsquat_set3 = np.interp(leftleg_gobletsquat_set3, (160, 240), (100, 0))
+            bar_left_gobletsquat_set3 = np.interp(leftleg_gobletsquat_set3, (160, 240), (480, 680))
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
+            if int(per_left_gobletsquat_set3) == 100:
+                color_left_gobletsquat_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_gobletsquat_set3 = (0, 0, 255)
+            
+            if int(per_right_gobletsquat_set3) == 100:
+                color_right_gobletsquat_set3 = (0, 255, 0)
+            else:
+                color_right_gobletsquat_set3 = (0, 0, 255)
 
-                    if rightleg <= 90 and leftleg <= 90:
-                        if dir_goblet_squat_set3 == 0:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 1
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
-                    elif rightleg >= 170 and leftleg >= 170:
-                        if dir_goblet_squat_set3 == 1:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 0
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
+            #left
+            if 40 <= per_left_gobletsquat_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_gobletsquat_set3 += time.time() - start_time2_gobletsquat_set3
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftleg is not None and rightleg is not None:
-                    per_right_leg = np.interp(rightleg, (190, 270), (0, 100))
-                    bar_right_leg = np.interp(rightleg, (190, 270), (680, 480))
-                    per_left_leg = np.interp(leftleg, (190, 270), (0, 100))
-                    bar_left_leg = np.interp(leftleg, (190, 270), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_gobletsquat_set3 >= time_threshold_gobletsquat_set3:
+                    if dir_left_unsuccessful_gobletsquat_set3 == 0:
+                        unsuccessful_reps_count_left_gobletsquat_set3 += 0.5
+                        dir_left_unsuccessful_gobletsquat_set3 = 1
+            else:
+                within_range_time1_gobletsquat_set3 = 0
+                # Update the start time to the current time
+                start_time2_gobletsquat_set3 = time.time()
 
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)
-              
-                    if rightleg >= 270 and leftleg >= 270:
-                        if dir_goblet_squat_set3 == 0:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 1
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
-                    elif rightleg <= 190 and leftleg <= 190:
-                        if dir_goblet_squat_set3 == 1:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 0
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
+            if 1 <= per_left_gobletsquat_set3 <= 10:
+                if dir_left_unsuccessful_gobletsquat_set3 == 1:
+                    unsuccessful_reps_count_left_gobletsquat_set3 += 0.5
+                    dir_left_unsuccessful_gobletsquat_set3 = 0
+
+            if per_left_gobletsquat_set3 == success_threshold_gobletsquat_set3:
+                if dir_left_gobletsquat_set3 == 0:
+                    successful_reps_count_left_gobletsquat_set3 += 0.5
+                    dir_left_gobletsquat_set3 = 1
+
+            elif per_left_gobletsquat_set3 == atrest_value_gobletsquat_set3:
+                if dir_left_gobletsquat_set3 == 1:
+                    successful_reps_count_left_gobletsquat_set3 += 0.5
+                    dir_left_gobletsquat_set3 = 0
+
+            # right
+            if 40 <= per_right_gobletsquat_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_gobletsquat_set3 += time.time() - start_time3_gobletsquat_set3
+
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_gobletsquat_set3 >= time_threshold_gobletsquat_set3:
+                    if dir_right_unsuccessful_gobletsquat_set3 == 0:
+                        unsuccessful_reps_count_right_gobletsquat_set3 += 0.5
+                        dir_right_unsuccessful_gobletsquat_set3 = 1
+            else:
+                within_range_time2_gobletsquat_set3 = 0
+                # Update the start time to the current time
+                start_time3_gobletsquat_set3 = time.time()
+
+            if 1 <= per_right_gobletsquat_set3 <= 10:
+                if dir_right_unsuccessful_gobletsquat_set3 == 1:
+                    unsuccessful_reps_count_right_gobletsquat_set3 += 0.5
+                    dir_right_unsuccessful_gobletsquat_set3 = 0
+
+            if per_right_gobletsquat_set3 == success_threshold_gobletsquat_set3:
+                if dir_right_gobletsquat_set3 == 0:
+                    successful_reps_count_right_gobletsquat_set3 += 0.5
+                    dir_right_gobletsquat_set3 = 1
+                    cooldown_timer_gobletsquat_set3 = cooldown_duration_gobletsquat_set3
+            elif per_right_gobletsquat_set3 == atrest_value_gobletsquat_set3: 
+                if dir_right_gobletsquat_set3 == 1:
+                    successful_reps_count_right_gobletsquat_set3 += 0.5
+                    dir_right_gobletsquat_set3 = 0
+                    cooldown_timer_gobletsquat_set3 = cooldown_duration_gobletsquat_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_gobletsquat_set3 = detector_gobletsquat.feedback_gobletsquat(per_left_gobletsquat_set3)
+
+            detector_gobletsquat.update_next_per_left(per_left_gobletsquat_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_gobletsquat_set3 = detector_gobletsquat.feedback_gobletsquat(per_right_gobletsquat_set3)
+
+            detector_gobletsquat.update_next_per_left(per_right_gobletsquat_set3)
 
 
-
-            elif orientation == 'front' and orientation2 == 'front':
-
-                    per_right_leg = np.interp(rightleg, (150, 240), (100, 0))
-                    bar_right_leg = np.interp(rightleg, (150, 240), (480, 680))
-                    per_left_leg = np.interp(leftleg, (150, 240), (100, 0))
-                    bar_left_leg = np.interp(leftleg, (150, 240), (480, 680))
-                    
-                    
-                    if int(per_left_leg) == 100 and int(per_right_leg) == 100:
-                        color_left_leg = (0, 255, 0) 
-                        color_right_leg = (0, 255, 0) 
-                    else:
-                        color_left_leg = (0, 0, 255)  
-                        color_right_leg = (0, 0, 255)  # Keep color of right leg bar as red
-
-                    if rightleg <= 160 and leftleg <= 160:
-                        if dir_goblet_squat_set3 == 0:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 1
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
-                    elif rightleg >= 240 and leftleg >= 240: 
-                        if dir_goblet_squat_set3 == 1:
-                            count_goblet_squat_set3 += 0.5
-                            dir_goblet_squat_set3 = 0
-                            cooldown_timer_goblet_squat_set3 = cooldown_duration_goblet_squat_set3
-
-        cvzone.putTextRect(img, 'Goblet Squat Tracker SET 3', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front Goblet Squat SET 3', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_gobletsquat)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
-
-        
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_gobletsquat_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg)), (50, 680), color_right_leg, -1)
+        cv2.rectangle(img, (8, int(bar_right_gobletsquat_set3)), (50, 680), color_right_gobletsquat_set3, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_gobletsquat_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg)), (995, 680), color_left_leg, -1)
+        cv2.rectangle(img, (952, int(bar_left_gobletsquat_set3)), (995, 680), color_left_gobletsquat_set3, -1)
 
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_goblet_squat_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_gobletsquat_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_goblet_squat_set3)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
-
+    cv2.putText(img, f"{int(successful_reps_count_left_gobletsquat_set3)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
 
     #Timer
-    if remaining_time <= 0:
-        cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat_set3 = False
+    if remaining_time_gobletsquat <= 0:
+        cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
+        display_info_gobletsquat_set3 = False
         exercise_mode = "rest_gs_set3"
         rest_goblet_squat_start_time_set3 = time.time()
 
-    # Repetition
-    if count_goblet_squat_set3 >= 6:  # Assuming 10 jumping jacks for demonstration
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_goblet_squat_set3 = False
-        exercise_mode = "rest_gs_set3"
-        rest_goblet_squat_start_time_set3 = time.time()
+    if successful_reps_count_right_gobletsquat_set3 >= 10 and successful_reps_count_left_gobletsquat_set3 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_gobletsquat_set3 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_gobletsquat_set3 == 0:
+                general_feedback_left_gobletsquat_set3 = detector_gobletsquat.left_leg_feedback(total_reps_count_left_gobletsquat_set3)
+                general_feedback_right_gobletsquat_set3 = detector_gobletsquat.right_leg_feedback(total_reps_count_right_gobletsquat_set3)
+                dir_gen_feedback_gobletsquat_set3 = 1
+                exercise_mode = "rest_gs_set3"
+                rest_goblet_squat_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat_set3 >= 3 and unsuccessful_reps_count_right_gobletsquat_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set3 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set3 == 0:
+            general_feedback_left_gobletsquat_set3 = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat_set3)
+            general_feedback_right_gobletsquat_set3 = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat_set3)
+            dir_gen_feedback_unsuccessful_gobletsquat_set3 = 1
+            exercise_mode = "rest_gs_set3"
+            rest_goblet_squat_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_gobletsquat_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set3 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set3 == 0:
+            general_feedback_left_gobletsquat_set3 = detector_gobletsquat.left_leg_unsuccessful_feedback(total_reps_count_left_gobletsquat_set3)
+            dir_gen_feedback_unsuccessful_gobletsquat_set3 = 1
+            exercise_mode = "rest_gs_set3"
+            rest_goblet_squat_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_gobletsquat_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_gobletsquat_set3 = False
+
+        if dir_gen_feedback_unsuccessful_gobletsquat_set3 == 0:
+            general_feedback_right_gobletsquat_set3 = detector_gobletsquat.right_leg_unsuccessful_feedback(total_reps_count_right_gobletsquat_set3)
+            dir_gen_feedback_unsuccessful_gobletsquat_set3 == 1
+            exercise_mode = "rest_gs_set3"
+            rest_goblet_squat_start_time_set3 = time.time()
     return img
 
 def rest_gs_set3(img):
@@ -6363,7 +6888,7 @@ def rest_gs_set3(img):
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_goblet_squat_start_time_set3
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -6378,180 +6903,197 @@ def rest_gs_set3(img):
     return img
 
 def detect_hkt(img):
-    global count_high_knee_tap_left, count_high_knee_tap_right, dir_high_knee_tap_left, dir_high_knee_tap_right, start_time_hkt, repetition_time_hkt, display_info_hkt, leftbody_hkt, rightbody_hkt, per_left_leg_hkt, per_right_leg_hkt, bar_left_leg_hkt, bar_right_leg_hkt, cooldown_duration_hkt, cooldown_timer_hkt, color_left_leg_hkt, color_right_leg_hkt, exercise_mode, orientation, orientation2, rest_hkt_start_time
+    global dir_left_highkneetap, dir_right_highkneetap, display_info_highkneetap, per_right_highkneetap, per_left_highkneetap, bar_left_highkneetap, bar_right_highkneetap, color_right_highkneetap, color_left_highkneetap, feedback_left_highkneetap, feedback_right_highkneetap, success_threshold_highkneetap, atrest_value_highkneetap, unsuccessful_reps_count_left_highkneetap, successful_reps_count_left_highkneetap, unsuccessful_reps_count_right_highkneetap, successful_reps_count_right_highkneetap, dir_left_unsuccessful_highkneetap, dir_right_unsuccessful_highkneetap, total_reps_count_highkneetap, total_reps_count_left_highkneetap, total_reps_count_right_highkneetap, start_time1_highkneetap, start_time2_highkneetap, start_time3_highkneetap, time_threshold_highkneetap, within_range_time1_highkneetap, within_range_time2_highkneetap, general_feedback_left_highkneetap, general_feedback_right_highkneetap, dir_gen_feedback_highkneetap, dir_gen_feedback_unsuccessful_highkneetap, cooldown_timer_highkneetap, cooldown_duration_highkneetap, leftleg_highkneetap, rightleg_highkneetap, rest_hkt_start_time, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_hkt
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt
+    elapsed_time_highkneetap = time.time() - start_time1_highkneetap
+    remaining_time_highkneetap = max(0, 10 - elapsed_time_highkneetap)
 
-    if display_info_hkt:  # Check if to display counter, bar, and percentage
-        img = detector_HighKneeTap.findPose(img, False)
-        lmList_jumping_jacks = detector_HighKneeTap.findPosition(img, False)
+    if display_info_highkneetap:  # Check if to display counter, bar, and percentage
+        img = detector_highkneetap.findPose(img, False)
+        lmList_highkneetap = detector_highkneetap.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_highkneetap) != 0:
 
             # Right and Left keypoints
-            rightleg_hkt, orientation = detector_HighKneeTap.HighKneeTap(img, 24, 26, 28, True)
-            leftleg_hkt, orientation2 = detector_HighKneeTap.HighKneeTap(img, 23, 25, 27, True)
+            rightleg_highkneetap = detector_highkneetap.HighKneeTap(img, 24, 26, 28, True)
+            leftleg_highkneetap = detector_highkneetap.HighKneeTap(img, 23, 25, 27, True)
 
-            if cooldown_timer_hkt > 0:
-                cooldown_timer_hkt -= 1
+            if cooldown_timer_highkneetap > 0:
+                cooldown_timer_highkneetap -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_hkt = np.interp(rightleg_hkt, (70, 170), (100, 0))
-                    bar_right_leg_hkt = np.interp(rightleg_hkt, (70, 170), (480, 680))
-                    per_left_leg_hkt = np.interp(leftleg_hkt, (70, 170), (100, 0))
-                    bar_left_leg_hkt = np.interp(leftleg_hkt, (70, 170), (480, 680))
+            per_right_highkneetap = np.interp(rightleg_highkneetap, (150, 240), (100, 0))
+            bar_right_highkneetap = np.interp(rightleg_highkneetap, (150, 240), (480, 680))
 
-                    if int(per_left_leg_hkt) == 100 :
-                        color_left_leg_hkt = (0, 255, 0) 
-                    elif int(per_right_leg_hkt) == 100:
-                        color_right_leg_hkt = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt = (0, 0, 255)  
-                        color_right_leg_hkt = (0, 0, 255)
-                    
-                    if 50 <= rightleg_hkt <= 60:
-                        if dir_high_knee_tap_right == 0:
-                            count_high_knee_tap_right += 1
-                            dir_high_knee_tap_right = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                            print("Up Right: ",count_high_knee_tap_right)
-                    elif rightleg_hkt >= 155: 
-                        if dir_high_knee_tap_right == 1:
-                            dir_high_knee_tap_right = 0
+            per_left_highkneetap = np.interp(leftleg_highkneetap, (150, 240), (100, 0))
+            bar_left_highkneetap = np.interp(leftleg_highkneetap, (150, 240), (480, 680))
 
-                    if 50 <= leftleg_hkt <= 60:
-                        if dir_high_knee_tap_left == 0:
-                            count_high_knee_tap_left += 1
-                            dir_high_knee_tap_left = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                            print("Up Left: ",count_high_knee_tap_left)
+            if int(per_left_highkneetap) == 100:
+                color_left_highkneetap = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_highkneetap = (0, 0, 255)
+            
+            if int(per_right_highkneetap) == 100:
+                color_right_highkneetap = (0, 255, 0)
+            else:
+                color_right_highkneetap = (0, 0, 255)
 
-                    elif leftleg_hkt >= 155:
-                        if dir_high_knee_tap_left == 1:
-                            dir_high_knee_tap_left = 0
+            #left
+            if 40 <= per_left_highkneetap <= 90:
+                # Increment the time within range
+                within_range_time1_highkneetap += time.time() - start_time2_highkneetap
 
-            elif orientation =='left' and orientation2 == 'left':
-                    per_right_leg_hkt = np.interp(rightleg_hkt, (210, 300), (0, 100))
-                    bar_right_leg_hkt = np.interp(rightleg_hkt, (210, 300), (680, 480))
-                    per_left_leg_hkt = np.interp(leftleg_hkt, (210, 300), (0, 100))
-                    bar_left_leg_hkt = np.interp(leftleg_hkt, (210, 300), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_highkneetap >= time_threshold_highkneetap:
+                    if dir_left_unsuccessful_highkneetap == 0:
+                        unsuccessful_reps_count_left_highkneetap += 0.5
+                        dir_left_unsuccessful_highkneetap = 1
+            else:
+                within_range_time1_highkneetap = 0
+                # Update the start time to the current time
+                start_time2_highkneetap = time.time()
 
-                    if int(per_left_leg_hkt) == 100 :
-                        color_left_leg_hkt = (0, 255, 0) 
-                    elif int(per_right_leg_hkt) == 100:
-                        color_right_leg_hkt = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt = (0, 0, 255)  
-                        color_right_leg_hkt = (0, 0, 255)
+            if 1 <= per_left_highkneetap <= 10:
+                if dir_left_unsuccessful_highkneetap == 1:
+                    unsuccessful_reps_count_left_highkneetap += 0.5
+                    dir_left_unsuccessful_highkneetap = 0
 
-                    if rightleg_hkt >= 295:
-                        if dir_high_knee_tap_right == 0:
-                            count_high_knee_tap_right += 1
-                            dir_high_knee_tap_right = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                    elif rightleg_hkt <= 210: 
-                        if dir_high_knee_tap_right == 1:
-                            dir_high_knee_tap_right = 0
+            if per_left_highkneetap == success_threshold_highkneetap:
+                if dir_left_highkneetap == 0:
+                    successful_reps_count_left_highkneetap += 0.5
+                    dir_left_highkneetap = 1
 
-                    if leftleg_hkt >= 300:
-                        if dir_high_knee_tap_left == 0:
-                            count_high_knee_tap_left += 1
-                            dir_high_knee_tap_left = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                    elif leftleg_hkt <= 210:
-                        if dir_high_knee_tap_left == 1:
-                            dir_high_knee_tap_left = 0
+            elif per_left_highkneetap == atrest_value_highkneetap:
+                if dir_left_highkneetap == 1:
+                    successful_reps_count_left_highkneetap += 0.5
+                    dir_left_highkneetap = 0
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    per_right_leg_hkt = np.interp(rightleg_hkt, (150, 240), (100, 0))
-                    bar_right_leg_hkt = np.interp(rightleg_hkt, (150, 240), (480, 680))
-                    per_left_leg_hkt = np.interp(leftleg_hkt, (150, 240), (100, 0))
-                    bar_left_leg_hkt = np.interp(leftleg_hkt, (150, 240), (480, 680))
-                    
-                    if int(per_left_leg_hkt) == 100 :
-                        color_left_leg_hkt = (0, 255, 0) 
-                    elif int(per_right_leg_hkt) == 100:
-                        color_right_leg_hkt = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt = (0, 0, 255)  
-                        color_right_leg_hkt = (0, 0, 255)
+            # right
+            if 40 <= per_right_highkneetap <= 90:
+                # Increment the time within range
+                within_range_time2_highkneetap += time.time() - start_time3_highkneetap
 
-                    if rightleg_hkt <= 150:
-                        if dir_high_knee_tap_right == 0:
-                            count_high_knee_tap_right += 1
-                            dir_high_knee_tap_right = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                    elif rightleg_hkt >= 240: 
-                        if dir_high_knee_tap_right == 1:
-                            dir_high_knee_tap_right = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_highkneetap >= time_threshold_highkneetap:
+                    if dir_right_unsuccessful_highkneetap == 0:
+                        unsuccessful_reps_count_right_highkneetap += 0.5
+                        dir_right_unsuccessful_highkneetap = 1
+            else:
+                within_range_time2_highkneetap = 0
+                # Update the start time to the current time
+                start_time3_highkneetap = time.time()
 
-                    if leftleg_hkt <= 150:
-                        if dir_high_knee_tap_left == 0:
-                            count_high_knee_tap_left += 1
-                            dir_high_knee_tap_left = 1
-                            cooldown_timer_hkt = cooldown_duration_hkt
-                    elif leftleg_hkt >= 240:
-                        if dir_high_knee_tap_left == 1:
-                            dir_high_knee_tap_left = 0
+            if 1 <= per_right_highkneetap <= 10:
+                if dir_right_unsuccessful_highkneetap == 1:
+                    unsuccessful_reps_count_right_highkneetap += 0.5
+                    dir_right_unsuccessful_highkneetap = 0
+
+            if per_right_highkneetap == success_threshold_highkneetap:
+                if dir_right_highkneetap == 0:
+                    successful_reps_count_right_highkneetap += 0.5
+                    dir_right_highkneetap = 1
+                    cooldown_timer_highkneetap = cooldown_duration_highkneetap
+            elif per_right_highkneetap == atrest_value_highkneetap: 
+                if dir_right_highkneetap == 1:
+                    successful_reps_count_right_highkneetap += 0.5
+                    dir_right_highkneetap = 0
+                    cooldown_timer_highkneetap = cooldown_duration_highkneetap
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_highkneetap = detector_highkneetap.feedback_highkneetap(per_left_highkneetap)
+
+            detector_highkneetap.update_next_per_left(per_left_highkneetap)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_highkneetap = detector_highkneetap.feedback_highkneetap(per_right_highkneetap)
+
+            detector_highkneetap.update_next_per_left(per_right_highkneetap)
 
 
-        
-
-        cvzone.putTextRect(img, 'High Knee Tap Tracker', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front High Knee Tap', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_highkneetap)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_hkt)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_highkneetap)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_hkt)), (50, 680), color_right_leg_hkt, -1)
+        cv2.rectangle(img, (8, int(bar_right_highkneetap)), (50, 680), color_right_highkneetap, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_hkt)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_highkneetap)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_hkt)), (995, 680), color_left_leg_hkt, -1)
+        cv2.rectangle(img, (952, int(bar_left_highkneetap)), (995, 680), color_left_highkneetap, -1)
     
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_right)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_highkneetap)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_left)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_highkneetap)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     #Timer
-    if remaining_time <= 0:
+    if remaining_time_highkneetap <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt = False
+        display_info_highkneetap = False
         exercise_mode = "rest_hkt"
         rest_hkt_start_time = time.time()
 
-    # Repetition
-    if count_high_knee_tap_right >= 5 and count_high_knee_tap_left >= 5:  # Changeable
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt = False
-        exercise_mode = "rest_hkt"
-        rest_hkt_start_time = time.time()
+    if successful_reps_count_right_highkneetap >= 10 and successful_reps_count_left_highkneetap >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_highkneetap = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_highkneetap == 0:
+                general_feedback_left_highkneetap = detector_highkneetap.left_leg_feedback(total_reps_count_left_highkneetap)
+                general_feedback_right_highkneetap = detector_highkneetap.right_leg_feedback(total_reps_count_right_highkneetap)
+                dir_gen_feedback_highkneetap = 1
+                exercise_mode = "rest_hkt"
+                rest_hkt_start_time = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap >= 3 and unsuccessful_reps_count_right_highkneetap >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap == 0:
+            general_feedback_left_highkneetap = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap)
+            general_feedback_right_highkneetap = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap)
+            dir_gen_feedback_unsuccessful_highkneetap = 1
+            exercise_mode = "rest_hkt"
+            rest_hkt_start_time = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap == 0:
+            general_feedback_left_highkneetap = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap)
+            dir_gen_feedback_unsuccessful_highkneetap = 1
+            exercise_mode = "rest_hkt"
+            rest_hkt_start_time = time.time()
+
+    if unsuccessful_reps_count_right_highkneetap >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap == 0:
+            general_feedback_right_highkneetap = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap)
+            dir_gen_feedback_unsuccessful_highkneetap == 1
+            exercise_mode = "rest_hkt"
+            rest_hkt_start_time = time.time()
     return img
 
 def rest_hkt(img):
-    global exercise_mode, rest_hkt_start_time, start_time_hkt_set2
+    global exercise_mode, rest_hkt_start_time, start_time1_highkneetap_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_hkt_start_time
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -6562,185 +7104,202 @@ def rest_hkt(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "highkneetap_set2"
-        start_time_hkt_set2 = time.time()
+        start_time1_highkneetap_set2 = time.time()
     return img
 
 def detect_hkt_set2(img):
-    global count_high_knee_tap_left_set2, count_high_knee_tap_right_set2, dir_high_knee_tap_left_set2, dir_high_knee_tap_right_set2, start_time_hkt_set2, repetition_time_hkt_set2, display_info_hkt_set2, leftbody_hkt_set2, rightbody_hkt_set2, per_left_leg_hkt_set2, per_right_leg_hkt_set2, bar_left_leg_hkt_set2, bar_right_leg_hkt_set2, cooldown_duration_hkt_set2, cooldown_timer_hkt_set2, color_left_leg_hkt_set2, color_right_leg_hkt_set2, exercise_mode, orientation, orientation2, rest_hkt_start_time_set2
+    global dir_left_highkneetap_set2, dir_right_highkneetap_set2, display_info_highkneetap_set2, per_right_highkneetap_set2, per_left_highkneetap_set2, bar_left_highkneetap_set2, bar_right_highkneetap_set2, color_right_highkneetap_set2, color_left_highkneetap_set2, feedback_left_highkneetap_set2, feedback_right_highkneetap_set2, success_threshold_highkneetap_set2, atrest_value_highkneetap_set2, unsuccessful_reps_count_left_highkneetap_set2, successful_reps_count_left_highkneetap_set2, unsuccessful_reps_count_right_highkneetap_set2, successful_reps_count_right_highkneetap_set2, dir_left_unsuccessful_highkneetap_set2, dir_right_unsuccessful_highkneetap_set2, total_reps_count_highkneetap_set2, total_reps_count_left_highkneetap_set2, total_reps_count_right_highkneetap_set2, start_time1_highkneetap_set2, start_time2_highkneetap_set2, start_time3_highkneetap_set2, time_threshold_highkneetap_set2, within_range_time1_highkneetap_set2, within_range_time2_highkneetap_set2, general_feedback_left_highkneetap_set2, general_feedback_right_highkneetap_set2, dir_gen_feedback_highkneetap_set2, dir_gen_feedback_unsuccessful_highkneetap_set2, cooldown_timer_highkneetap_set2, cooldown_duration_highkneetap_set2, leftleg_highkneetap_set2, rightleg_highkneetap_set2, rest_hkt_start_time_set2, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_hkt_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt_set2
+    elapsed_time_highkneetap = time.time() - start_time1_highkneetap_set2
+    remaining_time_highkneetap = max(0, 10 - elapsed_time_highkneetap)
 
-    if display_info_hkt_set2:  # Check if to display counter, bar, and percentage
-        img = detector_HighKneeTap.findPose(img, False)
-        lmList_jumping_jacks = detector_HighKneeTap.findPosition(img, False)
+    if display_info_highkneetap_set2:  # Check if to display counter, bar, and percentage
+        img = detector_highkneetap.findPose(img, False)
+        lmList_highkneetap = detector_highkneetap.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_highkneetap) != 0:
 
             # Right and Left keypoints
-            rightleg_hkt_set2, orientation = detector_HighKneeTap.HighKneeTap(img, 24, 26, 28, True)
-            leftleg_hkt_set2, orientation2 = detector_HighKneeTap.HighKneeTap(img, 23, 25, 27, True)
+            rightleg_highkneetap_set2 = detector_highkneetap.HighKneeTap(img, 24, 26, 28, True)
+            leftleg_highkneetap_set2 = detector_highkneetap.HighKneeTap(img, 23, 25, 27, True)
 
-            if cooldown_timer_hkt_set2 > 0:
-                cooldown_timer_hkt_set2 -= 1
+            if cooldown_timer_highkneetap_set2 > 0:
+                cooldown_timer_highkneetap_set2 -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (70, 170), (100, 0))
-                    bar_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (70, 170), (480, 680))
-                    per_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (70, 170), (100, 0))
-                    bar_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (70, 170), (480, 680))
+            per_right_highkneetap_set2 = np.interp(rightleg_highkneetap_set2, (150, 240), (100, 0))
+            bar_right_highkneetap_set2 = np.interp(rightleg_highkneetap_set2, (150, 240), (480, 680))
 
-                    if int(per_left_leg_hkt_set2) == 100 :
-                        color_left_leg_hkt_set2 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set2) == 100:
-                        color_right_leg_hkt_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set2 = (0, 0, 255)  
-                        color_right_leg_hkt_set2 = (0, 0, 255)
-                    
-                    if 50 <= rightleg_hkt_set2 <= 60:
-                        if dir_high_knee_tap_right_set2 == 0:
-                            count_high_knee_tap_right_set2 += 1
-                            dir_high_knee_tap_right_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                            #print("Up Right: ",count_high_knee_tap_right)
-                    elif rightleg_hkt_set2 >= 155: 
-                        if dir_high_knee_tap_right_set2 == 1:
-                            dir_high_knee_tap_right_set2 = 0
+            per_left_highkneetap_set2 = np.interp(leftleg_highkneetap_set2, (150, 240), (100, 0))
+            bar_left_highkneetap_set2 = np.interp(leftleg_highkneetap_set2, (150, 240), (480, 680))
 
-                    if 50 <= leftleg_hkt_set2 <= 60:
-                        if dir_high_knee_tap_left_set2 == 0:
-                            count_high_knee_tap_left_set2 += 1
-                            dir_high_knee_tap_left_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                            #print("Up Left: ",count_high_knee_tap_left)
+            if int(per_left_highkneetap_set2) == 100:
+                color_left_highkneetap_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_highkneetap_set2 = (0, 0, 255)
+            
+            if int(per_right_highkneetap_set2) == 100:
+                color_right_highkneetap_set2 = (0, 255, 0)
+            else:
+                color_right_highkneetap_set2 = (0, 0, 255)
 
-                    elif leftleg_hkt_set2 >= 155:
-                        if dir_high_knee_tap_left_set2 == 1:
-                            dir_high_knee_tap_left_set2 = 0
+            #left
+            if 40 <= per_left_highkneetap_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_highkneetap_set2 += time.time() - start_time2_highkneetap_set2
 
-            elif orientation =='left' and orientation2 == 'left':
-                    per_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (210, 300), (0, 100))
-                    bar_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (210, 300), (680, 480))
-                    per_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (210, 300), (0, 100))
-                    bar_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (210, 300), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_highkneetap_set2 >= time_threshold_highkneetap_set2:
+                    if dir_left_unsuccessful_highkneetap_set2 == 0:
+                        unsuccessful_reps_count_left_highkneetap_set2 += 0.5
+                        dir_left_unsuccessful_highkneetap_set2 = 1
+            else:
+                within_range_time1_highkneetap_set2 = 0
+                # Update the start time to the current time
+                start_time2_highkneetap_set2 = time.time()
 
-                    if int(per_left_leg_hkt_set2) == 100 :
-                        color_left_leg_hkt_set2 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set2) == 100:
-                        color_right_leg_hkt_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set2 = (0, 0, 255)  
-                        color_right_leg_hkt_set2 = (0, 0, 255)
+            if 1 <= per_left_highkneetap_set2 <= 10:
+                if dir_left_unsuccessful_highkneetap_set2 == 1:
+                    unsuccessful_reps_count_left_highkneetap_set2 += 0.5
+                    dir_left_unsuccessful_highkneetap_set2 = 0
 
-                    if rightleg_hkt_set2 >= 295:
-                        if dir_high_knee_tap_right_set2 == 0:
-                            count_high_knee_tap_right_set2 += 1
-                            dir_high_knee_tap_right_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                    elif rightleg_hkt_set2 <= 210: 
-                        if dir_high_knee_tap_right_set2 == 1:
-                            dir_high_knee_tap_right_set2 = 0
+            if per_left_highkneetap_set2 == success_threshold_highkneetap_set2:
+                if dir_left_highkneetap_set2 == 0:
+                    successful_reps_count_left_highkneetap_set2 += 0.5
+                    dir_left_highkneetap_set2 = 1
 
-                    if leftleg_hkt_set2 >= 300:
-                        if dir_high_knee_tap_left_set2 == 0:
-                            count_high_knee_tap_left_set2 += 1
-                            dir_high_knee_tap_left_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                    elif leftleg_hkt_set2 <= 210:
-                        if dir_high_knee_tap_left_set2 == 1:
-                            dir_high_knee_tap_left_set2 = 0
+            elif per_left_highkneetap_set2 == atrest_value_highkneetap_set2:
+                if dir_left_highkneetap_set2 == 1:
+                    successful_reps_count_left_highkneetap_set2 += 0.5
+                    dir_left_highkneetap_set2 = 0
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    per_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (150, 240), (100, 0))
-                    bar_right_leg_hkt_set2 = np.interp(rightleg_hkt_set2, (150, 240), (480, 680))
-                    per_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (150, 240), (100, 0))
-                    bar_left_leg_hkt_set2 = np.interp(leftleg_hkt_set2, (150, 240), (480, 680))
-                    
-                    if int(per_left_leg_hkt_set2) == 100 :
-                        color_left_leg_hkt_set2 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set2) == 100:
-                        color_right_leg_hkt_set2 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set2 = (0, 0, 255)  
-                        color_right_leg_hkt_set2 = (0, 0, 255)
+            # right
+            if 40 <= per_right_highkneetap_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_highkneetap_set2 += time.time() - start_time3_highkneetap_set2
 
-                    if rightleg_hkt_set2 <= 150:
-                        if dir_high_knee_tap_right_set2 == 0:
-                            count_high_knee_tap_right_set2 += 1
-                            dir_high_knee_tap_right_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                    elif rightleg_hkt_set2 >= 240: 
-                        if dir_high_knee_tap_right_set2 == 1:
-                            dir_high_knee_tap_right_set2 = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_highkneetap_set2 >= time_threshold_highkneetap_set2:
+                    if dir_right_unsuccessful_highkneetap_set2 == 0:
+                        unsuccessful_reps_count_right_highkneetap_set2 += 0.5
+                        dir_right_unsuccessful_highkneetap_set2 = 1
+            else:
+                within_range_time2_highkneetap_set2 = 0
+                # Update the start time to the current time
+                start_time3_highkneetap_set2 = time.time()
 
-                    if leftleg_hkt_set2 <= 150:
-                        if dir_high_knee_tap_left_set2 == 0:
-                            count_high_knee_tap_left_set2 += 1
-                            dir_high_knee_tap_left_set2 = 1
-                            cooldown_timer_hkt_set2 = cooldown_duration_hkt_set2
-                    elif leftleg_hkt_set2 >= 240:
-                        if dir_high_knee_tap_left_set2 == 1:
-                            dir_high_knee_tap_left_set2 = 0
+            if 1 <= per_right_highkneetap_set2 <= 10:
+                if dir_right_unsuccessful_highkneetap_set2 == 1:
+                    unsuccessful_reps_count_right_highkneetap_set2 += 0.5
+                    dir_right_unsuccessful_highkneetap_set2 = 0
+
+            if per_right_highkneetap_set2 == success_threshold_highkneetap_set2:
+                if dir_right_highkneetap_set2 == 0:
+                    successful_reps_count_right_highkneetap_set2 += 0.5
+                    dir_right_highkneetap_set2 = 1
+                    cooldown_timer_highkneetap_set2 = cooldown_duration_highkneetap_set2
+            elif per_right_highkneetap_set2 == atrest_value_highkneetap_set2: 
+                if dir_right_highkneetap_set2 == 1:
+                    successful_reps_count_right_highkneetap_set2 += 0.5
+                    dir_right_highkneetap_set2 = 0
+                    cooldown_timer_highkneetap_set2 = cooldown_duration_highkneetap_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_highkneetap_set2 = detector_highkneetap.feedback_highkneetap(per_left_highkneetap_set2)
+
+            detector_highkneetap.update_next_per_left(per_left_highkneetap_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_highkneetap_set2 = detector_highkneetap.feedback_highkneetap(per_right_highkneetap_set2)
+
+            detector_highkneetap.update_next_per_left(per_right_highkneetap_set2)
 
 
-        
-
-        cvzone.putTextRect(img, 'High Knee Tap SET 2', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front High Knee Tap SET 2', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_highkneetap)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_hkt_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_highkneetap_set2)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_hkt_set2)), (50, 680), color_right_leg_hkt_set2, -1)
+        cv2.rectangle(img, (8, int(bar_right_highkneetap_set2)), (50, 680), color_right_highkneetap_set2, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_hkt_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_highkneetap_set2)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_hkt_set2)), (995, 680), color_left_leg_hkt_set2, -1)
+        cv2.rectangle(img, (952, int(bar_left_highkneetap_set2)), (995, 680), color_left_highkneetap_set2, -1)
     
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_right_set2)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_highkneetap_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_left_set2)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_highkneetap_set2)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     #Timer
-    if remaining_time <= 0:
+    if remaining_time_highkneetap <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt_set2 = False
+        display_info_highkneetap_set2 = False
         exercise_mode = "rest_hkt_set2"
         rest_hkt_start_time_set2 = time.time()
 
-    # Repetition
-    if count_high_knee_tap_right_set2 >= 5 and count_high_knee_tap_left_set2 >= 5:  # Changeable
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt_set2 = False
-        exercise_mode = "rest_hkt_set2"
-        rest_hkt_start_time_set2 = time.time()
+    if successful_reps_count_right_highkneetap_set2 >= 10 and successful_reps_count_left_highkneetap_set2 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_highkneetap_set2 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_highkneetap_set2 == 0:
+                general_feedback_left_highkneetap_set2 = detector_highkneetap.left_leg_feedback(total_reps_count_left_highkneetap_set2)
+                general_feedback_right_highkneetap_set2 = detector_highkneetap.right_leg_feedback(total_reps_count_right_highkneetap_set2)
+                dir_gen_feedback_highkneetap_set2 = 1
+                exercise_mode = "rest_hkt_set2"
+                rest_hkt_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap_set2 >= 3 and unsuccessful_reps_count_right_highkneetap_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set2 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set2 == 0:
+            general_feedback_left_highkneetap_set2 = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap_set2)
+            general_feedback_right_highkneetap_set2 = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap_set2)
+            dir_gen_feedback_unsuccessful_highkneetap_set2 = 1
+            exercise_mode = "rest_hkt_set2"
+            rest_hkt_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set2 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set2 == 0:
+            general_feedback_left_highkneetap_set2 = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap_set2)
+            dir_gen_feedback_unsuccessful_highkneetap_set2 = 1
+            exercise_mode = "rest_hkt_set2"
+            rest_hkt_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_highkneetap_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set2 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set2 == 0:
+            general_feedback_right_highkneetap_set2 = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap_set2)
+            dir_gen_feedback_unsuccessful_highkneetap_set2 == 1
+            exercise_mode = "rest_hkt_set2"
+            rest_hkt_start_time_set2 = time.time()
 
     return img
 
 def rest_hkt_set2(img):
-    global exercise_mode, rest_hkt_start_time_set2, start_time_hkt_set3
+    global exercise_mode, rest_hkt_start_time_set2, start_time1_highkneetap_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_hkt_start_time_set2
-    rest_remaining_time = max(0, 60 - rest_elapsed_time)
+    rest_remaining_time = max(0, 10 - rest_elapsed_time)
 
         # Draw rectangle behind the timer text
     cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
@@ -6751,177 +7310,194 @@ def rest_hkt_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "highkneetap_set3"
-        start_time_hkt_set3 = time.time()
+        start_time1_highkneetap_set3 = time.time()
 
     return img
 
 def detect_hkt_set3(img):
-    global count_high_knee_tap_left_set3, count_high_knee_tap_right_set3, dir_high_knee_tap_left_set3, dir_high_knee_tap_right_set3, start_time_hkt_set3, repetition_time_hkt_set3, display_info_hkt_set3, leftbody_hkt_set3, rightbody_hkt_set3, per_left_leg_hkt_set3, per_right_leg_hkt_set3, bar_left_leg_hkt_set3, bar_right_leg_hkt_set3, cooldown_duration_hkt_set3, cooldown_timer_hkt_set3, color_left_leg_hkt_set3, color_right_leg_hkt_set3, exercise_mode, orientation, orientation2, rest_hkt_start_time_set3
+    global dir_left_highkneetap_set3, dir_right_highkneetap_set3, display_info_highkneetap_set3, per_right_highkneetap_set3, per_left_highkneetap_set3, bar_left_highkneetap_set3, bar_right_highkneetap_set3, color_right_highkneetap_set3, color_left_highkneetap_set3, feedback_left_highkneetap_set3, feedback_right_highkneetap_set3, success_threshold_highkneetap_set3, atrest_value_highkneetap_set3, unsuccessful_reps_count_left_highkneetap_set3, successful_reps_count_left_highkneetap_set3, unsuccessful_reps_count_right_highkneetap_set3, successful_reps_count_right_highkneetap_set3, dir_left_unsuccessful_highkneetap_set3, dir_right_unsuccessful_highkneetap_set3, total_reps_count_highkneetap_set3, total_reps_count_left_highkneetap_set3, total_reps_count_right_highkneetap_set3, start_time1_highkneetap_set3, start_time2_highkneetap_set3, start_time3_highkneetap_set3, time_threshold_highkneetap_set3, within_range_time1_highkneetap_set3, within_range_time2_highkneetap_set3, general_feedback_left_highkneetap_set3, general_feedback_right_highkneetap_set3, dir_gen_feedback_highkneetap_set3, dir_gen_feedback_unsuccessful_highkneetap_set3, cooldown_timer_highkneetap_set3, cooldown_duration_highkneetap_set3, leftleg_highkneetap_set3, rightleg_highkneetap_set3, rest_hkt_start_time_set3, exercise_mode
 
     img = cv2.resize(img, (1280, 720))
 
-    elapsed_time = time.time() - start_time_hkt_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hkt_set3
+    elapsed_time_highkneetap = time.time() - start_time1_highkneetap_set3
+    remaining_time_highkneetap = max(0, 10 - elapsed_time_highkneetap)
 
-    if display_info_hkt_set3:  # Check if to display counter, bar, and percentage
-        img = detector_HighKneeTap.findPose(img, False)
-        lmList_jumping_jacks = detector_HighKneeTap.findPosition(img, False)
+    if display_info_highkneetap_set3:  # Check if to display counter, bar, and percentage
+        img = detector_highkneetap.findPose(img, False)
+        lmList_highkneetap = detector_highkneetap.findPosition(img, False)
 
         # Define angles for jumping jacks outside the if statement
-        if len(lmList_jumping_jacks) != 0:
+        if len(lmList_highkneetap) != 0:
 
             # Right and Left keypoints
-            rightleg_hkt_set3, orientation = detector_HighKneeTap.HighKneeTap(img, 24, 26, 28, True)
-            leftleg_hkt_set3, orientation2 = detector_HighKneeTap.HighKneeTap(img, 23, 25, 27, True)
+            rightleg_highkneetap_set3 = detector_highkneetap.HighKneeTap(img, 24, 26, 28, True)
+            leftleg_highkneetap_set3 = detector_highkneetap.HighKneeTap(img, 23, 25, 27, True)
 
-            if cooldown_timer_hkt_set3 > 0:
-                cooldown_timer_hkt_set3 -= 1
+            if cooldown_timer_highkneetap_set3 > 0:
+                cooldown_timer_highkneetap_set3 -= 1
 
-            if orientation == 'right' and orientation2 == 'right':
-                    per_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (70, 170), (100, 0))
-                    bar_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (70, 170), (480, 680))
-                    per_left_leg_hkt_set3 = np.interp(leftleg_hkt_set3, (70, 170), (100, 0))
-                    bar_left_leg_hkt_set3 = np.interp(leftleg_hkt_set3, (70, 170), (480, 680))
+            per_right_highkneetap_set3 = np.interp(rightleg_highkneetap_set3, (150, 240), (100, 0))
+            bar_right_highkneetap_set3 = np.interp(rightleg_highkneetap_set3, (150, 240), (480, 680))
 
-                    if int(per_left_leg_hkt_set3) == 100 :
-                        color_left_leg_hkt_set3 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set3) == 100:
-                        color_right_leg_hkt_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set3 = (0, 0, 255)  
-                        color_right_leg_hkt_set3 = (0, 0, 255)
-                    
-                    if 50 <= rightleg_hkt_set3 <= 60:
-                        if dir_high_knee_tap_right_set3 == 0:
-                            count_high_knee_tap_right_set3 += 1
-                            dir_high_knee_tap_right_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                            #print("Up Right: ",count_high_knee_tap_right)
-                    elif rightleg_hkt_set3 >= 155: 
-                        if dir_high_knee_tap_right_set3 == 1:
-                            dir_high_knee_tap_right_set3 = 0
+            per_left_highkneetap_set3 = np.interp(leftleg_highkneetap_set3, (150, 240), (100, 0))
+            bar_left_highkneetap_set3 = np.interp(leftleg_highkneetap_set3, (150, 240), (480, 680))
 
-                    if 50 <= leftleg_hkt_set3 <= 60:
-                        if dir_high_knee_tap_left_set3 == 0:
-                            count_high_knee_tap_left_set3 += 1
-                            dir_high_knee_tap_left_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                            #print("Up Left: ",count_high_knee_tap_left)
+            if int(per_left_highkneetap_set3) == 100:
+                color_left_highkneetap_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_highkneetap_set3 = (0, 0, 255)
+            
+            if int(per_right_highkneetap_set3) == 100:
+                color_right_highkneetap_set3 = (0, 255, 0)
+            else:
+                color_right_highkneetap_set3 = (0, 0, 255)
 
-                    elif leftleg_hkt_set3 >= 155:
-                        if dir_high_knee_tap_left_set3 == 1:
-                            dir_high_knee_tap_left_set3 = 0
+            #left
+            if 40 <= per_left_highkneetap <= 90:
+                # Increment the time within range
+                within_range_time1_highkneetap_set3 += time.time() - start_time2_highkneetap_set3
 
-            elif orientation =='left' and orientation2 == 'left':
-                    per_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (210, 300), (0, 100))
-                    bar_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (210, 300), (680, 480))
-                    per_left_leg_hkt_set3 = np.interp(leftleg_hkt_set3, (210, 300), (0, 100))
-                    bar_left_leg_hkt_set3 = np.interp(leftleg_hkt_set3, (210, 300), (680, 480))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_highkneetap_set3 >= time_threshold_highkneetap_set3:
+                    if dir_left_unsuccessful_highkneetap_set3 == 0:
+                        unsuccessful_reps_count_left_highkneetap_set3 += 0.5
+                        dir_left_unsuccessful_highkneetap_set3 = 1
+            else:
+                within_range_time1_highkneetap_set3 = 0
+                # Update the start time to the current time
+                start_time2_highkneetap_set3 = time.time()
 
-                    if int(per_left_leg_hkt_set3) == 100 :
-                        color_left_leg_hkt_set3 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set3) == 100:
-                        color_right_leg_hkt_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set3 = (0, 0, 255)  
-                        color_right_leg_hkt_set3 = (0, 0, 255)
+            if 1 <= per_left_highkneetap_set3 <= 10:
+                if dir_left_unsuccessful_highkneetap_set3 == 1:
+                    unsuccessful_reps_count_left_highkneetap_set3 += 0.5
+                    dir_left_unsuccessful_highkneetap_set3 = 0
 
-                    if rightleg_hkt_set3 >= 295:
-                        if dir_high_knee_tap_right_set3 == 0:
-                            count_high_knee_tap_right_set3 += 1
-                            dir_high_knee_tap_right_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                    elif rightleg_hkt_set3 <= 210: 
-                        if dir_high_knee_tap_right_set3 == 1:
-                            dir_high_knee_tap_right_set3 = 0
+            if per_left_highkneetap_set3 == success_threshold_highkneetap_set3:
+                if dir_left_highkneetap_set3 == 0:
+                    successful_reps_count_left_highkneetap_set3 += 0.5
+                    dir_left_highkneetap_set3 = 1
 
-                    if leftleg_hkt_set3 >= 300:
-                        if dir_high_knee_tap_left_set3 == 0:
-                            count_high_knee_tap_left_set3 += 1
-                            dir_high_knee_tap_left_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                    elif leftleg_hkt_set3 <= 210:
-                        if dir_high_knee_tap_left_set3 == 1:
-                            dir_high_knee_tap_left_set3 = 0
+            elif per_left_highkneetap_set3 == atrest_value_highkneetap_set3:
+                if dir_left_highkneetap_set3 == 1:
+                    successful_reps_count_left_highkneetap_set3 += 0.5
+                    dir_left_highkneetap_set3 = 0
 
-            elif orientation == 'front' and orientation2 == 'front':
-                    per_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (150, 240), (100, 0))
-                    bar_right_leg_hkt_set3 = np.interp(rightleg_hkt_set3, (150, 240), (480, 680))
-                    per_left_leg_hkt_set3 = np.interp(leftleg_hkt_set3, (150, 240), (100, 0))
-                    bar_left_leg_hkt_set3= np.interp(leftleg_hkt_set3, (150, 240), (480, 680))
-                    
-                    if int(per_left_leg_hkt_set3) == 100 :
-                        color_left_leg_hkt_set3 = (0, 255, 0) 
-                    elif int(per_right_leg_hkt_set3) == 100:
-                        color_right_leg_hkt_set3 = (0, 255, 0)
-                    else:
-                        color_left_leg_hkt_set3 = (0, 0, 255)  
-                        color_right_leg_hkt_set3 = (0, 0, 255)
+            # right
+            if 40 <= per_right_highkneetap_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_highkneetap_set3 += time.time() - start_time3_highkneetap_set3
 
-                    if rightleg_hkt_set3 <= 150:
-                        if dir_high_knee_tap_right_set3 == 0:
-                            count_high_knee_tap_right_set3 += 1
-                            dir_high_knee_tap_right_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                    elif rightleg_hkt_set3 >= 240: 
-                        if dir_high_knee_tap_right_set3 == 1:
-                            dir_high_knee_tap_right_set3 = 0
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_highkneetap_set3 >= time_threshold_highkneetap_set3:
+                    if dir_right_unsuccessful_highkneetap_set3 == 0:
+                        unsuccessful_reps_count_right_highkneetap_set3 += 0.5
+                        dir_right_unsuccessful_highkneetap_set3 = 1
+            else:
+                within_range_time2_highkneetap_set3 = 0
+                # Update the start time to the current time
+                start_time3_highkneetap_set3 = time.time()
 
-                    if leftleg_hkt_set3 <= 150:
-                        if dir_high_knee_tap_left_set3 == 0:
-                            count_high_knee_tap_left_set3 += 1
-                            dir_high_knee_tap_left_set3 = 1
-                            cooldown_timer_hkt_set3 = cooldown_duration_hkt_set3
-                    elif leftleg_hkt_set3 >= 240:
-                        if dir_high_knee_tap_left_set3 == 1:
-                            dir_high_knee_tap_left_set3 = 0
+            if 1 <= per_right_highkneetap_set3 <= 10:
+                if dir_right_unsuccessful_highkneetap_set3 == 1:
+                    unsuccessful_reps_count_right_highkneetap_set3 += 0.5
+                    dir_right_unsuccessful_highkneetap_set3 = 0
+
+            if per_right_highkneetap_set3 == success_threshold_highkneetap_set3:
+                if dir_right_highkneetap_set3 == 0:
+                    successful_reps_count_right_highkneetap_set3 += 0.5
+                    dir_right_highkneetap_set3 = 1
+                    cooldown_timer_highkneetap_set3 = cooldown_duration_highkneetap_set3
+            elif per_right_highkneetap_set3 == atrest_value_highkneetap_set3: 
+                if dir_right_highkneetap_set3 == 1:
+                    successful_reps_count_right_highkneetap_set3 += 0.5
+                    dir_right_highkneetap_set3 = 0
+                    cooldown_timer_highkneetap_set3 = cooldown_duration_highkneetap_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_highkneetap_set3 = detector_highkneetap.feedback_highkneetap(per_left_highkneetap_set3)
+
+            detector_highkneetap.update_next_per_left(per_left_highkneetap_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_highkneetap_set3 = detector_highkneetap.feedback_highkneetap(per_right_highkneetap_set3)
+
+            detector_highkneetap.update_next_per_left(per_right_highkneetap_set3)
 
 
-        
-
-        cvzone.putTextRect(img, 'High Knee Tap SET 3', [450, 30], thickness=2, border=2, scale=2)
+        cvzone.putTextRect(img, 'Front High Knee Tap SET 3', [450, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  # Rectangle position and color
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_highkneetap)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # RIGHT LEG
-        cv2.putText(img, f"R {int(per_right_leg_hkt_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R {int(per_right_highkneetap_set3)}%", (24, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 480), (50, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_leg_hkt_set3)), (50, 680), color_right_leg_hkt_set3, -1)
+        cv2.rectangle(img, (8, int(bar_right_highkneetap_set3)), (50, 680), color_right_highkneetap_set3, -1)
 
         # LEFT LEG
-        cv2.putText(img, f"L {int(per_left_leg_hkt_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L {int(per_left_highkneetap_set3)}%", (962, 470), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 480), (995, 680), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_leg_hkt_set3)), (995, 680), color_left_leg_hkt_set3, -1)
+        cv2.rectangle(img, (952, int(bar_left_highkneetap_set3)), (995, 680), color_left_highkneetap_set3, -1)
     
     # Counter 
     cv2.rectangle(img, (20, 20), (200, 130), (0, 0, 255), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_right_set3)}/5", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_right_highkneetap_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     cv2.rectangle(img, (210, 20), (390, 130), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_high_knee_tap_left_set3)}/5", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    cv2.putText(img, f"{int(successful_reps_count_left_highkneetap_set3)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     #Timer
-    if remaining_time <= 0:
+    if remaining_time_highkneetap <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt_set3 = False
-        exercise_mode = "rest_hkt_set3"
+        display_info_highkneetap_set3 = False
+        exercise_mode = "rest_hkt"
         rest_hkt_start_time_set3 = time.time()
 
-    # Repetition
-    if count_high_knee_tap_right_set3 >= 5 and count_high_knee_tap_left_set3 >= 5:  # Changeable
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hkt_set3 = False
-        exercise_mode = "rest_hkt_set3"
-        rest_hkt_start_time_set3 = time.time()
+    if successful_reps_count_right_highkneetap_set3 >= 10 and successful_reps_count_left_highkneetap_set3 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_highkneetap_set3 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_highkneetap_set3 == 0:
+                general_feedback_left_highkneetap_set3 = detector_highkneetap.left_leg_feedback(total_reps_count_left_highkneetap_set3)
+                general_feedback_right_highkneetap_set3 = detector_highkneetap.right_leg_feedback(total_reps_count_right_highkneetap_set3)
+                dir_gen_feedback_highkneetap_set3 = 1
+                exercise_mode = "rest_hkt_set3"
+                rest_hkt_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap_set3 >= 3 and unsuccessful_reps_count_right_highkneetap_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set3 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set3 == 0:
+            general_feedback_left_highkneetap_set3 = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap_set3)
+            general_feedback_right_highkneetap_set3 = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap_set3)
+            dir_gen_feedback_unsuccessful_highkneetap_set3 = 1
+            exercise_mode = "rest_hkt_set3"
+            rest_hkt_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_highkneetap_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set3 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set3 == 0:
+            general_feedback_left_highkneetap_set3 = detector_highkneetap.left_leg_unsuccessful_feedback(total_reps_count_left_highkneetap_set3)
+            dir_gen_feedback_unsuccessful_highkneetap_set3 = 1
+            exercise_mode = "rest_hkt_set3"
+            rest_hkt_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_highkneetap_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [420, 30], thickness=2, border=2, scale=1)
+        display_info_highkneetap_set3 = False
+
+        if dir_gen_feedback_unsuccessful_highkneetap_set3 == 0:
+            general_feedback_right_highkneetap_set3 = detector_highkneetap.right_leg_unsuccessful_feedback(total_reps_count_right_highkneetap_set3)
+            dir_gen_feedback_unsuccessful_highkneetap_set3 == 1
+            exercise_mode = "rest_hkt_set3"
+            rest_hkt_start_time_set3 = time.time()
     return img
 
 def rest_hkt_set3(img):
@@ -6944,137 +7520,193 @@ def rest_hkt_set3(img):
     return img
 
 def detect_dhh(img):
-    global count_hip_hinge, dir_hip_hinge, start_time_hpp, repetition_time_hpp, display_info_hpp, per_left_hip_angle, bar_left_hip_angle, per_right_hip_angle, bar_right_hip_angle, leftbody_hpp, rightbody_hpp, color_hip, rest_dhh_start_time, orientation, orientation2, exercise_mode
+    global dir_left_dumbbellhiphinge, dir_right_dumbbellhiphinge, display_info_dumbbellhiphinge, per_right_dumbbellhiphinge, per_left_dumbbellhiphinge, bar_left_dumbbellhiphinge, bar_right_dumbbellhiphinge, color_right_dumbbellhiphinge, color_left_dumbbellhiphinge, feedback_left_dumbbellhiphinge, feedback_right_dumbbellhiphinge, success_threshold_dumbbellhiphinge, atrest_value_dumbbellhiphinge, unsuccessful_reps_count_left_dumbbellhiphinge, successful_reps_count_left_dumbbellhiphinge, unsuccessful_reps_count_right_dumbbellhiphinge, successful_reps_count_right_dumbbellhiphinge, dir_left_unsuccessful_dumbbellhiphinge, dir_right_unsuccessful_dumbbellhiphinge, total_reps_count_dumbbellhiphinge, total_reps_count_left_dumbbellhiphinge, total_reps_count_right_dumbbellhiphinge, start_time1_dumbbellhiphinge, start_time2_dumbbellhiphinge, start_time3_dumbbellhiphinge, time_threshold_dumbbellhiphinge, within_range_time1_dumbbellhiphinge, within_range_time2_dumbbellhiphinge, general_feedback_left_dumbbellhiphinge, general_feedback_right_dumbbellhiphinge, dir_gen_feedback_dumbbellhiphinge, dir_gen_feedback_unsuccessful_dumbbellhiphinge, cooldown_timer_dumbbellhiphinge, cooldown_duration_dumbbellhiphinge, leftbody_dumbbellhiphinge, rightbody_dumbbellhiphinge, rest_dhh_start_time, exercise_mode
 
 
     img = cv2.resize(img, (1280, 720))
 
+    elapsed_time_dumbbellhiphinge = time.time() - start_time1_dumbbellhiphinge
+    remaining_time_dumbbellhiphinge = max(0, 60 - elapsed_time_dumbbellhiphinge)
 
-    elapsed_time = time.time() - start_time_hpp
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp
-
-    if display_info_hpp:
-        img = detector_HipHinge.findPose(img, False)
-        lmList_hip_hinge = detector_HipHinge.findPosition(img, False)
+    if display_info_dumbbellhiphinge:
+        img = detector_dumbbellhiphinge.findPose(img, False)
+        lmList_hip_hinge = detector_dumbbellhiphinge.findPosition(img, False)
 
         if len(lmList_hip_hinge) != 0:
-            leftbody_hpp, orientation = detector_HipHinge.HipHinge(img, 11, 23, 25, True)
-            rightbody_hpp, orientation2 = detector_HipHinge.HipHinge(img, 12, 24, 26, True)
+            leftbody_dumbbellhiphinge = detector_dumbbellhiphinge.HipHinge(img, 11, 23, 25, True)
+            rightbody_dumbbellhiphinge  = detector_dumbbellhiphinge.HipHinge(img, 12, 24, 26, True)
 
-            if orientation == 'right' and orientation2 == 'right':
-                if leftbody_hpp is not None and rightbody_hpp is not None:
+            if leftbody_dumbbellhiphinge is not None and rightbody_dumbbellhiphinge is not None:
+                per_left_dumbbellhiphinge = np.interp(int(leftbody_dumbbellhiphinge), (90, 240), (100, 0))
+                bar_left_dumbbellhiphinge = np.interp(int(leftbody_dumbbellhiphinge), (90, 240), (200, 400))
 
-                    per_left_hip_angle = np.interp(int(leftbody_hpp), (230, 280), (0, 100))
-                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (230, 280), (400, 200))
+                per_right_dumbbellhiphinge = np.interp(int(rightbody_dumbbellhiphinge), (90, 240), (100, 0))
+                bar_right_dumbbellhiphinge= np.interp(int(rightbody_dumbbellhiphinge), (90, 240), (200, 400))
 
-                    per_right_hip_angle = np.interp(int(rightbody_hpp), (230, 280), (0, 100))
-                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (230, 280), (400, 200))
+            if int(per_left_dumbbellhiphinge) == 100:
+                color_left_dumbbellhiphinge = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellhiphinge = (0, 0, 255)
+            
+            if int(per_right_dumbbellhiphinge) == 100:
+                color_right_dumbbellhiphinge = (0, 255, 0)
+            else:
+                color_right_dumbbellhiphinge = (0, 0, 255)
 
-                    if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
-                        color_hip = (0, 255, 0)
-                    else: 
-                        color_hip = (0, 0, 255)
-                    
-                    if leftbody_hpp >= 270 and rightbody_hpp >= 270:
-                        if dir_hip_hinge == 0:
-                            count_hip_hinge += 0.5
-                            dir_hip_hinge = 1
-                    elif leftbody_hpp <= 230 and rightbody_hpp <= 230:
-                        if dir_hip_hinge == 1:
-                            dir_hip_hinge = 0
-                            count_hip_hinge += 0.5
+            #left
+            if 40 <= per_left_dumbbellhiphinge <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellhiphinge += time.time() - start_time2_dumbbellhiphinge
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_hpp is not None and rightbody_hpp is not None:
-                    per_left_hip_angle = np.interp(int(leftbody_hpp), (70, 150), (100, 0))
-                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (70, 140), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellhiphinge >= time_threshold_dumbbellhiphinge:
+                    if dir_left_unsuccessful_dumbbellhiphinge == 0:
+                        unsuccessful_reps_count_left_dumbbellhiphinge += 0.5
+                        dir_left_unsuccessful_dumbbellhiphinge = 1
+            else:
+                within_range_time1_dumbbellhiphinge = 0
+                # Update the start time to the current time
+                start_time2_dumbbellhiphinge = time.time()
 
-                    per_right_hip_angle = np.interp(int(rightbody_hpp), (70, 150), (100, 0))
-                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (70, 140), (200, 400))
+            if 1 <= per_left_dumbbellhiphinge <= 10:
+                if dir_left_unsuccessful_dumbbellhiphinge == 1:
+                    unsuccessful_reps_count_left_dumbbellhiphinge += 0.5
+                    dir_left_unsuccessful_dumbbellhiphinge = 0
 
-                    
-                    if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
-                        color_hip = (0, 255, 0)
-                    else: 
-                        color_hip = (0, 0, 255)
-                    
-                    if leftbody_hpp <= 70 and rightbody_hpp <= 70:
-                        if dir_hip_hinge == 0:
-                            count_hip_hinge += 0.5
-                            dir_hip_hinge = 1
-                    elif leftbody_hpp >= 150 and rightbody_hpp >= 150:
-                        if dir_hip_hinge == 1:
-                            count_hip_hinge += 0.5
-                            dir_hip_hinge = 0
+            if per_left_dumbbellhiphinge == success_threshold_dumbbellhiphinge:
+                if dir_left_dumbbellhiphinge == 0:
+                    successful_reps_count_left_dumbbellhiphinge += 0.5
+                    dir_left_dumbbellhiphinge = 1
 
-            elif orientation == 'front' and orientation2 == 'front':
-                if leftbody_hpp is not None and rightbody_hpp is not None:
-                    per_left_hip_angle = np.interp(int(leftbody_hpp), (90, 240), (100, 0))
-                    bar_left_hip_angle = np.interp(int(leftbody_hpp), (80, 240), (200, 400))
+            elif per_left_dumbbellhiphinge == atrest_value_dumbbellhiphinge:
+                if dir_left_dumbbellhiphinge == 1:
+                    successful_reps_count_left_dumbbellhiphinge += 0.5
+                    dir_left_dumbbellhiphinge = 0
 
-                    per_right_hip_angle = np.interp(int(rightbody_hpp), (90, 240), (100, 0))
-                    bar_right_hip_angle = np.interp(int(rightbody_hpp), (80, 240), (200, 400))
+            # right
+            if 40 <= per_right_dumbbellhiphinge <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellhiphinge += time.time() - start_time3_dumbbellhiphinge
 
-                    
-                    if per_left_hip_angle >= 100 and per_right_hip_angle >= 100:
-                        color_hip = (0, 255, 0)
-                    else: 
-                        color_hip = (0, 0, 255)
-                    
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellhiphinge >= time_threshold_dumbbellhiphinge:
+                    if dir_right_unsuccessful_dumbbellhiphinge == 0:
+                        unsuccessful_reps_count_right_dumbbellhiphinge += 0.5
+                        dir_right_unsuccessful_dumbbellhiphinge = 1
+            else:
+                within_range_time2_dumbbellhiphinge = 0
+                # Update the start time to the current time
+                start_time3_dumbbellhiphinge = time.time()
 
-                    if leftbody_hpp <= 90 and rightbody_hpp <= 90:
-                        if dir_hip_hinge == 0:
-                            count_hip_hinge += 0.5
-                            dir_hip_hinge = 1
-                    elif leftbody_hpp >= 240 and rightbody_hpp >= 240:
-                        if dir_hip_hinge == 1:
-                            count_hip_hinge += 0.5
-                            dir_hip_hinge = 0
+            if 1 <= per_right_dumbbellhiphinge <= 10:
+                if dir_right_unsuccessful_dumbbellhiphinge == 1:
+                    unsuccessful_reps_count_right_dumbbellhiphinge += 0.5
+                    dir_right_unsuccessful_dumbbellhiphinge = 0
 
-        cvzone.putTextRect(img, 'Dumbbell Hip Hinge Tracker', [220, 30], thickness=2, border=2, scale=2.5)
+            if per_right_dumbbellhiphinge == success_threshold_dumbbellhiphinge:
+                if dir_right_dumbbellhiphinge == 0:
+                    successful_reps_count_right_dumbbellhiphinge += 0.5
+                    dir_right_dumbbellhiphinge = 1
+                    cooldown_timer_dumbbellhiphinge = cooldown_duration_dumbbellhiphinge
+            elif per_right_dumbbellhiphinge == atrest_value_dumbbellhiphinge: 
+                if dir_right_dumbbellhiphinge == 1:
+                    successful_reps_count_right_dumbbellhiphinge += 0.5
+                    dir_right_dumbbellhiphinge = 0
+                    cooldown_timer_dumbbellhiphinge = cooldown_duration_dumbbellhiphinge
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellhiphinge = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_left_dumbbellhiphinge)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_left_dumbbellhiphinge)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellhiphinge = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_right_dumbbellhiphinge)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_right_dumbbellhiphinge)
+
+
+
+        cvzone.putTextRect(img, 'Front Dumbbell Hip Hinge', [370, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellhiphinge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # Draw angle information
-        cv2.putText(img, f"R: {int(per_right_hip_angle)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R: {int(per_right_dumbbellhiphinge)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_hip_angle)),(50, 400), color_hip, -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellhiphinge)),(50, 400), color_right_dumbbellhiphinge, -1)
 
-        cv2.putText(img, f"L: {int(per_left_hip_angle)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L: {int(per_left_dumbbellhiphinge)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_hip_angle)), (995, 400), color_hip, -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellhiphinge)), (995, 400), color_left_dumbbellhiphinge,-1)
 
-    # Draw count
-    cv2.rectangle(img, (0, 0), (130, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_hip_hinge)}/5", (20, 70), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellhiphinge)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellhiphinge)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Check if time's up
-    if remaining_time <= 0:
+    if remaining_time_dumbbellhiphinge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp = False
+        display_info_dumbbellhiphinge = False
         exercise_mode = "rest_dhh"
         rest_dhh_start_time = time.time()
 
-    # Check if exercise is complete
-    if count_hip_hinge >= 5:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp = False
-        exercise_mode = "rest_dhh"
-        rest_dhh_start_time = time.time()
+
+    if successful_reps_count_right_dumbbellhiphinge >= 10 and successful_reps_count_left_dumbbellhiphinge >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_dumbbellhiphinge = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_dumbbellhiphinge == 0:
+                general_feedback_left_dumbbellhiphinge = detector_dumbbellhiphinge.left_arm_feedback(total_reps_count_left_dumbbellhiphinge)
+                general_feedback_right_dumbbellhiphinge = detector_dumbbellhiphinge.right_arm_feedback(total_reps_count_right_dumbbellhiphinge)
+                dir_gen_feedback_dumbbellhiphinge = 1
+                exercise_mode = "rest_dhh"
+                rest_dhh_start_time = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge >= 3 and unsuccessful_reps_count_right_dumbbellhiphinge >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge == 0:
+            general_feedback_left_dumbbellhiphinge = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge)
+            general_feedback_right_dumbbellhiphinge = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge = 1
+            exercise_mode = "rest_dhh"
+            rest_dhh_start_time = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge = False
+    
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge == 0:
+            general_feedback_left_dumbbellhiphinge = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge = 1
+            exercise_mode = "rest_dhh"
+            rest_dhh_start_time = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellhiphinge >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge == 0:
+            general_feedback_right_dumbbellhiphinge = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge == 1
+            exercise_mode = "rest_dhh"
+            rest_dhh_start_time = time.time()
 
     return img
 
 def rest_dhh(img):
-    global exercise_mode, rest_dhh_start_time, start_time_hpp_set2
+    global exercise_mode, rest_dhh_start_time, start_time1_dumbbellhiphinge_set2
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time
@@ -7089,141 +7721,197 @@ def rest_dhh(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "dhh_set2"
-        start_time_hpp_set2 = time.time()
+        start_time1_dumbbellhiphinge_set2 = time.time()
     return img
 
 def detect_dhh_set2(img):
-    global count_hip_hinge_set2, dir_hip_hinge_set2, start_time_hpp_set2, repetition_time_hpp_set2, display_info_hpp_set2, per_left_hip_angle_set2, bar_left_hip_angle_set2, per_right_hip_angle_set2, bar_right_hip_angle_set2, leftbody_hpp_set2, rightbody_hpp_set2, color_hip_set2, rest_dhh_start_time_set2, orientation, orientation2, exercise_mode
+    global dir_left_dumbbellhiphinge_set2, dir_right_dumbbellhiphinge_set2, display_info_dumbbellhiphinge_set2, per_right_dumbbellhiphinge_set2, per_left_dumbbellhiphinge_set2, bar_left_dumbbellhiphinge_set2, bar_right_dumbbellhiphinge_set2, color_right_dumbbellhiphinge_set2, color_left_dumbbellhiphinge_set2, feedback_left_dumbbellhiphinge_set2, feedback_right_dumbbellhiphinge_set2, success_threshold_dumbbellhiphinge_set2, atrest_value_dumbbellhiphinge_set2, unsuccessful_reps_count_left_dumbbellhiphinge_set2, successful_reps_count_left_dumbbellhiphinge_set2, unsuccessful_reps_count_right_dumbbellhiphinge_set2, successful_reps_count_right_dumbbellhiphinge_set2, dir_left_unsuccessful_dumbbellhiphinge_set2, dir_right_unsuccessful_dumbbellhiphinge_set2, total_reps_count_dumbbellhiphinge_set2, total_reps_count_left_dumbbellhiphinge_set2, total_reps_count_right_dumbbellhiphinge_set2, start_time1_dumbbellhiphinge_set2, start_time2_dumbbellhiphinge_set2, start_time3_dumbbellhiphinge_set2, time_threshold_dumbbellhiphinge_set2, within_range_time1_dumbbellhiphinge_set2, within_range_time2_dumbbellhiphinge_set2, general_feedback_left_dumbbellhiphinge_set2, general_feedback_right_dumbbellhiphinge_set2, dir_gen_feedback_dumbbellhiphinge_set2, dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2, cooldown_timer_dumbbellhiphinge_set2, cooldown_duration_dumbbellhiphinge_set2, leftbody_dumbbellhiphinge_set2, rightbody_dumbbellhiphinge_set2, rest_dhh_start_time_set2, exercise_mode
 
 
     img = cv2.resize(img, (1280, 720))
 
+    elapsed_time_dumbbellhiphinge = time.time() - start_time1_dumbbellhiphinge_set2
+    remaining_time_dumbbellhiphinge = max(0, 60 - elapsed_time_dumbbellhiphinge)
 
-    elapsed_time = time.time() - start_time_hpp_set2
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp_set2
-
-    if display_info_hpp_set2:
-        img = detector_HipHinge.findPose(img, False)
-        lmList_hip_hinge = detector_HipHinge.findPosition(img, False)
+    if display_info_dumbbellhiphinge_set2:
+        img = detector_dumbbellhiphinge.findPose(img, False)
+        lmList_hip_hinge = detector_dumbbellhiphinge.findPosition(img, False)
 
         if len(lmList_hip_hinge) != 0:
-            leftbody_hpp_set2, orientation = detector_HipHinge.HipHinge(img, 11, 23, 25, True)
-            rightbody_hpp_set2, orientation2 = detector_HipHinge.HipHinge(img, 12, 24, 26, True)
+            leftbody_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.HipHinge(img, 11, 23, 25, True)
+            rightbody_dumbbellhiphinge_set2  = detector_dumbbellhiphinge.HipHinge(img, 12, 24, 26, True)
 
-            if orientation == 'right' and orientation2 == 'right':
-                if leftbody_hpp_set2 is not None and rightbody_hpp_set2 is not None:
+            if leftbody_dumbbellhiphinge_set2 is not None and rightbody_dumbbellhiphinge_set2 is not None:
+                per_left_dumbbellhiphinge_set2 = np.interp(int(leftbody_dumbbellhiphinge_set2), (90, 240), (100, 0))
+                bar_left_dumbbellhiphinge_set2 = np.interp(int(leftbody_dumbbellhiphinge_set2), (90, 240), (200, 400))
 
-                    per_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (230, 280), (0, 100))
-                    bar_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (230, 280), (400, 200))
+                per_right_dumbbellhiphinge_set2 = np.interp(int(rightbody_dumbbellhiphinge_set2), (90, 240), (100, 0))
+                bar_right_dumbbellhiphinge_set2= np.interp(int(rightbody_dumbbellhiphinge_set2), (90, 240), (200, 400))
 
-                    per_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (230, 280), (0, 100))
-                    bar_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (230, 280), (400, 200))
+            if int(per_left_dumbbellhiphinge_set2) == 100:
+                color_left_dumbbellhiphinge_set2 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellhiphinge_set2 = (0, 0, 255)
+            
+            if int(per_right_dumbbellhiphinge_set2) == 100:
+                color_right_dumbbellhiphinge_set2 = (0, 255, 0)
+            else:
+                color_right_dumbbellhiphinge_set2 = (0, 0, 255)
 
-                    if per_left_hip_angle_set2 >= 100 and per_right_hip_angle_set2 >= 100:
-                        color_hip_set2 = (0, 255, 0)
-                    else: 
-                        color_hip_set2 = (0, 0, 255)
-                    
-                    if leftbody_hpp_set2 >= 270 and rightbody_hpp_set2 >= 270:
-                        if dir_hip_hinge_set2 == 0:
-                            count_hip_hinge_set2 += 0.5
-                            dir_hip_hinge_set2 = 1
-                    elif leftbody_hpp_set2 <= 230 and rightbody_hpp_set2 <= 230:
-                        if dir_hip_hinge_set2 == 1:
-                            dir_hip_hinge_set2 = 0
-                            count_hip_hinge_set2 += 0.5
+            #left
+            if 40 <= per_left_dumbbellhiphinge_set2 <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellhiphinge_set2 += time.time() - start_time2_dumbbellhiphinge_set2
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_hpp_set2 is not None and rightbody_hpp_set2 is not None:
-                    per_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (70, 150), (100, 0))
-                    bar_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (70, 140), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellhiphinge_set2 >= time_threshold_dumbbellhiphinge_set2:
+                    if dir_left_unsuccessful_dumbbellhiphinge_set2 == 0:
+                        unsuccessful_reps_count_left_dumbbellhiphinge_set2 += 0.5
+                        dir_left_unsuccessful_dumbbellhiphinge_set2 = 1
+            else:
+                within_range_time1_dumbbellhiphinge_set2 = 0
+                # Update the start time to the current time
+                start_time2_dumbbellhiphinge_set2 = time.time()
 
-                    per_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (70, 150), (100, 0))
-                    bar_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (70, 140), (200, 400))
+            if 1 <= per_left_dumbbellhiphinge_set2 <= 10:
+                if dir_left_unsuccessful_dumbbellhiphinge_set2 == 1:
+                    unsuccessful_reps_count_left_dumbbellhiphinge_set2 += 0.5
+                    dir_left_unsuccessful_dumbbellhiphinge_set2 = 0
 
-                    
-                    if per_left_hip_angle_set2 >= 100 and per_right_hip_angle_set2 >= 100:
-                        color_hip_set2 = (0, 255, 0)
-                    else: 
-                        color_hip_set2 = (0, 0, 255)
-                    
-                    if leftbody_hpp_set2 <= 70 and rightbody_hpp_set2 <= 70:
-                        if dir_hip_hinge_set2 == 0:
-                            count_hip_hinge_set2 += 0.5
-                            dir_hip_hinge_set2 = 1
-                    elif leftbody_hpp_set2 >= 150 and rightbody_hpp_set2 >= 150:
-                        if dir_hip_hinge_set2 == 1:
-                            count_hip_hinge_set2 += 0.5
-                            dir_hip_hinge_set2 = 0
+            if per_left_dumbbellhiphinge_set2 == success_threshold_dumbbellhiphinge_set2:
+                if dir_left_dumbbellhiphinge_set2 == 0:
+                    successful_reps_count_left_dumbbellhiphinge_set2 += 0.5
+                    dir_left_dumbbellhiphinge_set2 = 1
 
-            elif orientation == 'front' and orientation2 == 'front':
-                if leftbody_hpp_set2 is not None and rightbody_hpp_set2 is not None:
-                    per_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (90, 240), (100, 0))
-                    bar_left_hip_angle_set2 = np.interp(int(leftbody_hpp_set2), (80, 240), (200, 400))
+            elif per_left_dumbbellhiphinge_set2 == atrest_value_dumbbellhiphinge_set2:
+                if dir_left_dumbbellhiphinge_set2 == 1:
+                    successful_reps_count_left_dumbbellhiphinge_set2 += 0.5
+                    dir_left_dumbbellhiphinge_set2 = 0
 
-                    per_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (90, 240), (100, 0))
-                    bar_right_hip_angle_set2 = np.interp(int(rightbody_hpp_set2), (80, 240), (200, 400))
+            # right
+            if 40 <= per_right_dumbbellhiphinge_set2 <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellhiphinge_set2 += time.time() - start_time3_dumbbellhiphinge_set2
 
-                    
-                    if per_left_hip_angle_set2 >= 100 and per_right_hip_angle_set2 >= 100:
-                        color_hip_set2 = (0, 255, 0)
-                    else: 
-                        color_hip_set2 = (0, 0, 255)
-                    
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellhiphinge_set2 >= time_threshold_dumbbellhiphinge_set2:
+                    if dir_right_unsuccessful_dumbbellhiphinge_set2 == 0:
+                        unsuccessful_reps_count_right_dumbbellhiphinge_set2 += 0.5
+                        dir_right_unsuccessful_dumbbellhiphinge_set2 = 1
+            else:
+                within_range_time2_dumbbellhiphinge_set2 = 0
+                # Update the start time to the current time
+                start_time3_dumbbellhiphinge_set2 = time.time()
 
-                    if leftbody_hpp_set2 <= 90 and rightbody_hpp_set2 <= 90:
-                        if dir_hip_hinge_set2 == 0:
-                            count_hip_hinge_set2 += 0.5
-                            dir_hip_hinge_set2 = 1
-                    elif leftbody_hpp_set2 >= 240 and rightbody_hpp_set2 >= 240:
-                        if dir_hip_hinge_set2 == 1:
-                            count_hip_hinge_set2 += 0.5
-                            dir_hip_hinge_set2 = 0
+            if 1 <= per_right_dumbbellhiphinge_set2 <= 10:
+                if dir_right_unsuccessful_dumbbellhiphinge_set2 == 1:
+                    unsuccessful_reps_count_right_dumbbellhiphinge_set2 += 0.5
+                    dir_right_unsuccessful_dumbbellhiphinge_set2 = 0
 
-        cvzone.putTextRect(img, 'Dumbbell Hip Hinge SET 2', [220, 30], thickness=2, border=2, scale=2.5)
+            if per_right_dumbbellhiphinge_set2 == success_threshold_dumbbellhiphinge_set2:
+                if dir_right_dumbbellhiphinge_set2 == 0:
+                    successful_reps_count_right_dumbbellhiphinge_set2 += 0.5
+                    dir_right_dumbbellhiphinge_set2 = 1
+                    cooldown_timer_dumbbellhiphinge_set2 = cooldown_duration_dumbbellhiphinge_set2
+            elif per_right_dumbbellhiphinge_set2 == atrest_value_dumbbellhiphinge_set2: 
+                if dir_right_dumbbellhiphinge_set2 == 1:
+                    successful_reps_count_right_dumbbellhiphinge_set2 += 0.5
+                    dir_right_dumbbellhiphinge_set2 = 0
+                    cooldown_timer_dumbbellhiphinge_set2 = cooldown_duration_dumbbellhiphinge_set2
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_left_dumbbellhiphinge_set2)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_left_dumbbellhiphinge_set2)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_right_dumbbellhiphinge_set2)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_right_dumbbellhiphinge_set2)
+
+
+
+        cvzone.putTextRect(img, 'Front Dumbbell Hip Hinge SET 2', [370, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellhiphinge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # Draw angle information
-        cv2.putText(img, f"R: {int(per_right_hip_angle_set2)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R: {int(per_right_dumbbellhiphinge_set2)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_hip_angle_set2)),(50, 400), color_hip_set2, -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellhiphinge_set2)),(50, 400), color_right_dumbbellhiphinge_set2, -1)
 
-        cv2.putText(img, f"L: {int(per_left_hip_angle_set2)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L: {int(per_left_dumbbellhiphinge_set2)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_hip_angle_set2)), (995, 400), color_hip_set2, -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellhiphinge_set2)), (995, 400), color_left_dumbbellhiphinge_set2,-1)
 
-    # Draw count
-    cv2.rectangle(img, (0, 0), (130, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_hip_hinge_set2)}/5", (20, 70), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellhiphinge_set2)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellhiphinge_set2)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Check if time's up
-    if remaining_time <= 0:
+    if remaining_time_dumbbellhiphinge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp_set2 = False
+        display_info_dumbbellhiphinge_set2 = False
         exercise_mode = "rest_dhh_set2"
         rest_dhh_start_time_set2 = time.time()
 
-    # Check if exercise is complete
-    if count_hip_hinge_set2 >= 5:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp_set2 = False
-        exercise_mode = "rest_dhh_set2"
-        rest_dhh_start_time_set2 = time.time()
+
+    if successful_reps_count_right_dumbbellhiphinge_set2 >= 10 and successful_reps_count_left_dumbbellhiphinge_set2 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_dumbbellhiphinge_set2 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_dumbbellhiphinge_set2 == 0:
+                general_feedback_left_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.left_arm_feedback(total_reps_count_left_dumbbellhiphinge_set2)
+                general_feedback_right_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.right_arm_feedback(total_reps_count_right_dumbbellhiphinge_set2)
+                dir_gen_feedback_dumbbellhiphinge_set2 = 1
+                exercise_mode = "rest_dhh_set2"
+                rest_dhh_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge_set2 >= 3 and unsuccessful_reps_count_right_dumbbellhiphinge_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set2 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 == 0:
+            general_feedback_left_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge_set2)
+            general_feedback_right_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge_set2)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 = 1
+            exercise_mode = "rest_dhh_set2"
+            rest_dhh_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set2 = False
+    
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 == 0:
+            general_feedback_left_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge_set2)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 = 1
+            exercise_mode = "rest_dhh_set2"
+            rest_dhh_start_time_set2 = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellhiphinge_set2 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set2 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 == 0:
+            general_feedback_right_dumbbellhiphinge_set2 = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge_set2)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set2 == 1
+            exercise_mode = "rest_dhh_set2"
+            rest_dhh_start_time_set2 = time.time()
 
     return img
 
 def rest_dhh_set2(img):
-    global exercise_mode, rest_dhh_start_time_set2, start_time_hpp_set3
+    global exercise_mode, rest_dhh_start_time_set2, start_time1_dumbbellhiphinge_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time_set2
@@ -7238,140 +7926,196 @@ def rest_dhh_set2(img):
 
     if rest_remaining_time <= 0:
         exercise_mode = "dhh_set3"
-        start_time_hpp_set3 = time.time()
+        start_time1_dumbbellhiphinge_set3 = time.time()
     return img
 
 def detect_dhh_set3(img):
-    global count_hip_hinge_set3, dir_hip_hinge_set3, start_time_hpp_set3, repetition_time_hpp_set3, display_info_hpp_set3, per_left_hip_angle_set3, bar_left_hip_angle_set3, per_right_hip_angle_set3, bar_right_hip_angle_set3, leftbody_hpp_set3, rightbody_hpp_set3, color_hip_set3, rest_dhh_start_time_set3, orientation, orientation2, exercise_mode
+    global dir_left_dumbbellhiphinge_set3, dir_right_dumbbellhiphinge_set3, display_info_dumbbellhiphinge_set3, per_right_dumbbellhiphinge_set3, per_left_dumbbellhiphinge_set3, bar_left_dumbbellhiphinge_set3, bar_right_dumbbellhiphinge_set3, color_right_dumbbellhiphinge_set3, color_left_dumbbellhiphinge_set3, feedback_left_dumbbellhiphinge_set3, feedback_right_dumbbellhiphinge_set3, success_threshold_dumbbellhiphinge_set3, atrest_value_dumbbellhiphinge_set3, unsuccessful_reps_count_left_dumbbellhiphinge_set3, successful_reps_count_left_dumbbellhiphinge_set3, unsuccessful_reps_count_right_dumbbellhiphinge_set3, successful_reps_count_right_dumbbellhiphinge_set3, dir_left_unsuccessful_dumbbellhiphinge_set3, dir_right_unsuccessful_dumbbellhiphinge_set3, total_reps_count_dumbbellhiphinge_set3, total_reps_count_left_dumbbellhiphinge_set3, total_reps_count_right_dumbbellhiphinge_set3, start_time1_dumbbellhiphinge_set3, start_time2_dumbbellhiphinge_set3, start_time3_dumbbellhiphinge_set3, time_threshold_dumbbellhiphinge_set3, within_range_time1_dumbbellhiphinge_set3, within_range_time2_dumbbellhiphinge_set3, general_feedback_left_dumbbellhiphinge_set3, general_feedback_right_dumbbellhiphinge_set3, dir_gen_feedback_dumbbellhiphinge_set3, dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3, cooldown_timer_dumbbellhiphinge_set3, cooldown_duration_dumbbellhiphinge_set3, leftbody_dumbbellhiphinge_set3, rightbody_dumbbellhiphinge_set3, rest_dhh_start_time_set3, exercise_mode
 
 
     img = cv2.resize(img, (1280, 720))
 
+    elapsed_time_dumbbellhiphinge = time.time() - start_time1_dumbbellhiphinge_set3
+    remaining_time_dumbbellhiphinge = max(0, 60 - elapsed_time_dumbbellhiphinge)
 
-    elapsed_time = time.time() - start_time_hpp_set3
-    remaining_time = max(0, 60 - elapsed_time) #repetition_time_hpp_set3
-
-    if display_info_hpp_set3:
-        img = detector_HipHinge.findPose(img, False)
-        lmList_hip_hinge = detector_HipHinge.findPosition(img, False)
+    if display_info_dumbbellhiphinge_set3:
+        img = detector_dumbbellhiphinge.findPose(img, False)
+        lmList_hip_hinge = detector_dumbbellhiphinge.findPosition(img, False)
 
         if len(lmList_hip_hinge) != 0:
-            leftbody_hpp_set3, orientation = detector_HipHinge.HipHinge(img, 11, 23, 25, True)
-            rightbody_hpp_set3, orientation2 = detector_HipHinge.HipHinge(img, 12, 24, 26, True)
+            leftbody_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.HipHinge(img, 11, 23, 25, True)
+            rightbody_dumbbellhiphinge_set3  = detector_dumbbellhiphinge.HipHinge(img, 12, 24, 26, True)
 
-            if orientation == 'right' and orientation2 == 'right':
-                if leftbody_hpp_set3 is not None and rightbody_hpp_set3 is not None:
+            if leftbody_dumbbellhiphinge_set3 is not None and rightbody_dumbbellhiphinge_set3 is not None:
+                per_left_dumbbellhiphinge_set3 = np.interp(int(leftbody_dumbbellhiphinge_set3), (90, 240), (100, 0))
+                bar_left_dumbbellhiphinge_set3 = np.interp(int(leftbody_dumbbellhiphinge_set3), (90, 240), (200, 400))
 
-                    per_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (230, 280), (0, 100))
-                    bar_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (230, 280), (400, 200))
+                per_right_dumbbellhiphinge_set3 = np.interp(int(rightbody_dumbbellhiphinge_set3), (90, 240), (100, 0))
+                bar_right_dumbbellhiphinge_set3= np.interp(int(rightbody_dumbbellhiphinge_set3), (90, 240), (200, 400))
 
-                    per_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (230, 280), (0, 100))
-                    bar_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (230, 280), (400, 200))
+            if int(per_left_dumbbellhiphinge_set3) == 100:
+                color_left_dumbbellhiphinge_set3 = (0, 255, 0)  # Change color of left leg bar to green
+            else:
+                color_left_dumbbellhiphinge_set3 = (0, 0, 255)
+            
+            if int(per_right_dumbbellhiphinge_set3) == 100:
+                color_right_dumbbellhiphinge_set3 = (0, 255, 0)
+            else:
+                color_right_dumbbellhiphinge_set3 = (0, 0, 255)
 
-                    if per_left_hip_angle_set3 >= 100 and per_right_hip_angle_set3 >= 100:
-                        color_hip_set3 = (0, 255, 0)
-                    else: 
-                        color_hip_set3 = (0, 0, 255)
-                    
-                    if leftbody_hpp_set3 >= 270 and rightbody_hpp_set3 >= 270:
-                        if dir_hip_hinge_set3 == 0:
-                            count_hip_hinge_set3 += 0.5
-                            dir_hip_hinge_set3 = 1
-                    elif leftbody_hpp_set3 <= 230 and rightbody_hpp_set3 <= 230:
-                        if dir_hip_hinge_set3 == 1:
-                            dir_hip_hinge_set3 = 0
-                            count_hip_hinge_set3 += 0.5
+            #left
+            if 40 <= per_left_dumbbellhiphinge_set3 <= 90:
+                # Increment the time within range
+                within_range_time1_dumbbellhiphinge_set3 += time.time() - start_time2_dumbbellhiphinge_set3
 
-            elif orientation =='left' and orientation2 == 'left':
-                if leftbody_hpp_set3 is not None and rightbody_hpp_set3 is not None:
-                    per_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (70, 150), (100, 0))
-                    bar_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (70, 140), (200, 400))
+                # Check if peak value has been within range for the specified time
+                if within_range_time1_dumbbellhiphinge_set3 >= time_threshold_dumbbellhiphinge_set3:
+                    if dir_left_unsuccessful_dumbbellhiphinge_set3 == 0:
+                        unsuccessful_reps_count_left_dumbbellhiphinge_set3 += 0.5
+                        dir_left_unsuccessful_dumbbellhiphinge_set3 = 1
+            else:
+                within_range_time1_dumbbellhiphinge_set3 = 0
+                # Update the start time to the current time
+                start_time2_dumbbellhiphinge_set3 = time.time()
 
-                    per_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (70, 150), (100, 0))
-                    bar_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (70, 140), (200, 400))
+            if 1 <= per_left_dumbbellhiphinge_set3 <= 10:
+                if dir_left_unsuccessful_dumbbellhiphinge_set3 == 1:
+                    unsuccessful_reps_count_left_dumbbellhiphinge_set3 += 0.5
+                    dir_left_unsuccessful_dumbbellhiphinge_set3 = 0
 
-                    
-                    if per_left_hip_angle_set3 >= 100 and per_right_hip_angle_set3 >= 100:
-                        color_hip_set3 = (0, 255, 0)
-                    else: 
-                        color_hip_set3 = (0, 0, 255)
-                    
-                    if leftbody_hpp_set3 <= 70 and rightbody_hpp_set3 <= 70:
-                        if dir_hip_hinge_set3 == 0:
-                            count_hip_hinge_set3 += 0.5
-                            dir_hip_hinge_set3 = 1
-                    elif leftbody_hpp_set3 >= 150 and rightbody_hpp_set3 >= 150:
-                        if dir_hip_hinge_set3 == 1:
-                            count_hip_hinge_set3 += 0.5
-                            dir_hip_hinge_set3 = 0
+            if per_left_dumbbellhiphinge_set3 == success_threshold_dumbbellhiphinge_set3:
+                if dir_left_dumbbellhiphinge_set3 == 0:
+                    successful_reps_count_left_dumbbellhiphinge_set3 += 0.5
+                    dir_left_dumbbellhiphinge_set3 = 1
 
-            elif orientation == 'front' and orientation2 == 'front':
-                if leftbody_hpp_set3 is not None and rightbody_hpp_set3 is not None:
-                    per_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (90, 240), (100, 0))
-                    bar_left_hip_angle_set3 = np.interp(int(leftbody_hpp_set3), (80, 240), (200, 400))
+            elif per_left_dumbbellhiphinge_set3 == atrest_value_dumbbellhiphinge_set3:
+                if dir_left_dumbbellhiphinge_set3 == 1:
+                    successful_reps_count_left_dumbbellhiphinge_set3 += 0.5
+                    dir_left_dumbbellhiphinge_set3 = 0
 
-                    per_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (90, 240), (100, 0))
-                    bar_right_hip_angle_set3 = np.interp(int(rightbody_hpp_set3), (80, 240), (200, 400))
+            # right
+            if 40 <= per_right_dumbbellhiphinge_set3 <= 90:
+                # Increment the time within range
+                within_range_time2_dumbbellhiphinge_set3 += time.time() - start_time3_dumbbellhiphinge_set3
 
-                    
-                    if per_left_hip_angle_set3 >= 100 and per_right_hip_angle_set3 >= 100:
-                        color_hip_set3 = (0, 255, 0)
-                    else: 
-                        color_hip_set3 = (0, 0, 255)
-                    
+                # Check if peak value has been within range for the specified time
+                if within_range_time2_dumbbellhiphinge_set3 >= time_threshold_dumbbellhiphinge_set3:
+                    if dir_right_unsuccessful_dumbbellhiphinge_set3 == 0:
+                        unsuccessful_reps_count_right_dumbbellhiphinge_set3 += 0.5
+                        dir_right_unsuccessful_dumbbellhiphinge_set3 = 1
+            else:
+                within_range_time2_dumbbellhiphinge_set3 = 0
+                # Update the start time to the current time
+                start_time3_dumbbellhiphinge_set3 = time.time()
 
-                    if leftbody_hpp_set3 <= 90 and rightbody_hpp_set3 <= 90:
-                        if dir_hip_hinge_set3== 0:
-                            count_hip_hinge_set3 += 0.5
-                            dir_hip_hinge_set3 = 1
-                    elif leftbody_hpp_set3 >= 240 and rightbody_hpp_set3 >= 240:
-                        if dir_hip_hinge_set3 == 1:
-                            count_hip_hinge_set3 += 0.5
-                            dir_hip_hinge_set3 = 0
+            if 1 <= per_right_dumbbellhiphinge_set3 <= 10:
+                if dir_right_unsuccessful_dumbbellhiphinge_set3 == 1:
+                    unsuccessful_reps_count_right_dumbbellhiphinge_set3 += 0.5
+                    dir_right_unsuccessful_dumbbellhiphinge_set3 = 0
 
-        cvzone.putTextRect(img, 'Dumbbell Hip Hinge SET 3', [220, 30], thickness=2, border=2, scale=2.5)
+            if per_right_dumbbellhiphinge_set3 == success_threshold_dumbbellhiphinge_set3:
+                if dir_right_dumbbellhiphinge_set3 == 0:
+                    successful_reps_count_right_dumbbellhiphinge_set3 += 0.5
+                    dir_right_dumbbellhiphinge_set3 = 1
+                    cooldown_timer_dumbbellhiphinge_set3 = cooldown_duration_dumbbellhiphinge_set3
+            elif per_right_dumbbellhiphinge_set3 == atrest_value_dumbbellhiphinge_set3: 
+                if dir_right_dumbbellhiphinge_set3 == 1:
+                    successful_reps_count_right_dumbbellhiphinge_set3 += 0.5
+                    dir_right_dumbbellhiphinge_set3 = 0
+                    cooldown_timer_dumbbellhiphinge_set3 = cooldown_duration_dumbbellhiphinge_set3
+
+            # feedback for left hand  # TO BE FETCHED 
+            feedback_left_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_left_dumbbellhiphinge_set3)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_left_dumbbellhiphinge_set3)
+
+            # feedback for right hand  # TO BE FETCHED 
+            feedback_right_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.feedback_dumbbellhiphinge(per_right_dumbbellhiphinge_set3)
+
+            detector_dumbbellhiphinge.update_next_per_left(per_right_dumbbellhiphinge_set3)
+
+
+
+        cvzone.putTextRect(img, 'Front Dumbbell Hip Hinge SET 3', [370, 30], thickness=2, border=2, scale=1.5)
 
         # Draw rectangle behind the timer text
         cv2.rectangle(img, (890, 10), (1260, 80), (255, 0, 0), -2)  
 
         # Draw timer text above the rectangle
-        timer_text = f"Time left: {int(remaining_time)}s"
+        timer_text = f"Time left: {int(remaining_time_dumbbellhiphinge)}s"
         cv2.putText(img, timer_text, (900, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
-        # Orientation
-        cv2.rectangle(img, (890, 100), (1180, 160), (0, 0, 255), -2)
-        cv2.putText(img, f"Orientation: {orientation}", (900, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3)
-
         # Draw angle information
-        cv2.putText(img, f"R: {int(per_right_hip_angle_set3)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"R: {int(per_right_dumbbellhiphinge_set3)}", (24, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (8, 200), (50, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (8, int(bar_right_hip_angle_set3)),(50, 400), color_hip_set3, -1)
+        cv2.rectangle(img, (8, int(bar_right_dumbbellhiphinge_set3)),(50, 400), color_right_dumbbellhiphinge_set3, -1)
 
-        cv2.putText(img, f"L: {int(per_left_hip_angle_set3)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
+        cv2.putText(img, f"L: {int(per_left_dumbbellhiphinge_set3)}", (924, 195), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 0, 255), 7)
         cv2.rectangle(img, (952, 200), (995, 400), (0, 255, 0), 5)
-        cv2.rectangle(img, (952, int(bar_left_hip_angle_set3)), (995, 400), color_hip_set3, -1)
+        cv2.rectangle(img, (952, int(bar_left_dumbbellhiphinge_set3)), (995, 400), color_left_dumbbellhiphinge_set3,-1)
 
-    # Draw count
-    cv2.rectangle(img, (0, 0), (130, 120), (255, 0, 0), -1)
-    cv2.putText(img, f"{int(count_hip_hinge_set3)}/5", (20, 70), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+    
+    # count
+    cv2.rectangle(img, (20, 20), (140, 130), (0, 0, 255), -1)
+    cv2.putText(img, f"{int(successful_reps_count_right_dumbbellhiphinge_set3)}/10", (30, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
+
+    cv2.rectangle(img, (150, 20), (270, 130), (255, 0, 0), -1)
+    cv2.putText(img, f"{int(successful_reps_count_left_dumbbellhiphinge_set3)}/10", (160, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
     # Check if time's up
-    if remaining_time <= 0:
+    if remaining_time_dumbbellhiphinge <= 0:
         cvzone.putTextRect(img, "Time's Up", [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp_set3 = False
+        display_info_dumbbellhiphinge_set3 = False
         exercise_mode = "rest_dhh_set3"
         rest_dhh_start_time_set3 = time.time()
 
-    # Check if exercise is complete
-    if count_hip_hinge_set3 >= 5:  
-        cvzone.putTextRect(img, 'Exercise Complete', [390, 30], thickness=2, border=2, scale=2.5)
-        display_info_hpp_set3 = False
-        exercise_mode = "rest_dhh_set3"
-        rest_dhh_start_time_set3 = time.time()
+
+    if successful_reps_count_right_dumbbellhiphinge_set3 >= 10 and successful_reps_count_left_dumbbellhiphinge_set3 >= 10:
+            cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
+            display_info_dumbbellhiphinge_set3 = False
+            # General feedback after finishing the exercise # TO BE FETCHED
+            if dir_gen_feedback_dumbbellhiphinge_set3 == 0:
+                general_feedback_left_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.left_arm_feedback(total_reps_count_left_dumbbellhiphinge_set3)
+                general_feedback_right_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.right_arm_feedback(total_reps_count_right_dumbbellhiphinge_set3)
+                dir_gen_feedback_dumbbellhiphinge_set3 = 1
+                exercise_mode = "rest_dhh_set3"
+                rest_dhh_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge_set3 >= 3 and unsuccessful_reps_count_right_dumbbellhiphinge_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 2 unsuccessful tries for both arms. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set3 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 == 0:
+            general_feedback_left_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge_set3)
+            general_feedback_right_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge_set3)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 = 1
+            exercise_mode = "rest_dhh_set3"
+            rest_dhh_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_left_dumbbellhiphinge_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for left arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set3 = False
+    
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 == 0:
+            general_feedback_left_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.left_arm_unsuccessful_feedback(total_reps_count_left_dumbbellhiphinge_set3)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 = 1
+            exercise_mode = "rest_dhh_set3"
+            rest_dhh_start_time_set3 = time.time()
+
+    if unsuccessful_reps_count_right_dumbbellhiphinge_set3 >= 3:
+        cvzone.putTextRect(img, 'You have made 3 unsuccessful tries for right arm. Please retry again', [390, 30], thickness=2, border=2, scale=1)
+        display_info_dumbbellhiphinge_set3 = False
+
+        if dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 == 0:
+            general_feedback_right_dumbbellhiphinge_set3 = detector_dumbbellhiphinge.right_arm_unsuccessful_feedback(total_reps_count_right_dumbbellhiphinge_set3)
+            dir_gen_feedback_unsuccessful_dumbbellhiphinge_set3 == 1
+            exercise_mode = "rest_dhh_set3"
+            rest_dhh_start_time_set3 = time.time()
     return img
 
 def rest_dhh_set3(img):
-    global exercise_mode, rest_dhh_start_time_set3, start_time_hpp_set3
+    global exercise_mode, rest_dhh_start_time_set3
     img = cv2.resize(img, (1280, 720))
 
     rest_elapsed_time = time.time() - rest_dhh_start_time_set3

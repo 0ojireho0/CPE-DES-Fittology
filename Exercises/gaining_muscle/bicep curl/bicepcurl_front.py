@@ -6,7 +6,7 @@ import time
 import bicepcurl_front_PoseModule as pm
 import cvzone
 
-cap = cv2.VideoCapture(r'D:\CPEDES\Flask\Exercises\gaining_muscle\bicep curl\bicepcurl.mp4')
+cap = cv2.VideoCapture(r'C:\Users\jerem\Downloads\Video\VID_20240511_145612.mp4')
 
 #import class
 detector_bicep = pm.poseDetector()
