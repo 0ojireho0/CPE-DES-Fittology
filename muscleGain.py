@@ -3505,6 +3505,9 @@ def detect_shouldertap(img):
         display_info_shouldertaps = False
         exercise_mode = "rest_shouldertap"
         rest_shouldertap_start_time = time.time()
+    
+    total_reps_count_left_shouldertaps = successful_reps_count_left_shouldertaps + unsuccessful_reps_count_left_shouldertaps
+    total_reps_count_right_shouldertaps = unsuccessful_reps_count_right_shouldertaps + unsuccessful_reps_count_right_shouldertaps
 
     if successful_reps_count_right_shouldertaps >= 10 and successful_reps_count_left_shouldertaps >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -3710,6 +3713,9 @@ def detect_shouldertap_set2(img):
         exercise_mode = "rest_shouldertap_set2"
         rest_shouldertap_start_time_set2 = time.time()
 
+    total_reps_count_left_shouldertaps_set2 = successful_reps_count_left_shouldertaps_set2 + unsuccessful_reps_count_left_shouldertaps_set2
+    total_reps_count_right_shouldertaps_set = unsuccessful_reps_count_right_shouldertaps_set2 + unsuccessful_reps_count_right_shouldertaps_set2
+
     if successful_reps_count_right_shouldertaps_set2 >= 10 and successful_reps_count_left_shouldertaps_set2 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
             display_info_shouldertaps_set2 = False
@@ -3913,6 +3919,9 @@ def detect_shouldertap_set3(img):
         display_info_shouldertaps_set3 = False
         exercise_mode = "rest_shouldertap_set3"
         rest_shouldertap_start_time_set3 = time.time()
+
+    total_reps_count_left_shouldertaps_set3 = successful_reps_count_left_shouldertaps_set3 + unsuccessful_reps_count_left_shouldertaps_set3
+    total_reps_count_right_shouldertaps_set3 = unsuccessful_reps_count_right_shouldertaps_set3 + unsuccessful_reps_count_right_shouldertaps_set3
 
     if successful_reps_count_right_shouldertaps_set3 >= 10 and successful_reps_count_left_shouldertaps_set3 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -4124,6 +4133,9 @@ def detect_chestpress(img):
         display_info_chestpress = False
         exercise_mode = "rest_chestpress"
         rest_chestpress_start_time = time.time()
+
+    total_reps_count_left_chestpress = successful_reps_count_left_chestpress + unsuccessful_reps_count_left_chestpress
+    total_reps_count_right_chestpress = successful_reps_count_right_chestpress + unsuccessful_reps_count_right_chestpress
 
     if successful_reps_count_right_chestpress >= 5 and successful_reps_count_left_chestpress >= 5:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -4340,6 +4352,9 @@ def detect_chestpress_set2(img):
         display_info_chestpress_set2 = False
         exercise_mode = "rest_chestpress_set2"
         rest_chestpress_start_time_set2 = time.time()
+
+    total_reps_count_left_chestpress_set2 = successful_reps_count_left_chestpress_set2 + unsuccessful_reps_count_left_chestpress_set2
+    total_reps_count_right_chestpress_set2 = successful_reps_count_right_chestpress_set2 + unsuccessful_reps_count_right_chestpress_set2
 
     if successful_reps_count_right_chestpress_set2 >= 10 and successful_reps_count_left_chestpress_set2 >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -4560,6 +4575,9 @@ def detect_chestpress_set3(img):
         exercise_mode = "rest_chestpress_set3"
         rest_chestpress_start_time_set3 = time.time()
 
+    total_reps_count_left_chestpress_set3 = successful_reps_count_left_chestpress_set3 + unsuccessful_reps_count_left_chestpress_set3
+    total_reps_count_right_chestpress_set3 = successful_reps_count_right_chestpress_set3 + unsuccessful_reps_count_right_chestpress_set3
+
     if successful_reps_count_right_chestpress_set3 >= 10 and successful_reps_count_left_chestpress_set3 >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_chestpress_set3 = False
@@ -4769,6 +4787,9 @@ def detect_dumbbellfrontraise(img):
         exercise_mode = "rest_dumbbellfrontraise"
         rest_dumbbellfrontraise_start_time = time.time()
 
+    total_reps_count_left_dumbbellfrontraise = successful_reps_count_left_dumbbellfrontraise + unsuccessful_reps_count_left_dumbbellfrontraise
+    total_reps_count_right_dumbbellfrontraise = successful_reps_count_right_dumbbellfrontraise + unsuccessful_reps_count_right_dumbbellfrontraise
+
     if successful_reps_count_right_dumbbellfrontraise >= 10 and successful_reps_count_left_dumbbellfrontraise >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise = False
@@ -4973,6 +4994,9 @@ def detect_dumbbellfrontraise_set2(img):
         exercise_mode = "rest_dumbbellfrontraise_set2"
         rest_dumbbellfrontraise_start_time_set2 = time.time()
 
+    total_reps_count_left_dumbbellfrontraise_set2 = successful_reps_count_left_dumbbellfrontraise_set2 + unsuccessful_reps_count_left_dumbbellfrontraise_set2
+    total_reps_count_right_dumbbellfrontraise_set2 = successful_reps_count_right_dumbbellfrontraise_set2 + unsuccessful_reps_count_right_dumbbellfrontraise_set2
+
     if successful_reps_count_right_dumbbellfrontraise_set2 >= 10 and successful_reps_count_left_dumbbellfrontraise_set2 >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_dumbbellfrontraise_set2 = False
@@ -5174,6 +5198,9 @@ def detect_dumbbellfrontraise_set3(img):
         display_info_dumbbellfrontraise_set3 = False
         exercise_mode = "rest_dumbbellfrontraise_set3"
         rest_dumbbellfrontraise_start_time_set3 = time.time()
+
+    total_reps_count_left_dumbbellfrontraise_set3 = successful_reps_count_left_dumbbellfrontraise_set3 + unsuccessful_reps_count_left_dumbbellfrontraise_set3
+    total_reps_count_right_dumbbellfrontraise_set3 = successful_reps_count_right_dumbbellfrontraise_set3 + unsuccessful_reps_count_right_dumbbellfrontraise_set3
 
     if successful_reps_count_right_dumbbellfrontraise_set3 >= 10 and successful_reps_count_left_dumbbellfrontraise_set3 >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -6421,12 +6448,16 @@ def detect_gs(img):
     cv2.putText(img, f"{int(successful_reps_count_left_gobletsquat)}/10", (220, 90), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1.6, (255, 255, 255), 7)
 
 
+
     #Timer
     if remaining_time_gobletsquat <= 0:
         cvzone.putTextRect(img, "Time's Up", [420, 30], thickness=2, border=2, scale=2.5)
         display_info_gobletsquat = False
         exercise_mode = "rest_gs"
         rest_goblet_squat_start_time = time.time()
+
+    total_reps_count_left_gobletsquat = successful_reps_count_left_gobletsquat + unsuccessful_reps_count_left_gobletsquat
+    total_reps_count_right_gobletsquat = successful_reps_count_right_gobletsquat + unsuccessful_reps_count_right_gobletsquat
 
     if successful_reps_count_right_gobletsquat >= 10 and successful_reps_count_left_gobletsquat >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -6634,6 +6665,9 @@ def detect_gs_set2(img):
         exercise_mode = "rest_gs_set2"
         rest_goblet_squat_start_time_set2 = time.time()
 
+    total_reps_count_left_gobletsquat_set2 = successful_reps_count_left_gobletsquat_set2 + unsuccessful_reps_count_left_gobletsquat_set2
+    total_reps_count_right_gobletsquat_set2 = successful_reps_count_right_gobletsquat_set2 + unsuccessful_reps_count_right_gobletsquat_set2
+
     if successful_reps_count_right_gobletsquat_set2 >= 10 and successful_reps_count_left_gobletsquat_set2 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
             display_info_gobletsquat_set2 = False
@@ -6840,6 +6874,9 @@ def detect_gs_set3(img):
         exercise_mode = "rest_gs_set3"
         rest_goblet_squat_start_time_set3 = time.time()
 
+    total_reps_count_left_gobletsquat_set3 = successful_reps_count_left_gobletsquat_set3 + unsuccessful_reps_count_left_gobletsquat_set3
+    total_reps_count_right_gobletsquat_set3 = successful_reps_count_right_gobletsquat_set3 + unsuccessful_reps_count_right_gobletsquat_set3
+
     if successful_reps_count_right_gobletsquat_set3 >= 10 and successful_reps_count_left_gobletsquat_set3 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
             display_info_gobletsquat_set3 = False
@@ -7045,6 +7082,9 @@ def detect_hkt(img):
         exercise_mode = "rest_hkt"
         rest_hkt_start_time = time.time()
 
+    total_reps_count_left_highkneetap = successful_reps_count_left_highkneetap + unsuccessful_reps_count_left_highkneetap
+    total_reps_count_right_highkneetap = successful_reps_count_right_highkneetap + unsuccessful_reps_count_right_highkneetap
+
     if successful_reps_count_right_highkneetap >= 10 and successful_reps_count_left_highkneetap >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
             display_info_highkneetap = False
@@ -7249,6 +7289,9 @@ def detect_hkt_set2(img):
         display_info_highkneetap_set2 = False
         exercise_mode = "rest_hkt_set2"
         rest_hkt_start_time_set2 = time.time()
+
+    total_reps_count_left_highkneetap_set2 = successful_reps_count_left_highkneetap_set2 + unsuccessful_reps_count_left_highkneetap_set2
+    total_reps_count_right_highkneetap_set2 = successful_reps_count_right_highkneetap_set2 + unsuccessful_reps_count_right_highkneetap_set2
 
     if successful_reps_count_right_highkneetap_set2 >= 10 and successful_reps_count_left_highkneetap_set2 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -7457,6 +7500,9 @@ def detect_hkt_set3(img):
         exercise_mode = "rest_hkt"
         rest_hkt_start_time_set3 = time.time()
 
+    total_reps_count_left_highkneetap_set3 = successful_reps_count_left_highkneetap_set3 + unsuccessful_reps_count_left_highkneetap_set3
+    total_reps_count_right_highkneetap_set3 = successful_reps_count_right_highkneetap_set3 + unsuccessful_reps_count_right_highkneetap_set3
+
     if successful_reps_count_right_highkneetap_set3 >= 10 and successful_reps_count_left_highkneetap_set3 >= 10:
             cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
             display_info_highkneetap_set3 = False
@@ -7658,6 +7704,9 @@ def detect_dhh(img):
         display_info_dumbbellhiphinge = False
         exercise_mode = "rest_dhh"
         rest_dhh_start_time = time.time()
+
+    total_reps_count_left_dumbbellhiphinge = successful_reps_count_left_dumbbellhiphinge + unsuccessful_reps_count_left_dumbbellhiphinge
+    total_reps_count_right_dumbbellhiphinge = successful_reps_count_right_dumbbellhiphinge + unsuccessful_reps_count_right_dumbbellhiphinge
 
 
     if successful_reps_count_right_dumbbellhiphinge >= 10 and successful_reps_count_left_dumbbellhiphinge >= 10:
@@ -7863,6 +7912,9 @@ def detect_dhh_set2(img):
         display_info_dumbbellhiphinge_set2 = False
         exercise_mode = "rest_dhh_set2"
         rest_dhh_start_time_set2 = time.time()
+    
+    total_reps_count_left_dumbbellhiphinge_set2 = successful_reps_count_left_dumbbellhiphinge_set2 + unsuccessful_reps_count_left_dumbbellhiphinge
+    total_reps_count_right_dumbbellhiphinge_set2 = successful_reps_count_right_dumbbellhiphinge_set2 + unsuccessful_reps_count_right_dumbbellhiphinge_set2
 
 
     if successful_reps_count_right_dumbbellhiphinge_set2 >= 10 and successful_reps_count_left_dumbbellhiphinge_set2 >= 10:
@@ -8068,6 +8120,9 @@ def detect_dhh_set3(img):
         display_info_dumbbellhiphinge_set3 = False
         exercise_mode = "rest_dhh_set3"
         rest_dhh_start_time_set3 = time.time()
+
+    total_reps_count_left_dumbbellhiphinge_set3 = successful_reps_count_left_dumbbellhiphinge_set3 + unsuccessful_reps_count_left_dumbbellhiphinge_set3
+    total_reps_count_right_dumbbellhiphinge_set3 = successful_reps_count_right_dumbbellhiphinge_set3 + unsuccessful_reps_count_right_dumbbellhiphinge_set3
 
 
     if successful_reps_count_right_dumbbellhiphinge_set3 >= 10 and successful_reps_count_left_dumbbellhiphinge_set3 >= 10:
