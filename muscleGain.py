@@ -1243,7 +1243,7 @@ within_range_time1_bodyweightsquat = 0
 within_range_time2_bodyweightsquat = 0
 
 # gen feedback success
-general_feedback_body_bodyweightsquat = ""
+general_feedback_left_bodyweightsquat = ""
 
 # gen feedback unsuccess
 dir_gen_feedback_bodyweightsquat = 0
@@ -1277,7 +1277,7 @@ rightbody_bodyweightsquat_set2 = 0
 color_right_bodyweightsquat_set2 = (0, 0, 255)
 color_left_bodyweightsquat_set2 = (0, 0, 255)
 
-feedback_body_bodyweightsquat_set2 = ""
+general_feedback_left_bodyweightsquat_set2 = ""
 
 success_threshold_bodyweightsquat_set2 = 100
 
@@ -1333,7 +1333,7 @@ rightbody_bodyweightsquat_set3 = 0
 color_right_bodyweightsquat_set3 = (0, 0, 255)
 color_left_bodyweightsquat_set3 = (0, 0, 255)
 
-feedback_body_bodyweightsquat_set3 = ""
+general_feedback_left_bodyweightsquat_set3 = ""
 
 success_threshold_bodyweightsquat_set3 = 100
 
@@ -1963,8 +1963,6 @@ def home():
 exercise_mode = "bicep_curl"
 
 
-
-
 def gen_frames():
     cap = cv2.VideoCapture(0)
     while True:
@@ -2113,6 +2111,7 @@ def start_timer():
 def get_exercise_mode():
     global exercise_mode
     return jsonify({'exercise_mode': exercise_mode})
+
 
 def detect_bicep_curls(img):
     global countdown_before_exercise, countdown_repetition_time, count_bicep_left, count_bicep_right, dir_bicep_left, dir_bicep_right, start_time_bicep, repetition_time_bicep, display_info_bicep, rest_bicep_start_time, bar_left_bicep, bar_right_bicep, angle_left_bicep, angle_right_bicep, color_right_bicep, color_left_bicep, feedback_left_bicep, feedback_right_bicep, min_threshold_bicep, max_threshold_bicep, success_threshold_bicep, peak_value_bicep, atrest_value_bicep, reps_count_bicep, unsuccessful_reps_count_left_bicep, successful_reps_count_left_bicep, unsuccessful_reps_count_right_bicep, successful_reps_count_right_bicep, dir_bicep_left_unsuccessful_bicep, dir_bicep_right_unsuccessful_bicep, total_reps_count_bicep, total_reps_count_left_bicep, total_reps_count_right_bicep, start_time1_bicep, start_time2_bicep, general_feedback_left_bicep, general_feedback_right_bicep, dir_gen_feedback_bicep, dir_gen_feedback_unsuccessful_bicep, exercise_mode, per_left_bicep, per_right_bicep, within_range_time1_bicep, within_range_time2_bicep, start_time3_bicep
@@ -2282,6 +2281,7 @@ def detect_bicep_curls(img):
             general_feedback_left_bicep = detector_bicep.left_arm_feedback(total_reps_count_left)
             general_feedback_right_bicep = detector_bicep.right_arm_feedback(total_reps_count_right)
             dir_gen_feedback_bicep = 1
+            print(f"{general_feedback_right_bicep} \n{general_feedback_left_bicep}")
             exercise_mode = "rest_bicep"
             rest_bicep_start_time = time.time()
         
@@ -2306,9 +2306,8 @@ def detect_bicep_curls(img):
             exercise_mode = "rest_bicep"
             rest_bicep_start_time = time.time()
 
-
-
     return img
+
 
 
 def rest_bicep(img):
@@ -2482,10 +2481,10 @@ def detect_bicep_curls_set2(img):
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
         display_info_bicep_set2 = False
         # General feedback after finishing the exercise # TO BE FETCHED
-        if dir_gen_feedback_bicep == 0:
+        if dir_gen_feedback_bicep_set2 == 0:
             general_feedback_left_bicep_set2 = detector_bicep.left_arm_feedback(total_reps_count_left_set2)
             general_feedback_right_bicep_set2 = detector_bicep.right_arm_feedback(total_reps_count_right_set2)
-            dir_gen_feedback_bicep = 1
+            dir_gen_feedback_bicep_set2 = 1
             exercise_mode = "rest_bicep_set2"
             rest_bicep_start_time_set2 = time.time()
     # To check for unsuccessful arm rep counter # CHANGED
@@ -2731,6 +2730,8 @@ def rest_bicep_set3(img):
     return img
 
 
+
+
 # Function to detect push-ups
 def detect_push_up(img):
     global exercise_mode, display_info_pushup, per_right_pushup, per_left_pushup, bar_left_pushup, bar_right_pushup, leftangle_pushup, rightangle_pushup, color_right_pushup, color_left_pushup, feedback_left_pushup, feedback_right_pushup, success_threshold_pushup, peak_value_pushup, atrest_value_pushup, unsuccessful_reps_count_left_pushup, successful_reps_count_left_pushup, unsuccessful_reps_count_right_pushup, successful_reps_count_right_pushup, dir_left_unsuccessful_pushup, dir_right_unsuccessful_pushup, total_reps_count_pushup, total_reps_count_left_pushup, total_reps_count_right_pushup, start_time1_pushup, start_time2_pushup, start_time3_pushup, time_threshold_pushup, within_range_time1_pushup, general_feedback_left_pushup, general_feedback_right_pushup, dir_gen_feedback_pushup, dir_gen_feedback_unsuccessful_pushup, rest_pushup_start_time, dir_left_pushup, dir_right_pushup
@@ -2878,6 +2879,8 @@ def detect_push_up(img):
 
     total_reps_count_left_pushup = successful_reps_count_left_pushup + unsuccessful_reps_count_left_pushup
     total_reps_count_right_pushup = successful_reps_count_right_pushup + unsuccessful_reps_count_right_pushup  
+
+    
 
     if successful_reps_count_right_pushup >= 10 and successful_reps_count_left_pushup >= 10:
         cvzone.putTextRect(img, 'All Repetitions Completed', [420, 30], thickness=2, border=2, scale=2.5)
@@ -5893,7 +5896,7 @@ def rest_alternatinglunge_set3(img):
     return img
 
 def detect_bws(img):
-    global dir_left_bodyweightsquat, dir_right_bodyweightsquat, display_info_bodyweightsquat, per_right_bodyweightsquat, per_left_bodyweightsquat, bar_left_bodyweightsquat, bar_right_bodyweightsquat, leftbody_bodyweightsquat, rightbody_bodyweightsquat, color_right_bodyweightsquat, color_left_bodyweightsquat, feedback_body_bodyweightsquat, success_threshold_bodyweightsquat, peak_value_bodyweightsquat, atrest_value_bodyweightsquat, unsuccessful_reps_count_body_bodyweightsquat, successful_reps_count_body_bodyweightsquat, dir_left_unsuccessful_bodyweightsquat, start_time1_bodyweightsquat, start_time2_bodyweightsquat, start_time3_bodyweightsquat, time_threshold_bodyweightsquat, within_range_time1_bodyweightsquat, within_range_time2_bodyweightsquat, general_feedback_body_bodyweightsquat, dir_gen_feedback_bodyweightsquat, dir_gen_feedback_unsuccessful_bodyweightsquat, cooldown_timer_bodyweightsquat, cooldown_duration_bodyweightsquat, rest_bws_start_time, exercise_mode, per_right_body_bodyweightsquat, bar_right_body_bodyweightsquat, per_left_body_bodyweightsquat, bar_left_body_bodyweightsquat
+    global dir_left_bodyweightsquat, dir_right_bodyweightsquat, display_info_bodyweightsquat, per_right_bodyweightsquat, per_left_bodyweightsquat, bar_left_bodyweightsquat, bar_right_bodyweightsquat, leftbody_bodyweightsquat, rightbody_bodyweightsquat, color_right_bodyweightsquat, color_left_bodyweightsquat, feedback_body_bodyweightsquat, success_threshold_bodyweightsquat, peak_value_bodyweightsquat, atrest_value_bodyweightsquat, unsuccessful_reps_count_body_bodyweightsquat, successful_reps_count_body_bodyweightsquat, dir_left_unsuccessful_bodyweightsquat, start_time1_bodyweightsquat, start_time2_bodyweightsquat, start_time3_bodyweightsquat, time_threshold_bodyweightsquat, within_range_time1_bodyweightsquat, within_range_time2_bodyweightsquat, general_feedback_left_bodyweightsquat, dir_gen_feedback_bodyweightsquat, dir_gen_feedback_unsuccessful_bodyweightsquat, cooldown_timer_bodyweightsquat, cooldown_duration_bodyweightsquat, rest_bws_start_time, exercise_mode, per_right_body_bodyweightsquat, bar_right_body_bodyweightsquat, per_left_body_bodyweightsquat, bar_left_body_bodyweightsquat
 
     img = cv2.resize(img, (1280, 720))
 
@@ -6033,7 +6036,7 @@ def rest_bws(img):
     return img
 
 def detect_bws_set2(img):
-    global dir_left_bodyweightsquat_set2, dir_right_bodyweightsquat_set2, display_info_bodyweightsquat_set2, per_right_bodyweightsquat_set2, per_left_bodyweightsquat_set2, bar_left_bodyweightsquat_set2, bar_right_bodyweightsquat_set2, leftbody_bodyweightsquat_set2, rightbody_bodyweightsquat_set2, color_right_bodyweightsquat_set2, color_left_bodyweightsquat_set2, feedback_body_bodyweightsquat_set2, success_threshold_bodyweightsquat_set2, peak_value_bodyweightsquat_set2, atrest_value_bodyweightsquat_set2, unsuccessful_reps_count_body_bodyweightsquat_set2, successful_reps_count_body_bodyweightsquat_set2, dir_left_unsuccessful_bodyweightsquat_set2, start_time1_bodyweightsquat_set2, start_time2_bodyweightsquat_set2, start_time3_bodyweightsquat_set2, time_threshold_bodyweightsquat_set2, within_range_time1_bodyweightsquat_set2, within_range_time2_bodyweightsquat_set2, general_feedback_body_bodyweightsquat_set2, dir_gen_feedback_bodyweightsquat_set2, dir_gen_feedback_unsuccessful_bodyweightsquat_set2, cooldown_timer_bodyweightsquat_set2, cooldown_duration_bodyweightsquat_set2, rest_bws_start_time_set2, exercise_mode, per_right_body_bodyweightsquat_set2, bar_right_body_bodyweightsquat_set2, per_left_body_bodyweightsquat_set2, bar_left_body_bodyweightsquat_set2
+    global dir_left_bodyweightsquat_set2, dir_right_bodyweightsquat_set2, display_info_bodyweightsquat_set2, per_right_bodyweightsquat_set2, per_left_bodyweightsquat_set2, bar_left_bodyweightsquat_set2, bar_right_bodyweightsquat_set2, leftbody_bodyweightsquat_set2, rightbody_bodyweightsquat_set2, color_right_bodyweightsquat_set2, color_left_bodyweightsquat_set2, feedback_body_bodyweightsquat_set2, success_threshold_bodyweightsquat_set2, peak_value_bodyweightsquat_set2, atrest_value_bodyweightsquat_set2, unsuccessful_reps_count_body_bodyweightsquat_set2, successful_reps_count_body_bodyweightsquat_set2, dir_left_unsuccessful_bodyweightsquat_set2, start_time1_bodyweightsquat_set2, start_time2_bodyweightsquat_set2, start_time3_bodyweightsquat_set2, time_threshold_bodyweightsquat_set2, within_range_time1_bodyweightsquat_set2, within_range_time2_bodyweightsquat_set2, general_feedback_left_bodyweightsquat_set2, dir_gen_feedback_bodyweightsquat_set2, dir_gen_feedback_unsuccessful_bodyweightsquat_set2, cooldown_timer_bodyweightsquat_set2, cooldown_duration_bodyweightsquat_set2, rest_bws_start_time_set2, exercise_mode, per_right_body_bodyweightsquat_set2, bar_right_body_bodyweightsquat_set2, per_left_body_bodyweightsquat_set2, bar_left_body_bodyweightsquat_set2
 
     img = cv2.resize(img, (1280, 720))
 
@@ -6173,7 +6176,7 @@ def rest_bws_set2(img):
     return img
 
 def detect_bws_set3(img):
-    global dir_left_bodyweightsquat_set3, dir_right_bodyweightsquat_set3, display_info_bodyweightsquat_set3, per_right_bodyweightsquat_set3, per_left_bodyweightsquat_set3, bar_left_bodyweightsquat_set3, bar_right_bodyweightsquat_set3, leftbody_bodyweightsquat_set3, rightbody_bodyweightsquat_set3, color_right_bodyweightsquat_set3, color_left_bodyweightsquat_set3, feedback_body_bodyweightsquat_set3, success_threshold_bodyweightsquat_set3, peak_value_bodyweightsquat_set3, atrest_value_bodyweightsquat_set3, unsuccessful_reps_count_body_bodyweightsquat_set3, successful_reps_count_body_bodyweightsquat_set3, dir_left_unsuccessful_bodyweightsquat_set3, start_time1_bodyweightsquat_set3, start_time2_bodyweightsquat_set3, start_time3_bodyweightsquat_set3, time_threshold_bodyweightsquat_set3, within_range_time1_bodyweightsquat_set3, within_range_time2_bodyweightsquat_set3, general_feedback_body_bodyweightsquat_set3, dir_gen_feedback_bodyweightsquat_set3, dir_gen_feedback_unsuccessful_bodyweightsquat_set3, cooldown_timer_bodyweightsquat_set3, cooldown_duration_bodyweightsquat_set3, rest_bws_start_time_set3, exercise_mode, per_right_body_bodyweightsquat_set3, bar_right_body_bodyweightsquat_set3, per_left_body_bodyweightsquat_set3, bar_left_body_bodyweightsquat_set3
+    global dir_left_bodyweightsquat_set3, dir_right_bodyweightsquat_set3, display_info_bodyweightsquat_set3, per_right_bodyweightsquat_set3, per_left_bodyweightsquat_set3, bar_left_bodyweightsquat_set3, bar_right_bodyweightsquat_set3, leftbody_bodyweightsquat_set3, rightbody_bodyweightsquat_set3, color_right_bodyweightsquat_set3, color_left_bodyweightsquat_set3, feedback_body_bodyweightsquat_set3, success_threshold_bodyweightsquat_set3, peak_value_bodyweightsquat_set3, atrest_value_bodyweightsquat_set3, unsuccessful_reps_count_body_bodyweightsquat_set3, successful_reps_count_body_bodyweightsquat_set3, dir_left_unsuccessful_bodyweightsquat_set3, start_time1_bodyweightsquat_set3, start_time2_bodyweightsquat_set3, start_time3_bodyweightsquat_set3, time_threshold_bodyweightsquat_set3, within_range_time1_bodyweightsquat_set3, within_range_time2_bodyweightsquat_set3, general_feedback_left_bodyweightsquat_set3, dir_gen_feedback_bodyweightsquat_set3, dir_gen_feedback_unsuccessful_bodyweightsquat_set3, cooldown_timer_bodyweightsquat_set3, cooldown_duration_bodyweightsquat_set3, rest_bws_start_time_set3, exercise_mode, per_right_body_bodyweightsquat_set3, bar_right_body_bodyweightsquat_set3, per_left_body_bodyweightsquat_set3, bar_left_body_bodyweightsquat_set3
 
     img = cv2.resize(img, (1280, 720))
 
@@ -8187,3 +8190,22 @@ def rest_dhh_set3(img):
         exercise_mode = "done exercise"
         print(exercise_mode)
     return img
+
+@muscleGain.route('/detect_bicep_curls')
+def feedback_bicep_curls():
+    global general_feedback_right_bicep, general_feedback_left_bicep, general_feedback_right_bicep_set2, general_feedback_left_bicep_set2, general_feedback_right_bicep_set3, general_feedback_left_bicep_set3, general_feedback_left_pushup,general_feedback_right_pushup,general_feedback_left_pushup_set2,general_feedback_right_pushup_set2,general_feedback_left_pushup_set3,general_feedback_right_pushup_set3,general_feedback_left_shouldertaps,general_feedback_right_shouldertaps,general_feedback_left_shouldertaps_set2,general_feedback_right_shouldertaps_set2,general_feedback_left_shouldertaps_set3,general_feedback_right_shouldertaps_set3,general_feedback_left_chestpress,general_feedback_right_chestpress,general_feedback_left_chestpress_set2,general_feedback_right_chestpress_set2,general_feedback_left_chestpress_set3,general_feedback_right_chestpress_set3,general_feedback_left_dumbbellfrontraise,general_feedback_right_dumbbellfrontraise,general_feedback_left_dumbbellfrontraise_set2,general_feedback_right_dumbbellfrontraise_set2,general_feedback_left_dumbbellfrontraise_set3,general_feedback_right_dumbbellfrontraise_set3,general_feedback_right_leglunge,general_feedback_left_leglunge,general_feedback_right_leglunge_set2,general_feedback_left_leglunge_set2,general_feedback_right_leglunge_set3,general_feedback_left_leglunge_set3,general_feedback_left_bodyweightsquat,general_feedback_left_bodyweightsquat_set2,general_feedback_left_bodyweightsquat_set3,general_feedback_left_gobletsquat,general_feedback_right_gobletsquat,general_feedback_left_gobletsquat_set2,general_feedback_right_gobletsquat_set2,general_feedback_left_gobletsquat_set3,general_feedback_right_gobletsquat_set3,general_feedback_left_highkneetap,general_feedback_right_highkneetap,general_feedback_left_highkneetap_set2,general_feedback_right_highkneetap_set2,general_feedback_left_highkneetap_set3,general_feedback_right_highkneetap_set3,general_feedback_left_dumbbellhiphinge,general_feedback_right_dumbbellhiphinge,general_feedback_left_dumbbellhiphinge_set2,general_feedback_right_dumbbellhiphinge_set2,general_feedback_left_dumbbellhiphinge_set3,general_feedback_right_dumbbellhiphinge_set3
+
+
+
+    return jsonify({'general_feedback_right_bicep': general_feedback_right_bicep},{'general_feedback_left_bicep': general_feedback_left_bicep}, {'general_feedback_right_bicep_set2': general_feedback_right_bicep_set2}, {'general_feedback_left_bicep_set2': general_feedback_left_bicep_set2}, {'general_feedback_right_bicep_set3':general_feedback_right_bicep_set3}, {'general_feedback_left_bicep_set3':general_feedback_left_bicep_set3}, {'general_feedback_left_pushup':general_feedback_left_pushup}, 
+    {'general_feedback_right_pushup':general_feedback_right_pushup}, {'general_feedback_left_pushup_set2':general_feedback_left_pushup_set2}, {'general_feedback_right_pushup_set2':general_feedback_right_pushup_set2}, {'general_feedback_left_pushup_set3':general_feedback_left_pushup_set3}, {'general_feedback_right_pushup_set3':general_feedback_right_pushup_set3}, {'general_feedback_left_shouldertaps':general_feedback_left_shouldertaps}, {'general_feedback_right_shouldertaps':general_feedback_right_shouldertaps}, {'general_feedback_left_shouldertaps_set2':general_feedback_left_shouldertaps_set2}, {'general_feedback_right_shouldertaps_set2':general_feedback_right_shouldertaps_set2}, {'general_feedback_left_shouldertaps_set3':general_feedback_left_shouldertaps_set3}, {'general_feedback_right_shouldertaps_set3':general_feedback_right_shouldertaps_set3}, {'general_feedback_left_chestpress':general_feedback_left_chestpress}, {'general_feedback_right_chestpress':general_feedback_right_chestpress}, {'general_feedback_left_chestpress_set2':general_feedback_left_chestpress_set2}, {'general_feedback_right_chestpress_set2':general_feedback_right_chestpress_set2}, {'general_feedback_left_chestpress_set3':general_feedback_left_chestpress_set3}, {'general_feedback_right_chestpress_set3':general_feedback_right_chestpress_set3}, {'general_feedback_left_dumbbellfrontraise':general_feedback_left_dumbbellfrontraise}, {'general_feedback_right_dumbbellfrontraise':general_feedback_right_dumbbellfrontraise}, {'general_feedback_left_dumbbellfrontraise_set2':general_feedback_left_dumbbellfrontraise_set2}, {'general_feedback_right_dumbbellfrontraise_set2':general_feedback_right_dumbbellfrontraise_set2}, {'general_feedback_left_dumbbellfrontraise_set3':general_feedback_left_dumbbellfrontraise_set3}, {'general_feedback_right_dumbbellfrontraise_set3':general_feedback_right_dumbbellfrontraise_set3}, {'general_feedback_right_leglunge':general_feedback_right_leglunge}, {'general_feedback_left_leglunge':general_feedback_left_leglunge}, {'general_feedback_right_leglunge_set2':general_feedback_right_leglunge_set2}, {'general_feedback_left_leglunge_set2':general_feedback_left_leglunge_set2}, {'general_feedback_right_leglunge_set3':general_feedback_right_leglunge_set3}, {'general_feedback_left_leglunge_set3':general_feedback_left_leglunge_set3}, {'general_feedback_left_bodyweightsquat':general_feedback_left_bodyweightsquat}, {'general_feedback_left_bodyweightsquat_set2':general_feedback_left_bodyweightsquat_set2}, {'general_feedback_left_bodyweightsquat_set3':general_feedback_left_bodyweightsquat_set3}, {'general_feedback_left_gobletsquat':general_feedback_left_gobletsquat}, {'general_feedback_right_gobletsquat':general_feedback_right_gobletsquat}, {'general_feedback_left_gobletsquat_set2':general_feedback_left_gobletsquat_set2}, {'general_feedback_right_gobletsquat_set2':general_feedback_right_gobletsquat_set2}, {'general_feedback_left_gobletsquat_set3':general_feedback_left_gobletsquat_set3}, {'general_feedback_right_gobletsquat_set3':general_feedback_right_gobletsquat_set3}, {'general_feedback_left_highkneetap':general_feedback_left_highkneetap}, {'general_feedback_right_highkneetap':general_feedback_right_highkneetap}, {'general_feedback_left_highkneetap_set2':general_feedback_left_highkneetap_set2}, {'general_feedback_right_highkneetap_set2':general_feedback_right_highkneetap_set2}, {'general_feedback_left_highkneetap_set3':general_feedback_left_highkneetap_set3}, {'general_feedback_right_highkneetap_set3':general_feedback_right_highkneetap_set3}, {'general_feedback_left_dumbbellhiphinge':general_feedback_left_dumbbellhiphinge}, {'general_feedback_right_dumbbellhiphinge':general_feedback_right_dumbbellhiphinge}, {'general_feedback_left_dumbbellhiphinge_set2':general_feedback_left_dumbbellhiphinge_set2}, {'general_feedback_right_dumbbellhiphinge_set2':general_feedback_right_dumbbellhiphinge_set2}, {'general_feedback_left_dumbbellhiphinge_set3':general_feedback_left_dumbbellhiphinge_set3}, {'general_feedback_right_dumbbellhiphinge_set3':general_feedback_right_dumbbellhiphinge_set3})
+
+
+
+
+
+
+
+
+
+
